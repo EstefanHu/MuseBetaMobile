@@ -24,7 +24,7 @@ const clearErrorMessage = dispatch => () => {
   dispatch({ type: 'clear_error_message' })
 };
 
-const login = dispatch => async ({ payload, callback }) => {
+const login = dispatch => async ({ payload }) => {
   try {
     const response = await useFetch(loginUrl, 'POST', payload);
     if (response.status !== 'success')
@@ -32,7 +32,6 @@ const login = dispatch => async ({ payload, callback }) => {
 
     await AsyncStorage.setItem('token', response.token);
     dispatch({ type: 'register', payload: response.token });
-    callback();
   } catch (err) {
     dispatch({ type: 'add_error', payload: 'Something went wrong with sign up' });
   }

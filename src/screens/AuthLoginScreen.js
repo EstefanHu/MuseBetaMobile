@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -12,11 +12,17 @@ import {
 import { Context as AuthContext } from './../providers/AuthProvider.js';
 
 export const AuthLoginScreen = ({ navigation }) => {
-  const { login, clearErrorMessage } = useContext(AuthContext);
+  const { state: { errorMessage }, login, clearErrorMessage } = useContext(AuthContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     navigation.addListener('blur', clearErrorMessage);
   }, []);
+
+  const AttemptLogin = () => {
+    login({ payload: { email, password } });
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -27,20 +33,27 @@ export const AuthLoginScreen = ({ navigation }) => {
         <View style={styles.container}>
           <View style={styles.formContainer} >
             <Text style={styles.logo}>:Muse</Text>
+            {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
             <TextInput style={styles.inputBox}
               underlineColorAndroid='rgba(0,0,0,0)'
               placeholder="Email Address"
               keyboardType="email-address"
               onSubmitEditing={() => console.log('testing')}
+              value={email}
+              autoCapitalize='none'
+              autoCorrect={false}
+              onChangeText={text => setEmail(text)}
             />
             <TextInput style={styles.inputBox}
               underlineColorAndroid='rgba(0,0,0,0)'
               placeholder="Password"
-              secureTextEntry={true}
+              secureTextEntry
+              value={password}
+              onChangeText={text => setPassword(text)}
             />
             <TouchableOpacity
               style={styles.button}
-              onPress={login}
+              onPress={AttemptLogin}
             >
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
