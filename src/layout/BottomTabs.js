@@ -6,6 +6,7 @@ import {
 } from '@expo/vector-icons';
 
 import { StoryStack } from './../stacks/StoryStack.js';
+import { LibraryStack } from './../stacks/LibraryStack.js';
 import { ProfileStack } from './../stacks/ProfileStack.js';
 
 const Tabs = createBottomTabNavigator();
@@ -18,6 +19,8 @@ export const BottomTabs = () => {
         tabBarIcon: ({ _, color, size }) => {
           if (route.name === 'Story') {
             return <FontAwesome5 name={'tasks'} size={size} color={color} />;
+          } else if (route.name === 'Library') {
+            return <MaterialCommunityIcons name={'library-shelves'} size={size} color={color} />
           } else if (route.name === 'Profile') {
             return <MaterialCommunityIcons name={'account-group'} size={size} color={color} />
           }
@@ -29,6 +32,7 @@ export const BottomTabs = () => {
       }}
     >
       <Tabs.Screen name='Story' component={StoryStack} listeners={{ focus: () => console.log('focused') }} />
+      <Tabs.Screen name='Library' component={LibraryStack} listeners={{ focus: () => null }} />
       <Tabs.Screen name='Profile' component={ProfileStack} listeners={{ focus: () => null }} />
     </Tabs.Navigator>
   );
