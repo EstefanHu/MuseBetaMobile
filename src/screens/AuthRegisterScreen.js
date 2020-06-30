@@ -4,9 +4,11 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { Context as AuthContext } from '../providers/AuthProvider.js';
-import { Container } from '../components/container.js';
 
 export const AuthRegisterScreen = ({ navigation }) => {
   const { state, signup, clearErrorMessage } = useContext(AuthContext);
@@ -18,8 +20,11 @@ export const AuthRegisterScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <Container>
-      <>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+      >
         <Text style={styles.header}>Sign Up for getting tracked</Text>
         {state.errorMessage ? <Text style={styles.errorMessage}>{state.errorMessage}</Text> : null}
         <Text style={styles.label}>Email</Text>
@@ -43,12 +48,18 @@ export const AuthRegisterScreen = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate('AuthLoginScreen')}>
           <Text>Already being tracked? Sign In</Text>
         </TouchableOpacity>
-      </>
-    </Container>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 80,
+  },
   header: {
     fontSize: 25
   },
