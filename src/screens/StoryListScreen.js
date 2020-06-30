@@ -45,7 +45,9 @@ export const StoryListScreen = ({ navigation }) => {
   const { state: { stories }, fetchStories } = useContext(StoryContext);
 
   useEffect(() => {
-    fetchStories('Seattle');
+    (async () => {
+      fetchStories('Seattle');
+    })();
   }, []);
 
   return (

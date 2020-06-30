@@ -1,13 +1,12 @@
 exports.useFetch = async (url, method, body, token) => {
   try {
-    const params = {
-      method,
-      headers: {
+    const params = { method }
+
+    method === 'GET' ? params.headers = {}
+    : params.headers = {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       }
-    }
-
     if (token) params.headers.Authorization = `Bearer ${token}`;
     if (body) params.body = JSON.stringify(body);
 
