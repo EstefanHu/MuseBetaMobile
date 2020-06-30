@@ -57,7 +57,7 @@ export const StoryListScreen = ({ navigation }) => {
         data={stories}
         keyExtractor={item => item._id}
         renderItem={({ item }) => {
-          return <StoryCard item={item} />
+          return <StoryCard navigation={navigation} item={item} />
         }}
       />
     </View>
