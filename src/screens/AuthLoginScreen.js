@@ -20,7 +20,7 @@ export const AuthLoginScreen = ({ navigation }) => {
     navigation.addListener('blur', clearErrorMessage);
   }, []);
 
-  const AttemptLogin = () => {
+  const launchLogin = () => {
     login({ payload: { email, password } });
   }
 
@@ -53,7 +53,7 @@ export const AuthLoginScreen = ({ navigation }) => {
             />
             <TouchableOpacity
               style={styles.button}
-              onPress={AttemptLogin}
+              onPress={launchLogin}
             >
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>

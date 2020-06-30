@@ -37,7 +37,7 @@ const login = dispatch => async ({ payload }) => {
   }
 };
 
-const register = dispatch => async ({ payload, callback }) => {
+const register = dispatch => async ({ payload }) => {
   try {
     if (payload.password.length < 8)
       return dispatch({ type: 'add_error', payload: 'Password is not long enough' });
@@ -50,7 +50,6 @@ const register = dispatch => async ({ payload, callback }) => {
 
     await AsyncStorage.setItem('token', response.token);
     dispatch({ type: 'login', payload: response.token });
-    callback();
   } catch (err) {
     dispatch({ type: 'add_error', payload: 'Something went wrong with sign in' });
   }

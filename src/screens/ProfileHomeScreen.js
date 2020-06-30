@@ -8,12 +8,12 @@ import {
 import { Context as AuthContext } from '../providers/AuthProvider.js';
 
 export const ProfileHomeScreen = () => {
-  const { signout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Acount Screen</Text>
-      <Button title='logout' onPress={signout} />
+      <Button title='logout' onPress={logout} />
     </View>
   )
 }

@@ -1,88 +1,134 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
+  View,
   Text,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Keyboard,
   TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
-import { Context as AuthContext } from '../providers/AuthProvider.js';
+import { Context as AuthContext } from './../providers/AuthProvider.js';
 
 export const AuthRegisterScreen = ({ navigation }) => {
-  const { state, signup, clearErrorMessage } = useContext(AuthContext);
+  const { register } = useContext(AuthContext);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  useEffect(() => {
-    navigation.addListener('blur', clearErrorMessage);
-  }, []);
+  const launchRegister = e => {
+    register({
+      payload: {
+        name: `${firstName} ${lastName}`,
+        email,
+        password,
+        confirmPassword
+      }
+    });
+  };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
-      >
-        <Text style={styles.header}>Sign Up for getting tracked</Text>
-        {state.errorMessage ? <Text style={styles.errorMessage}>{state.errorMessage}</Text> : null}
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={styles.input}
-          autoCapitalize='none'
-          autoCorrect={false}
-          value={email}
-          onChangeText={text => setEmail(text)}
-        />
-        <Text style={styles.label}>Password</Text>
-        <TextInput
-          style={styles.input}
-          secureTextEntry
-          value={password}
-          onChangeText={text => setPassword(text)}
-        />
-        <TouchableOpacity onPress={() => signup({ email, password })}>
-          <Text style={styles.button}>Sign Up</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('AuthLoginScreen')}>
-          <Text>Already being tracked? Sign In</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <View style={styles.formContainer} >
+          <Text style={styles.logo}>Join the Story</Text>
+          <TextInput style={styles.inputBox}
+            underlineColorAndroid='rgba(0,0,0,0)'
+            placeholder="First Name"
+            onSubmitEditing={() => console.log('testing')}
+          />
+          <TextInput style={styles.inputBox}
+            underlineColorAndroid='rgba(0,0,0,0)'
+            placeholder="Last Name"
+            onSubmitEditing={() => console.log('testing')}
+          />
+          <TextInput style={styles.inputBox}
+            underlineColorAndroid='rgba(0,0,0,0)'
+            placeholder="Email Address"
+            keyboardType="email-address"
+            onSubmitEditing={() => console.log('testing')}
+          />
+          <TextInput style={styles.inputBox}
+            underlineColorAndroid='rgba(0,0,0,0)'
+            placeholder="Password"
+            secureTextEntry={true}
+          />
+          <TextInput style={styles.inputBox}
+            underlineColorAndroid='rgba(0,0,0,0)'
+            placeholder="Confirm Password"
+            secureTextEntry={true}
+          />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={launchRegister}
+          >
+            <Text style={styles.buttonText}>Register</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.loginTextCont}>
+          <Text style={styles.loginText}>Already have an Account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('AuthLoginScreen')}>
+            <Text style={styles.loginButton}> Log in!</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </TouchableWithoutFeedback>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 80,
+    justifyContent: 'center'
   },
-  header: {
-    fontSize: 25
+  logo: {
+    fontWeight: 'bold',
+    fontSize: 40
   },
-  errorMessage: {
-    fontSize: 16,
-    color: 'red',
+  loginTextCont: {
+    flexGrow: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    paddingVertical: 16,
+    flexDirection: 'row'
   },
-  input: {
-    height: 40,
-    width: '80%',
-    borderColor: 'grey',
-    borderWidth: 1,
-    paddingHorizontal: 8,
+  loginText: {
     fontSize: 16
   },
+  loginButton: {
+    color: '#a8a8a8',
+    fontSize: 16,
+    fontWeight: '500'
+  },
+  formContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  inputBox: {
+    width: 300,
+    backgroundColor: '#ebebeb',
+    borderRadius: 25,
+    paddingHorizontal: 16,
+    paddingVertical: 13,
+    fontSize: 16,
+    marginVertical: 10
+  },
   button: {
-    height: 40,
-    width: '100%',
-    backgroundColor: '#aa00e8',
-    padding: 10,
+    width: 300,
+    backgroundColor: 'rgb(255, 50, 50)',
+    borderRadius: 25,
     marginVertical: 10,
-    paddingHorizontal: 80,
-    fontSize: 18,
-    color: 'white',
+    paddingVertical: 13
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'center'
   }
 });
