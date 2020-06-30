@@ -12,3 +12,7 @@ export const StoryListScreen = () => {
     </View>
   )
 }
+
+const filter = () => {
+  
+}
