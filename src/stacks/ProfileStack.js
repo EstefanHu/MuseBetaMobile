@@ -1,15 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StoryListScreen } from '../screens/StoryListScreen.js';
-import { StoryDetailScreen } from '../screens/StoryDetailScreen.js';
-import { StoryEngageScreen } from '../screens/StoryEngageScreen.js';
+import { ProfileHomeScreen } from '../screens/ProfileHomeScreen.js';
 
 const Stack = createStackNavigator();
 
 export const ProfileStack = () => (
   <Stack.Navigator>
-    <Stack.Screen name='StoryListScreen' component={StoryListScreen} />
-    <Stack.Screen name='StoryDetailScreen' component={StoryDetailScreen} />
-    <Stack.Screen name='StoryEngageScreen' component={StoryEngageScreen} />
+    <Stack.Screen name='ProfileHomeScreen' component={ProfileHomeScreen} />
   </Stack.Navigator>
 )

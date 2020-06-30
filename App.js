@@ -9,7 +9,7 @@ import { Provider as NewStoryProvider } from './src/providers/NewStoryProvider.j
 import { Provider as ProfileProvider } from './src/providers/ProfileProvider.js';
 
 import { BottomTabs } from './src/layout/BottomTabs.js';
-import { LandingStack } from './src/stacks/LandingStack.js';
+import { AuthStack } from './src/stacks/AuthStack.js';
 
 const App = () => {
   const { state, tryLocalSignin } = useContext(AuthContext);
@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      {state.token ? <BottomTabs /> : <LandingStack />}
+      {state.token ? <BottomTabs /> : <AuthStack />}
     </NavigationContainer>
   );
 }
