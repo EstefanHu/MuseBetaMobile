@@ -8,23 +8,29 @@ import { Provider as StoryProvider } from './src/providers/StoryProvider.js';
 import { Provider as NewStoryProvider } from './src/providers/NewStoryProvider.js';
 import { Provider as ProfileProvider } from './src/providers/ProfileProvider.js';
 
+import { BottomTabs } from './src/layout/BottomTabs.js';
+import { AuthStack } from './src/stacks/AuthStack.js';
+
 const App = () => {
+  const { state, tryLocalSignin } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    (async function authenticate() {
+      await tryLocalSignin();
+      setIsLoading(false);
+    })();
+  }, []);
+
+  // Loading Screen
+  if (isLoading) return null;
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      {state.token ? <BottomTabs /> : <AuthStack />}
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default () => {
   return (
