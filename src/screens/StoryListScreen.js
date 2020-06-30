@@ -23,7 +23,7 @@ const wait = (timeout) => {
   });
 };
 
-export const StoryListScreen = ({ navigation }) => {
+export const StoryListScreen = ({ navigation, route }) => {
   const { state: { stories }, fetchStories } = useContext(StoryContext);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -53,7 +53,12 @@ export const StoryListScreen = ({ navigation }) => {
         refreshing={refreshing}
         keyExtractor={item => item._id}
         renderItem={({ item }) => {
-          return <StoryCard navigation={navigation} item={item} />
+          return item.genre === route.params.genre
+            || route.params.genre == 'All' ?
+            <StoryCard
+              navigation={navigation}
+              item={item}
+            /> : null
         }}
       />
     </SafeAreaView>

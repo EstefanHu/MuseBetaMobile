@@ -25,6 +25,7 @@ export const StoryStack = () => (
           />
         )
       })}
+      initialParams={{ genre: 'All' }}
     />
     <Stack.Screen
       name='StoryDetailScreen'

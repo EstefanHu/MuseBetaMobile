@@ -45,12 +45,19 @@ export const Filter = ({ navigation }) => {
         style={styles.scroll}
         showsHorizontalScrollIndicator={false}
       >
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            navigation.navigate('StoryListScreen', { genre: 'All' })}
+        >
+          <Text style={styles.content}>All</Text>
+        </TouchableOpacity>
         {GENRES.map(item => (
           <TouchableOpacity
             key={item.label}
             style={styles.button}
             onPress={() =>
-              navigation.navigate('Home', { genre: item.value })}
+              navigation.navigate('StoryListScreen', { genre: item.value })}
           >
             <Text style={styles.content}>
               {item.value}

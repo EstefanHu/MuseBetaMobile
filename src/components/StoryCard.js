@@ -22,6 +22,12 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 20
+  },
+  read: {
+    backgroundColor: 'rgb(245,245,245)',
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    borderRadius: 5,
   }
 });
 
