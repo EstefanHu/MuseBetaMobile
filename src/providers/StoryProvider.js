@@ -103,12 +103,3 @@ export const { Context, Provider } = createDataContext(
     stories: []
   }
 );
-
-// {
-//   _id: 'ie4w9gee0rq',
-//   title: 'Hello World',
-//   genre: 'Non-Fiction',
-//   pitch: 'Industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the.',
-//   createdAt: 'October 17, 2019',
-//   author: 'Estefan Hu'
-// }
