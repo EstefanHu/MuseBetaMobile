@@ -6,11 +6,10 @@ import { AuthRegisterScreen } from '../screens/AuthRegisterScreen.js';
 const Stack = createStackNavigator();
 
 export const AuthStack = () => (
-  <Stack.Navigator>
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen
       name='AuthLoginScreen'
       component={AuthLoginScreen}
-      options={{ title: '' }}
     />
     <Stack.Screen
       name='AuthRegisterScreen'

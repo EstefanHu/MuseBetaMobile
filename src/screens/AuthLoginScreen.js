@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -12,15 +12,11 @@ import {
 import { Context as AuthContext } from './../providers/AuthProvider.js';
 
 export const AuthLoginScreen = ({ navigation }) => {
-  const { login } = useContext(AuthContext);
+  const { login, clearErrorMessage } = useContext(AuthContext);
 
-  const attemptLogin = () => {
-    fetch('http://192.168.1.10:4000/mobile/test')
-      .then(res => res.json())
-      .then(console.log)
-      .catch(console.error);
-  }
-
+  useEffect(() => {
+    navigation.addListener('blur', clearErrorMessage);
+  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -44,7 +40,7 @@ export const AuthLoginScreen = ({ navigation }) => {
             />
             <TouchableOpacity
               style={styles.button}
-              onPress={attemptLogin}
+              onPress={login}
             >
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
