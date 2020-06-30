@@ -6,7 +6,7 @@ import { StoryEngageScreen } from '../screens/StoryEngageScreen.js';
 
 const Stack = createStackNavigator();
 
-export const StoryStack = () => (
+export const ProfileStack = () => (
   <Stack.Navigator>
     <Stack.Screen name='StoryListScreen' component={StoryListScreen} />
     <Stack.Screen name='StoryDetailScreen' component={StoryDetailScreen} />
