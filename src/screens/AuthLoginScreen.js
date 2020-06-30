@@ -8,7 +8,7 @@ import {
 import { Container } from '../components/container.js';
 import { Context as AuthContext } from '../providers/AuthProvider.js';
 
-export const LandingLoginScreen = ({ navigation }) => {
+export const AuthLoginScreen = ({ navigation }) => {
   const { state, signin, clearErrorMessage } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,7 +40,7 @@ export const LandingLoginScreen = ({ navigation }) => {
         <TouchableOpacity onPress={() => signin({ email, password })}>
           <Text style={styles.button}>Sign In</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+        <TouchableOpacity onPress={() => navigation.navigate('AuthRegisterScreen')}>
           <Text>Not being tracked yet? Sign up!</Text>
         </TouchableOpacity>
       </>

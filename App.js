@@ -1,8 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
 
-import { Provider as AuthProvider } from './src/providers/AuthProvider.js';
+import {
+  Provider as AuthProvider,
+  Context as AuthContext
+} from './src/providers/AuthProvider.js';
 import { Provider as LocationProvider } from './src/providers/LocationProvider.js';
 import { Provider as StoryProvider } from './src/providers/StoryProvider.js';
 import { Provider as NewStoryProvider } from './src/providers/NewStoryProvider.js';
@@ -12,12 +13,12 @@ import { BottomTabs } from './src/layout/BottomTabs.js';
 import { AuthStack } from './src/stacks/AuthStack.js';
 
 const App = () => {
-  const { state, tryLocalSignin } = useContext(AuthContext);
+  const { state, tryLocalLogin } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    (async function authenticate() {
-      await tryLocalSignin();
+    (async () => {
+      await tryLocalLogin();
       setIsLoading(false);
     })();
   }, []);

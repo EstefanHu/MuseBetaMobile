@@ -1,6 +1,7 @@
 import createDataContext from './createDataContext.js';
 import { useFetch } from './../hooks/useFetch.js';
 import { loginUrl, registerUrl } from './../constants/network.js';
+import { AsyncStorage } from 'react-native';
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -29,7 +30,7 @@ const login = dispatch => async ({ payload, callback }) => {
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
 
-    await localStorage.setItem('token', response.token);
+    await AsyncStorage.setItem('token', response.token);
     dispatch({ type: 'register', payload: response.token });
     callback();
   } catch (err) {
@@ -48,7 +49,7 @@ const register = dispatch => async ({ payload, callback }) => {
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
 
-    await localStorage.setItem('token', response.token);
+    await AsyncStorage.setItem('token', response.token);
     dispatch({ type: 'login', payload: response.token });
     callback();
   } catch (err) {
@@ -57,12 +58,12 @@ const register = dispatch => async ({ payload, callback }) => {
 };
 
 const tryLocalLogin = dispatch => async () => {
-  const token = await localStorage.getItem('token');
+  const token = await AsyncStorage.getItem('token');
   if (token) dispatch({ type: 'login', payload: token });
 };
 
 const logout = dispatch => async () => {
-  await localStorage.removeItem('token');
+  await AsyncStorage.removeItem('token');
   dispatch({ type: 'logout' });
 };
 
