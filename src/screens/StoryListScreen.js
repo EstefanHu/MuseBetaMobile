@@ -1,48 +1,31 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
-  View,
-  Text,
   FlatList,
-  ScrollView,
-  TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
-import { GENRES } from './../constants/genre.js';
 import { Context as StoryContext } from './../providers/StoryProvider.js';
 
+import { Filter } from './../components/Filter.js';
 import { StoryCard } from './../components/StoryCard.js';
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: 'white',
-    paddingVertical: 10,
-  },
-  scroll: {
-    display: 'flex',
-    flexDirection: 'row',
-    paddingHorizontal: 5,
-  },
-  button: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: 'lightgrey',
-    marginHorizontal: 5,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 20,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-  },
-  content: {
-    fontSize: 14,
-    color: 'black',
+    alignItems: 'center',
+    // marginTop: Constants.statusBarHeight,
   }
 });
 
+const wait = (timeout) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
+};
+
 export const StoryListScreen = ({ navigation }) => {
   const { state: { stories }, fetchStories } = useContext(StoryContext);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -50,41 +33,29 @@ export const StoryListScreen = ({ navigation }) => {
     })();
   }, []);
 
+  // const onRefresh = () => {
+  //   setRefreshing(true);
+  //   refreshFeed(() => setRefreshing(false));
+  // }
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <Filter navigation={navigation} />
       <FlatList
         data={stories}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
         keyExtractor={item => item._id}
         renderItem={({ item }) => {
           return <StoryCard navigation={navigation} item={item} />
         }}
       />
-    </View>
+    </SafeAreaView>
   )
-}
-
-const Filter = ({ navigation }) => {
-  return (
-    <View style={styles.container}>
-      <ScrollView
-        horizontal={true}
-        style={styles.scroll}
-        showsHorizontalScrollIndicator={false}
-      >
-        {GENRES.map(item => (
-          <TouchableOpacity
-            key={item.label}
-            style={styles.button}
-            onPress={() =>
-              navigation.navigate('Home', { genre: item.value })}
-          >
-            <Text style={styles.content}>
-              {item.value}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    </View >
-  );
 };
