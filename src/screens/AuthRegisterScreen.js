@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -11,12 +11,16 @@ import {
 import { Context as AuthContext } from './../providers/AuthProvider.js';
 
 export const AuthRegisterScreen = ({ navigation }) => {
-  const { register } = useContext(AuthContext);
+  const { state: { errorMessage }, register, clearErrorMessage } = useContext(AuthContext);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  useEffect(() => {
+    navigation.addListener('blur', clearErrorMessage);
+  }, []);
 
   const launchRegister = e => {
     register({
@@ -34,31 +38,52 @@ export const AuthRegisterScreen = ({ navigation }) => {
       <View style={styles.container}>
         <View style={styles.formContainer} >
           <Text style={styles.logo}>Join the Story</Text>
+          {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
           <TextInput style={styles.inputBox}
             underlineColorAndroid='rgba(0,0,0,0)'
             placeholder="First Name"
             onSubmitEditing={() => console.log('testing')}
+            value={firstName}
+            autoCapitalize='none'
+            autoCorrect={false}
+            onChangeText={text => setFirstName(text)}
           />
           <TextInput style={styles.inputBox}
             underlineColorAndroid='rgba(0,0,0,0)'
             placeholder="Last Name"
             onSubmitEditing={() => console.log('testing')}
+            value={lastName}
+            autoCapitalize='none'
+            autoCorrect={false}
+            onChangeText={text => setLastName(text)}
           />
           <TextInput style={styles.inputBox}
             underlineColorAndroid='rgba(0,0,0,0)'
             placeholder="Email Address"
             keyboardType="email-address"
             onSubmitEditing={() => console.log('testing')}
+            value={email}
+            autoCapitalize='none'
+            autoCorrect={false}
+            onChangeText={text => setEmail(text)}
           />
           <TextInput style={styles.inputBox}
             underlineColorAndroid='rgba(0,0,0,0)'
             placeholder="Password"
             secureTextEntry={true}
+            value={password}
+            autoCapitalize='none'
+            autoCorrect={false}
+            onChangeText={text => setPassword(text)}
           />
           <TextInput style={styles.inputBox}
             underlineColorAndroid='rgba(0,0,0,0)'
             placeholder="Confirm Password"
             secureTextEntry={true}
+            value={confirmPassword}
+            autoCapitalize='none'
+            autoCorrect={false}
+            onChangeText={text => setConfirmPassword(text)}
           />
           <TouchableOpacity
             style={styles.button}
