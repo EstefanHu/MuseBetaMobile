@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
   StyleSheet,
   View,
   Text,
+  FlatList,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
 import { GENRES } from './../constants/genre.js';
+import { Context as StoryContext } from './../providers/StoryProvider.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,8 +17,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: 'white',
     paddingVertical: 10,
-    borderBottomColor: 'lightgrey',
-    borderBottomWidth: 1,
   },
   scroll: {
     display: 'flex',
@@ -39,11 +39,27 @@ const styles = StyleSheet.create({
   }
 });
 
-export const StoryListScreen = () => {
+export const StoryListScreen = ({ navigation }) => {
+  const { state: { stories }, fetchStories } = useContext(StoryContext);
+
+  useEffect(() => {
+    fetchStories('Seattle');
+  }, []);
+
   return (
     <View>
-      <Filter />
-      <Text>Hello from StoryListScreen</Text>
+      <Filter navigation={navigation} />
+      <FlatList
+        data={stories}
+        keyExtractor={item => item._id}
+        renderItem={({ item }) => {
+          return <TouchableOpacity onPress={() => navigation.navigate('StoryDetailScreen', { _id: item._id })}>
+            <View style={styles.item}>
+              <Text>{item.title}</Text>
+            </View>
+          </TouchableOpacity>
+        }}
+      />
     </View>
   )
 }
@@ -58,9 +74,10 @@ const Filter = ({ navigation }) => {
       >
         {GENRES.map(item => (
           <TouchableOpacity
+            key={item.label}
             style={styles.button}
             onPress={() =>
-              navigation.navigate('Home', { genre: children })}
+              navigation.navigate('Home', { genre: item.value })}
           >
             <Text style={styles.content}>
               {item.value}

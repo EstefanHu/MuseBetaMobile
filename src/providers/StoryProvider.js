@@ -1,5 +1,7 @@
 import createDataContext from './createDataContext.js';
-import { API } from '../constants/network.js';
+import { useFetch } from './../hooks/useFetch.js';
+import { storyUrl } from '../constants/network.js';
+import { AsyncStorage } from 'react-native';
 
 const storyReducer = (state, action) => {
   switch (action.type) {
@@ -48,21 +50,12 @@ const setFocusedStoryId = dispatch => storyId => {
   dispatch({ type: 'set_focused_story', payload: storyId });
 }
 
-const fetchStories = dispatch => async (city, callback) => {
+const fetchStories = dispatch => async city => {
   try {
-    const token = localStorage.getItem('token');
-    const response = await fetch(API + `/api/v1/story?city=${city}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }
-    });
-    const data = await response.json();
-    if (data.status !== 'success') return dispatch({ type: 'add_error', payload: data.payload });
-    dispatch({ type: 'fetch_stories', payload: data.payload.data });
-    callback();
+    const token = await AsyncStorage.getItem('token');
+    const response = await useFetch(`${storyUrl}?city=${city}`, 'GET', null, token);
+    if (response.status !== 'success') return dispatch({ type: 'add_error', payload: response.payload });
+    dispatch({ type: 'fetch_stories', payload: response.payload.data });
   } catch (err) {
     console.log(err);
   }
