@@ -7,7 +7,14 @@ const Stack = createStackNavigator();
 
 export const AuthStack = () => (
   <Stack.Navigator>
-    <Stack.Screen name='AuthLoginScreen' component={AuthLoginScreen} />
-    <Stack.Screen name='AuthRegisterScreen' component={AuthRegisterScreen} />
+    <Stack.Screen
+      name='AuthLoginScreen'
+      component={AuthLoginScreen}
+      options={{ title: '' }}
+    />
+    <Stack.Screen
+      name='AuthRegisterScreen'
+      component={AuthRegisterScreen}
+    />
   </Stack.Navigator>
 )

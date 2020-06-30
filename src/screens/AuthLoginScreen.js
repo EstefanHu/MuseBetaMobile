@@ -1,53 +1,61 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
+  View,
   Text,
-  TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
+  TextInput,
   Keyboard,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
 } from 'react-native';
-import { Context as AuthContext } from '../providers/AuthProvider.js';
+import { Context as AuthContext } from './../providers/AuthProvider.js';
 
 export const AuthLoginScreen = ({ navigation }) => {
-  const { state, signin, clearErrorMessage } = useContext(AuthContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { login } = useContext(AuthContext);
 
-  useEffect(() => {
-    navigation.addListener('blur', clearErrorMessage);
-  }, [])
+  const attemptLogin = () => {
+    fetch('http://192.168.1.10:4000/mobile/test')
+      .then(res => res.json())
+      .then(console.log)
+      .catch(console.error);
+  }
+
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS == "ios" ? "padding" : "height"}
       >
-        <Text style={styles.header}>Sign In</Text>
-        {state.errorMessage ? <Text style={styles.errorMessage}>{state.errorMessage}</Text> : null}
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={styles.input}
-          value={email}
-          autoCapitalize='none'
-          autoCorrect={false}
-          onChangeText={text => setEmail(text)}
-        />
-        <Text style={styles.label}>Password</Text>
-        <TextInput
-          style={styles.input}
-          secureTextEntry
-          value={password}
-          onChangeText={text => setPassword(text)}
-        />
-        <TouchableOpacity onPress={() => signin({ email, password })}>
-          <Text style={styles.button}>Sign In</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('AuthRegisterScreen')}>
-          <Text>Not being tracked yet? Sign up!</Text>
-        </TouchableOpacity>
+        <View style={styles.container}>
+          <View style={styles.formContainer} >
+            <Text style={styles.logo}>:Muse</Text>
+            <TextInput style={styles.inputBox}
+              underlineColorAndroid='rgba(0,0,0,0)'
+              placeholder="Email Address"
+              keyboardType="email-address"
+              onSubmitEditing={() => console.log('testing')}
+            />
+            <TextInput style={styles.inputBox}
+              underlineColorAndroid='rgba(0,0,0,0)'
+              placeholder="Password"
+              secureTextEntry={true}
+            />
+            <TouchableOpacity
+              style={styles.button}
+              onPress={attemptLogin}
+            >
+              <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.signupTextCont}>
+            <Text style={styles.signupText}>Don't have an account yet?</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('AuthRegisterScreen')}>
+              <Text style={styles.signupButton}> Sign up!</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   )
@@ -55,34 +63,56 @@ export const AuthLoginScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 80,
+    justifyContent: 'center'
   },
-  header: {
-    fontSize: 25
+  logo: {
+    fontSize: 80,
+    fontWeight: 'bold',
+    // color: 'rgb(255,50,50)'
   },
-  errorMessage: {
-    fontSize: 16,
-    color: 'red',
+  signupTextCont: {
+    flexGrow: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    paddingVertical: 16,
+    flexDirection: 'row'
   },
-  input: {
-    height: 40,
-    width: '80%',
-    borderColor: 'grey',
-    borderWidth: 1,
-    paddingHorizontal: 8,
+  signupText: {
     fontSize: 16
   },
+  signupButton: {
+    color: '#a8a8a8',
+    fontSize: 16,
+    fontWeight: '500'
+  },
+  formContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  inputBox: {
+    width: 300,
+    backgroundColor: '#ebebeb',
+    borderRadius: 25,
+    paddingHorizontal: 16,
+    paddingVertical: 13,
+    fontSize: 16,
+    marginVertical: 10
+  },
   button: {
-    height: 40,
-    width: '100%',
-    backgroundColor: '#aa00e8',
-    padding: 10,
+    width: 300,
+    backgroundColor: 'rgb(255, 50, 50)',
+    borderRadius: 25,
     marginVertical: 10,
-    paddingHorizontal: 80,
-    fontSize: 18,
-    color: 'white',
+    paddingVertical: 13
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'center'
   }
 });

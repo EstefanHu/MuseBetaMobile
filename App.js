@@ -25,7 +25,6 @@ const App = () => {
     })();
   }, []);
 
-  // Loading Screen
   if (isLoading) return null;
 
   return (
