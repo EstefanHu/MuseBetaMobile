@@ -42,9 +42,9 @@ export default () => {
           <StoryProvider>
             <NewStoryProvider>
               <ProfileProvider>
-                <React.StrictMode>
+                {/* <React.StrictMode> */}
                   <App />
-                </React.StrictMode>
+                {/* </React.StrictMode> */}
               </ProfileProvider>
             </NewStoryProvider>
           </StoryProvider>

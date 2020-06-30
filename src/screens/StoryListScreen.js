@@ -10,6 +10,8 @@ import {
 import { GENRES } from './../constants/genre.js';
 import { Context as StoryContext } from './../providers/StoryProvider.js';
 
+import { StoryCard } from './../components/StoryCard.js';
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -53,11 +55,7 @@ export const StoryListScreen = ({ navigation }) => {
         data={stories}
         keyExtractor={item => item._id}
         renderItem={({ item }) => {
-          return <TouchableOpacity onPress={() => navigation.navigate('StoryDetailScreen', { _id: item._id })}>
-            <View style={styles.item}>
-              <Text>{item.title}</Text>
-            </View>
-          </TouchableOpacity>
+          return <StoryCard item={item} />
         }}
       />
     </View>
