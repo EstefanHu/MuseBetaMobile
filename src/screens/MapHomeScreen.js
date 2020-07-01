@@ -3,6 +3,7 @@ import MapView, { Marker } from 'react-native-maps';
 import {
   StyleSheet,
   View,
+  FlatList,
   Dimensions
 } from 'react-native';
 
@@ -22,7 +23,11 @@ const styles = StyleSheet.create({
 export const MapHomeScreen = () => {
   return (
     <View style={styles.container}>
-      <MapView style={styles.mapStyle} />
+      <MapView
+        style={styles.mapStyle}
+        showsUserLocation
+      >
+      </MapView>
     </View>
   )
 }
