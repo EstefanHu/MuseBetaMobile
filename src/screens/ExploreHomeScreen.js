@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export const MapHomeScreen = () => {
+export const ExploreHomeScreen = () => {
   return (
     <View style={styles.container}>
       <MapView

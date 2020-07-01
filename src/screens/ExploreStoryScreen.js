@@ -5,7 +5,7 @@ import {
   Text,
 } from 'react-native';
 
-export const MapStoryDetailScreen = ({ navigation, route }) => {
+export const ExploreStoryScreen = ({ navigation, route }) => {
   return (
     <View>
       <Text>Map Story Detail Screen</Text>
