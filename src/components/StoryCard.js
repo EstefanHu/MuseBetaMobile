@@ -65,17 +65,21 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   actions: {
+    alignItems: 'center',
+  },
+  actionsWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
+    width: 200,
   },
   button: {
     backgroundColor: 'rgb(245,245,245)',
     borderBottomWidth: 1,
     borderColor: 'lightgrey',
     borderRadius: 5,
-    paddingVertical: 8,
-    paddingHorizontal: 15,
+    height: 45,
+    width: 90,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -118,21 +122,23 @@ export const StoryCard = ({ navigation, item }) => {
       </View>
 
       <View style={styles.actions}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('StoryDetailScreen', { _id: item._id })}
-        >
-          <View style={styles.button}>
-            <Ionicons name='md-book' size={22} color='grey' />
-            <Text>  Read</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.button}>
-            <FontAwesome name='bookmark-o' size={22} color='grey' />
-            <Text>  Save</Text>
-          </View>
-        </TouchableOpacity>
+        <View style={styles.actionsWrapper}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('StoryDetailScreen', { _id: item._id })}
+          >
+            <View style={styles.button}>
+              <Ionicons name='md-book' size={22} color='grey' />
+              <Text>  Read</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.button}>
+              <FontAwesome name='bookmark-o' size={22} color='grey' />
+              <Text>  Save</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   )
-}
+};
