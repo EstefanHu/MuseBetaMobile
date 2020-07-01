@@ -5,7 +5,7 @@ import { LibraryListScreen } from '../screens/LibraryListScreen.js';
 const Stack = createStackNavigator();
 
 export const LibraryStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
+  <Stack.Navigator>
     <Stack.Screen
       name='LibraryListScreen'
       component={LibraryListScreen}
