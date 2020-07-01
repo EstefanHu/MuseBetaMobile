@@ -5,11 +5,14 @@ import {
   View,
   Text
 } from 'react-native';
+
 import { createStackNavigator } from '@react-navigation/stack';
 import { StoryListScreen } from './../screens/StoryListScreen.js';
 import { StoryDetailScreen } from './../screens/StoryDetailScreen.js';
 import { StoryEngageScreen } from './../screens/StoryEngageScreen.js';
 import { StoryCreateScreen } from './../screens/StoryCreateScreen.js';
+
+import { Logo } from './../components/Logo.js';
 
 const styles = StyleSheet.create({
   button: {
@@ -31,7 +34,7 @@ export const StoryStack = () => (
       name='StoryListScreen'
       component={StoryListScreen}
       options={({ navigation }) => ({
-        headerLeft: () => null,
+        headerLeft: () => <Logo />,
         headerTitle: 'Story',
         headerRight: () => (
           <TouchableOpacity
