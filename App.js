@@ -15,7 +15,7 @@ import { BottomTabs } from './src/layout/BottomTabs.js';
 import { AuthStack } from './src/stacks/AuthStack.js';
 
 const App = () => {
-  const { state, tryLocalLogin } = useContext(AuthContext);
+  const { state: { token }, tryLocalLogin } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      {state.token ? <BottomTabs /> : <AuthStack />}
+      {token ? <BottomTabs /> : <AuthStack />}
     </NavigationContainer>
   );
 }
@@ -43,7 +43,7 @@ export default () => {
             <NewStoryProvider>
               <ProfileProvider>
                 {/* <React.StrictMode> */}
-                  <App />
+                <App />
                 {/* </React.StrictMode> */}
               </ProfileProvider>
             </NewStoryProvider>

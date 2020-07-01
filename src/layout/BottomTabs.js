@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   FontAwesome5,
@@ -13,7 +13,6 @@ import { ProfileStack } from './../stacks/ProfileStack.js';
 const Tabs = createBottomTabNavigator();
 
 export const BottomTabs = () => {
-
   return (
     <Tabs.Navigator
       screenOptions={({ route }) => ({
