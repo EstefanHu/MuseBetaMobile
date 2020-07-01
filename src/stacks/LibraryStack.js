@@ -9,6 +9,9 @@ export const LibraryStack = () => (
     <Stack.Screen
       name='LibraryListScreen'
       component={LibraryListScreen}
+      options={{
+        headerTitle: 'Library'
+      }}
       initialParams={{genre: 'All'}}
     />
   </Stack.Navigator>
