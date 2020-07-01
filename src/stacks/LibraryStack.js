@@ -15,4 +15,4 @@ export const LibraryStack = () => (
       initialParams={{genre: 'All'}}
     />
   </Stack.Navigator>
-)
+);
