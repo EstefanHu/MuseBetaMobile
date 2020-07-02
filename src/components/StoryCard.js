@@ -50,14 +50,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginVertical: 3
   },
   title: {
     fontWeight: 'bold',
     fontSize: 20,
     width: 250,
   },
-  channel: {
-  },
+  channel: {},
   pitch: {
     paddingHorizontal: 15,
     fontSize: 16,
@@ -104,7 +104,7 @@ export const StoryCard = ({ navigation, item }) => {
               <Text style={styles.author}>{item.authorName}</Text>
             </TouchableOpacity>
             <TouchableOpacity>
-              <Text style={styles.geolocation}>{item.city}</Text>
+              <Text style={styles.geolocation}>{item.city}, {item.community}</Text>
             </TouchableOpacity>
           </View>
         </View>

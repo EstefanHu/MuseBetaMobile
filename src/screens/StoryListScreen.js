@@ -53,8 +53,8 @@ export const StoryListScreen = ({ navigation, route }) => {
         refreshing={refreshing}
         keyExtractor={item => item._id}
         renderItem={({ item }) => {
-          return item.genre === route.params.genre
-            || route.params.genre == 'All' ?
+          return item.channel === route.params.channel
+            || route.params.channel == 'All' ?
             <StoryCard
               navigation={navigation}
               item={item}

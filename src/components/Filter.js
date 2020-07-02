@@ -48,7 +48,7 @@ export const Filter = ({ navigation }) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() =>
-            navigation.navigate('StoryListScreen', { genre: 'All' })}
+            navigation.navigate('StoryListScreen', { channel: 'All' })}
         >
           <Text style={styles.content}>All</Text>
         </TouchableOpacity>
@@ -57,7 +57,7 @@ export const Filter = ({ navigation }) => {
             key={item.label}
             style={styles.button}
             onPress={() =>
-              navigation.navigate('StoryListScreen', { genre: item.value })}
+              navigation.navigate('StoryListScreen', { channel: item.value })}
           >
             <Text style={styles.content}>
               {item.value}
