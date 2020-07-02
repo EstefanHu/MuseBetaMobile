@@ -6,7 +6,7 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
-import { GENRES } from './../constants/genre.js';
+import { CHANNELS } from '../constants/channels.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -52,7 +52,7 @@ export const Filter = ({ navigation }) => {
         >
           <Text style={styles.content}>All</Text>
         </TouchableOpacity>
-        {GENRES.map(item => (
+        {CHANNELS.map(item => (
           <TouchableOpacity
             key={item.label}
             style={styles.button}

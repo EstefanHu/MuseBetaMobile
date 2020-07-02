@@ -1,4 +1,4 @@
-const GENRES = [
+const CHANNELS = [
   { value: 'Fiction', label: 'Fiction' },
   { value: 'Poetry', label: 'Poetry' },
   { value: 'Narrative', label: 'Narrative' },
@@ -12,5 +12,5 @@ const GENRES = [
 ]
 
 export {
-  GENRES
+  CHANNELS
 };

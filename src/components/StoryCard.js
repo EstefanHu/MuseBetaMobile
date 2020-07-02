@@ -49,11 +49,14 @@ const styles = StyleSheet.create({
   prime: {
     paddingHorizontal: 15,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 20,
+    width: 250,
+  },
+  channel: {
   },
   pitch: {
     paddingHorizontal: 15,
@@ -112,7 +115,7 @@ export const StoryCard = ({ navigation, item }) => {
 
       <View style={styles.prime}>
         <Text style={styles.title}>{item.title}</Text>
-        <Text>{item.genre}</Text>
+        <Text style={styles.channel}>{item.channel}</Text>
       </View>
 
       <Text style={styles.pitch}>{item.pitch}</Text>
