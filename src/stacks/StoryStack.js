@@ -21,7 +21,7 @@ export const StoryStack = () => (
         headerTitle: null,
         headerRight: () => <HeaderActions navigation={navigation} />
       })}
-      initialParams={{ genre: 'All' }}
+      initialParams={{ channel: 'All' }}
     />
     <Stack.Screen
       name='StoryDetailScreen'

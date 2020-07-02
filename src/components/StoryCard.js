@@ -11,6 +11,8 @@ import {
   FontAwesome
 } from '@expo/vector-icons';
 
+import { Context as LibraryContext } from './../providers/LibraryProvider.js';
+
 import userDefault from './../../assets/user-default.png';
 
 const styles = StyleSheet.create({
@@ -90,8 +92,16 @@ const styles = StyleSheet.create({
 });
 
 export const StoryCard = ({ navigation, item }) => {
-  const {}
-  const [isSaved,setIsSaved] = useState(false);
+  // const { addToLibrary, removeFromLibrary } = useContext(LibraryContext);
+  const [isSaved, setIsSaved] = useState(false);
+
+  const saveStory = () => {
+    setIsSaved(false);
+  }
+
+  const removeStory = () => {
+    setIsSaved(true);
+  }
 
   return (
     <View style={styles.card}>
@@ -137,12 +147,21 @@ export const StoryCard = ({ navigation, item }) => {
               <Text>  Read</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.button}>
-              <FontAwesome name='bookmark-o' size={22} color='grey' />
-              <Text>  Save</Text>
-            </View>
-          </TouchableOpacity>
+          {
+            isSaved ?
+              <TouchableOpacity onPress={() => removeStory()}>
+                <View style={styles.button}>
+                  <FontAwesome name='bookmark' size={22} color='grey' />
+                  <Text>  Remove</Text>
+                </View>
+              </TouchableOpacity>
+              : <TouchableOpacity onPress={() => saveStory()}>
+                <View style={styles.button}>
+                  <FontAwesome name='bookmark-o' size={22} color='grey' />
+                  <Text>  Save</Text>
+                </View>
+              </TouchableOpacity>
+          }
         </View>
       </View>
     </View>
