@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -92,15 +92,22 @@ const styles = StyleSheet.create({
 });
 
 export const StoryCard = ({ navigation, item }) => {
-  // const { addToLibrary, removeFromLibrary } = useContext(LibraryContext);
+  const { state: { library }, addToLibrary, removeFromLibrary } = useContext(LibraryContext);
   const [isSaved, setIsSaved] = useState(false);
 
-  const saveStory = () => {
-    setIsSaved(false);
+  useEffect(() => {
+    library.includes(item._id) ?
+      setIsSaved(true) : setIsSaved(false);
+  }, []);
+
+  const saveStory = async id => {
+    await addToLibrary(id);
+    setIsSaved(true);
   }
 
-  const removeStory = () => {
-    setIsSaved(true);
+  const removeStory = async id => {
+    await removeFromLibrary(id);
+    setIsSaved(false);
   }
 
   return (
@@ -149,13 +156,13 @@ export const StoryCard = ({ navigation, item }) => {
           </TouchableOpacity>
           {
             isSaved ?
-              <TouchableOpacity onPress={() => removeStory()}>
+              <TouchableOpacity onPress={() => removeStory(item._id)}>
                 <View style={styles.button}>
                   <FontAwesome name='bookmark' size={22} color='grey' />
                   <Text>  Remove</Text>
                 </View>
               </TouchableOpacity>
-              : <TouchableOpacity onPress={() => saveStory()}>
+              : <TouchableOpacity onPress={() => saveStory(item._id)}>
                 <View style={styles.button}>
                   <FontAwesome name='bookmark-o' size={22} color='grey' />
                   <Text>  Save</Text>

@@ -55,11 +55,11 @@ export const StoryListScreen = ({ navigation, route }) => {
         keyExtractor={item => item._id}
         renderItem={({ item }) => {
           return item.channel === route.params.channel
-            || route.params.channel == 'All' ?
+            || route.params.channel == 'All' &&
             <StoryCard
               navigation={navigation}
               item={item}
-            /> : null
+            />
         }}
       />
     </SafeAreaView>
