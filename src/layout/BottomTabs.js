@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   FontAwesome5,
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
+import decode from 'jwt-decode';
+
+import { Context as AuthContext } from './../providers/AuthProvider.js';
 
 import { StoryStack } from './../stacks/StoryStack.js';
 import { ExploreStack } from './../stacks/ExploreStack.js';
@@ -13,6 +16,18 @@ import { ProfileStack } from './../stacks/ProfileStack.js';
 const Tabs = createBottomTabNavigator();
 
 export const BottomTabs = () => {
+  const { state: { token }, logout } = useContext(AuthContext);
+
+  useEffect(() => {
+    try {
+      const expDate = decode(token);
+      if (expDate < new Date().getTime() / 1000)
+        logout();
+    } catch (error) {
+      logout();
+    }
+  }, [])
+
   return (
     <Tabs.Navigator
       screenOptions={({ route }) => ({
