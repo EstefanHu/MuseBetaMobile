@@ -4,9 +4,9 @@ import {
   FlatList,
   SafeAreaView,
 } from 'react-native';
-import { Context as StoryContext } from './../providers/StoryProvider.js'; // TODO: Temp
+import { Context as ProfileContext } from './../providers/ProfileProvider.js'; // TODO: Temp
 import { Filter } from './../components/Filter.js';
-import {StoryCard} from './../components/StoryCard.js';
+import { StoryCard } from './../components/StoryCard.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,15 +22,15 @@ const wait = (timeout) => {
   });
 };
 
-export const LibraryListScreen = ({navigation, route}) => {
-  const { state: { stories } } = useContext(StoryContext);
+export const LibraryListScreen = ({ navigation, route }) => {
+  const { state: { library }, fetchLibary } = useContext(ProfileContext);
   const [refreshing, setRefreshing] = useState(false);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     fetchStories('Seattle');
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      fetchLibary();
+    })();
+  }, []);
 
   // const onRefresh = () => {
   //   setRefreshing(true);
@@ -47,7 +47,7 @@ export const LibraryListScreen = ({navigation, route}) => {
     <SafeAreaView style={styles.container}>
       <Filter navigation={navigation} />
       <FlatList
-        data={stories}
+        data={library}
         onRefresh={onRefresh}
         refreshing={refreshing}
         keyExtractor={item => item._id}

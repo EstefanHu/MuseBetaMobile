@@ -62,7 +62,7 @@ const fetchStories = dispatch => async city => {
 }
 
 const addStory = dispatch => async story => {
-  const token = localStorage.getItem('token');
+  const token = AsyncStorage.getItem('token');
   const response = await fetch(API + '/api/v1/story', {
     method: 'POST',
     headers: {
