@@ -95,10 +95,10 @@ export const StoryCard = ({ navigation, item }) => {
   const { state: { library }, addToLibrary, removeFromLibrary } = useContext(LibraryContext);
   const [isSaved, setIsSaved] = useState(false);
 
-  useEffect(() => {
-    library.includes(item._id) ?
-      setIsSaved(true) : setIsSaved(false);
-  }, []);
+  // useEffect(() => {
+  //   library.includes(item._id) ?
+  //     setIsSaved(true) : setIsSaved(false);
+  // }, []);
 
   const saveStory = async id => {
     await addToLibrary(id);

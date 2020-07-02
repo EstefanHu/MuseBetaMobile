@@ -21,7 +21,7 @@ export const BottomTabs = () => {
   useEffect(() => {
     try {
       const expDate = decode(token);
-      if (expDate < new Date().getTime() / 1000)
+      if (expDate.exp < new Date().getTime() / 1000)
         logout();
     } catch (error) {
       logout();
