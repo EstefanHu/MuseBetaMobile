@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -90,6 +90,9 @@ const styles = StyleSheet.create({
 });
 
 export const StoryCard = ({ navigation, item }) => {
+  const {}
+  const [isSaved,setIsSaved] = useState(false);
+
   return (
     <View style={styles.card}>
 

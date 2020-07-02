@@ -6,6 +6,8 @@ const profileUrl = API + '/api/v1/user/me';
 const addToLibrary = API + '/api/v1/user/addStoryToLibrary';
 const removeFromLibrary = API + '/api/v1/user/removeStoryFromLibrary';
 const getLibrary = API + '/api/v1/story/library';
+const addStoryToLibrary = API + '/api/v1/user/addStoryToLibrary';
+const removeStoryFromLibrary = API + '/api/v1/user/removeStoryFromLibrary';
 const storyUrl = API + '/api/v1/story';
 
 export {
