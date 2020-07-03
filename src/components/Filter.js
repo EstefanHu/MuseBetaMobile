@@ -6,7 +6,7 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
-import { CHANNELS } from '../constants/channels.js';
+import { CHANNELS } from './../constants/channels.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,34 +37,30 @@ const styles = StyleSheet.create({
   }
 });
 
-export const Filter = ({ navigation }) => {
-  return (
-    <View style={styles.container}>
-      <ScrollView
-        horizontal={true}
-        style={styles.scroll}
-        showsHorizontalScrollIndicator={false}
+export const Filter = ({ channel, setChannel }) => (
+  <View style={styles.container}>
+    <ScrollView
+      horizontal={true}
+      style={styles.scroll}
+      showsHorizontalScrollIndicator={false}
+    >
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => setChannel('All')}
       >
+        <Text style={styles.content}>All</Text>
+      </TouchableOpacity>
+      {CHANNELS.map(item => (
         <TouchableOpacity
+          key={item.label}
           style={styles.button}
-          onPress={() =>
-            navigation.navigate('StoryListScreen', { channel: 'All' })}
+          onPress={() => setChannel(item.value)}
         >
-          <Text style={styles.content}>All</Text>
+          <Text style={styles.content}>
+            {item.value}
+          </Text>
         </TouchableOpacity>
-        {CHANNELS.map(item => (
-          <TouchableOpacity
-            key={item.label}
-            style={styles.button}
-            onPress={() =>
-              navigation.navigate('StoryListScreen', { channel: item.value })}
-          >
-            <Text style={styles.content}>
-              {item.value}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    </View >
-  );
-};
+      ))}
+    </ScrollView>
+  </View >
+);

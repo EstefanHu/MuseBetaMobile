@@ -22,9 +22,10 @@ const wait = (timeout) => {
   });
 };
 
-export const LibraryListScreen = ({ navigation, route }) => {
+export const LibraryListScreen = ({ navigation }) => {
   const { state: { library }, fetchLibrary } = useContext(ProfileContext);
   const [refreshing, setRefreshing] = useState(false);
+  const [channel, setChannel] = useState('All');
 
   useEffect(() => {
     fetchLibrary();
@@ -43,15 +44,15 @@ export const LibraryListScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Filter navigation={navigation} />
+      <Filter navigation={navigation} channel={channel} setChannel={setChannel} />
       <FlatList
         data={library}
         onRefresh={onRefresh}
         refreshing={refreshing}
         keyExtractor={item => item._id}
         renderItem={({ item }) => {
-          return item.genre === route.params.genre
-            || route.params.genre == 'All' ?
+          return item.channel === channel
+            || channel == 'All' ?
             <StoryCard
               navigation={navigation}
               item={item}
