@@ -31,6 +31,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
   },
+  selectedButton: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: 'grey',
+    marginHorizontal: 5,
+    backgroundColor: 'rgb(230,230,230)',
+    borderRadius: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
   content: {
     fontSize: 14,
     color: 'black',
@@ -45,7 +55,7 @@ export const Filter = ({ channel, setChannel }) => (
       showsHorizontalScrollIndicator={false}
     >
       <TouchableOpacity
-        style={styles.button}
+        style={channel === 'All' ? styles.selectedButton : styles.button}
         onPress={() => setChannel('All')}
       >
         <Text style={styles.content}>All</Text>
@@ -53,7 +63,7 @@ export const Filter = ({ channel, setChannel }) => (
       {CHANNELS.map(item => (
         <TouchableOpacity
           key={item.label}
-          style={styles.button}
+          style={item.value === channel ? styles.selectedButton : styles.button}
           onPress={() => setChannel(item.value)}
         >
           <Text style={styles.content}>
