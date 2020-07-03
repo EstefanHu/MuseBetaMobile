@@ -38,8 +38,8 @@ const profileReducer = (state, action) => {
     case 'remove_from_library':
       return {
         ...state,
-        libraryId: [state.libraryIds.filter(storyId => storyId === action.payload)],
-        library: [state.library.filter(story => story._id === action.payload)]
+        libraryId: state.libraryIds.filter(storyId => storyId !== action.payload),
+        library: state.library.filter(story => story._id !== action.payload)
       };
     default:
       return state;
@@ -72,7 +72,6 @@ const fetchLibrary = dispatch => async () => {
 
 const addToLibrary = dispatch => async story => {
   try {
-    console.log('adding');
     const token = await AsyncStorage.getItem('token');
     const response = await useFetch(addStoryToLibrary, 'PATCH', { id: story._id }, token);
     if (response.status !== 'success')
@@ -85,7 +84,6 @@ const addToLibrary = dispatch => async story => {
 
 const removeFromLibrary = dispatch => async storyId => {
   try {
-    console.log('removing');
     const token = await AsyncStorage.getItem('token');
     const response = await useFetch(removeStoryFromLibrary, 'PATCH', { id: storyId }, token);
     if (response.status !== 'success')
