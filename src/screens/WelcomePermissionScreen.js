@@ -3,8 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
-  Button,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -20,30 +19,22 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     width: 200,
-    marginBottom: 10,
+    marginBottom: 50
   },
   nextText: {
     fontWeight: 'bold',
     fontSize: 20,
     textAlign: 'center'
-  },
-  skip: {
-    marginBottom: 50,
-    color: 'white',
-    fontSize: 16
   }
 });
 
-export const WelcomeImageScreen = ({ navigation }) => {
+export const WelcomePermissionScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('WelcomePermissionScreen')}>
+      <TouchableOpacity onPress={() => console.log('yay!')}>
         <View style={styles.next}>
-          <Text style={styles.nextText}>Upload</Text>
+          <Text style={styles.nextText}>Agree</Text>
         </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('WelcomePermissionScreen')}>
-        <Text style={styles.skip}>Skip for now</Text>
       </TouchableOpacity>
     </View>
   )

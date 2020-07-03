@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white'
   },
-  start: {
+  next: {
     backgroundColor: 'white',
     borderRadius: 5,
     paddingVertical: 10,
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     width: 200,
     marginBottom: 50
   },
-  startText: {
+  nextText: {
     fontWeight: 'bold',
     fontSize: 20,
     textAlign: 'center'
@@ -60,8 +60,8 @@ export const WelcomeIntroScreen = ({ navigation }) => {
         <Text style={styles.tease}>begin your story?</Text>
       </View>
       <TouchableOpacity onPress={() => navigation.navigate('WelcomeTermsScreen')}>
-        <View style={styles.start}>
-          <Text style={styles.startText}>Start</Text>
+        <View style={styles.next}>
+          <Text style={styles.nextText}>Start</Text>
         </View>
       </TouchableOpacity>
     </View>
