@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   View,
   Text,
-  SafeAreaView
 } from 'react-native';
+import { Context as JourneyContext } from './../providers/JourneyProvider.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,9 +15,22 @@ const styles = StyleSheet.create({
 });
 
 export const JourneyDeploymentScreen = () => {
+  const { state: { status } } = useContext(JourneyContext);
+
   return (
     <View style={styles.container}>
-      <Text>Deployment</Text>
+      {
+        status === 'inactive' ?
+          <Idle /> : <View><Text>{status}</Text></View>
+      }
     </View>
   );
+};
+
+const Idle = () => {
+  return (
+    <View>
+      <Text>Inactive</Text>
+    </View>
+  )
 };
