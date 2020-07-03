@@ -10,7 +10,6 @@ import { Provider as LocationProvider } from './src/providers/LocationProvider.j
 import { Provider as StoryProvider } from './src/providers/StoryProvider.js';
 import { Provider as NewStoryProvider } from './src/providers/NewStoryProvider.js';
 import { Provider as ProfileProvider } from './src/providers/ProfileProvider.js';
-import { Provider as LibraryProvider } from './src/providers/LibraryProvider.js';
 
 import { BottomTabs } from './src/layout/BottomTabs.js';
 import { AuthStack } from './src/stacks/AuthStack.js';
@@ -43,11 +42,9 @@ export default () => {
           <StoryProvider>
             <NewStoryProvider>
               <ProfileProvider>
-                <LibraryProvider>
                   {/* <React.StrictMode> */}
                   <App />
                   {/* </React.StrictMode> */}
-                </LibraryProvider>
               </ProfileProvider>
             </NewStoryProvider>
           </StoryProvider>

@@ -12,7 +12,6 @@ import {
 } from '@expo/vector-icons';
 
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
-import { Context as LibraryContext } from './../providers/LibraryProvider.js';
 
 import userDefault from './../../assets/user-default.png';
 
@@ -93,14 +92,15 @@ const styles = StyleSheet.create({
 });
 
 export const StoryCard = ({ navigation, item }) => {
-  const { state: { library } } = useContext(ProfileContext);
-  const { addToLibrary, removeFromLibrary } = useContext(LibraryContext);
+  const { state: { library },addToLibrary, removeFromLibrary  } = useContext(ProfileContext);
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     library.includes(item._id) ?
       setIsSaved(true) : setIsSaved(false);
-  }, []);
+    console.log(item.title);
+    console.log(library.includes(item._id));
+  }, [library]);
 
   const saveStory = async id => {
     await addToLibrary(id);
@@ -108,7 +108,7 @@ export const StoryCard = ({ navigation, item }) => {
   }
 
   const removeStory = async id => {
-    await removeFromLibrary(id);
+    removeFromLibrary(id);
     setIsSaved(false);
   }
 
