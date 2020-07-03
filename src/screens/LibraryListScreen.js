@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   FlatList,
+  View,
+  Text,
   SafeAreaView,
 } from 'react-native';
 import { Context as ProfileContext } from './../providers/ProfileProvider.js'; // TODO: Temp
@@ -45,20 +47,24 @@ export const LibraryListScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Filter navigation={navigation} channel={channel} setChannel={setChannel} />
-      <FlatList
-        data={library}
-        onRefresh={onRefresh}
-        refreshing={refreshing}
-        keyExtractor={item => item._id}
-        renderItem={({ item }) => {
-          return item.channel === channel
-            || channel == 'All' ?
-            <StoryCard
-              navigation={navigation}
-              item={item}
-            /> : null
-        }}
-      />
+      {
+        library.length > 0 ?
+          <FlatList
+            data={library}
+            onRefresh={onRefresh}
+            refreshing={refreshing}
+            keyExtractor={item => item._id}
+            renderItem={({ item }) => {
+              return item.channel === channel
+                || channel == 'All' ?
+                <StoryCard
+                  navigation={navigation}
+                  item={item}
+                /> : null
+            }}
+          />
+          : <View><Text>Nothing in your library</Text></View>
+      }
     </SafeAreaView>
   )
 }
