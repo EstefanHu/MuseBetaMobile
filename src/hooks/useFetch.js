@@ -1,6 +1,7 @@
 exports.useFetch = async (url, method, body, token) => {
   try {
     const params = { method }
+    console.log(url)
 
     method === 'GET' ? params.headers = {}
       : params.headers = {
@@ -12,6 +13,8 @@ exports.useFetch = async (url, method, body, token) => {
 
     const response = await fetch(url, params);
     const data = await response.json();
+
+    console.log(data.status)
 
     return data;
   } catch (error) {

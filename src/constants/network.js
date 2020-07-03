@@ -13,8 +13,8 @@ export {
   loginUrl,
   registerUrl,
   profileUrl,
+  getLibrary,
   addStoryToLibrary,
   removeStoryFromLibrary,
-  getLibrary,
   storyUrl
 }

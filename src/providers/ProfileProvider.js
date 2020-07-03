@@ -33,7 +33,5 @@ const getMe = dispatch => async () => {
 export const { Context, Provider } = createDataContext(
   profileReducer,
   { getMe },
-  {
-    library: [],
-  }
+  {}
 );

@@ -26,11 +26,11 @@ export const LibraryListScreen = ({ navigation, route }) => {
   const { state: { library }, fetchLibary } = useContext(ProfileContext);
   const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      fetchLibary();
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     fetchLibary();
+  //   })();
+  // }, []);
 
   // const onRefresh = () => {
   //   setRefreshing(true);

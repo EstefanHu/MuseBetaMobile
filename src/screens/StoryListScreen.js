@@ -28,9 +28,7 @@ export const StoryListScreen = ({ navigation, route }) => {
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      fetchStories('Seattle');
-    })();
+    fetchStories('Seattle');
   }, []);
 
 
