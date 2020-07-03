@@ -92,18 +92,16 @@ const styles = StyleSheet.create({
 });
 
 export const StoryCard = ({ navigation, item }) => {
-  const { state: { library },addToLibrary, removeFromLibrary  } = useContext(ProfileContext);
+  const { state: { libraryIds }, addToLibrary, removeFromLibrary } = useContext(ProfileContext);
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
-    library.includes(item._id) ?
+    libraryIds.includes(item._id) ?
       setIsSaved(true) : setIsSaved(false);
-    console.log(item.title);
-    console.log(library.includes(item._id));
-  }, [library]);
+  }, [libraryIds]);
 
-  const saveStory = async id => {
-    await addToLibrary(id);
+  const saveStory = async story => {
+    await addToLibrary(story);
     setIsSaved(true);
   }
 
@@ -164,7 +162,7 @@ export const StoryCard = ({ navigation, item }) => {
                   <Text>  Remove</Text>
                 </View>
               </TouchableOpacity>
-              : <TouchableOpacity onPress={() => saveStory(item._id)}>
+              : <TouchableOpacity onPress={() => saveStory(item)}>
                 <View style={styles.button}>
                   <FontAwesome name='bookmark-o' size={22} color='grey' />
                   <Text>  Save</Text>

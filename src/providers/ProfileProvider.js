@@ -21,22 +21,26 @@ const profileReducer = (state, action) => {
         ...state,
         name: action.payload.name,
         email: action.payload.email,
-        library: action.payload.library,
+        libraryIds: action.payload.library,
+        credibility: action.payload.credibility,
+        role: action.payload.role,
+        type: action.payload.type,
+        photo: action.payload.photo
       }
     case 'fetch_library':
       return { ...state, library: action.payload };
-    case 'update_library':
-      return { ...state, library: action.payload };
-    case 'add_story_to_library':
+    case 'add_to_library':
       return {
         ...state,
+        libraryIds: [...state.libraryIds, action.payload._id],
         library: [...state.library, action.payload]
-      }
-    case 'remove_story_from_library':
+      };
+    case 'remove_from_library':
       return {
         ...state,
-        library: state.library.filter(item => item === action.payload)
-      }
+        libraryId: [state.libraryIds.filter(storyId => storyId === action.payload)],
+        library: [state.library.filter(story => story._id === action.payload)]
+      };
     default:
       return state;
   }
@@ -46,7 +50,8 @@ const getMe = dispatch => async () => {
   try {
     const token = await AsyncStorage.getItem('token');
     const response = await useFetch(profileUrl, 'GET', null, token);
-    if (response.status !== 'success') return dispatch({ type: 'add_error', payload: response.payload });
+    if (response.status !== 'success')
+      return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'get_me', payload: response.payload });
   } catch (error) {
     console.log(error);
@@ -57,20 +62,22 @@ const fetchLibrary = dispatch => async () => {
   try {
     const token = await AsyncStorage.getItem('token');
     const response = await useFetch(getLibrary, 'GET', null, token);
-    if (response.status !== 'success') return dispatch({ type: 'add_error', payload: response.payload });
+    if (response.status !== 'success')
+      return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'fetch_library', payload: response.payload });
   } catch (error) {
     console.log(error);
   }
 }
 
-const addToLibrary = dispatch => async storyId => {
+const addToLibrary = dispatch => async story => {
   try {
     console.log('adding');
     const token = await AsyncStorage.getItem('token');
-    const response = await useFetch(addStoryToLibrary, 'PATCH', { id: storyId }, token);
-    if (response.status !== 'success') return dispatch({ type: 'add_error', payload: response.payload });
-    dispatch({ type: 'update_library', payload: response.payload });
+    const response = await useFetch(addStoryToLibrary, 'PATCH', { id: story._id }, token);
+    if (response.status !== 'success')
+      return dispatch({ type: 'add_error', payload: response.payload });
+    dispatch({ type: 'add_to_library', payload: response.payload });
   } catch (error) {
     console.log(error);
   }
@@ -81,15 +88,12 @@ const removeFromLibrary = dispatch => async storyId => {
     console.log('removing');
     const token = await AsyncStorage.getItem('token');
     const response = await useFetch(removeStoryFromLibrary, 'PATCH', { id: storyId }, token);
-    if (response.status !== 'success') return dispatch({ type: 'add_error', payload: response.payload });
-    dispatch({ type: 'update_library', payload: response.payload });
+    if (response.status !== 'success')
+      return dispatch({ type: 'add_error', payload: response.payload });
+    dispatch({ type: 'remove_from_library', payload: response.payload });
   } catch (error) {
     console.log(error);
   }
-}
-
-const updateLibrary = dispatch => id => {
-  dispatch({ type: 'update_library', payload: id });
 }
 
 export const { Context, Provider } = createDataContext(
