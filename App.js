@@ -13,6 +13,7 @@ import { Provider as ProfileProvider } from './src/providers/ProfileProvider.js'
 
 import { BottomTabs } from './src/layout/BottomTabs.js';
 import { AuthStack } from './src/stacks/AuthStack.js';
+import { WelcomeStack } from './src/stacks/WelcomeStack.js';
 
 const App = () => {
   const { state: { token }, tryLocalLogin } = useContext(AuthContext);
@@ -29,7 +30,8 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      {token ? <BottomTabs /> : <AuthStack />}
+      {/* {token ? <BottomTabs /> : <AuthStack />} */}
+      <WelcomeStack />
     </NavigationContainer>
   );
 }

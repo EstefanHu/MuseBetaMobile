@@ -2,21 +2,21 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { WelcomeFirstScreen } from './../screens/WelcomeFirstScreen.js';
-import { WelcomeSecondScreen } from './../screens/WelcomeSecondScreen.js';
+import { WelcomeIntroScreen } from '../screens/WelcomeIntroScreen.js';
+import { WelcomeTermsScreen } from './../screens/WelcomeTermsScreen.js';
 import { WelcomeThirdScreen } from './../screens/WelcomeThirdScreen.js';
 
 const Stack = createStackNavigator();
 
 export const WelcomeStack = () => (
-  <Stack.Navigator screenOptions={{}}>
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen
-      name='WelcomeFirstScreen'
-      component={WelcomeFirstScreen}
+      name='WelcomeIntroScreen'
+      component={WelcomeIntroScreen}
     />
     <Stack.Screen
-      name='WelcomeSecondScreen'
-      component={WelcomeSecondScreen}
+      name='WelcomeTermsScreen'
+      component={WelcomeTermsScreen}
     />
     <Stack.Screen
       name='WelcomeThirdScreen'
