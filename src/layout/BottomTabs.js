@@ -7,6 +7,7 @@ import {
 import decode from 'jwt-decode';
 
 import { Context as AuthContext } from './../providers/AuthProvider.js';
+import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 
 import { StoryStack } from './../stacks/StoryStack.js';
 import { ExploreStack } from './../stacks/ExploreStack.js';
@@ -17,16 +18,15 @@ const Tabs = createBottomTabNavigator();
 
 export const BottomTabs = () => {
   const { state: { token }, logout } = useContext(AuthContext);
+  const { getMe } = useContext(ProfileContext);
 
   useEffect(() => {
-    try {
-      const expDate = decode(token);
-      if (expDate.exp < new Date().getTime() / 1000)
-        logout();
-    } catch (error) {
+    const expDate = decode(token);
+    if (expDate.exp < new Date().getTime() / 1000)
       logout();
-    }
-  }, [])
+
+    getMe();
+  }, []);
 
   return (
     <Tabs.Navigator

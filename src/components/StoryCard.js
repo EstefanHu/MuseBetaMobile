@@ -11,6 +11,7 @@ import {
   FontAwesome
 } from '@expo/vector-icons';
 
+import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 import { Context as LibraryContext } from './../providers/LibraryProvider.js';
 
 import userDefault from './../../assets/user-default.png';
@@ -92,13 +93,16 @@ const styles = StyleSheet.create({
 });
 
 export const StoryCard = ({ navigation, item }) => {
-  const { state: { library }, addToLibrary, removeFromLibrary } = useContext(LibraryContext);
+  const { state: { library } } = useContext(ProfileContext);
+  const { addToLibrary, removeFromLibrary } = useContext(LibraryContext);
   const [isSaved, setIsSaved] = useState(false);
 
-  // useEffect(() => {
-  //   library.includes(item._id) ?
-  //     setIsSaved(true) : setIsSaved(false);
-  // }, []);
+  useEffect(() => {
+    library.includes(item._id) ?
+      setIsSaved(true) : setIsSaved(false);
+    console.log(library);
+    console.log(library.includes(item._id));
+  }, []);
 
   const saveStory = async id => {
     await addToLibrary(id);

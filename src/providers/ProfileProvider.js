@@ -3,6 +3,7 @@ import {
 } from './../constants/network.js';
 import { useFetch } from '../hooks/useFetch.js';
 import { profileUrl } from '../constants/network.js';
+import { AsyncStorage } from 'react-native';
 
 const profileReducer = (state, action) => {
   switch (action.type) {
@@ -15,6 +16,7 @@ const profileReducer = (state, action) => {
         ...state,
         name: action.payload.name,
         email: action.payload.email,
+        library: action.payload.library,
       }
     default:
       return state;
@@ -23,8 +25,11 @@ const profileReducer = (state, action) => {
 
 const getMe = dispatch => async () => {
   try {
-    const response = await useFetch(profileUrl, 'GET');
-    dispatch({ type: 'get_me', payload: response.payload });
+    const token = await AsyncStorage.getItem('token');
+    const response = await useFetch(profileUrl, 'GET', null, token);
+    // console.log(response.data.data)
+    if (response.status !== 'success') return dispatch({ type: 'add_error', payload: response.payload });
+    dispatch({ type: 'get_me', payload: response.data });
   } catch (error) {
     console.log(error);
   }
@@ -33,5 +38,13 @@ const getMe = dispatch => async () => {
 export const { Context, Provider } = createDataContext(
   profileReducer,
   { getMe },
-  {}
+  {
+    name: null,
+    email: null,
+    role: null,
+    type: null,
+    library: [],
+    credibility: null,
+    photo: null
+  }
 );
