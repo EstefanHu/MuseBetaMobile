@@ -4,7 +4,7 @@ import {
   FlatList,
   SafeAreaView,
 } from 'react-native';
-import { Context as ProfileContext } from './../providers/ProfileProvider.js'; // TODO: Temp
+import { Context as LibraryContext } from './../providers/LibraryProvider.js'; // TODO: Temp
 import { Filter } from './../components/Filter.js';
 import { StoryCard } from './../components/StoryCard.js';
 
@@ -23,14 +23,12 @@ const wait = (timeout) => {
 };
 
 export const LibraryListScreen = ({ navigation, route }) => {
-  const { state: { library }, fetchLibary } = useContext(ProfileContext);
+  const { state: { library }, fetchLibrary } = useContext(LibraryContext);
   const [refreshing, setRefreshing] = useState(false);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     fetchLibary();
-  //   })();
-  // }, []);
+  useEffect(() => {
+    fetchLibrary();
+  }, []);
 
   // const onRefresh = () => {
   //   setRefreshing(true);

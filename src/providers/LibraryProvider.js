@@ -16,12 +16,10 @@ const libraryReducer = (state, action) => {
   }
 };
 
-const fetchLibrary = dispatch = async () => {
+const fetchLibrary = dispatch => async () => {
   try {
-    console.log('fetching');
-    const token = AsyncStorage.getItem('token');
+    const token = await AsyncStorage.getItem('token');
     const response = await useFetch(getLibrary, 'GET', null, token);
-    console.log(response);
     if (response.status !== 'success') return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'fetch_library', payload: response.payload });
   } catch (error) {
@@ -54,7 +52,7 @@ const removeFromLibrary = dispatch => async storyId => {
 }
 export const { Context, Provider } = createDataContext(
   libraryReducer,
-  {addToLibrary, removeFromLibrary },
+  { fetchLibrary, addToLibrary, removeFromLibrary },
   {
     library: []
   }
