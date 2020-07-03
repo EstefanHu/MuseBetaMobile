@@ -30,8 +30,8 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      {/* {token ? <BottomTabs /> : <AuthStack />} */}
-      <WelcomeStack />
+      {token ? <BottomTabs /> : <AuthStack />}
+      {/* <WelcomeStack /> */}
     </NavigationContainer>
   );
 }

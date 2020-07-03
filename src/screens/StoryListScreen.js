@@ -48,6 +48,7 @@ export const StoryListScreen = ({ navigation }) => {
       <Filter navigation={navigation} channel={channel} setChannel={c => setChannel(c)} />
       <FlatList
         data={stories}
+        showsVerticalScrollIndicator={false}
         onRefresh={onRefresh}
         refreshing={refreshing}
         keyExtractor={item => item._id}

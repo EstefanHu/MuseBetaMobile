@@ -38,7 +38,7 @@ const profileReducer = (state, action) => {
     case 'remove_from_library':
       return {
         ...state,
-        libraryId: state.libraryIds.filter(storyId => storyId !== action.payload),
+        libraryIds: state.libraryIds.filter(storyId => storyId !== action.payload),
         library: state.library.filter(story => story._id !== action.payload)
       };
     default:
