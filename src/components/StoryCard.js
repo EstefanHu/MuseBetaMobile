@@ -100,8 +100,6 @@ export const StoryCard = ({ navigation, item }) => {
   useEffect(() => {
     library.includes(item._id) ?
       setIsSaved(true) : setIsSaved(false);
-    console.log(library);
-    console.log(library.includes(item._id));
   }, []);
 
   const saveStory = async id => {

@@ -27,9 +27,8 @@ const getMe = dispatch => async () => {
   try {
     const token = await AsyncStorage.getItem('token');
     const response = await useFetch(profileUrl, 'GET', null, token);
-    // console.log(response.data.data)
     if (response.status !== 'success') return dispatch({ type: 'add_error', payload: response.payload });
-    dispatch({ type: 'get_me', payload: response.data });
+    dispatch({ type: 'get_me', payload: response.payload });
   } catch (error) {
     console.log(error);
   }
