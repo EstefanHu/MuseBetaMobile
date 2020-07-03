@@ -35,7 +35,7 @@ export const BottomTabs = () => {
           if (route.name === 'Story') {
             return <FontAwesome5 name='tasks' size={size} color={color} />;
           } else if (route.name === 'Explore') {
-            return <FontAwesome5 name='map' size={size} color={color} />;
+            return <FontAwesome5 name='compass' size={size} color={color} />;
           } else if (route.name === 'Library') {
             return <MaterialCommunityIcons name='library-shelves' size={size} color={color} />;
           } else if (route.name === 'Profile') {
@@ -44,14 +44,14 @@ export const BottomTabs = () => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'tomato',
+        activeTintColor: 'rgb(255,50,50)',
         inactiveTintColor: 'gray',
       }}
     >
-      <Tabs.Screen name='Story' component={StoryStack} listeners={{ focus: () => console.log('focused') }} />
-      <Tabs.Screen name='Explore' component={ExploreStack} listeners={{ focus: () => null }} />
-      <Tabs.Screen name='Library' component={LibraryStack} listeners={{ focus: () => null }} />
-      <Tabs.Screen name='Profile' component={ProfileStack} listeners={{ focus: () => null }} />
+      <Tabs.Screen name='Story' component={StoryStack} />
+      <Tabs.Screen name='Explore' component={ExploreStack} />
+      <Tabs.Screen name='Library' component={LibraryStack} />
+      <Tabs.Screen name='Profile' component={ProfileStack} />
     </Tabs.Navigator>
   );
 };

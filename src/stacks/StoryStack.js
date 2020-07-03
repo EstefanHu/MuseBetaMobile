@@ -12,7 +12,7 @@ import { HeaderActions } from '../components/HeaderActions.js';
 const Stack = createStackNavigator();
 
 export const StoryStack = () => (
-  <Stack.Navigator screenOptions={{}}>
+  <Stack.Navigator>
     <Stack.Screen
       name='StoryListScreen'
       component={StoryListScreen}
