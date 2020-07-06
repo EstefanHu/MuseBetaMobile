@@ -31,8 +31,9 @@ export const StoryListScreen = ({ navigation }) => {
   const [channel, setChannel] = useState('All');
 
   useEffect(() => {
-    fetchStories(city);
-  }, []);
+    if (city)
+      fetchStories(city);
+  }, [city]);
 
   // const onRefresh = () => {
   //   setRefreshing(true);
