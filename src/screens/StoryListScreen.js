@@ -5,6 +5,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { Context as StoryContext } from './../providers/StoryProvider.js';
+import { Context as LocationContext } from './../providers/LocationProvider.js';
 
 import { Filter } from './../components/Filter.js';
 import { StoryCard } from './../components/StoryCard.js';
@@ -25,11 +26,12 @@ const wait = (timeout) => {
 
 export const StoryListScreen = ({ navigation }) => {
   const { state: { stories }, fetchStories } = useContext(StoryContext);
+  const { state: { city } } = useContext(LocationContext);
   const [refreshing, setRefreshing] = useState(false);
   const [channel, setChannel] = useState('All');
 
   useEffect(() => {
-    fetchStories('Seattle');
+    fetchStories(city);
   }, []);
 
   // const onRefresh = () => {

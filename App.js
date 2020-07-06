@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   Provider as AuthProvider,
   Context as AuthContext
 } from './src/providers/AuthProvider.js';
-import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-
-import { Provider as LocationProvider } from './src/providers/LocationProvider.js';
+import {
+  Provider as LocationProvider,
+  Context as LocationContext
+} from './src/providers/LocationProvider.js';
 import { Provider as StoryProvider } from './src/providers/StoryProvider.js';
 import { Provider as NewStoryProvider } from './src/providers/NewStoryProvider.js';
 import { Provider as ProfileProvider } from './src/providers/ProfileProvider.js';
@@ -18,6 +20,7 @@ import { WelcomeStack } from './src/stacks/WelcomeStack.js';
 
 const App = () => {
   const { state: { token }, tryLocalLogin } = useContext(AuthContext);
+  const { approximateLocation } = useContext(LocationContext);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -25,6 +28,10 @@ const App = () => {
       await tryLocalLogin();
       setIsLoading(false);
     })();
+  }, []);
+
+  useEffect(() => {
+    approximateLocation();
   }, []);
 
   if (isLoading) return null;
