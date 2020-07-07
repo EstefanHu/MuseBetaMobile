@@ -10,9 +10,11 @@ import { WelcomeStack } from './WelcomeStack.js';
 import { BottomTabs } from './../layout/BottomTabs.js';
 import { CreateStoryModal } from './../layout/CreateStoryModal.js';
 
-import {HeaderActions} from './../components/HeaderActions.js';
+import { HeaderActions } from './../components/HeaderActions.js';
 import { Logo } from './../components/Logo.js';
 import { SettingsStack } from './SettingsStack.js';
+import { BackHeader } from '../components/BackHeader.js';
+import { SettingsActions } from '../components/SettingsActions.js';
 
 const Stack = createStackNavigator();
 
@@ -33,7 +35,7 @@ export const RootStack = () => {
       screenOptions={{ animationEnabled: false }}
       mode='modal'
     >
-      <Stack.Screen
+      {/* <Stack.Screen
         name='BottomTabs'
         component={BottomTabs}
         options={({ navigation }) => ({
@@ -49,13 +51,17 @@ export const RootStack = () => {
           animationEnabled: true,
           header: () => null
         }}
-      />
-      <Stack.Screen 
+      /> */}
+      <Stack.Screen
         name='SettingsStack'
         component={SettingsStack}
-        options={{
-          animationEnabled: true
-        }}
+        options={({ navigation }) => ({
+          animationEnabled: true,
+          headerLeft: () => <BackHeader navigation={navigation} />,
+          headerTitle: null,
+          headerRight: () => <SettingsActions navigation={navigation} />
+        })}
+        mode='screen'
       />
     </Stack.Navigator>
   )
