@@ -45,12 +45,18 @@ export const RootStack = () => {
       <Stack.Screen
         name='CreateStoryModal'
         component={CreateStoryModal}
-        options={{ animationEnabled: true }}
+        options={{
+          animationEnabled: true,
+          header: () => null
+        }}
       />
       <Stack.Screen
         name='ProfileOverviewModal'
         component={ProfileOverviewModal}
-        options={{ animationEnabled: true }}
+        options={{
+          animationEnabled: true,
+          header: () => null
+        }}
       />
     </Stack.Navigator>
   )
