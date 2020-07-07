@@ -14,9 +14,8 @@ import { Provider as NewStoryProvider } from './src/providers/NewStoryProvider.j
 import { Provider as ProfileProvider } from './src/providers/ProfileProvider.js';
 import { Provider as JourneyProvider } from './src/providers/JourneyProvider.js';
 
-import { BottomTabs } from './src/layout/BottomTabs.js';
 import { AuthStack } from './src/stacks/AuthStack.js';
-import { WelcomeStack } from './src/stacks/WelcomeStack.js';
+import { RootStack } from './src/stacks/RootStack.js';
 
 const App = () => {
   const { state: { token }, tryLocalLogin } = useContext(AuthContext);
@@ -38,8 +37,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      {token ? <BottomTabs /> : <AuthStack />}
-      {/* <WelcomeStack /> */}
+      {token ? <RootStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }

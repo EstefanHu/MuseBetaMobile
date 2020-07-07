@@ -5,9 +5,6 @@ import { StoryListScreen } from './../screens/StoryListScreen.js';
 import { StoryDetailScreen } from './../screens/StoryDetailScreen.js';
 import { StoryEngageScreen } from './../screens/StoryEngageScreen.js';
 
-import { Logo } from './../components/Logo.js';
-import { HeaderActions } from '../components/HeaderActions.js';
-
 const Stack = createStackNavigator();
 
 export const StoryStack = () => (
@@ -15,11 +12,6 @@ export const StoryStack = () => (
     <Stack.Screen
       name='StoryListScreen'
       component={StoryListScreen}
-      options={({ navigation }) => ({
-        headerLeft: () => <Logo />,
-        headerTitle: null,
-        headerRight: () => <HeaderActions navigation={navigation} />
-      })}
       initialParams={{ channel: 'All' }}
     />
     <Stack.Screen
