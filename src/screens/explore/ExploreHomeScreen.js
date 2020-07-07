@@ -6,8 +6,8 @@ import {
   FlatList,
   Dimensions
 } from 'react-native';
-import { Context as LocationContext } from './../providers/LocationProvider.js';
-import { Context as StoryContext } from './../providers/StoryProvider.js';
+import { Context as LocationContext } from './../../providers/LocationProvider.js';
+import { Context as StoryContext } from './../../providers/StoryProvider.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   }
-})
+});
 
 export const ExploreHomeScreen = () => {
   const { state: { longitude, latitude, approximateLongitude, approximateLatitude } } = useContext(LocationContext);

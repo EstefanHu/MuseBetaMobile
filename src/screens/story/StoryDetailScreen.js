@@ -4,7 +4,7 @@ import {
   View,
   Text,
 } from 'react-native';
-import { Context as StoryContext } from './../providers/StoryProvider.js';
+import { Context as StoryContext } from '../../providers/StoryProvider.js';
 
 export const StoryDetailScreen = ({ route }) => {
   const { state: { stories } } = useContext(StoryContext);

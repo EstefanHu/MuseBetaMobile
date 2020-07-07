@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
-import { StoryListScreen } from './../screens/StoryListScreen.js';
-import { StoryDetailScreen } from './../screens/StoryDetailScreen.js';
-import { StoryEngageScreen } from './../screens/StoryEngageScreen.js';
+import { StoryListScreen } from '../screens/story/StoryListScreen.js';
+import { StoryDetailScreen } from '../screens/story/StoryDetailScreen.js';
+import { StoryEngageScreen } from '../screens/story/StoryEngageScreen.js';
 
 const Stack = createStackNavigator();
 
