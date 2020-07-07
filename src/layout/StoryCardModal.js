@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   Share
 } from 'react-native';
+import * as Linking from 'expo-linking';
 import {
   MaterialCommunityIcons
 } from '@expo/vector-icons';
@@ -51,7 +52,8 @@ export const StoryCardModal = ({ route, navigation }) => {
     try {
       await Share.share({
         message: 'Check out this story from :Muse!',
-        title: 'Project:Muse'
+        title: 'Project:Muse',
+        url: Linking.makeUrl()
       }, {
         excludedActivityTypes: [
           'com.apple.UIKit.activity.PostToWeibo',
