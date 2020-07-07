@@ -37,7 +37,7 @@ export const HeaderActions = ({ navigation }) => {
         <MaterialCommunityIcons style={styles.icon} name='plus' size={22} color='grey' />
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate('ProfileOverviewModal')}>
+        onPress={() => navigation.navigate('SettingsStack')}>
         <Image
           style={styles.profileImage}
           source={ProfileImage}

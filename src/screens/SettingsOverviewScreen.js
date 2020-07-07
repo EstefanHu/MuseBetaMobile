@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   ScrollView
 } from 'react-native';
-import { Context as ProfileContext } from './../providers/ProfileProvider.js';
+import { Context as ProfileContext } from '../providers/ProfileProvider.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 import ProfileImage from './../../assets/user-default.png';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export const ProfileOverviewModal = ({ navigation }) => {
+export const SettingsOverviewScreen = ({ navigation }) => {
   const { state: { name, email } } = useContext(ProfileContext);
 
   return (

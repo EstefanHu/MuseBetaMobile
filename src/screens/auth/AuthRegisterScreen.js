@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
-import { Context as AuthContext } from './../providers/AuthProvider.js';
+import { Context as AuthContext } from './../../providers/AuthProvider.js';
 
 export const AuthRegisterScreen = ({ navigation }) => {
   const { state: { errorMessage }, register, clearErrorMessage } = useContext(AuthContext);

@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
 } from 'react-native';
-import { Context as AuthContext } from './../providers/AuthProvider.js';
+import { Context as AuthContext } from './../../providers/AuthProvider.js';
 
 export const AuthLoginScreen = ({ navigation }) => {
   const { state: { errorMessage }, login, clearErrorMessage } = useContext(AuthContext);
