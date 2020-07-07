@@ -3,58 +3,72 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions,
+  SafeAreaView
 } from 'react-native';
+import {
+  MaterialCommunityIcons
+} from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   modal: {
+    width: Dimensions.get('window').width,
     backgroundColor: 'white',
     paddingVertical: 10,
-    borderRadius: 10,
   },
   options: {
-    alignItems: 'center',
     justifyContent: 'space-evenly',
-    paddingHorizontal: 20
+    borderBottomColor: 'lightgrey',
+    borderBottomWidth: 1,
   },
   optionButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 6
+    paddingHorizontal: 15,
+    paddingVertical: 6,
+    height: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  report: {
-    color: 'red',
-    fontWeight: 'bold',
-    fontSize: 26
+  optionLabel: {
+    fontSize: 18,
+    marginLeft: 30,
   },
-  cancel: {
-    borderTopWidth: 1,
-    borderTopColor: 'lightgrey',
-    paddingHorizontal: 30
-  }
 });
 
 export const StoryCardModal = ({ route, navigation }) => {
   const { storyId } = route.params;
+  const SIZE = 30;
+  const COLOR = 'grey';
 
   return (
     <View style={styles.container}>
-      <View style={styles.modal}>
+      <SafeAreaView style={styles.modal}>
         <View style={styles.options}>
           <TouchableOpacity onPress={() => navigation.navigate('ReportModal', { storyId })}>
             <View style={styles.optionButton}>
-              <Text style={styles.report}>Report</Text>
+              <MaterialCommunityIcons name='share' size={SIZE} color={COLOR} />
+              <Text style={styles.optionLabel}>Share</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('ReportModal', { storyId })}>
+            <View style={styles.optionButton}>
+              <MaterialCommunityIcons name='flag' size={SIZE} color={COLOR} />
+              <Text style={styles.optionLabel}>Report</Text>
             </View>
           </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => navigation.pop()}>
-          <Text style={styles.cancel}>Cancel</Text>
+          <View style={styles.optionButton}>
+            <MaterialCommunityIcons name='close' size={SIZE} color={COLOR} />
+            <Text style={styles.optionLabel}>Cancel</Text>
+          </View>
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     </View>
   );
 };

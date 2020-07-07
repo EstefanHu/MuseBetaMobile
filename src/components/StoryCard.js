@@ -4,7 +4,8 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 import {
   Ionicons,
