@@ -174,5 +174,5 @@ export const StoryCard = ({ navigation, item }) => {
         </View>
       </View>
     </View>
-  )
+  );
 };

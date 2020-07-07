@@ -34,6 +34,7 @@ export const RootStack = () => {
 
   return (
     <Stack.Navigator
+      // initialRouteName="ReportModal"
       screenOptions={{ animationEnabled: false }}
       mode='modal'
     >
@@ -96,9 +97,10 @@ export const RootStack = () => {
       <Stack.Screen
         name='ReportModal'
         component={ReportModal}
-        options={{
+        options={({ navigation }) => ({
           animationEnabled: true,
-        }}
+          headerTitle: null
+        })}
       />
     </Stack.Navigator>
   )
