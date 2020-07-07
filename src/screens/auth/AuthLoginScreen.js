@@ -8,6 +8,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
+  SafeAreaView,
 } from 'react-native';
 import { Context as AuthContext } from './../../providers/AuthProvider.js';
 
@@ -30,7 +31,7 @@ export const AuthLoginScreen = ({ navigation }) => {
         style={styles.container}
         behavior={Platform.OS == "ios" ? "padding" : "height"}
       >
-        <View style={styles.container}>
+        <SafeAreaView>
           <View style={styles.formContainer} >
             <Text style={styles.logo}>:Muse</Text>
             {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
@@ -64,7 +65,7 @@ export const AuthLoginScreen = ({ navigation }) => {
               <Text style={styles.signupButton}> Sign up!</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </SafeAreaView>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   )
@@ -86,7 +87,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'flex-end',
     justifyContent: 'center',
-    paddingVertical: 16,
     flexDirection: 'row'
   },
   signupText: {
