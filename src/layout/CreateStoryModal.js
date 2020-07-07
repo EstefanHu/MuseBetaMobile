@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export const CreateStoryModal = ({navigation}) => {
+export const CreateStoryModal = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text>Hello</Text>

@@ -1,4 +1,10 @@
 import React, { useEffect, useContext } from 'react';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import decode from 'jwt-decode';
@@ -11,8 +17,12 @@ import { BottomTabs } from './../layout/BottomTabs.js';
 import { CreateStoryModal } from './../layout/CreateStoryModal.js';
 import { ProfileOverviewModal } from './../layout/ProfileOverviewModal.js';
 
+import {
+  MaterialCommunityIcons
+} from '@expo/vector-icons';
+import {HeaderActions} from './../components/HeaderActions.js';
 import { Logo } from './../components/Logo.js';
-import { HeaderActions } from './../components/HeaderActions.js';
+import { BackHeader } from '../components/BackHeader.js';
 
 const Stack = createStackNavigator();
 
@@ -53,11 +63,40 @@ export const RootStack = () => {
       <Stack.Screen
         name='ProfileOverviewModal'
         component={ProfileOverviewModal}
-        options={{
+        options={({ navigation }) => ({
           animationEnabled: true,
-          header: () => null
-        }}
+          headerLeft: () => <BackHeader navigation={navigation} />,
+          headerTitle: null,
+          headerRight: () => <ProfileHeader navigation={navigation} />
+        })}
       />
     </Stack.Navigator>
   )
 };
+
+const leftHeaderStyles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+  },
+  icon: {
+    // marginRight: 10,
+  }
+});
+
+const ProfileHeader = ({ navigation }) => {
+  return (
+    <View style={leftHeaderStyles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('SettingsModal')}>
+        <MaterialCommunityIcons
+          style={leftHeaderStyles.icon}
+          name='dots-vertical'
+          size={22}
+          color='grey'
+        />
+      </TouchableOpacity>
+    </View>
+  )
+}

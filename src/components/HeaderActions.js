@@ -45,4 +45,4 @@ export const HeaderActions = ({ navigation }) => {
       </TouchableOpacity>
     </View>
   )
-}
+};
