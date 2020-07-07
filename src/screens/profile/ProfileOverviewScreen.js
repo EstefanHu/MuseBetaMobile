@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 import ProfileImage from './../../../assets/user-default.png';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export const SettingsOverviewScreen = ({ navigation }) => {
+export const ProfileOverviewScreen = ({ navigation }) => {
   const { state: { name, email } } = useContext(ProfileContext);
 
   return (
@@ -66,7 +66,7 @@ export const SettingsOverviewScreen = ({ navigation }) => {
           </View>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('updateProfile')}>
+            onPress={() => navigation.navigate('ProfileUpdateScreen')}>
             <MaterialCommunityIcons name='settings' size={25} color='grey' />
           </TouchableOpacity>
         </View>

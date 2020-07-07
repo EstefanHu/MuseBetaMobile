@@ -20,11 +20,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export const SettingsActions = ({ navigation }) => {
+export const ProfileActions = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('SettingsUpdateScreen')}>
+        onPress={() => navigation.navigate('MetaModal')}>
         <MaterialCommunityIcons
           style={styles.icon}
           name='dots-vertical'

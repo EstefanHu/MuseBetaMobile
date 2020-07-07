@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export const SettingsUpdateScreen = () => {
+export const ProfileUpdateScreen = () => {
   return (
     <View style={styles.container}>
       <Text>Update</Text>
