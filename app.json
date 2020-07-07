@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": ":Muse",
-    "slug": ":Muse",
-    "scheme": ":Muse",
+    "slug": "Muse",
+    "scheme": "muse",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
