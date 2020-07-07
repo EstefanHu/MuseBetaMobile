@@ -35,7 +35,7 @@ export const RootStack = () => {
       screenOptions={{ animationEnabled: false }}
       mode='modal'
     >
-      {/* <Stack.Screen
+      <Stack.Screen
         name='BottomTabs'
         component={BottomTabs}
         options={({ navigation }) => ({
@@ -51,7 +51,7 @@ export const RootStack = () => {
           animationEnabled: true,
           header: () => null
         }}
-      /> */}
+      />
       <Stack.Screen
         name='ProfileStack'
         component={ProfileStack}
