@@ -15,6 +15,7 @@ import { Logo } from './../components/Logo.js';
 import { ProfileStack } from './ProfileStack.js';
 import { BackHeader } from '../components/BackHeader.js';
 import { ProfileActions } from '../components/ProfileActions.js';
+import { StoryCardModal } from '../layout/StoryCardModal.js';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,34 @@ export const RootStack = () => {
         options={{
           animationEnabled: true,
           header: () => null
+        }}
+      />
+      <Stack.Screen
+        name='StoryCardModal'
+        component={StoryCardModal}
+        options={{
+          animationEnabled: true,
+          header: () => null,
+          cardStyle: { backgroundColor: 'rgba(0, 0, 0, 0.15)' },
+          cardOverlayEnabled: true,
+
+          cardStyleInterpolator: ({ current: { progress } }) => {
+            return {
+              cardStyle: {
+                opacity: progress.interpolate({
+                  inputRange: [0, 0.5, 0.9, 1],
+                  outputRange: [0, 0.25, 0.7, 1]
+                })
+              },
+              overlayStyle: {
+                opacity: progress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, 0.5],
+                  extrapolate: 'clamp',
+                })
+              }
+            };
+          }
         }}
       />
       <Stack.Screen

@@ -128,7 +128,8 @@ export const StoryCard = ({ navigation, item }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('StoryCardModal')}>
           <Text>...</Text>
         </TouchableOpacity>
       </View>
