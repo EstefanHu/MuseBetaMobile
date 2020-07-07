@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Dimensions,
   SafeAreaView,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Share
 } from 'react-native';
 import {
   MaterialCommunityIcons
@@ -46,12 +47,46 @@ export const StoryCardModal = ({ route, navigation }) => {
   const SIZE = 30;
   const COLOR = 'grey';
 
+  const onShare = async () => {
+    try {
+      await Share.share({
+        message: 'Check out this story from :Muse!',
+        title: 'Project:Muse'
+      }, {
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.PostToWeibo',
+          'com.apple.UIKit.activity.Print',
+          'com.apple.UIKit.activity.CopyToPasteboard',
+          'com.apple.UIKit.activity.AssignToContact',
+          'com.apple.UIKit.activity.SaveToCameraRoll',
+          'com.apple.UIKit.activity.AddToReadingList',
+          'com.apple.UIKit.activity.PostToFlickr',
+          'com.apple.UIKit.activity.PostToVimeo',
+          'com.apple.UIKit.activity.PostToTencentWeibo',
+          'com.apple.UIKit.activity.AirDrop',
+          'com.apple.UIKit.activity.OpenInIBooks',
+          'com.apple.UIKit.activity.MarkupAsPDF',
+          'com.apple.reminders.RemindersEditorExtension',
+          'com.apple.mobilenotes.SharingExtension',
+          'com.apple.mobileslideshow.StreamShareService',
+          'com.linkedin.LinkedIn.ShareExtension',
+          'pinterest.ShareExtension',
+          'com.google.GooglePlus.ShareExtension',
+          'com.tumblr.tumblr.Share-With-Tumblr',
+          'net.whatsapp.WhatsApp.ShareExtension',
+        ]
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => navigation.pop()}>
       <View style={styles.container}>
         <SafeAreaView style={styles.modal}>
           <View style={styles.options}>
-            <TouchableOpacity onPress={() => navigation.navigate('ReportModal', { storyId })}>
+            <TouchableOpacity onPress={onShare}>
               <View style={styles.optionButton}>
                 <MaterialCommunityIcons name='share' size={SIZE} color={COLOR} />
                 <Text style={styles.optionLabel}>Share</Text>
