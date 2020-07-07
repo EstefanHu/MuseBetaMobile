@@ -18,12 +18,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const wait = (timeout) => {
-  return new Promise(resolve => {
-    setTimeout(resolve, timeout);
-  });
-};
-
 export const LibraryListScreen = ({ navigation }) => {
   const { state: { library }, fetchLibrary } = useContext(ProfileContext);
   const [refreshing, setRefreshing] = useState(false);
@@ -33,16 +27,11 @@ export const LibraryListScreen = ({ navigation }) => {
     fetchLibrary();
   }, []);
 
-  // const onRefresh = () => {
-  //   setRefreshing(true);
-  //   refreshFeed(() => setRefreshing(false));
-  // }
-
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = async () => {
     setRefreshing(true);
-
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
+    await fetchLibrary();
+    setRefreshing(false);
+  }
 
   return (
     <SafeAreaView style={styles.container}>

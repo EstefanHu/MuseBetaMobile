@@ -18,12 +18,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const wait = (timeout) => {
-  return new Promise(resolve => {
-    setTimeout(resolve, timeout);
-  });
-};
-
 export const StoryListScreen = ({ navigation }) => {
   const { state: { stories }, fetchStories } = useContext(StoryContext);
   const { state: { city } } = useContext(LocationContext);
@@ -35,16 +29,11 @@ export const StoryListScreen = ({ navigation }) => {
       fetchStories(city);
   }, [city]);
 
-  // const onRefresh = () => {
-  //   setRefreshing(true);
-  //   refreshFeed(() => setRefreshing(false));
-  // }
-
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = async () => {
     setRefreshing(true);
-
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
+    await fetchStories(city);
+    setRefreshing(false);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
