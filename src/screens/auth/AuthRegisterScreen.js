@@ -126,7 +126,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'flex-end',
     justifyContent: 'center',
-    paddingVertical: 16,
     flexDirection: 'row'
   },
   loginText: {
