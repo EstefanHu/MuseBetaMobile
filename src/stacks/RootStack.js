@@ -9,9 +9,10 @@ import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 import { WelcomeStack } from './WelcomeStack.js';
 import { BottomTabs } from './../layout/BottomTabs.js';
 import { CreateStoryModal } from './../layout/CreateStoryModal.js';
+import { ProfileOverviewModal } from './../layout/ProfileOverviewModal.js';
 
 import { Logo } from './../components/Logo.js';
-import { HeaderActions } from '../components/HeaderActions.js';
+import { HeaderActions } from './../components/HeaderActions.js';
 
 const Stack = createStackNavigator();
 
@@ -44,8 +45,13 @@ export const RootStack = () => {
       <Stack.Screen
         name='CreateStoryModal'
         component={CreateStoryModal}
-        options={{animationEnabled: true}}
+        options={{ animationEnabled: true }}
+      />
+      <Stack.Screen
+        name='ProfileOverviewModal'
+        component={ProfileOverviewModal}
+        options={{ animationEnabled: true }}
       />
     </Stack.Navigator>
   )
-}
+};

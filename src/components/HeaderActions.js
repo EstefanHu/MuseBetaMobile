@@ -36,10 +36,13 @@ export const HeaderActions = ({ navigation }) => {
         onPress={() => navigation.navigate('CreateStoryModal')}>
         <MaterialCommunityIcons style={styles.icon} name='plus' size={22} color='grey' />
       </TouchableOpacity>
-      <Image
-        style={styles.profileImage}
-        source={ProfileImage}
-      />
+      <TouchableOpacity
+        onPress={() => navigation.navigate('ProfileOverviewModal')}>
+        <Image
+          style={styles.profileImage}
+          source={ProfileImage}
+        />
+      </TouchableOpacity>
     </View>
   )
 }
