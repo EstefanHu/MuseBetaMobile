@@ -129,7 +129,7 @@ export const StoryCard = ({ navigation, item }) => {
           </View>
         </View>
         <TouchableOpacity
-          onPress={() => navigation.navigate('StoryCardModal')}>
+          onPress={() => navigation.navigate('StoryCardModal', { storyId: item._id })}>
           <Text>...</Text>
         </TouchableOpacity>
       </View>

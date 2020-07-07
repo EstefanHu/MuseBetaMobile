@@ -11,12 +11,25 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.15)',
   },
   modal: {
     backgroundColor: 'white',
-    paddingVertical: 20,
+    paddingVertical: 10,
     borderRadius: 10,
+  },
+  options: {
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    paddingHorizontal: 20
+  },
+  optionButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 6
+  },
+  report: {
+    color: 'red',
+    fontWeight: 'bold',
+    fontSize: 26
   },
   cancel: {
     borderTopWidth: 1,
@@ -25,10 +38,19 @@ const styles = StyleSheet.create({
   }
 });
 
-export const StoryCardModal = ({ navigation }) => {
+export const StoryCardModal = ({ route, navigation }) => {
+  const { storyId } = route.params;
+
   return (
     <View style={styles.container}>
       <View style={styles.modal}>
+        <View style={styles.options}>
+          <TouchableOpacity onPress={() => navigation.navigate('ReportModal', { storyId })}>
+            <View style={styles.optionButton}>
+              <Text style={styles.report}>Report</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity onPress={() => navigation.pop()}>
           <Text style={styles.cancel}>Cancel</Text>
         </TouchableOpacity>

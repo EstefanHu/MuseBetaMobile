@@ -16,6 +16,7 @@ import { ProfileStack } from './ProfileStack.js';
 import { BackHeader } from '../components/BackHeader.js';
 import { ProfileActions } from '../components/ProfileActions.js';
 import { StoryCardModal } from '../layout/StoryCardModal.js';
+import { ReportModal } from '../layout/ReportModal.js';
 
 const Stack = createStackNavigator();
 
@@ -91,6 +92,13 @@ export const RootStack = () => {
           headerRight: () => <ProfileActions navigation={navigation} />
         })}
         mode='screen'
+      />
+      <Stack.Screen
+        name='ReportModal'
+        component={ReportModal}
+        options={{
+          animationEnabled: true,
+        }}
       />
     </Stack.Navigator>
   )
