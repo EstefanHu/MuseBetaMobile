@@ -57,7 +57,7 @@ const fetchStories = dispatch => async city => {
     if (response.status !== 'success') return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'fetch_stories', payload: response.payload });
   } catch (error) {
-    console.log(eror);
+    console.log(error);
   }
 }
 
