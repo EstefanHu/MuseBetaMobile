@@ -29,7 +29,6 @@ export const RootStack = () => {
 
   return (
     <Stack.Navigator
-      headerMode='none'
       screenOptions={{ animationEnabled: false }}
       mode='modal'
     >
@@ -45,9 +44,7 @@ export const RootStack = () => {
       <Stack.Screen
         name='CreateStoryModal'
         component={CreateStoryModal}
-        options={
-
-        }
+        options={{animationEnabled: true}}
       />
     </Stack.Navigator>
   )

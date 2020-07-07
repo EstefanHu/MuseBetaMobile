@@ -2,7 +2,8 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Text
+  Text,
+  TouchableOpacity
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -13,10 +14,13 @@ const styles = StyleSheet.create({
   }
 })
 
-export const CreateStoryModal = () => {
+export const CreateStoryModal = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text>Hello</Text>
+      <TouchableOpacity onPress={() => navigation.pop()}>
+        <Text>Back</Text>
+      </TouchableOpacity>
     </View>
   );
 };

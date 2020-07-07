@@ -33,7 +33,7 @@ export const HeaderActions = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('StoryCreateScreen')}>
+        onPress={() => navigation.navigate('CreateStoryModal')}>
         <MaterialCommunityIcons style={styles.icon} name='plus' size={22} color='grey' />
       </TouchableOpacity>
       <Image
