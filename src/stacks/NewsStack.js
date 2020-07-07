@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
-import { NewsHomeScreen } from './../screens/NewsHomeScreen.js';
+import { NewsHomeScreen } from '../screens/news/NewsHomeScreen.js';
 
 const Stack = createStackNavigator();
 

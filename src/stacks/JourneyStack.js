@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { JourneyDeploymentScreen } from './../screens/JourneyDeploymentScreen.js';
+import { JourneyDeploymentScreen } from './../screens/journey/JourneyDeploymentScreen.js';
 
 const Stack = createStackNavigator();
 

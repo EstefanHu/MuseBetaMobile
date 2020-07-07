@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { SettingsOverviewScreen } from './../screens/SettingsOverviewScreen.js';
+import { SettingsOverviewScreen } from '../screens/settings/SettingsOverviewScreen.js';
 
 import {
   MaterialCommunityIcons

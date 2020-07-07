@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   ScrollView
 } from 'react-native';
-import { Context as ProfileContext } from '../providers/ProfileProvider.js';
+import { Context as ProfileContext } from '../../providers/ProfileProvider.js';
 
 const styles = StyleSheet.create({
   container: {

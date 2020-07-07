@@ -6,9 +6,9 @@ import {
   Text,
   SafeAreaView,
 } from 'react-native';
-import { Context as ProfileContext } from './../providers/ProfileProvider.js'; // TODO: Temp
-import { Filter } from './../components/Filter.js';
-import { StoryCard } from './../components/StoryCard.js';
+import { Context as ProfileContext } from '../../providers/ProfileProvider.js'; // TODO: Temp
+import { Filter } from '../../components/Filter.js';
+import { StoryCard } from '../../components/StoryCard.js';
 
 const styles = StyleSheet.create({
   container: {
