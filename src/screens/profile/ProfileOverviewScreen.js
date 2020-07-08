@@ -54,13 +54,13 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold'
   },
-  storyHolder: {
-
-  }
+  credibility: {
+    fontSize: 19
+  },
 });
 
 export const ProfileOverviewScreen = ({ navigation }) => {
-  const { state: { id, name, stories },
+  const { state: { id, name, credibility, stories },
     fetchStories } = useContext(ProfileContext);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -84,6 +84,7 @@ export const ProfileOverviewScreen = ({ navigation }) => {
           />
           <View style={styles.info}>
             <Text style={styles.name}>{name}</Text>
+            <Text style={styles.credibility}>{credibility}</Text>
           </View>
         </View>
 
