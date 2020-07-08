@@ -43,9 +43,9 @@ const approximateLocation = dispatch => async () => {
   };
 };
 
-const setCoords = dispatch => async location => {
+const setCoords = dispatch => async location =>
   dispatch({ type: 'get_location', payload: location });
-};
+
 
 export const { Provider, Context } = createDataContext(
   LocationReducer,

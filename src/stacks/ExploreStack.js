@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Linking } from 'react-native';
+import { Linking, Alert } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
@@ -15,12 +15,28 @@ export const ExploreStack = () => {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestPermissionsAsync();
-      console.log(status);
-      if (status === 'denied') Linking.openURL('app-settings:');
+      let { status } = await Location.getPermissionsAsync();
+      console.log('wainting')
+
+      if (status !== 'granted') {
+        Alert.alert(
+          'Grant Location',
+          'Permission is required for :Muse explore feature',
+          [
+            {
+              text: 'Later',
+              style: 'cancel'
+            },
+            {
+              text: 'Settings',
+              onPress: () => Linking.openSettings(),
+            }
+          ],
+          { cancelable: false }
+        )
+      }
 
       let location = await Location.getCurrentPositionAsync({});
-      console.log(location);
       setCoords(location);
     })();
   }, []);
