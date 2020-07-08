@@ -34,7 +34,7 @@ export const RootStack = () => {
 
   return (
     <Stack.Navigator
-      // initialRouteName="ReportModal"
+      // initialRouteName="ProfileStack"
       screenOptions={{ animationEnabled: false }}
       mode='modal'
     >

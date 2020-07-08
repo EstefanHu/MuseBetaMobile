@@ -1,6 +1,5 @@
 import createDataContext from './createDataContext.js';
-import {
-} from './../constants/network.js';
+import { storyUrl } from './../constants/network.js';
 import { useFetch } from '../hooks/useFetch.js';
 import {
   profileUrl,
@@ -19,6 +18,7 @@ const profileReducer = (state, action) => {
     case 'get_me':
       return {
         ...state,
+        id: action.payload._id,
         name: action.payload.name,
         email: action.payload.email,
         libraryIds: action.payload.library,
@@ -41,6 +41,8 @@ const profileReducer = (state, action) => {
         libraryIds: state.libraryIds.filter(storyId => storyId !== action.payload),
         library: state.library.filter(story => story._id !== action.payload)
       };
+    case 'fetch_stories':
+      return { ...state, stories: action.payload }
     default:
       return state;
   }
@@ -94,16 +96,30 @@ const removeFromLibrary = dispatch => async storyId => {
   }
 }
 
+const fetchStories = dispatch => async authorId => {
+  try {
+    const token = await AsyncStorage.getItem('token');
+    const response = await useFetch(storyUrl + `?authorId=${authorId}`, 'GET', null, token);
+    if (response.status !== 'success')
+      return dispatch({ type: 'add_error', payload: response.payload });
+    dispatch({ type: 'fetch_stories', payload: response.payload });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const { Context, Provider } = createDataContext(
   profileReducer,
-  { getMe, fetchLibrary, addToLibrary, removeFromLibrary },
+  { getMe, fetchLibrary, addToLibrary, removeFromLibrary, fetchStories },
   {
+    id: null,
     name: null,
     email: null,
     role: null,
     type: null,
     libraryIds: [],
     library: [],
+    stories: [],
     credibility: null,
     photo: null
   }

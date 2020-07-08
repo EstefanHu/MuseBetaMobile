@@ -6,16 +6,17 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
-  ScrollView
+  FlatList,
+  Dimensions
 } from 'react-native';
-import { Context as ProfileContext } from '../../providers/ProfileProvider.js';
+import { Context as ProfileContext } from './../../providers/ProfileProvider.js';
+
+import { StoryCard } from './../../components/StoryCard.js';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-  },
-  scrollView: {
+    alignItems: 'center',
   },
   userName: {
     fontSize: 28
@@ -27,7 +28,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'white',
+    width: Dimensions.get('window').width,
   },
   profile: {
     flexDirection: 'row'
@@ -39,39 +42,66 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 40,
   },
+  info: {
+    marginLeft: 15,
+  },
   name: {
     fontSize: 22,
     fontWeight: 'bold'
   },
+  storyHolder: {
+
+  }
 });
 
 import ProfileImage from './../../../assets/user-default.png';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export const ProfileOverviewScreen = ({ navigation }) => {
-  const { state: { name, email } } = useContext(ProfileContext);
+  const { state: { id, name, email, stories },
+    fetchStories } = useContext(ProfileContext);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    fetchStories(id);
+  }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchStories(id);
+    setRefreshing(false);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.header}>
-          <View style={styles.profile}>
-            <Image
-              style={styles.profileImage}
-              source={ProfileImage}
-            />
-            <View style={styles.info}>
-              <Text style={styles.name}>{name}</Text>
-            </View>
+      <View style={styles.header}>
+        <View style={styles.profile}>
+          <Image
+            style={styles.profileImage}
+            source={ProfileImage}
+          />
+          <View style={styles.info}>
+            <Text style={styles.name}>{name}</Text>
           </View>
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ProfileUpdateScreen')}>
-            <MaterialCommunityIcons name='settings' size={25} color='grey' />
-          </TouchableOpacity>
         </View>
 
-      </ScrollView>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ProfileUpdateScreen')}>
+          <MaterialCommunityIcons name='settings' size={25} color='grey' />
+        </TouchableOpacity>
+      </View>
+
+      <FlatList
+        data={stories}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
+        keyExtractor={item => item._id}
+        renderItem={({ item }) => <StoryCard
+          navigation={navigation}
+          item={item}
+        />
+        }
+      />
     </SafeAreaView>
-  )
-}
+  );
+};
