@@ -14,12 +14,19 @@ const LocationReducer = (state, action) => {
         city: action.payload.city,
         region: action.payload.regionName,
         zip: action.payload.zip,
-
       }
+    case 'set_status':
+      return { ...state, status: action.payload }
     default:
       return state;
   }
 }
+
+const addErrorMessage = dispatch => message =>
+  dispatch({ type: 'add_error', payload: message });
+
+const clearErrorMessage = dispatch => () =>
+  dispatch({ type: 'clear_error_message' });
 
 const approximateLocation = dispatch => async () => {
   try {
@@ -29,13 +36,17 @@ const approximateLocation = dispatch => async () => {
     dispatch({ type: 'approximate_location', payload: data });
   } catch (error) {
     console.log(error);
-  }
-}
+  };
+};
+
+const setStatus = dispatch => status =>
+  dispatch({ type: 'set_status', payload: status });
 
 export const { Provider, Context } = createDataContext(
   LocationReducer,
-  { approximateLocation },
+  { addErrorMessage, clearErrorMessage, approximateLocation, setStatus },
   {
+    status: null,
     errorMessage: '',
     approximateLongitude: null,
     approximateLatitude: null,
