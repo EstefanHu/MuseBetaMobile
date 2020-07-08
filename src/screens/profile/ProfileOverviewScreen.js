@@ -9,9 +9,14 @@ import {
   FlatList,
   Dimensions
 } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import { Context as ProfileContext } from './../../providers/ProfileProvider.js';
 
 import { StoryCard } from './../../components/StoryCard.js';
+import { NoStory } from '../../components/NoStory.js';
+
+import ProfileImage from './../../../assets/user-default.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -54,11 +59,8 @@ const styles = StyleSheet.create({
   }
 });
 
-import ProfileImage from './../../../assets/user-default.png';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
 export const ProfileOverviewScreen = ({ navigation }) => {
-  const { state: { id, name, email, stories },
+  const { state: { id, name, stories },
     fetchStories } = useContext(ProfileContext);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -91,17 +93,26 @@ export const ProfileOverviewScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <FlatList
-        data={stories}
-        onRefresh={onRefresh}
-        refreshing={refreshing}
-        keyExtractor={item => item._id}
-        renderItem={({ item }) => <StoryCard
-          navigation={navigation}
-          item={item}
-        />
-        }
-      />
+      {
+        stories.length < 0 ?
+          <FlatList
+            data={stories}
+            onRefresh={onRefresh}
+            refreshing={refreshing}
+            keyExtractor={item => item._id}
+            renderItem={({ item }) =>
+              <StoryCard
+                navigation={navigation}
+                item={item}
+              />
+            }
+          />
+          : <NoStory
+            navigation={navigation}
+            action={'Create First!'}
+            url={'CreateStoryModal'}
+          />
+      }
     </SafeAreaView>
   );
 };
