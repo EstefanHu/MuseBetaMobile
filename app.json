@@ -4,6 +4,7 @@
     "description": "Project:Muse is the worlds for context first story telling platform.",
     "slug": "project-muse",
     "scheme": "muse",
+    "sdkVersion": "38.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,16 +14,27 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 30000
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.estefanhu.projectmuse",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Allow Project:Muse experiences to use your location",
+        "NSPhotoLibraryUsageDescription": "Give Project:Muse experiences permission to access you photos"
+      }
+    },
+    "android": {
+      "package":"com.estefanhu.projectmuse"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "privacy": "public"
   }
 }
