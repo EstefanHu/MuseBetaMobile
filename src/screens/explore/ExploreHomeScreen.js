@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 });
 
 export const ExploreHomeScreen = () => {
-  const { state: { longitude, latitude, approximateLongitude, approximateLatitude } } = useContext(LocationContext);
+  const { state: { longitude, latitude } } = useContext(LocationContext);
   const { state: { stories } } = useContext(StoryContext);
   const [region, setRegion] = useState({
     longitude: longitude,

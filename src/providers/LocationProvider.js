@@ -6,8 +6,6 @@ const LocationReducer = (state, action) => {
       return { ...state, errorMessage: action.payload }
     case 'clear_error_message':
       return { ...state, errorMessage: '' }
-    case 'set_status':
-      return { ...state, status: action.payload }
     case 'approximate_location':
       return {
         ...state,
@@ -34,9 +32,6 @@ const addErrorMessage = dispatch => message =>
 const clearErrorMessage = dispatch => () =>
   dispatch({ type: 'clear_error_message' });
 
-const setStatus = dispatch => status =>
-  dispatch({ type: 'set_status', payload: status });
-
 const approximateLocation = dispatch => async () => {
   try {
     const response = await fetch('http://ip-api.com/json');
@@ -54,9 +49,8 @@ const setCoords = dispatch => async location => {
 
 export const { Provider, Context } = createDataContext(
   LocationReducer,
-  { addErrorMessage, clearErrorMessage, setStatus, approximateLocation, setCoords },
+  { addErrorMessage, clearErrorMessage, approximateLocation, setCoords },
   {
-    status: 'pending',
     errorMessage: '',
     longitude: null,
     latitude: null,
