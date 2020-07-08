@@ -9,7 +9,7 @@ import { ExploreStoryScreen } from './../screens/explore/ExploreStoryScreen';
 const Stack = createStackNavigator();
 
 export const ExploreStack = () => {
-  const { state: { status }, setStatus } = useContext(LocationContext);
+  const { state: { status }, setStatus, getLocation } = useContext(LocationContext);
 
   // useEffect(() => {
   //   (async () => {
@@ -21,8 +21,12 @@ export const ExploreStack = () => {
   useEffect(() => {
     const requestLocation = async () => {
       let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') return setStatus('denied');
+
+      let location = await Location.getCurrentPositionAsync({});
+      setStatus()
     }
-    if (status !== 'granted')
+    if (status === 'pending') requestLocation();
   }, []);
 
   return (

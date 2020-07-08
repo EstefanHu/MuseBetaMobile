@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": ":Muse",
-    "slug": "Muse",
+    "description": "Project:Muse is the worlds for context first story telling platform.",
+    "slug": "project-muse",
     "scheme": "muse",
     "version": "1.0.0",
     "orientation": "portrait",
