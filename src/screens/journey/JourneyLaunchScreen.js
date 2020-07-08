@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  };
+  }
 });
 
 export const JourneyLaunchScreen = () => {
@@ -21,9 +21,9 @@ export const JourneyLaunchScreen = () => {
 
   useEffect(() => {
     const { status } = await Permissions.getAsync(Permissions.LOCATION);
+    console.log(status);
     setStatus(status);
 
-    if (status)
   }, []);
 
   const linkSettings = () => Linking.openURL('app-settings:');

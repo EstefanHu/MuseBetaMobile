@@ -26,11 +26,13 @@ export const ExploreHomeScreen = () => {
   const { state: { longitude, latitude, approximateLongitude, approximateLatitude } } = useContext(LocationContext);
   const { state: { stories } } = useContext(StoryContext);
   const [region, setRegion] = useState({
-    longitude: approximateLongitude,
-    latitude: approximateLatitude,
+    longitude: longitude,
+    latitude: latitude,
     longitudeDelta: 0.1,
     latitudeDelta: 0.1
   });
+
+  console.log(longitude,latitude)
 
   // useEffect(() => {
   //   console.log('recalculating');

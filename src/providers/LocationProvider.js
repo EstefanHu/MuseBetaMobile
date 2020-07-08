@@ -11,8 +11,8 @@ const LocationReducer = (state, action) => {
     case 'approximate_location':
       return {
         ...state,
-        approximateLongitude: action.payload.lon,
-        approximateLatitude: action.payload.lat,
+        longitude: action.payload.lon,
+        latitude: action.payload.lat,
         city: action.payload.city,
         region: action.payload.regionName,
         zip: action.payload.zip,
@@ -20,8 +20,8 @@ const LocationReducer = (state, action) => {
     case 'get_location':
       return {
         ...state,
-        longitude: action.payload.longitude,
-        latitude: action.payload.latitude
+        longitude: action.payload.coords.longitude,
+        latitude: action.payload.coords.latitude
       }
     default:
       return state;
@@ -48,18 +48,16 @@ const approximateLocation = dispatch => async () => {
   };
 };
 
-const getLocation = dispatch => async () => {
-  dispatch({ type: 'get_location' });
+const setCoords = dispatch => async location => {
+  dispatch({ type: 'get_location', payload: location });
 };
 
 export const { Provider, Context } = createDataContext(
   LocationReducer,
-  { addErrorMessage, clearErrorMessage, setStatus, approximateLocation, getLocation },
+  { addErrorMessage, clearErrorMessage, setStatus, approximateLocation, setCoords },
   {
     status: 'pending',
     errorMessage: '',
-    approximateLongitude: null,
-    approximateLatitude: null,
     longitude: null,
     latitude: null,
     city: null,
