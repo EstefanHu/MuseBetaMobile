@@ -14,7 +14,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Context as ProfileContext } from './../../providers/ProfileProvider.js';
 
 import { StoryCard } from './../../components/StoryCard.js';
-import { NoStory } from '../../components/NoStory.js';
+import { NoStory } from './../../components/NoStory.js';
 
 import ProfileImage from './../../../assets/user-default.png';
 
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingVertical: 15,
     borderBottomColor: 'lightgrey',
     borderBottomWidth: 1,
     flexDirection: 'row',
@@ -94,7 +94,7 @@ export const ProfileOverviewScreen = ({ navigation }) => {
       </View>
 
       {
-        stories.length < 0 ?
+        stories.length > 0 ?
           <FlatList
             data={stories}
             onRefresh={onRefresh}
