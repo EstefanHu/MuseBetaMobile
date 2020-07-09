@@ -6,7 +6,7 @@ import {
   Feather
 } from '@expo/vector-icons';
 
-import { StoryStack } from './../stacks/StoryStack.js';
+import { TopStack } from '../stacks/TopStack.js';
 import { ExploreStack } from './../stacks/ExploreStack.js';
 import { LibraryStack } from './../stacks/LibraryStack.js';
 import { NewsStack } from './../stacks/NewsStack.js';
@@ -18,7 +18,7 @@ export const BottomTabs = () => (
   <Tabs.Navigator
     screenOptions={({ route }) => ({
       tabBarIcon: ({ _, color, size }) => {
-        if (route.name === 'Story') {
+        if (route.name === 'Top') {
           return <FontAwesome5 name='tasks' size={size} color={color} />;
         } else if (route.name === 'Explore') {
           return <FontAwesome5 name='compass' size={size} color={color} />;
@@ -37,7 +37,7 @@ export const BottomTabs = () => (
       inactiveTintColor: 'gray',
     }}
   >
-    <Tabs.Screen name='Story' component={StoryStack} />
+    <Tabs.Screen name='Top' component={TopStack} />
     <Tabs.Screen name='Explore' component={ExploreStack} />
     <Tabs.Screen name='Journey' component={JourneyStack} />
     <Tabs.Screen name='News' component={NewsStack} />

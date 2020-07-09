@@ -4,11 +4,11 @@ import {
   FlatList,
   SafeAreaView,
 } from 'react-native';
-import { Context as StoryContext } from './../../providers/StoryProvider.js';
-import { Context as LocationContext } from './../../providers/LocationProvider.js';
+import { Context as StoryContext } from '../../providers/StoryProvider.js';
+import { Context as LocationContext } from '../../providers/LocationProvider.js';
 
-import { Filter } from './../../components/Filter.js';
-import { StoryCard } from './../../components/StoryCard.js';
+import { Filter } from '../../components/Filter.js';
+import { StoryCard } from '../../components/StoryCard.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const StoryListScreen = ({ navigation }) => {
+export const TopListScreen = ({ navigation }) => {
   const { state: { stories }, fetchStories } = useContext(StoryContext);
   const { state: { city } } = useContext(LocationContext);
   const [refreshing, setRefreshing] = useState(false);
