@@ -12,7 +12,7 @@ exports.useFetch = async (url, method, body, token) => {
       }
     if (token) params.headers.Authorization = `Bearer ${token}`;
     if (body) params.body = bodyIsFormData ? body : JSON.stringify(body);
-      console.log(params);
+    
     const response = await fetch(url, params);
     const data = await response.json();
 

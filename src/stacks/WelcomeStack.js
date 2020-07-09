@@ -13,14 +13,14 @@ const Stack = createStackNavigator();
 
 export const WelcomeStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    {/* <Stack.Screen
+    <Stack.Screen
       name='WelcomeIntroScreen'
       component={WelcomeIntroScreen}
     />
     <Stack.Screen
       name='WelcomeLocationScreen'
       component={WelcomeLocationScreen}
-    /> */}
+    />
     <Stack.Screen
       name='WelcomeImageScreen'
       component={WelcomeImageScreen}

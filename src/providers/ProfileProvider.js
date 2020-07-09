@@ -71,11 +71,15 @@ const uploadProfilePhoto = dispatch => async (photo, callback) => {
   try {
     const token = await AsyncStorage.getItem('token');
 
-    // let filename = photo.split('/').pop();
+    let localUri = photo;
+    let filename = localUri.split('/').pop();
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+
     let formData = new FormData();
-    formData.append('photo', photo.split('/').pop());
+    formData.append('photo', { uri: localUri, name: filename, type });
+
     const response = await useFetch(updateMeUrl, 'PATCH', formData, token);
-    console.log(response)
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'upload_profile_photo', payload: response.payload.photo });
