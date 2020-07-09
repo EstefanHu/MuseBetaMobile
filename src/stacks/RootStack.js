@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import decode from 'jwt-decode';
@@ -23,6 +23,7 @@ const Stack = createStackNavigator();
 export const RootStack = () => {
   const { state: { token }, logout } = useContext(AuthContext);
   const { getMe } = useContext(ProfileContext);
+  const [isNew, setIsNew] = useState(null);
 
   useEffect(() => {
     const expDate = decode(token);
@@ -34,10 +35,17 @@ export const RootStack = () => {
 
   return (
     <Stack.Navigator
-      // initialRouteName="ProfileStack"
+      initialRouteName={isNew ? 'WelcomeStack' : 'BottomTabs'}
       screenOptions={{ animationEnabled: false }}
       mode='modal'
     >
+      <Stack.Screen
+        name='WelcomeStack'
+        component={WelcomeStack}
+        options={{
+          header: () => null
+        }}
+      />
       <Stack.Screen
         name='BottomTabs'
         component={BottomTabs}

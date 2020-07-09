@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  SafeAreaView
 } from 'react-native';
+
+import { Context as LocationContext } from './../../providers/LocationProvider.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +22,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     width: 200,
-    marginBottom: 50
   },
   nextText: {
     fontWeight: 'bold',
@@ -29,14 +31,15 @@ const styles = StyleSheet.create({
 });
 
 export const WelcomeLocationScreen = ({ navigation }) => {
+  const { setCoords } = useContext(LocationContext);
 
   return (
-    <View style={styles.contiainer}>
+    <SafeAreaView style={styles.contiainer}>
       <TouchableOpacity onPress={() => navigation.navigate('WelcomeImageScreen')}>
         <View style={styles.next}>
           <Text style={styles.nextText}>Next</Text>
         </View>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };

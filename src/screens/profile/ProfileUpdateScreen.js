@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   View,
-  Text
+  Text,
+  TouchableOpacity,
 } from 'react-native';
+import { Context as AuthContext } from './../../providers/AuthProvider.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,10 +13,15 @@ const styles = StyleSheet.create({
   }
 })
 
-export const ProfileUpdateScreen = () => {
+export const ProfileUpdateScreen = ({ navigation }) => {
+  const { logout } = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <Text>Update</Text>
+      <TouchableOpacity onPress={logout}>
+        <Text>Logout</Text>
+      </TouchableOpacity>
     </View>
   )
 }

@@ -10,9 +10,9 @@ const authReducer = (state, action) => {
     case 'clear_error_message':
       return { ...state, errorMessage: '' }
     case 'register':
-      return { errorMessage: '', token: action.payload };
+      return { errorMessage: '', token: action.payload, isNew: true };
     case 'login':
-      return { errorMessage: '', token: action.payload };
+      return { errorMessage: '', token: action.payload, isNew: false };
     case 'logout':
       return { ...state, errorMessage: '', token: '' };
     default:
@@ -31,7 +31,7 @@ const login = dispatch => async ({ payload }) => {
       return dispatch({ type: 'add_error', payload: response.payload });
 
     await AsyncStorage.setItem('token', response.token);
-    dispatch({ type: 'register', payload: response.token });
+    dispatch({ type: 'login', payload: response.token });
   } catch (err) {
     dispatch({ type: 'add_error', payload: 'Something went wrong with sign up' });
   }
@@ -49,7 +49,7 @@ const register = dispatch => async ({ payload }) => {
       return dispatch({ type: 'add_error', payload: response.payload });
 
     await AsyncStorage.setItem('token', response.token);
-    dispatch({ type: 'login', payload: response.token });
+    dispatch({ type: 'register', payload: response.token });
   } catch (err) {
     dispatch({ type: 'add_error', payload: 'Something went wrong with sign in' });
   }
