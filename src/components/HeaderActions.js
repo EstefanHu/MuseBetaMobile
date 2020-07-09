@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -8,8 +8,12 @@ import {
 import {
   MaterialCommunityIcons
 } from '@expo/vector-icons';
+import { getProfileImage } from './../constants/network.js';
 
-import ProfileImage from './../../assets/user-default.png';
+import { Context as ProfileContext } from './../providers/ProfileProvider.js';
+
+import DefaultImage from './../../assets/user-default.png';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +24,7 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
   },
-  profileImage: {
+  image: {
     height: 25,
     width: 25,
     borderColor: 'lightgrey',
@@ -30,6 +34,8 @@ const styles = StyleSheet.create({
 });
 
 export const HeaderActions = ({ navigation }) => {
+  const { state: { photo } } = useContext(ProfileContext);
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -42,8 +48,11 @@ export const HeaderActions = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => navigation.navigate('ProfileStack')}>
         <Image
-          style={styles.profileImage}
-          source={ProfileImage}
+          style={styles.image}
+          source={
+            photo ? getProfileImage + '/' + photo
+              : DefaultImage
+          }
         />
       </TouchableOpacity>
     </View>
