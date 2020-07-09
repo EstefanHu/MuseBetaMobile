@@ -10,13 +10,14 @@ import {
   Dimensions
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { getProfileImage } from './../../constants/network.js';
 
 import { Context as ProfileContext } from './../../providers/ProfileProvider.js';
 
 import { StoryCard } from './../../components/StoryCard.js';
 import { NoStory } from './../../components/NoStory.js';
 
-import ProfileImage from './../../../assets/user-default.png';
+import DefaultImage from './../../../assets/user-default.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
 });
 
 export const ProfileOverviewScreen = ({ navigation }) => {
-  const { state: { id, name, credibility, stories },
+  const { state: { id, name, credibility, stories, photo },
     fetchStories } = useContext(ProfileContext);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -80,7 +81,10 @@ export const ProfileOverviewScreen = ({ navigation }) => {
         <View style={styles.profile}>
           <Image
             style={styles.profileImage}
-            source={ProfileImage}
+            source={
+              photo ? getProfileImage + '/' + photo
+                : DefaultImage
+            }
           />
           <View style={styles.info}>
             <Text style={styles.name}>{name}</Text>

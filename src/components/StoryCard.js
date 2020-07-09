@@ -10,10 +10,11 @@ import {
   Ionicons,
   FontAwesome
 } from '@expo/vector-icons';
+import { getProfileImage } from './../constants/network.js';
 
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 
-import userDefault from './../../assets/user-default.png';
+import DefaultImage from './../../assets/user-default.png';
 
 const styles = StyleSheet.create({
   card: {
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
 });
 
 export const StoryCard = ({ navigation, item }) => {
-  const { state: { libraryIds }, addToLibrary, removeFromLibrary } = useContext(ProfileContext);
+  const { state: { libraryIds, authorPhoto }, addToLibrary, removeFromLibrary } = useContext(ProfileContext);
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
@@ -117,7 +118,10 @@ export const StoryCard = ({ navigation, item }) => {
         <View style={styles.meta}>
           <Image
             style={styles.profileImg}
-            source={userDefault}
+            source={
+              authorPhoto ? getProfileImage + '/' + authorPhoto
+                : DefaultImage
+            }
           />
           <View>
             <TouchableOpacity>
