@@ -75,7 +75,6 @@ export const WelcomeImageScreen = ({ navigation }) => {
       ],
       { cancelable: false }
     )
-
     const { cancelled, uri } = await ImagePicker.launchImageLibraryAsync({
       aspect: 1,
       allowsEditing: true,
@@ -85,8 +84,21 @@ export const WelcomeImageScreen = ({ navigation }) => {
 
   const takePhoto = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    if (status !== 'granted') return;
-
+    if (status !== 'granted') return Alert.alert(
+      'Grant Permission',
+      'Previously blocked access to CAMERA. Do you want to change settings?',
+      [
+        {
+          text: 'Skip',
+          style: 'cancel',
+        },
+        {
+          text: 'Settings',
+          onPress: () => Linking.openSettings()
+        }
+      ],
+      { cancelable: false }
+    )
     const { cancelled, uri } = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
     });

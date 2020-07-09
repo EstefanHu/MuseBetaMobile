@@ -3,7 +3,6 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { WelcomeIntroScreen } from './../screens/welcome/WelcomeIntroScreen.js';
-import { WelcomeTermsScreen } from './../screens/welcome/WelcomeTermsScreen.js';
 import { WelcomeLocationScreen } from './../screens/welcome/WelcomeLocationScreen.js';
 import { WelcomeImageScreen } from './../screens/welcome/WelcomeImageScreen.js';
 
@@ -24,12 +23,6 @@ export const WelcomeStack = () => (
     <Stack.Screen
       name='WelcomeImageScreen'
       component={WelcomeImageScreen}
-    />
-
-
-    <Stack.Screen
-      name='WelcomeTermsScreen'
-      component={WelcomeTermsScreen}
     />
     <Stack.Screen
       name='WelcomePermissionScreen'
