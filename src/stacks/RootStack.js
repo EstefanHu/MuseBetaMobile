@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import decode from 'jwt-decode';
 
 import { Context as AuthContext } from './../providers/AuthProvider.js';
@@ -21,9 +20,8 @@ import { ReportModal } from '../layout/ReportModal.js';
 const Stack = createStackNavigator();
 
 export const RootStack = () => {
-  const { state: { token }, logout } = useContext(AuthContext);
+  const { state: { token, isNew }, logout } = useContext(AuthContext);
   const { getMe } = useContext(ProfileContext);
-  const [isNew, setIsNew] = useState(null);
 
   useEffect(() => {
     const expDate = decode(token);
