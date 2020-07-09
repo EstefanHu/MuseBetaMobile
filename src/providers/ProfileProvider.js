@@ -3,6 +3,7 @@ import { storyUrl } from './../constants/network.js';
 import { useFetch } from '../hooks/useFetch.js';
 import {
   profileUrl,
+  updateMeUrl,
   getLibrary,
   addStoryToLibrary,
   removeStoryFromLibrary
@@ -27,6 +28,8 @@ const profileReducer = (state, action) => {
         type: action.payload.type,
         photo: action.payload.photo
       }
+    case 'upload_profile_photo':
+      return { ...state, photo: action.payload.photo };
     case 'fetch_library':
       return { ...state, library: action.payload };
     case 'add_to_library':
@@ -48,6 +51,10 @@ const profileReducer = (state, action) => {
   }
 };
 
+const clearErrorMessage = dispatch => () => {
+  dispatch({ type: 'clear_error_message' })
+};
+
 const getMe = dispatch => async () => {
   try {
     const token = await AsyncStorage.getItem('token');
@@ -55,6 +62,19 @@ const getMe = dispatch => async () => {
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'get_me', payload: response.payload });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const uploadProfilePhoto = dispatch => async (photo, callback) => {
+  try {
+    const token = await AsyncStorage.getItem('token');
+    const response = await useFetch(updateMeUrl, 'PATCH', { photo }, token);
+    if (response.status !== 'success')
+      return dispatch({ type: 'add_error', payload: response.payload });
+    dispatch({ type: 'upload_profile_photo' });
+    callback();
   } catch (error) {
     console.log(error);
   }
@@ -110,7 +130,15 @@ const fetchStories = dispatch => async authorId => {
 
 export const { Context, Provider } = createDataContext(
   profileReducer,
-  { getMe, fetchLibrary, addToLibrary, removeFromLibrary, fetchStories },
+  {
+    clearErrorMessage,
+    getMe,
+    uploadProfilePhoto,
+    fetchLibrary,
+    addToLibrary,
+    removeFromLibrary,
+    fetchStories
+  },
   {
     id: null,
     name: null,
