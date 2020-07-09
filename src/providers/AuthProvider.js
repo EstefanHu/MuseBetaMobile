@@ -80,5 +80,8 @@ export const { Provider, Context } = createDataContext(
     tryLocalLogin,
     finishTutorial
   },
-  { token: null, errorMessage: '' }
+  {
+    token: null,
+    errorMessage: '',
+  }
 );

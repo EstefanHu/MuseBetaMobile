@@ -15,9 +15,11 @@ export const ExploreStack = () => {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.getPermissionsAsync();
-
-      if (status !== 'granted') {
+      let { status } = await Permissions.getAsync(Permissions.LOCATION);
+      if (status === 'granted') {
+        let location = await Location.getCurrentPositionAsync({});
+        setCoords(location);
+      } else {
         Alert.alert(
           'Grant Location',
           'Permission is required for :Muse explore feature',
@@ -34,9 +36,6 @@ export const ExploreStack = () => {
           { cancelable: false }
         )
       }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setCoords(location);
     })();
   }, []);
 
