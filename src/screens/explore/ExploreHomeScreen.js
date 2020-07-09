@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import {
   StyleSheet,
   View,
-  FlatList,
   Dimensions
 } from 'react-native';
 import { Context as LocationContext } from './../../providers/LocationProvider.js';
@@ -23,6 +22,16 @@ const styles = StyleSheet.create({
 });
 
 export const ExploreHomeScreen = () => {
+  const { state: { longitude } } = useContext(LocationContext);
+
+  return (
+    <View style={styles.container}>
+      {longitude && <Map />}
+    </View>
+  )
+}
+
+const Map = () => {
   const { state: { longitude, latitude } } = useContext(LocationContext);
   const { state: { stories } } = useContext(StoryContext);
   const [region, setRegion] = useState({
@@ -32,32 +41,25 @@ export const ExploreHomeScreen = () => {
     latitudeDelta: 0.1
   });
 
-  console.log(longitude,latitude)
-
-  // useEffect(() => {
-  //   console.log('recalculating');
-  // }, [longitude, latitude]);
-
   return (
-    <View style={styles.container}>
-      <MapView
-        style={styles.mapStyle}
-        initialRegion={region}
-        showsUserLocation
-      >
-        {
-          stories.map(item => (
-            <Marker
-              key={item._id}
-              coordinate={{
-                latitude: item.startLocation.coordinates[1],
-                longitude: item.startLocation.coordinates[0]
-              }}
-              title={item.title}
-            />
-          ))
-        }
-      </MapView>
-    </View>
+    <MapView
+      style={styles.mapStyle}
+      initialRegion={region}
+      onRegionChange={setRegion}
+      showsUserLocation
+    >
+      {
+        stories.map(item => (
+          <Marker
+            key={item._id}
+            coordinate={{
+              latitude: item.startLocation.coordinates[1],
+              longitude: item.startLocation.coordinates[0]
+            }}
+            title={item.title}
+          />
+        ))
+      }
+    </MapView>
   )
 }

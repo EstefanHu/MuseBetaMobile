@@ -9,8 +9,6 @@ const LocationReducer = (state, action) => {
     case 'approximate_location':
       return {
         ...state,
-        longitude: action.payload.lon,
-        latitude: action.payload.lat,
         city: action.payload.city,
         region: action.payload.regionName,
         zip: action.payload.zip,
