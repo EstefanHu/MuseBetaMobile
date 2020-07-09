@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
 export const WelcomeTermsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('WelcomeImageScreen')}>
+      <Text>Terms and Conditions</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('WelcomeLocationScreen')}>
         <View style={styles.next}>
           <Text style={styles.nextText}>Agree</Text>
         </View>
