@@ -16,7 +16,6 @@ export const ExploreStack = () => {
   useEffect(() => {
     (async () => {
       let { status } = await Location.getPermissionsAsync();
-      console.log('wainting')
 
       if (status !== 'granted') {
         Alert.alert(
