@@ -29,7 +29,7 @@ const profileReducer = (state, action) => {
         photo: action.payload.photo
       }
     case 'upload_profile_photo':
-      return { ...state, photo: action.payload.photo };
+      return { ...state, photo: action.payload };
     case 'fetch_library':
       return { ...state, library: action.payload };
     case 'add_to_library':
@@ -70,10 +70,15 @@ const getMe = dispatch => async () => {
 const uploadProfilePhoto = dispatch => async (photo, callback) => {
   try {
     const token = await AsyncStorage.getItem('token');
-    const response = await useFetch(updateMeUrl, 'PATCH', { photo }, token);
+
+    // let filename = photo.split('/').pop();
+    let formData = new FormData();
+    formData.append('photo', photo.split('/').pop());
+    const response = await useFetch(updateMeUrl, 'PATCH', formData, token);
+    console.log(response)
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
-    dispatch({ type: 'upload_profile_photo' });
+    dispatch({ type: 'upload_profile_photo', payload: response.payload.photo });
     callback();
   } catch (error) {
     console.log(error);
@@ -84,9 +89,10 @@ const fetchLibrary = dispatch => async () => {
   try {
     const token = await AsyncStorage.getItem('token');
     const response = await useFetch(getLibrary, 'GET', null, token);
+    return
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
-    dispatch({ type: 'fetch_library', payload: response.payload });
+    dispatch({ type: 'fetch_library', payload: response.payload.photo });
   } catch (error) {
     console.log(error);
   }

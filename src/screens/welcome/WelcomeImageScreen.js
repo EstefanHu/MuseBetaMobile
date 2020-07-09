@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
+import { Context as ProfileContext } from './../../providers/ProfileProvider.js';
 
 import ProfileImage from './../../../assets/user-default.png';
 
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
 });
 
 export const WelcomeImageScreen = ({ navigation }) => {
+  const { uploadProfilePhoto } = useContext(ProfileContext);
   const [photoUri, setPhotoUri] = useState(null);
 
   const selectPicture = async () => {
@@ -93,7 +95,9 @@ export const WelcomeImageScreen = ({ navigation }) => {
   }
 
   const submitPhoto = () => {
-    navigation.navigate('WelcomePermissionScreen');
+    uploadProfilePhoto(photoUri, () =>
+      navigation.navigate('WelcomePermissionScreen')
+    )
   }
 
   return (
