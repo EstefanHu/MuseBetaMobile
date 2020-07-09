@@ -3,7 +3,8 @@ import MapView, { Marker } from 'react-native-maps';
 import {
   StyleSheet,
   View,
-  Dimensions
+  Dimensions,
+  TouchableOpacity
 } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
 
@@ -23,17 +24,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ExploreHomeScreen = () => {
+export const ExploreHomeScreen = ({ navigation }) => {
   const { state: { longitude } } = useContext(LocationContext);
 
   return (
     <View style={styles.container}>
-      {longitude && <Map />}
+      {longitude && <Map navigation={navigation} />}
     </View>
   )
 }
 
-const Map = () => {
+const Map = ({ navigation }) => {
   const { state: { longitude, latitude } } = useContext(LocationContext);
   const { state: { stories } } = useContext(StoryContext);
   const [region, setRegion] = useState({
@@ -59,6 +60,7 @@ const Map = () => {
               longitude: item.startLocation.coordinates[0]
             }}
             title={item.title}
+            onPress={() => navigation.navigate('ExploreStoryModal', { id: item._id })}
           />
         ))
       }

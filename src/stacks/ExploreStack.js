@@ -40,7 +40,7 @@ export const ExploreStack = () => {
   }, []);
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator mode='modal'>
       <Stack.Screen
         name='ExploreHomeScreen'
         component={ExploreHomeScreen}
@@ -48,7 +48,17 @@ export const ExploreStack = () => {
       <Stack.Screen
         name='ExploreStoryModal'
         component={ExploreStoryModal}
-        mode='modal'
+        options={{
+          // cardOverlay: true,
+          cardOverlayEnabled: true,
+          cardStyle: {
+            backgroundColor: 'transparent',
+            justifyContent: 'bottom',
+            alignItems: 'center',
+          },
+          gestureEnabled: true,
+          
+        }}
       />
     </Stack.Navigator>
   );
