@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 });
 
 export const LibraryListScreen = ({ navigation }) => {
-  const { state: { library }, fetchLibrary } = useContext(ProfileContext);
+  const { state: { library, libraryIds }, fetchLibrary } = useContext(ProfileContext);
   const [refreshing, setRefreshing] = useState(false);
   const [channel, setChannel] = useState('All');
 
@@ -37,7 +37,7 @@ export const LibraryListScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <Filter navigation={navigation} channel={channel} setChannel={setChannel} />
       {
-        library.length > 0 ?
+        libraryIds.length > 0 ?
           <FlatList
             data={library}
             onRefresh={onRefresh}

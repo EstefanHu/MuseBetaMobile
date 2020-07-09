@@ -72,7 +72,7 @@ const fetchStories = dispatch => async city => {
 const fetchSingleStory = dispatch => async id => {
   try {
     const token = await AsyncStorage.getItem('token');
-    const response = await useFetch(`${storyUrl}?id=${id}`, 'GET', null, token);
+    const response = await useFetch(storyUrl + '/' + id, 'GET', null, token);
     if (response.status !== 'status') return dispatch({ type: 'added_error', payload: response.payload });
     dispatch({ type: 'fetch_single_story', payload: response.payload });
   } catch (error) {

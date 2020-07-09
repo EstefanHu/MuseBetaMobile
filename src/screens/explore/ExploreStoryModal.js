@@ -21,12 +21,13 @@ const styles = StyleSheet.create({
 });
 
 export const ExploreStoryModal = ({ route, navigation }) => {
-  const { state: { stories } } = useContext(StoryContext);
-  const story = stories.find(s => s._id === route.params?.id);
+  const { state: { stories }, fetchSingleStory } = useContext(StoryContext);
+  const { id } = route.params;
+  const story = stories.find(s => s._id === id);
 
   useEffect(() => {
-    
-  })
+    fetchSingleStory(id);
+  }, [id]);
 
   return (
     <View style={styles.modal}>
