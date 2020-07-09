@@ -5,6 +5,8 @@ import {
   View,
   Dimensions
 } from 'react-native';
+import { Foundation } from '@expo/vector-icons';
+
 import { Context as LocationContext } from './../../providers/LocationProvider.js';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
 

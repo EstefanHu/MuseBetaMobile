@@ -6,7 +6,7 @@ import * as Permissions from 'expo-permissions';
 
 import { Context as LocationContext } from './../providers/LocationProvider.js';
 import { ExploreHomeScreen } from './../screens/explore/ExploreHomeScreen';
-import { ExploreStoryScreen } from './../screens/explore/ExploreStoryScreen';
+import { ExploreStoryModal } from '../screens/explore/ExploreStoryModal.js';
 
 const Stack = createStackNavigator();
 
@@ -46,9 +46,10 @@ export const ExploreStack = () => {
         component={ExploreHomeScreen}
       />
       <Stack.Screen
-        name='ExploreStoryScreen'
-        component={ExploreStoryScreen}
+        name='ExploreStoryModal'
+        component={ExploreStoryModal}
+        mode='modal'
       />
     </Stack.Navigator>
-  )
-}
+  );
+};
