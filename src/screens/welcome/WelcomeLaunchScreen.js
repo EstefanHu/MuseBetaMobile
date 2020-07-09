@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity
 } from 'react-native';
+
+import { Context as AuthContext } from './../../providers/AuthProvider.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,10 +30,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export const WelcomePermissionScreen = ({ navigation }) => {
+export const WelcomeLaunchScreen = ({ navigation }) => {
+  const { finishTutorial } = useContext(AuthContext);
+
+  const toApplication = () => {
+    finishTutorial();
+    navigation.navigate('BottomTabs');
+  }
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => console.log('yay!')}>
+      <TouchableOpacity onPress={toApplication}>
         <View style={styles.next}>
           <Text style={styles.nextText}>Agree</Text>
         </View>

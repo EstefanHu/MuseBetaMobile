@@ -6,7 +6,7 @@ import { WelcomeIntroScreen } from './../screens/welcome/WelcomeIntroScreen.js';
 import { WelcomeLocationScreen } from './../screens/welcome/WelcomeLocationScreen.js';
 import { WelcomeImageScreen } from './../screens/welcome/WelcomeImageScreen.js';
 
-import { WelcomePermissionScreen } from './../screens/welcome/WelcomePermissionScreen.js';
+import { WelcomeLaunchScreen } from './../screens/welcome/WelcomeLaunchScreen.js';
 
 const Stack = createStackNavigator();
 
@@ -25,8 +25,8 @@ export const WelcomeStack = () => (
       component={WelcomeImageScreen}
     />
     <Stack.Screen
-      name='WelcomePermissionScreen'
-      component={WelcomePermissionScreen}
+      name='WelcomeLaunchScreen'
+      component={WelcomeLaunchScreen}
     />
   </Stack.Navigator>
 );

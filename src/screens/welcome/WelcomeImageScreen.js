@@ -108,7 +108,7 @@ export const WelcomeImageScreen = ({ navigation }) => {
 
   const submitPhoto = () => {
     uploadProfilePhoto(photoUri, () =>
-      navigation.navigate('WelcomePermissionScreen')
+      navigation.navigate('WelcomeLaunchScreen')
     )
   }
 
@@ -144,7 +144,7 @@ export const WelcomeImageScreen = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       }
-      <TouchableOpacity onPress={() => navigation.navigate('WelcomePermissionScreen')}>
+      <TouchableOpacity onPress={() => navigation.navigate('WelcomeLaunchScreen')}>
         <Text style={styles.skip}>Skip for now</Text>
       </TouchableOpacity>
     </View>

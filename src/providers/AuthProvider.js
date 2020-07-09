@@ -15,6 +15,8 @@ const authReducer = (state, action) => {
       return { errorMessage: '', token: action.payload, isNew: false };
     case 'logout':
       return { ...state, errorMessage: '', token: '' };
+    case 'finish_tutorial':
+      return { ...state, isNew: false };
     default:
       return state;
   }
@@ -65,8 +67,18 @@ const logout = dispatch => async () => {
   dispatch({ type: 'logout' });
 };
 
+const finishTutorial = dispatch =>
+  () => dispatch({ type: 'finish_tutorial' });
+
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { login, register, logout, clearErrorMessage, tryLocalLogin },
+  {
+    login,
+    register,
+    logout,
+    clearErrorMessage,
+    tryLocalLogin,
+    finishTutorial
+  },
   { token: null, errorMessage: '' }
 );
