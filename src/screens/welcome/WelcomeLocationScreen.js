@@ -19,13 +19,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgb(255,50,50)',
   },
-  label: {
-    fontSize: 20,
-  },
   status: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  label: {
+    fontSize: 20,
   },
   permission: {
     color: 'white',

@@ -4,7 +4,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Dimensions
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -13,6 +12,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     backgroundColor: 'rgb(255,50,50)',
+  },
+  heroContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   hero: {
     fontWeight: 'bold',
@@ -25,7 +29,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 200,
   },
-  
   tease: {
     marginBottom: 5,
     fontSize: 16,
@@ -49,7 +52,7 @@ const styles = StyleSheet.create({
 export const WelcomeIntroScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.heroContainer}>
         <Text style={styles.hero}>Welcome</Text>
         <Text style={styles.logo}>:M</Text>
       </View>
@@ -59,7 +62,7 @@ export const WelcomeIntroScreen = ({ navigation }) => {
       <View>
         <Text style={styles.tease}>begin your story?</Text>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('WelcomeTermsScreen')}>
+      <TouchableOpacity onPress={() => navigation.navigate('WelcomeLocationScreen')}>
         <View style={styles.next}>
           <Text style={styles.nextText}>Start</Text>
         </View>

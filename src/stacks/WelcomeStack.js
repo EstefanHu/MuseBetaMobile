@@ -18,16 +18,18 @@ export const WelcomeStack = () => (
       component={WelcomeIntroScreen}
     />
     <Stack.Screen
-      name='WelcomeTermsScreen'
-      component={WelcomeTermsScreen}
-    />
-    <Stack.Screen
       name='WelcomeLocationScreen'
       component={WelcomeLocationScreen}
     />
     <Stack.Screen
       name='WelcomeImageScreen'
       component={WelcomeImageScreen}
+    />
+
+
+    <Stack.Screen
+      name='WelcomeTermsScreen'
+      component={WelcomeTermsScreen}
     />
     <Stack.Screen
       name='WelcomePermissionScreen'

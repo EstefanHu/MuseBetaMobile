@@ -3,7 +3,9 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions,
+  ScrollView
 } from 'react-native';
 import { } from 'react-native-gesture-handler';
 
@@ -13,6 +15,23 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     backgroundColor: 'rgb(255,50,50)',
+  },
+  main: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  hero: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  content: {
+    backgroundColor: 'white',
+    height: Dimensions.get('window').height * 0.6,
+    width: Dimensions.get('window').width * 0.75,
+    borderRadius: 5,
+    overflow: 'hidden'
   },
   next: {
     backgroundColor: 'white',
@@ -32,7 +51,14 @@ const styles = StyleSheet.create({
 export const WelcomeTermsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text>Terms and Conditions</Text>
+      <View style={styles.main}>
+        <Text style={styles.hero}>Terms and Conditions</Text>
+        <View style={styles.content}>
+    <ScrollView>
+      
+    </ScrollView>
+        </View>
+      </View>
       <TouchableOpacity onPress={() => navigation.navigate('WelcomeLocationScreen')}>
         <View style={styles.next}>
           <Text style={styles.nextText}>Agree</Text>
