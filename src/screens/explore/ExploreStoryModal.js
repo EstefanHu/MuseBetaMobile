@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
 export const ExploreStoryModal = ({ route, navigation }) => {
   const { state: { stories } } = useContext(StoryContext);
   const story = stories.find(s => s._id === route.params?.id);
+
+  useEffect(() => {
+    
+  })
 
   return (
     <View style={styles.modal}>

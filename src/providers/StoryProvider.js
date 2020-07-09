@@ -11,6 +11,14 @@ const storyReducer = (state, action) => {
       return { ...state, focusedStoryId: action.payload }
     case 'fetch_stories':
       return { ...state, stories: action.payload };
+    case 'fetch_single_story':
+      return {
+        ...state,
+        stories:
+          state.stories
+            .filter(s => s._id !== action.payload._id)
+            .push(action.payload)
+      };
     case 'add_story':
       return {
         ...state,
@@ -61,20 +69,26 @@ const fetchStories = dispatch => async city => {
   }
 }
 
+const fetchSingleStory = dispatch => async id => {
+  try {
+    const token = await AsyncStorage.getItem('token');
+    const response = await useFetch(`${storyUrl}?id=${id}`, 'GET', null, token);
+    if (response.status !== 'status') return dispatch({ type: 'added_error', payload: response.payload });
+    dispatch({ type: 'fetch_single_story', payload: response.payload });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const addStory = dispatch => async story => {
-  const token = AsyncStorage.getItem('token');
-  const response = await fetch(API + '/api/v1/story', {
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer ' + token,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(story)
-  });
-  const data = await response.json();
-  if (data.status === 'failure') return dispatch({ type: 'add_error', payload: data.payload });
-  dispatch({ type: 'add_story', payload: { ...story, _id: data.payload } });
+  try {
+    const token = AsyncStorage.getItem('token');
+    const response = await fetch(storyUrl, 'POST', story, token);
+    if (response.status === 'failure') return dispatch({ type: 'add_error', payload: response.payload });
+    dispatch({ type: 'add_story', payload: response.payload });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 const editStory = dispatch => (id, title, description, genre, body, callback) => {
@@ -88,7 +102,15 @@ const deleteStory = dispatch => id => {
 
 export const { Context, Provider } = createDataContext(
   storyReducer,
-  { setGenre, setFocusedStoryId, fetchStories, addStory, editStory, deleteStory },
+  {
+    setGenre,
+    setFocusedStoryId,
+    fetchStories,
+    fetchSingleStory,
+    addStory,
+    editStory,
+    deleteStory
+  },
   {
     genre: 'All',
     focusedStoryId: null,

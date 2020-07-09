@@ -57,7 +57,7 @@ export const ExploreStack = () => {
             alignItems: 'center',
           },
           gestureEnabled: true,
-          
+
         }}
       />
     </Stack.Navigator>
