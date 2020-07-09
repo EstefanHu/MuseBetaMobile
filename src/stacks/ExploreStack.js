@@ -11,7 +11,7 @@ import { ExploreStoryScreen } from './../screens/explore/ExploreStoryScreen';
 const Stack = createStackNavigator();
 
 export const ExploreStack = () => {
-  const { state: { status }, setStatus, setCoords } = useContext(LocationContext);
+  const { setCoords } = useContext(LocationContext);
 
   useEffect(() => {
     (async () => {
