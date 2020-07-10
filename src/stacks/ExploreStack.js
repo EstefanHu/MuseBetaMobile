@@ -53,7 +53,7 @@ export const ExploreStack = () => {
           cardOverlayEnabled: true,
           cardStyle: {
             backgroundColor: 'transparent',
-            justifyContent: 'bottom',
+            justifyContent: 'center',
             alignItems: 'center',
           },
           gestureEnabled: true,

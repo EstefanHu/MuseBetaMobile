@@ -1,10 +1,9 @@
 import React, { useState, useContext } from 'react';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Callout } from 'react-native-maps';
 import {
   StyleSheet,
   View,
   Dimensions,
-  TouchableOpacity
 } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
 
@@ -21,6 +20,14 @@ const styles = StyleSheet.create({
   mapStyle: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+  },
+  callout: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    transform: [
+      { translateX: 9 },
+      { translateY: 15 }
+    ]
   }
 });
 
@@ -59,9 +66,14 @@ const Map = ({ navigation }) => {
               latitude: item.startLocation.coordinates[1],
               longitude: item.startLocation.coordinates[0]
             }}
-            title={item.title}
             onPress={() => navigation.navigate('ExploreStoryModal', { id: item._id })}
-          />
+          >
+            <Callout tooltip>
+              <View style={styles.callout}>
+                <Foundation name='arrow-down' size={35} color='black' />
+              </View>
+            </Callout>
+          </Marker>
         ))
       }
     </MapView>
