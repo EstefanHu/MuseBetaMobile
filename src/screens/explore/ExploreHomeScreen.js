@@ -87,7 +87,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
   );
 };
 
-const Map = ({ navigation, bs }) => {
+const Map = ({ navigation, bs, setPaddingTop }) => {
   const userLocation = useRef([longitude, latitude]);
   const { state: { longitude, latitude } } = useContext(LocationContext);
   const { state: { stories } } = useContext(StoryContext);
@@ -103,9 +103,14 @@ const Map = ({ navigation, bs }) => {
       style={styles.mapStyle}
       region={region}
       onRegionChange={() => setRegion(region)}
-      showsUserLocation
-      mapType={"mutedStandard"}
+      showsUserLocation={true}
       showsMyLocationButton={true}
+      mapType={"mutedStandard"}
+      showsMyLocationButton={false}
+      showsScale
+      showsIndoors
+      loadingEnabled
+      compassOffset={{ x: -5, y: 5 }}
     >
       {
         stories.map(item => (
@@ -117,6 +122,7 @@ const Map = ({ navigation, bs }) => {
             }}
             onPress={() => bs.current.snapTo(0)}
             tracksViewChanges={false}
+            onMapReady={() => console.log('hello')}
           >
             <Callout tooltip alphaHitTest={true}>
               <View style={styles.callout}>

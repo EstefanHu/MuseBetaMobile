@@ -41,6 +41,7 @@ export const ExploreStack = () => {
   return (
     <Stack.Navigator mode='modal'>
       <Stack.Screen
+        options={{ header: () => null }}
         name='ExploreHomeScreen'
         component={ExploreHomeScreen}
       />
