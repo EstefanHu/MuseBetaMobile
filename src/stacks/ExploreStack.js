@@ -14,7 +14,7 @@ export const ExploreStack = () => {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Permissions.getAsync(Permissions.LOCATION);
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
       if (status === 'granted') {
         let location = await Location.getCurrentPositionAsync({});
         setCoords(location);

@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  Text
+  Text,
 } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
 import Animated, { reanimated } from 'react-native-reanimated';
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    height: '100%'
   },
   callout: {
     justifyContent: 'center',
@@ -104,6 +104,8 @@ const Map = ({ navigation, bs }) => {
       region={region}
       onRegionChange={() => setRegion(region)}
       showsUserLocation
+      mapType={"mutedStandard"}
+      showsMyLocationButton={true}
     >
       {
         stories.map(item => (
