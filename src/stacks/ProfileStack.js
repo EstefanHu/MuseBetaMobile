@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ProfileOverviewScreen } from '../screens/profile/ProfileOverviewScreen.js';
 import { ProfileUpdateScreen } from '../screens/profile/ProfileUpdateScreen.js';
 
-import { UpdateNameModal } from './../sceens/profile/UpdateNameModal.js';
+import { UpdateNameModal } from './../screens/profile/UpdateNameModal.js';
 import { MetaModal } from './../layout/MetaModal.js';
 
 const Stack = createStackNavigator();

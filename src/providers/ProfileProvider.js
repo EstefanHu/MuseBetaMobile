@@ -1,10 +1,10 @@
 import createDataContext from './createDataContext.js';
-import { storyUrl } from './../constants/network.js';
 import { useFetch } from '../hooks/useFetch.js';
 import {
   profileUrl,
   updateMeUrl,
   getLibrary,
+  storyUrl,
   addStoryToLibrary,
   removeStoryFromLibrary
 } from '../constants/network.js';
@@ -63,6 +63,7 @@ const getMe = dispatch => async () => {
   try {
     const token = await AsyncStorage.getItem('token');
     const response = await useFetch(profileUrl, 'GET', null, token);
+    console.log(response)
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'get_me', payload: response.payload });
@@ -138,6 +139,30 @@ const fetchStories = dispatch => async authorId => {
     dispatch({ type: 'fetch_stories', payload: response.payload });
   } catch (error) {
     console.log(error);
+  };
+};
+
+const updateName = dispatch => async name => {
+  try {
+    const token = await AsyncStorage.getItem('token');
+    const response = await useFetch(profileUrl, 'PATCH', name, token);
+    if (response.status !== 'success')
+      return dispatch({ type: 'add_error', payload: response.payload });
+    dispatch({ type: 'update_name', payload: response.payload });
+  } catch (error) {
+    console.log(error);
+  };
+};
+
+const udpateEmail = dispatch => async email => {
+  try {
+    const token = await AsyncStorage.getItem('token');
+    const response = await useFetch(profileUrl, 'PATCH', email, token);
+    if (response.status !== 'success')
+      return dispatch({ type: 'add_error', paylaod: response.payload });
+    dispatch({ type: 'update_email', payload: response.payload });
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -150,7 +175,8 @@ export const { Context, Provider } = createDataContext(
     fetchLibrary,
     addToLibrary,
     removeFromLibrary,
-    fetchStories
+    fetchStories,
+    updateName,
   },
   {
     id: null,

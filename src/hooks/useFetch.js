@@ -1,5 +1,8 @@
+import { AsyncStorage } from 'react-native';
+
 exports.useFetch = async (url, method, body, token) => {
   try {
+    const token = await AsyncStorage.getItem('token');
     const bodyIsFormData = body instanceof FormData;
     const params = { method }
 
@@ -12,7 +15,7 @@ exports.useFetch = async (url, method, body, token) => {
       }
     if (token) params.headers.Authorization = `Bearer ${token}`;
     if (body) params.body = bodyIsFormData ? body : JSON.stringify(body);
-    
+
     const response = await fetch(url, params);
     const data = await response.json();
 

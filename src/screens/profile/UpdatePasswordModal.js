@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 });
 
 export const UpdatePasswordModal = () => {
-  const {}
+  // const {}
   return (
     <View>
 
