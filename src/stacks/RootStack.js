@@ -11,11 +11,12 @@ import { CreateStoryModal } from './../layout/CreateStoryModal.js';
 
 import { HeaderActions } from './../components/HeaderActions.js';
 import { Logo } from './../components/Logo.js';
-import { ProfileStack } from './ProfileStack.js';
-import { BackHeader } from '../components/BackHeader.js';
-import { ProfileActions } from '../components/ProfileActions.js';
 import { StoryCardModal } from '../layout/StoryCardModal.js';
 import { ReportModal } from '../layout/ReportModal.js';
+
+import { UpdateNameModal } from './../screens/profile/UpdateNameModal.js';
+import { UpdatePasswordModal } from './../screens/profile/UpdatePasswordModal.js';
+import { MetaModal } from './../layout/MetaModal.js'
 
 const Stack = createStackNavigator();
 
@@ -34,7 +35,6 @@ export const RootStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={isNew ? 'WelcomeStack' : 'BottomTabs'}
-      // initialRouteName={'ProfileStack'}
       screenOptions={{ animationEnabled: false }}
       mode='modal'
     >
@@ -91,22 +91,24 @@ export const RootStack = () => {
         }}
       />
       <Stack.Screen
-        name='ProfileStack'
-        component={ProfileStack}
-        options={({ navigation }) => ({
-          animationEnabled: true,
-          headerTitle: null,
-          headerRight: () => <ProfileActions navigation={navigation} />
-        })}
-        mode='screen'
-      />
-      <Stack.Screen
         name='ReportModal'
         component={ReportModal}
         options={({ navigation }) => ({
           animationEnabled: true,
           headerTitle: null
         })}
+      />
+      <Stack.Screen
+        name='MetaModal'
+        component={MetaModal}
+      />
+      <Stack.Screen
+        name='UpdateNameModal'
+        component={UpdateNameModal}
+      />
+      <Stack.Screen
+        name='UpdatePasswordModal'
+        component={UpdatePasswordModal}
       />
     </Stack.Navigator>
   )

@@ -7,7 +7,7 @@ import {
   ImageBackground,
   TextInput,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import {
   FontAwesome,
@@ -49,11 +49,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#fff',
     borderRadius: 10,
-  },
-  userName: {
-    marginTop: 10,
-    fontSize: 18,
-    fontWeight: 'bold'
   },
   action: {
     flexDirection: 'row',
@@ -118,7 +113,7 @@ const styles = StyleSheet.create({
   panelButton: {
     padding: 13,
     borderRadius: 10,
-    backgroundColor: '#FF6347',
+    backgroundColor: 'rgb(255,50,50)',
     alignItems: 'center',
     marginVertical: 7,
   },
@@ -158,22 +153,13 @@ export const ProfileUpdateScreen = ({ navigation }) => {
                 </View>
               </ImageBackground>
             </TouchableOpacity>
-            <Text style={styles.userName}>{name}</Text>
+            {/* <Text style={styles.userName}>{name}</Text> */}
           </View>
 
           <View style={styles.action}>
             <FontAwesome name='user-o' size={20} />
             <TextInput
-              placeholder='First Name'
-              placeholderTextColor='#666666'
-              autoCorrect={false}
-              style={styles.textInput}
-            />
-          </View>
-          <View style={styles.action}>
-            <FontAwesome name='user-o' size={20} />
-            <TextInput
-              placeholder='Last Name'
+              placeholder='Name'
               placeholderTextColor='#666666'
               autoCorrect={false}
               style={styles.textInput}
