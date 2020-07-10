@@ -66,6 +66,18 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: '#05375a',
   },
+  submit: {
+    padding: 15,
+    borderRadius: 10,
+    backgroundColor: 'rgb(255,50,50)',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  submitLabel: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: 'white',
+  },
 });
 
 export const ProfileUpdateScreen = ({ navigation }) => {
@@ -150,8 +162,11 @@ export const ProfileUpdateScreen = ({ navigation }) => {
               style={styles.textInput}
             />
           </View>
+          <TouchableOpacity onPress={() => null} style={styles.submit}>
+            <Text style={styles.submitLabel}>Submit</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableWithoutFeedback>
-  )
-}
+  );
+};
