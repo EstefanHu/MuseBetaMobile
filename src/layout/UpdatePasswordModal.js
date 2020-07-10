@@ -5,8 +5,8 @@ import {
   Text,
   InputText
 } from 'react-native';
-import { Context as AuthProvider } from './../../providers/AuthProvider.js';
-import {Context as ProfileContext} from './../../providers/ProfileProvider.js';
+import { Context as AuthProvider } from '../providers/AuthProvider.js';
+import {Context as ProfileContext} from '../providers/ProfileProvider.js';
 
 const styles = StyleSheet.create({
   container: {

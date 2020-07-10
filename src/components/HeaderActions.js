@@ -46,7 +46,7 @@ export const HeaderActions = ({ navigation }) => {
         <MaterialCommunityIcons style={styles.icon} name='qrcode-scan' size={22} color='grey' />
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate('ProfileStack')}>
+        onPress={() => navigation.navigate('MetaModal')}>
         <Image
           style={styles.image}
           source={

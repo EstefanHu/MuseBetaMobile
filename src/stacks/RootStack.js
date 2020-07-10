@@ -14,8 +14,8 @@ import { Logo } from './../components/Logo.js';
 import { StoryCardModal } from '../layout/StoryCardModal.js';
 import { ReportModal } from '../layout/ReportModal.js';
 
-import { UpdateNameModal } from './../screens/profile/UpdateNameModal.js';
-import { UpdatePasswordModal } from './../screens/profile/UpdatePasswordModal.js';
+import { UpdateNameModal } from '../layout/UpdateNameModal.js';
+import { UpdatePasswordModal } from '../layout/UpdatePasswordModal.js';
 import { MetaModal } from './../layout/MetaModal.js'
 
 const Stack = createStackNavigator();
@@ -55,14 +55,6 @@ export const RootStack = () => {
         })}
       />
       <Stack.Screen
-        name='CreateStoryModal'
-        component={CreateStoryModal}
-        options={{
-          animationEnabled: true,
-          header: () => null
-        }}
-      />
-      <Stack.Screen
         name='StoryCardModal'
         component={StoryCardModal}
         options={{
@@ -97,6 +89,14 @@ export const RootStack = () => {
           animationEnabled: true,
           headerTitle: null
         })}
+      />
+      <Stack.Screen
+        name='CreateStoryModal'
+        component={CreateStoryModal}
+        options={{
+          animationEnabled: true,
+          header: () => null
+        }}
       />
       <Stack.Screen
         name='MetaModal'
