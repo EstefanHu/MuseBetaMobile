@@ -114,9 +114,9 @@ const Map = ({ navigation, bs }) => {
               longitude: item.startLocation.coordinates[0]
             }}
             onPress={() => bs.current.snapTo(0)}
-          // onPress={() => navigation.navigate('ExploreStoryModal', { id: item._id })}
+            tracksViewChanges={false}
           >
-            <Callout tooltip>
+            <Callout tooltip alphaHitTest={true}>
               <View style={styles.callout}>
                 <Foundation name='arrow-down' size={35} color='black' />
               </View>

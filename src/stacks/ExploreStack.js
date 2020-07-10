@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Linking, Alert } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Location from 'expo-location';

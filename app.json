@@ -25,8 +25,8 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.estefanhu.projectmuse",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Allow Project:Muse experiences to use your location",
-        "NSPhotoLibraryUsageDescription": "Give Project:Muse experiences permission to access you photos"
+        "NSLocationWhenInUseUsageDescription": "Allow Project:Muse experiences to use your location for accurate map content rendering.",
+        "NSPhotoLibraryUsageDescription": "Give Project:Muse experiences permission to access you photos for profile and review images"
       }
     },
     "android": {
