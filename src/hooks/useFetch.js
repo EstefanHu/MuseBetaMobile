@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-exports.useFetch = async (url, method, body, token) => {
+exports.useFetch = async (url, method, body) => {
   try {
     const token = await AsyncStorage.getItem('token');
     const bodyIsFormData = body instanceof FormData;

@@ -8,7 +8,6 @@ import {
   addStoryToLibrary,
   removeStoryFromLibrary
 } from '../constants/network.js';
-import { AsyncStorage } from 'react-native';
 
 const profileReducer = (state, action) => {
   switch (action.type) {
@@ -61,9 +60,7 @@ const clearErrorMessage = dispatch => () => {
 
 const getMe = dispatch => async () => {
   try {
-    const token = await AsyncStorage.getItem('token');
-    const response = await useFetch(profileUrl, 'GET', null, token);
-    console.log(response)
+    const response = await useFetch(profileUrl, 'GET', null);
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'get_me', payload: response.payload });
@@ -74,8 +71,6 @@ const getMe = dispatch => async () => {
 
 const uploadProfilePhoto = dispatch => async (photo, callback) => {
   try {
-    const token = await AsyncStorage.getItem('token');
-
     let localUri = photo;
     let filename = localUri.split('/').pop();
     let match = /\.(\w+)$/.exec(filename);
@@ -84,7 +79,7 @@ const uploadProfilePhoto = dispatch => async (photo, callback) => {
     let formData = new FormData();
     formData.append('photo', { uri: localUri, name: filename, type });
 
-    const response = await useFetch(updateMeUrl, 'PATCH', formData, token);
+    const response = await useFetch(updateMeUrl, 'PATCH', formData);
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'upload_profile_photo', payload: response.payload.photo });
@@ -96,8 +91,7 @@ const uploadProfilePhoto = dispatch => async (photo, callback) => {
 
 const fetchLibrary = dispatch => async () => {
   try {
-    const token = await AsyncStorage.getItem('token');
-    const response = await useFetch(getLibrary, 'GET', null, token);
+    const response = await useFetch(getLibrary, 'GET', null);
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'fetch_library', payload: response.payload });
@@ -108,8 +102,7 @@ const fetchLibrary = dispatch => async () => {
 
 const addToLibrary = dispatch => async story => {
   try {
-    const token = await AsyncStorage.getItem('token');
-    const response = await useFetch(addStoryToLibrary, 'PATCH', { id: story._id }, token);
+    const response = await useFetch(addStoryToLibrary, 'PATCH', { id: story._id });
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'add_to_library', payload: response.payload });
@@ -120,8 +113,7 @@ const addToLibrary = dispatch => async story => {
 
 const removeFromLibrary = dispatch => async storyId => {
   try {
-    const token = await AsyncStorage.getItem('token');
-    const response = await useFetch(removeStoryFromLibrary, 'PATCH', { id: storyId }, token);
+    const response = await useFetch(removeStoryFromLibrary, 'PATCH', { id: storyId });
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'remove_from_library', payload: response.payload });
@@ -132,8 +124,7 @@ const removeFromLibrary = dispatch => async storyId => {
 
 const fetchStories = dispatch => async authorId => {
   try {
-    const token = await AsyncStorage.getItem('token');
-    const response = await useFetch(storyUrl + `?authorId=${authorId}`, 'GET', null, token);
+    const response = await useFetch(storyUrl + `?authorId=${authorId}`, 'GET', null);
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'fetch_stories', payload: response.payload });
@@ -144,8 +135,7 @@ const fetchStories = dispatch => async authorId => {
 
 const updateName = dispatch => async name => {
   try {
-    const token = await AsyncStorage.getItem('token');
-    const response = await useFetch(profileUrl, 'PATCH', name, token);
+    const response = await useFetch(profileUrl, 'PATCH', name);
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'update_name', payload: response.payload });
@@ -156,8 +146,7 @@ const updateName = dispatch => async name => {
 
 const udpateEmail = dispatch => async email => {
   try {
-    const token = await AsyncStorage.getItem('token');
-    const response = await useFetch(profileUrl, 'PATCH', email, token);
+    const response = await useFetch(profileUrl, 'PATCH', email);
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', paylaod: response.payload });
     dispatch({ type: 'update_email', payload: response.payload });
@@ -177,6 +166,7 @@ export const { Context, Provider } = createDataContext(
     removeFromLibrary,
     fetchStories,
     updateName,
+    udpateEmail,
   },
   {
     id: null,
