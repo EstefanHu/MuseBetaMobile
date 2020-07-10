@@ -1,10 +1,13 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import {
   StyleSheet,
   View,
   Dimensions,
   Text,
+  Alert,
+  Platform,
+  TouchableOpacity
 } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
 import Animated, { reanimated } from 'react-native-reanimated';
@@ -47,7 +50,7 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     width: Dimensions.get('window').width,
-    height: '100%'
+    height: '100%',
   },
   callout: {
     justifyContent: 'center',
@@ -88,7 +91,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
 };
 
 const Map = ({ navigation, bs, setPaddingTop }) => {
-  const userLocation = useRef([longitude, latitude]);
+  const initialRegion = useRef(region);
   const { state: { longitude, latitude } } = useContext(LocationContext);
   const { state: { stories } } = useContext(StoryContext);
   const [region, setRegion] = useState({
@@ -102,15 +105,17 @@ const Map = ({ navigation, bs, setPaddingTop }) => {
     <MapView
       style={styles.mapStyle}
       region={region}
-      onRegionChange={() => setRegion(region)}
-      showsUserLocation={true}
-      showsMyLocationButton={true}
+      // onRegionChange={console.log}
+      onRegionChangeComplete={setRegion}
       mapType={"mutedStandard"}
-      showsMyLocationButton={false}
       showsScale
       showsIndoors
       loadingEnabled
       compassOffset={{ x: -5, y: 5 }}
+      showsUserLocation
+      showsMyLocationButton
+      onMapReady={() => console.log('hello')}
+      onPoiClick={e => console.log(e.nativeEvent)}
     >
       {
         stories.map(item => (
@@ -132,9 +137,10 @@ const Map = ({ navigation, bs, setPaddingTop }) => {
           </Marker>
         ))
       }
-      {/* <View style={{backgroundColor: 'rgba(255,255,255,.5)'}}>
-        <Text>{longitude}, {latitude}</Text>
-      </View> */}
+
+      <TouchableOpacity>
+        <Text>Recenter</Text>
+      </TouchableOpacity>
     </MapView>
   )
 }
