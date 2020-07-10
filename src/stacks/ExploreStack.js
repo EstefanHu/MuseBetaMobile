@@ -6,7 +6,6 @@ import * as Permissions from 'expo-permissions';
 
 import { Context as LocationContext } from './../providers/LocationProvider.js';
 import { ExploreHomeScreen } from './../screens/explore/ExploreHomeScreen';
-import { ExploreStoryModal } from '../screens/explore/ExploreStoryModal.js';
 
 const Stack = createStackNavigator();
 
@@ -44,21 +43,6 @@ export const ExploreStack = () => {
       <Stack.Screen
         name='ExploreHomeScreen'
         component={ExploreHomeScreen}
-      />
-      <Stack.Screen
-        name='ExploreStoryModal'
-        component={ExploreStoryModal}
-        options={{
-          // cardOverlay: true,
-          cardOverlayEnabled: true,
-          cardStyle: {
-            backgroundColor: 'transparent',
-            justifyContent: 'center',
-            alignItems: 'center',
-          },
-          gestureEnabled: true,
-
-        }}
       />
     </Stack.Navigator>
   );
