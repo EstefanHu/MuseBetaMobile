@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 
 export const ProfileStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName='ProfileUpdateScreen'>
       <Stack.Screen
         name='ProfileOverviewScreen'
         component={ProfileOverviewScreen}

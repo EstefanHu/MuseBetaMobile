@@ -1,9 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import {
   StyleSheet,
   View,
   Dimensions,
+  Text
 } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
 
@@ -42,6 +43,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
 }
 
 const Map = ({ navigation }) => {
+  const userLocation = useRef([longitude, latitude]);
   const { state: { longitude, latitude } } = useContext(LocationContext);
   const { state: { stories } } = useContext(StoryContext);
   const [region, setRegion] = useState({
@@ -54,8 +56,8 @@ const Map = ({ navigation }) => {
   return (
     <MapView
       style={styles.mapStyle}
-      initialRegion={region}
-      onRegionChange={setRegion}
+      region={region}
+      onRegionChange={() => setRegion(region)}
       showsUserLocation
     >
       {
@@ -66,7 +68,7 @@ const Map = ({ navigation }) => {
               latitude: item.startLocation.coordinates[1],
               longitude: item.startLocation.coordinates[0]
             }}
-            onPress={() => navigation.navigate('ExploreStoryModal', { id: item._id })}
+          // onPress={() => navigation.navigate('ExploreStoryModal', { id: item._id })}
           >
             <Callout tooltip>
               <View style={styles.callout}>
@@ -76,6 +78,9 @@ const Map = ({ navigation }) => {
           </Marker>
         ))
       }
+      {/* <View style={{backgroundColor: 'rgba(255,255,255,.5)'}}>
+        <Text>{longitude}, {latitude}</Text>
+      </View> */}
     </MapView>
   )
 }

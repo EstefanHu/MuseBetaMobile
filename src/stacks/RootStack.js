@@ -33,7 +33,8 @@ export const RootStack = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={isNew ? 'WelcomeStack' : 'BottomTabs'}
+      // initialRouteName={isNew ? 'WelcomeStack' : 'BottomTabs'}
+      initialRouteName={'ProfileStack'}
       screenOptions={{ animationEnabled: false }}
       mode='modal'
     >
@@ -94,7 +95,6 @@ export const RootStack = () => {
         component={ProfileStack}
         options={({ navigation }) => ({
           animationEnabled: true,
-          headerLeft: () => <BackHeader navigation={navigation} />,
           headerTitle: null,
           headerRight: () => <ProfileActions navigation={navigation} />
         })}
