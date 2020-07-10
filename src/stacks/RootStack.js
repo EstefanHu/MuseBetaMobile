@@ -5,18 +5,19 @@ import decode from 'jwt-decode';
 import { Context as AuthContext } from './../providers/AuthProvider.js';
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 
-import { WelcomeStack } from './WelcomeStack.js';
 import { BottomTabs } from './../layout/BottomTabs.js';
-import { CreateStoryModal } from './../layout/CreateStoryModal.js';
+
+import { WelcomeStack } from './WelcomeStack.js';
 
 import { HeaderActions } from './../components/HeaderActions.js';
 import { Logo } from './../components/Logo.js';
-import { StoryCardModal } from '../layout/StoryCardModal.js';
-import { ReportModal } from '../layout/ReportModal.js';
 
-import { UpdateNameModal } from '../layout/UpdateNameModal.js';
-import { UpdatePasswordModal } from '../layout/UpdatePasswordModal.js';
-import { MetaModal } from './../layout/MetaModal.js'
+import { StoryCardModal } from './../modals/StoryCardModal.js';
+import { ReportModal } from './../modals/ReportModal.js';
+import { CreateStoryModal } from '../modals/CreateStoryModal.js';
+import { MetaModal } from './../modals/MetaModal.js'
+import { UpdateNameModal } from './../modals/UpdateNameModal.js';
+import { UpdatePasswordModal } from './../modals/UpdatePasswordModal.js';
 
 const Stack = createStackNavigator();
 
@@ -101,14 +102,20 @@ export const RootStack = () => {
       <Stack.Screen
         name='MetaModal'
         component={MetaModal}
+        options={{
+          animationEnabled: true,
+          header: () => null
+        }}
       />
       <Stack.Screen
         name='UpdateNameModal'
         component={UpdateNameModal}
+        options={{ animationEnabled: true }}
       />
       <Stack.Screen
         name='UpdatePasswordModal'
         component={UpdatePasswordModal}
+        options={{ animationEnabled: true }}
       />
     </Stack.Navigator>
   )

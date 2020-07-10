@@ -1,23 +1,22 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import { ProfileOverviewScreen } from '../screens/profile/ProfileOverviewScreen.js';
 import { ProfileUpdateScreen } from '../screens/profile/ProfileUpdateScreen.js';
 
-const Stack = createStackNavigator();
+const Tab = createMaterialTopTabNavigator();
 
-export const ProfileStack = () => {
+export const ProfileTopTabs = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <Tab.Navigator>
+      <Tab.Screen
         name='ProfileOverviewScreen'
         component={ProfileOverviewScreen}
       />
-      <Stack.Screen
+      <Tab.Screen
         name='ProfileUpdateScreen'
         component={ProfileUpdateScreen}
       />
-      
-    </Stack.Navigator>
+    </Tab.Navigator>
   );
-};
+}
