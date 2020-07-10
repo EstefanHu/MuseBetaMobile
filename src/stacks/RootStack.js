@@ -15,6 +15,7 @@ import { Logo } from './../components/Logo.js';
 import { StoryCardModal } from './../modals/StoryCardModal.js';
 import { ReportModal } from './../modals/ReportModal.js';
 import { CreateStoryModal } from '../modals/CreateStoryModal.js';
+import { ScanQRModal } from './../modals/ScanQRModal.js';
 import { MetaModal } from './../modals/MetaModal.js'
 import { UpdateNameModal } from './../modals/UpdateNameModal.js';
 import { UpdatePasswordModal } from './../modals/UpdatePasswordModal.js';
@@ -94,6 +95,14 @@ export const RootStack = () => {
       <Stack.Screen
         name='CreateStoryModal'
         component={CreateStoryModal}
+        options={{
+          animationEnabled: true,
+          header: () => null
+        }}
+      />
+      <Stack.Screen
+        name='ScanQRModal'
+        component={ScanQRModal}
         options={{
           animationEnabled: true,
           header: () => null
