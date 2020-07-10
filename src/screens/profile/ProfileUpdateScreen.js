@@ -6,11 +6,15 @@ import {
   TouchableOpacity,
   ImageBackground,
   TextInput,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 import {
   FontAwesome,
   Feather,
-  Fontisto
+  Fontisto,
+  MaterialCommunityIcons,
+  Ionicons
 } from '@expo/vector-icons';
 import { getProfileImage } from './../../constants/network.js';
 import DefaultImage from './../../../assets/user-default.png';
@@ -48,6 +52,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold'
   },
+  action: {
+    flexDirection: 'row',
+    marginTop: 10,
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f2f2f2',
+    paddingBottom: 5,
+  },
+  textInput: {
+    flex: 1,
+    marginTop: Platform.OS === 'ios' ? 0 : -12,
+    paddingLeft: 10,
+    color: '#05375a',
+  },
 });
 
 export const ProfileUpdateScreen = ({ navigation }) => {
@@ -55,35 +73,85 @@ export const ProfileUpdateScreen = ({ navigation }) => {
   const { state: { name, photo } } = useContext(ProfileContext);
 
   return (
-    <View style={styles.container}>
-      <View style={{ margin: 20 }}>
-        <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity onPress={() => null}>
-            <ImageBackground
-              style={styles.image}
-              source={
-                photo ? getProfileImage + '/' + photo
-                  : DefaultImage
-              }
-              source={DefaultImage}
-            >
-              <View style={styles.cameraHolder}>
-                <Fontisto style={styles.camera} name='camera' size={35} color='#fff' />
-              </View>
-            </ImageBackground>
-          </TouchableOpacity>
-          <Text style={styles.userName}>{name}</Text>
-        </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <View style={{ margin: 20 }}>
+          <View style={{ alignItems: 'center' }}>
+            <TouchableOpacity onPress={() => null}>
+              <ImageBackground
+                style={styles.image}
+                source={
+                  photo ? getProfileImage + '/' + photo
+                    : DefaultImage
+                }
+                source={DefaultImage}
+              >
+                <View style={styles.cameraHolder}>
+                  <Fontisto style={styles.camera} name='camera' size={35} color='#fff' />
+                </View>
+              </ImageBackground>
+            </TouchableOpacity>
+            <Text style={styles.userName}>{name}</Text>
+          </View>
 
-        <View style={styles.action}>
-          <TextInput
-            placeholder='First Name'
-            placeholderTextColor='#666666'
-            style={styles.textInput}
-          />
-
+          <View style={styles.action}>
+            <FontAwesome name='user-o' size={20} />
+            <TextInput
+              placeholder='First Name'
+              placeholderTextColor='#666666'
+              autoCorrect={false}
+              style={styles.textInput}
+            />
+          </View>
+          <View style={styles.action}>
+            <FontAwesome name='user-o' size={20} />
+            <TextInput
+              placeholder='Last Name'
+              placeholderTextColor='#666666'
+              autoCorrect={false}
+              style={styles.textInput}
+            />
+          </View>
+          <View style={styles.action}>
+            <FontAwesome name='envelope-o' size={20} />
+            <TextInput
+              placeholder='Email Address'
+              keyboardType='email-address'
+              placeholderTextColor='#666666'
+              autoCorrect={false}
+              style={styles.textInput}
+            />
+          </View>
+          <View style={styles.action}>
+            <Feather name='phone' size={20} />
+            <TextInput
+              placeholder='Phone'
+              placeholderTextColor='#666666'
+              keyboardType='number-pad'
+              autoCorrect={false}
+              style={styles.textInput}
+            />
+          </View>
+          <View style={styles.action}>
+            <Ionicons name='md-globe' size={20} />
+            <TextInput
+              placeholder='Country'
+              placeholderTextColor='#666666'
+              autoCorrect={false}
+              style={styles.textInput}
+            />
+          </View>
+          <View style={styles.action}>
+            <MaterialCommunityIcons name='city-variant-outline' size={20} />
+            <TextInput
+              placeholder='City'
+              placeholderTextColor='#666666'
+              autoCorrect={false}
+              style={styles.textInput}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   )
 }
