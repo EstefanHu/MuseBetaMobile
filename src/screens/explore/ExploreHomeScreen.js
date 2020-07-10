@@ -137,7 +137,6 @@ const Map = ({ navigation, bs, setPaddingTop }) => {
           </Marker>
         ))
       }
-
       <TouchableOpacity>
         <Text>Recenter</Text>
       </TouchableOpacity>

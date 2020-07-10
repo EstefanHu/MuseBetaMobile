@@ -228,30 +228,32 @@ export const ProfileUpdateScreen = ({ navigation }) => {
           callbackNode={fall}
           enabledBottomClamp={true}
           renderHeader={
-            () => <View style={styles.header}>
-              <View style={styles.panelHeader}>
-                <View style={styles.panelHandle}></View>
+            () =>
+              <View style={styles.header}>
+                <View style={styles.panelHeader}>
+                  <View style={styles.panelHandle}></View>
+                </View>
               </View>
-            </View>
           }
           renderContent={
-            () => <View style={styles.panel}>
-              <View style={{ alignItems: 'center' }}>
-                <Text style={styles.panelTitle}>Upload Photo</Text>
-                <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
+            () =>
+              <View style={styles.panel}>
+                <View style={{ alignItems: 'center' }}>
+                  <Text style={styles.panelTitle}>Upload Photo</Text>
+                  <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
+                </View>
+                <TouchableOpacity style={styles.panelButton}>
+                  <Text style={styles.panelButtonTitle}>Take Photo</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.panelButton}>
+                  <Text style={styles.panelButtonTitle}>Choose From Library</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.panelButton}
+                  onPress={() => bs.current.snapTo(1)}>
+                  <Text style={styles.panelButtonTitle}>Cancel</Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity style={styles.panelButton}>
-                <Text style={styles.panelButtonTitle}>Take Photo</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.panelButton}>
-                <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.panelButton}
-                onPress={() => bs.current.snapTo(1)}>
-                <Text style={styles.panelButtonTitle}>Cancel</Text>
-              </TouchableOpacity>
-            </View>
           }
         />
       </View>
