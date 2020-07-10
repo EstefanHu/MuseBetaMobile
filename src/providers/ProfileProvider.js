@@ -45,7 +45,11 @@ const profileReducer = (state, action) => {
         library: state.library.filter(story => story._id !== action.payload)
       };
     case 'fetch_stories':
-      return { ...state, stories: action.payload }
+      return { ...state, stories: action.payload };
+    case 'update_name':
+      return { ...state, name: action.payload };
+    case 'update_email':
+      return { ...state, email: action.payload };
     default:
       return state;
   }
