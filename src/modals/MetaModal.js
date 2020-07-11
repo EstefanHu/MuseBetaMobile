@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,13 +6,19 @@ import {
   TouchableOpacity,
   Dimensions,
   SafeAreaView,
-  ScrollView
+  ScrollView,
+  Image
 } from 'react-native';
 import {
   AntDesign,
   FontAwesome,
   Ionicons
 } from '@expo/vector-icons';
+import { getProfileImage } from './../constants/network.js';
+
+import { Context as ProfileContext } from './../providers/ProfileProvider.js';
+
+import DefaultImage from './../../assets/user-default.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,11 +31,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
   },
+  profile: {
+    flexDirection: 'row',
+    padding: 15
+  },
+  image: {
+    height: 50,
+    width: 50,
+    borderColor: 'lightgrey',
+    borderWidth: 1,
+    borderRadius: 50,
+  },
   section: {
     paddingHorizontal: 15,
     paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
+    borderTopWidth: 1,
+    borderTopColor: '#f2f2f2',
   },
   action: {
     flexDirection: 'row',
@@ -45,6 +62,8 @@ const styles = StyleSheet.create({
 });
 
 export const MetaModal = ({ navigation }) => {
+  const { state: { name, email, photo } } = useContext(ProfileContext);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -59,8 +78,18 @@ export const MetaModal = ({ navigation }) => {
         <Text style={{ fontSize: 20 }}>Account</Text>
       </View>
       <ScrollView>
-        <View style={styles.section}>
-
+        <View style={styles.profile}>
+          <Image
+            style={styles.image}
+            source={
+              photo ? getProfileImage + '/' + photo
+                : DefaultImage
+            }
+          />
+          <View style={{ paddingLeft: 12 }}>
+            <Text style={{ fontSize: 18 }}>{name}</Text>
+            <Text>{email}</Text>
+          </View>
         </View>
 
         <View style={styles.section}>
