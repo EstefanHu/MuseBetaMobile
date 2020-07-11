@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 import {
   AntDesign,
-  FontAwesome
+  FontAwesome,
+  Ionicons
 } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: Platform.OS === 'ios' ? 0 : -12,
     paddingLeft: 15,
-    // color: '#05375a',
+    color: 'rgb(70, 70, 70)',
   },
 });
 
@@ -67,18 +68,26 @@ export const MetaModal = ({ navigation }) => {
             style={styles.action}
             onPress={() => navigation.navigate('ProfileTopTabs')}
           >
-            <FontAwesome name='user' size={20} color='grey' />
+            <FontAwesome name='user' size={20} color='rgb(80, 80, 80)' />
             <Text style={styles.actionLabel}>Your profile</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.section}>
-          <View style={styles.action}>
+          <TouchableOpacity
+            style={styles.action}
+            onPress={() => null}
+          >
+            <Ionicons name='md-settings' size={20} color='rgb(80, 80, 80)' />
             <Text style={styles.actionLabel}>Settings</Text>
-          </View>
-          <View style={styles.action}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.action}
+            onPress={() => null}
+          >
+            <FontAwesome name='question-circle' size={20} color='rgb(80, 80, 80)' />
             <Text style={styles.actionLabel}>Help & Feedback</Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View style={styles}></View>
