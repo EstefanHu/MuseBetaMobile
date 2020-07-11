@@ -1,10 +1,12 @@
 import React from 'react';
-
 import { createStackNavigator } from '@react-navigation/stack';
+
+import { ProfileTopTabs } from './../layout/ProfileTopTabs.js';
+
 import { TopListScreen } from '../screens/top/TopListScreen.js';
 import { TopDetailScreen } from '../screens/top/TopDetailScreen.js';
 import { TopEngageScreen } from '../screens/top/TopEngageScreen.js';
-import { ProfileTopTabs } from './../layout/ProfileTopTabs.js';
+
 
 const Stack = createStackNavigator();
 
