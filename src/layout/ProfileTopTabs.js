@@ -9,7 +9,7 @@ const Tab = createMaterialTopTabNavigator();
 
 export const ProfileTopTabs = () => {
   return (
-    <Tab.Navigator initialRouteName={'ProfileUpdateScreen'}>
+    <Tab.Navigator>
       <Tab.Screen
         name='ProfileOverviewScreen'
         component={ProfileOverviewScreen}
