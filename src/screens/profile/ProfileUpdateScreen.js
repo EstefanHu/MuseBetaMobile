@@ -20,7 +20,6 @@ import { getProfileImage } from './../../constants/network.js';
 import DefaultImage from './../../../assets/user-default.png';
 import Animated, { reanimated } from 'react-native-reanimated';
 
-import { Context as AuthContext } from './../../providers/AuthProvider.js';
 import { Context as ProfileContext } from './../../providers/ProfileProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -36,6 +35,7 @@ const styles = StyleSheet.create({
     borderColor: 'lightgrey',
     borderWidth: 1,
     borderRadius: 15,
+    overflow: 'hidden'
   },
   cameraHolder: {
     flex: 1,
@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     shadowOpacity: 0.2,
     paddingTop: 20,
-    borderTopEndRadius: 15,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15
   },
   panelHeader: {
     alignItems: 'center',
@@ -125,7 +126,6 @@ const styles = StyleSheet.create({
 });
 
 export const ProfileUpdateScreen = ({ navigation }) => {
-  const { logout } = useContext(AuthContext);
   const { state: { name, photo } } = useContext(ProfileContext);
 
   const bs = React.createRef();
@@ -153,7 +153,6 @@ export const ProfileUpdateScreen = ({ navigation }) => {
                 </View>
               </ImageBackground>
             </TouchableOpacity>
-            {/* <Text style={styles.userName}>{name}</Text> */}
           </View>
 
           <View style={styles.action}>
