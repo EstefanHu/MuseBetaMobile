@@ -17,9 +17,9 @@ export const ProfileTopTabs = () => {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        labelStyle: { fontSize: 10 },
-        tabStyle: { paddingHorizontal: 5 },
-        style: {},
+        labelStyle: { fontSize: 10, marginTop: -2 },
+        tabStyle: {},
+        style: { height: 40 },
         indicatorStyle: { backgroundColor: 'rgb(255,50,50)' }
       }}
     >
