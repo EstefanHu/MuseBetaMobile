@@ -13,6 +13,7 @@ import {
   FontAwesome,
   Feather,
   Fontisto,
+  MaterialIcons,
   MaterialCommunityIcons,
   Ionicons
 } from '@expo/vector-icons';
@@ -52,17 +53,12 @@ const styles = StyleSheet.create({
   },
   action: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 10,
     marginBottom: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
     paddingBottom: 5,
-  },
-  textInput: {
-    flex: 1,
-    marginTop: Platform.OS === 'ios' ? 0 : -12,
-    paddingLeft: 10,
-    color: '#05375a',
   },
   submit: {
     padding: 15,
@@ -76,6 +72,73 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
+});
+
+export const ProfileUpdateScreen = ({ navigation }) => {
+  const { state: { name, email, photo } } = useContext(ProfileContext);
+
+  const bs = React.createRef();
+  const fall = new Animated.Value(1);
+
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <Animated.View style={{
+          margin: 20,
+          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+        }}>
+          <View style={{ alignItems: 'center' }}>
+            <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
+              <ImageBackground
+                style={styles.image}
+                source={
+                  photo ? getProfileImage + '/' + photo
+                    : DefaultImage
+                }
+                source={DefaultImage}
+              >
+                <View style={styles.cameraHolder}>
+                  <Fontisto style={styles.camera} name='camera' size={35} color='#fff' />
+                </View>
+              </ImageBackground>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity style={styles.action}>
+            <View>
+              <Text>Name</Text>
+              <Text>{name}</Text>
+            </View>
+            <MaterialIcons name='edit' size={20} color='grey' />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.action}>
+            <View>
+              <Text>Email</Text>
+              <Text>{email}</Text>
+            </View>
+            <MaterialIcons name='edit' size={20} color='grey' />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => null} style={styles.submit}>
+            <Text style={styles.submitLabel}>Submit</Text>
+          </TouchableOpacity>
+        </Animated.View>
+        <BottomSheet
+          ref={bs}
+          snapPoints={[330, 0]}
+          initialSnap={1}
+          callbackNode={fall}
+          enabledBottomClamp={true}
+          renderHeader={() => <Header />}
+          renderContent={() => <Panel bs={bs} />}
+        />
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
+
+const bsStyles = StyleSheet.create({
   header: {
     backgroundColor: 'white',
     shadowColor: '#333333',
@@ -122,126 +185,33 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
     color: 'white',
-  },
-});
+  }
+})
 
-export const ProfileUpdateScreen = ({ navigation }) => {
-  const { state: { name, photo } } = useContext(ProfileContext);
+const Header = () => (
+  <View style={bsStyles.header}>
+    <View style={bsStyles.panelHeader}>
+      <View style={bsStyles.panelHandle}></View>
+    </View>
+  </View>
+);
 
-  const bs = React.createRef();
-  const fall = new Animated.Value(1);
-
-  return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
-        <Animated.View style={{
-          margin: 20,
-          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-        }}>
-          <View style={{ alignItems: 'center' }}>
-            <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
-              <ImageBackground
-                style={styles.image}
-                source={
-                  photo ? getProfileImage + '/' + photo
-                    : DefaultImage
-                }
-                source={DefaultImage}
-              >
-                <View style={styles.cameraHolder}>
-                  <Fontisto style={styles.camera} name='camera' size={35} color='#fff' />
-                </View>
-              </ImageBackground>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.action}>
-            <FontAwesome name='user-o' size={20} />
-            <TextInput
-              placeholder='Name'
-              placeholderTextColor='#666666'
-              autoCorrect={false}
-              style={styles.textInput}
-            />
-          </View>
-          <View style={styles.action}>
-            <FontAwesome name='envelope-o' size={20} />
-            <TextInput
-              placeholder='Email Address'
-              keyboardType='email-address'
-              placeholderTextColor='#666666'
-              autoCorrect={false}
-              style={styles.textInput}
-            />
-          </View>
-          <View style={styles.action}>
-            <Feather name='phone' size={20} />
-            <TextInput
-              placeholder='Phone'
-              placeholderTextColor='#666666'
-              keyboardType='number-pad'
-              autoCorrect={false}
-              style={styles.textInput}
-            />
-          </View>
-          <View style={styles.action}>
-            <Ionicons name='md-globe' size={20} />
-            <TextInput
-              placeholder='Country'
-              placeholderTextColor='#666666'
-              autoCorrect={false}
-              style={styles.textInput}
-            />
-          </View>
-          <View style={styles.action}>
-            <MaterialCommunityIcons name='city-variant-outline' size={20} />
-            <TextInput
-              placeholder='City'
-              placeholderTextColor='#666666'
-              autoCorrect={false}
-              style={styles.textInput}
-            />
-          </View>
-          <TouchableOpacity onPress={() => null} style={styles.submit}>
-            <Text style={styles.submitLabel}>Submit</Text>
-          </TouchableOpacity>
-        </Animated.View>
-        <BottomSheet
-          ref={bs}
-          snapPoints={[330, 0]}
-          initialSnap={1}
-          callbackNode={fall}
-          enabledBottomClamp={true}
-          renderHeader={
-            () =>
-              <View style={styles.header}>
-                <View style={styles.panelHeader}>
-                  <View style={styles.panelHandle}></View>
-                </View>
-              </View>
-          }
-          renderContent={
-            () =>
-              <View style={styles.panel}>
-                <View style={{ alignItems: 'center' }}>
-                  <Text style={styles.panelTitle}>Upload Photo</Text>
-                  <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
-                </View>
-                <TouchableOpacity style={styles.panelButton}>
-                  <Text style={styles.panelButtonTitle}>Take Photo</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.panelButton}>
-                  <Text style={styles.panelButtonTitle}>Choose From Library</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.panelButton}
-                  onPress={() => bs.current.snapTo(1)}>
-                  <Text style={styles.panelButtonTitle}>Cancel</Text>
-                </TouchableOpacity>
-              </View>
-          }
-        />
-      </View>
-    </TouchableWithoutFeedback>
-  );
-};
+const Panel = bs => (
+  <View style={bsStyles.panel}>
+    <View style={{ alignItems: 'center' }}>
+      <Text style={bsStyles.panelTitle}>Upload Photo</Text>
+      <Text style={bsStyles.panelSubtitle}>Choose Your Profile Picture</Text>
+    </View>
+    <TouchableOpacity style={bsStyles.panelButton}>
+      <Text style={bsStyles.panelButtonTitle}>Take Photo</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={bsStyles.panelButton}>
+      <Text style={bsStyles.panelButtonTitle}>Choose From Library</Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      style={bsStyles.panelButton}
+      onPress={() => bs.current.snapTo(1)}>
+      <Text style={bsStyles.panelButtonTitle}>Cancel</Text>
+    </TouchableOpacity>
+  </View>
+)
