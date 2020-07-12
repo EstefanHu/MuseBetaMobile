@@ -221,7 +221,6 @@ const Header = () => (
 
 const Panel = ({ bs }) => {
   const { uploadProfilePhoto } = useContext(ProfileContext);
-  const [photoUri, setPhotoUri] = useState(null);
 
   const selectPicture = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -244,9 +243,10 @@ const Panel = ({ bs }) => {
       aspect: 1,
       allowsEditing: true,
     });
-    if (!cancelled)
-      uploadProfilePhoto(uri,
-        () => bs.current.snapTo(1));
+    if (!cancelled) {
+      uploadProfilePhoto(uri);
+      bs.current.snapTo(1);
+    }
   }
 
   const takePhoto = async () => {
@@ -270,9 +270,10 @@ const Panel = ({ bs }) => {
       allowsEditing: true,
     });
 
-    if (!cancelled)
-      uploadProfilePhoto(uri,
-        () => bs.current.snapTo(1));
+    if (!cancelled) {
+      uploadProfilePhoto(uri);
+      bs.current.snapTo(1);
+    };
   };
 
 

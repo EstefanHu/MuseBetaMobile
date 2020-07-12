@@ -107,9 +107,8 @@ export const WelcomeImageScreen = ({ navigation }) => {
   }
 
   const submitPhoto = () => {
-    uploadProfilePhoto(photoUri, () =>
-      navigation.navigate('WelcomeLaunchScreen')
-    )
+    uploadProfilePhoto(photoUri);
+    navigation.navigate('WelcomeLaunchScreen')
   }
 
   return (

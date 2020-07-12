@@ -70,7 +70,7 @@ const getMe = dispatch => async () => {
   }
 }
 
-const uploadProfilePhoto = dispatch => async (photo, callback) => {
+const uploadProfilePhoto = dispatch => async photo => {
   try {
     let localUri = photo;
     let filename = localUri.split('/').pop();
@@ -84,7 +84,6 @@ const uploadProfilePhoto = dispatch => async (photo, callback) => {
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'upload_profile_photo', payload: response.payload.photo });
-    callback();
   } catch (error) {
     console.log(error);
   }
