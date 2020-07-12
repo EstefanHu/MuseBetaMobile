@@ -11,7 +11,9 @@ import { TopEngageScreen } from '../screens/top/TopEngageScreen.js';
 const Stack = createStackNavigator();
 
 export const TopStack = () => (
-  <Stack.Navigator>
+  <Stack.Navigator
+    initialRouteName={'ProfileTopTabs'}
+  >
     <Stack.Screen
       name='TopListScreen'
       component={TopListScreen}

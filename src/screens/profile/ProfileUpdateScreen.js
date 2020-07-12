@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ImageBackground,
   TouchableWithoutFeedback,
-  Keyboard,
   Alert
 } from 'react-native';
 import {
@@ -86,68 +85,67 @@ export const ProfileUpdateScreen = ({ navigation }) => {
   const fall = new Animated.Value(1);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
-        <Animated.View style={{
-          margin: 20,
-          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-        }}>
-          <View style={{ alignItems: 'center' }}>
-            <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
-              <ImageBackground
-                style={styles.image}
-                source={
-                  photo ? { uri: getProfileImage + '/' + photo }
-                    : DefaultImage
-                }
-              >
-                <View style={styles.cameraHolder}>
-                  <Fontisto style={styles.camera}
-                    name='camera' size={35} color='#fff' />
-                </View>
-              </ImageBackground>
-            </TouchableOpacity>
+    <View style={styles.container}>
+      <Animated.View style={{
+        margin: 20,
+        opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+      }}>
+        <View style={{ alignItems: 'center' }}>
+          <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
+            <ImageBackground
+              style={styles.image}
+              source={
+                photo ? { uri: getProfileImage + '/' + photo }
+                  : DefaultImage
+              }
+            >
+              <View style={styles.cameraHolder}>
+                <Fontisto style={styles.camera}
+                  name='camera' size={35} color='#fff' />
+              </View>
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+          style={styles.action}
+          onPress={() => navigation.navigate('UpdateNameModal')}>
+          <View>
+            <Text style={styles.label}>Name</Text>
+            <Text style={styles.infoLabel}>{name}</Text>
           </View>
+          <MaterialIcons name='edit' size={20} color='grey' />
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.action}
-            onPress={() => navigation.navigate('UpdateNameModal')}>
-            <View>
-              <Text style={styles.label}>Name</Text>
-              <Text style={styles.infoLabel}>{name}</Text>
-            </View>
-            <MaterialIcons name='edit' size={20} color='grey' />
-          </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.action}
+          onPress={() => navigation.navigate('UpdateEmailModal')}>
+          <View>
+            <Text style={styles.label}>Email</Text>
+            <Text style={styles.infoLabel}>{email}</Text>
+          </View>
+          <MaterialIcons name='edit' size={20} color='grey' />
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.action}
-            onPress={() => navigation.navigate('UpdateEmailModal')}>
-            <View>
-              <Text style={styles.label}>Email</Text>
-              <Text style={styles.infoLabel}>{email}</Text>
-            </View>
-            <MaterialIcons name='edit' size={20} color='grey' />
-          </TouchableOpacity>
+        {
+          links.length > 0 ? links.map(l => (
+            <TouchableOpacity
+              style={styles.action}
+              onPress={() => navigation.navigate('')}>
+              <View>
+                <Text style={styles.label}>Email</Text>
+                <Text style={styles.infoLabel}>{email}</Text>
+              </View>
+              <MaterialIcons name='edit' size={20} color='grey' />
+            </TouchableOpacity>
+          )) : null
+        }
 
-          {
-            links.length > 0 ? links.map(l => (
-              <TouchableOpacity
-                style={styles.action}
-                onPress={() => navigation.navigate('')}>
-                <View>
-                  <Text style={styles.label}>Email</Text>
-                  <Text style={styles.infoLabel}>{email}</Text>
-                </View>
-                <MaterialIcons name='edit' size={20} color='grey' />
-              </TouchableOpacity>
-            )) : null
-          }
-
-          <TouchableOpacity onPress={() => null} style={styles.submit}>
-            <Text style={styles.submitLabel}>Submit</Text>
-          </TouchableOpacity>
-        </Animated.View>
-        <BottomSheet
+        <TouchableOpacity onPress={() => null} style={styles.submit}>
+          <Text style={styles.submitLabel}>Submit</Text>
+        </TouchableOpacity>
+      </Animated.View>
+      <BottomSheet
           ref={bs}
           snapPoints={[330, 0]}
           initialSnap={1}
@@ -156,8 +154,7 @@ export const ProfileUpdateScreen = ({ navigation }) => {
           renderHeader={() => <Header />}
           renderContent={() => <Panel bs={bs} />}
         />
-      </View>
-    </TouchableWithoutFeedback>
+    </View>
   );
 };
 
