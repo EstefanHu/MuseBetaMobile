@@ -175,6 +175,7 @@ export const { Context, Provider } = createDataContext(
     email: null,
     role: null,
     type: null,
+    links: [],
     libraryIds: [],
     library: [],
     stories: [],

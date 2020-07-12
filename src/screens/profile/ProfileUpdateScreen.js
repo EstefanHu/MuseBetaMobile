@@ -60,6 +60,13 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f2f2f2',
     paddingBottom: 5,
   },
+  label: {
+    fontSize: 12,
+    color: 'grey'
+  },
+  infoLabel: {
+    fontSize: 18
+  },
   submit: {
     padding: 15,
     borderRadius: 10,
@@ -108,8 +115,8 @@ export const ProfileUpdateScreen = ({ navigation }) => {
             style={styles.action}
             onPress={() => navigation.navigate('UpdateNameModal')}>
             <View>
-              <Text style={{ fontSize: 12, color: 'grey' }}>Name</Text>
-              <Text style={{ fontSize: 18 }}>{name}</Text>
+              <Text style={styles.label}>Name</Text>
+              <Text style={styles.infoLabel}>{name}</Text>
             </View>
             <MaterialIcons name='edit' size={20} color='grey' />
           </TouchableOpacity>
@@ -118,8 +125,8 @@ export const ProfileUpdateScreen = ({ navigation }) => {
             style={styles.action}
             onPress={() => navigation.navigate('')}>
             <View>
-              <Text style={{ fontSize: 12, color: 'grey' }}>Email</Text>
-              <Text style={{ fontSize: 18 }}>{email}</Text>
+              <Text style={styles.label}>Email</Text>
+              <Text style={styles.infoLabel}>{email}</Text>
             </View>
             <MaterialIcons name='edit' size={20} color='grey' />
           </TouchableOpacity>
@@ -130,8 +137,8 @@ export const ProfileUpdateScreen = ({ navigation }) => {
                 style={styles.action}
                 onPress={() => navigation.navigate('')}>
                 <View>
-                  <Text style={{ fontSize: 12, color: 'grey' }}>Email</Text>
-                  <Text style={{ fontSize: 18 }}>{email}</Text>
+                  <Text style={styles.label}>Email</Text>
+                  <Text style={styles.infoLabel}>{email}</Text>
                 </View>
                 <MaterialIcons name='edit' size={20} color='grey' />
               </TouchableOpacity>
