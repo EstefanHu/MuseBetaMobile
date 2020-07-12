@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 });
 
 export const ProfileUpdateScreen = ({ navigation }) => {
-  const { state: { name, email, photo } } = useContext(ProfileContext);
+  const { state: { name, email, photo, links } } = useContext(ProfileContext);
 
   const bs = React.createRef();
   const fall = new Animated.Value(1);
@@ -104,21 +104,39 @@ export const ProfileUpdateScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={styles.action}>
+          <TouchableOpacity
+            style={styles.action}
+            onPress={() => navigation.navigate('UpdateNameModal')}>
             <View>
-              <Text>Name</Text>
-              <Text>{name}</Text>
+              <Text style={{ fontSize: 12, color: 'grey' }}>Name</Text>
+              <Text style={{ fontSize: 18 }}>{name}</Text>
             </View>
             <MaterialIcons name='edit' size={20} color='grey' />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.action}>
+          <TouchableOpacity
+            style={styles.action}
+            onPress={() => navigation.navigate('')}>
             <View>
-              <Text>Email</Text>
-              <Text>{email}</Text>
+              <Text style={{ fontSize: 12, color: 'grey' }}>Email</Text>
+              <Text style={{ fontSize: 18 }}>{email}</Text>
             </View>
             <MaterialIcons name='edit' size={20} color='grey' />
           </TouchableOpacity>
+
+          {
+            links.length > 0 ? links.map(l => (
+              <TouchableOpacity
+                style={styles.action}
+                onPress={() => navigation.navigate('')}>
+                <View>
+                  <Text style={{ fontSize: 12, color: 'grey' }}>Email</Text>
+                  <Text style={{ fontSize: 18 }}>{email}</Text>
+                </View>
+                <MaterialIcons name='edit' size={20} color='grey' />
+              </TouchableOpacity>
+            )) : null
+          }
 
           <TouchableOpacity onPress={() => null} style={styles.submit}>
             <Text style={styles.submitLabel}>Submit</Text>

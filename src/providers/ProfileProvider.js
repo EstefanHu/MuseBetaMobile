@@ -21,6 +21,7 @@ const profileReducer = (state, action) => {
         id: action.payload._id,
         name: action.payload.name,
         email: action.payload.email,
+        links: action.payload.links,
         libraryIds: action.payload.library,
         credibility: action.payload.credibility,
         role: action.payload.role,
