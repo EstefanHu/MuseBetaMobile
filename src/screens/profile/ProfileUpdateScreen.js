@@ -5,17 +5,12 @@ import {
   Text,
   TouchableOpacity,
   ImageBackground,
-  TextInput,
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
 import {
-  FontAwesome,
-  Feather,
   Fontisto,
   MaterialIcons,
-  MaterialCommunityIcons,
-  Ionicons
 } from '@expo/vector-icons';
 import { getProfileImage } from './../../constants/network.js';
 import DefaultImage from './../../../assets/user-default.png';
@@ -105,7 +100,8 @@ export const ProfileUpdateScreen = ({ navigation }) => {
                 source={DefaultImage}
               >
                 <View style={styles.cameraHolder}>
-                  <Fontisto style={styles.camera} name='camera' size={35} color='#fff' />
+                  <Fontisto style={styles.camera}
+                    name='camera' size={35} color='#fff' />
                 </View>
               </ImageBackground>
             </TouchableOpacity>
@@ -123,7 +119,7 @@ export const ProfileUpdateScreen = ({ navigation }) => {
 
           <TouchableOpacity
             style={styles.action}
-            onPress={() => navigation.navigate('')}>
+            onPress={() => navigation.navigate('UpdateEmailModal')}>
             <View>
               <Text style={styles.label}>Email</Text>
               <Text style={styles.infoLabel}>{email}</Text>

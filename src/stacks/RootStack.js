@@ -18,6 +18,7 @@ import { CreateStoryModal } from '../modals/CreateStoryModal.js';
 import { ScanQRModal } from './../modals/ScanQRModal.js';
 import { MetaModal } from './../modals/MetaModal.js'
 import { UpdateNameModal } from './../modals/UpdateNameModal.js';
+import { UpdateEmailModal } from './../modals/UpdateEmailModal.js';
 import { UpdatePasswordModal } from './../modals/UpdatePasswordModal.js';
 
 const Stack = createStackNavigator();
@@ -120,6 +121,11 @@ export const RootStack = () => {
       <Stack.Screen
         name='UpdateNameModal'
         component={UpdateNameModal}
+        options={{ animationEnabled: true }}
+      />
+      <Stack.Screen
+        name='UpdateEmailModal'
+        component={UpdateEmailModal}
         options={{ animationEnabled: true }}
       />
       <Stack.Screen
