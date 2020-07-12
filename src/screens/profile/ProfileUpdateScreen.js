@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -7,14 +7,17 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert
 } from 'react-native';
 import {
   Fontisto,
   MaterialIcons,
 } from '@expo/vector-icons';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
 import { getProfileImage } from './../../constants/network.js';
 import DefaultImage from './../../../assets/user-default.png';
-import Animated, { reanimated } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
 import { Context as ProfileContext } from './../../providers/ProfileProvider.js';
 
@@ -94,10 +97,9 @@ export const ProfileUpdateScreen = ({ navigation }) => {
               <ImageBackground
                 style={styles.image}
                 source={
-                  photo ? getProfileImage + '/' + photo
+                  photo ? { uri: getProfileImage + '/' + photo }
                     : DefaultImage
                 }
-                source={DefaultImage}
               >
                 <View style={styles.cameraHolder}>
                   <Fontisto style={styles.camera}
@@ -165,7 +167,7 @@ const bsStyles = StyleSheet.create({
     shadowColor: '#333333',
     shadowOffset: { width: -1, height: -3 },
     shadowRadius: 2,
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     paddingTop: 20,
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15
@@ -217,22 +219,87 @@ const Header = () => (
   </View>
 );
 
-const Panel = bs => (
-  <View style={bsStyles.panel}>
-    <View style={{ alignItems: 'center' }}>
-      <Text style={bsStyles.panelTitle}>Upload Photo</Text>
-      <Text style={bsStyles.panelSubtitle}>Choose Your Profile Picture</Text>
+const Panel = ({ bs }) => {
+  const { uploadProfilePhoto } = useContext(ProfileContext);
+  const [photoUri, setPhotoUri] = useState(null);
+
+  const selectPicture = async () => {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status !== 'granted') return Alert.alert(
+      'Grant Permission',
+      'Previously blocked access to CAMERA_ROLL. Do you want to change settings?',
+      [
+        {
+          text: 'Skip',
+          style: 'cancel',
+        },
+        {
+          text: 'Settings',
+          onPress: () => Linking.openSettings()
+        }
+      ],
+      { cancelable: false }
+    )
+    const { cancelled, uri } = await ImagePicker.launchImageLibraryAsync({
+      aspect: 1,
+      allowsEditing: true,
+    });
+    if (!cancelled)
+      uploadProfilePhoto(uri,
+        () => bs.current.snapTo(1));
+  }
+
+  const takePhoto = async () => {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    if (status !== 'granted') return Alert.alert(
+      'Grant Permission',
+      'Previously blocked access to CAMERA. Do you want to change settings?',
+      [
+        {
+          text: 'Skip',
+          style: 'cancel',
+        },
+        {
+          text: 'Settings',
+          onPress: () => Linking.openSettings()
+        }
+      ],
+      { cancelable: false }
+    )
+    const { cancelled, uri } = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+    });
+
+    if (!cancelled)
+      uploadProfilePhoto(uri,
+        () => bs.current.snapTo(1));
+  };
+
+
+  return (
+    <View style={bsStyles.panel}>
+      <View style={{ alignItems: 'center' }}>
+        <Text style={bsStyles.panelTitle}>Upload Photo</Text>
+        <Text style={bsStyles.panelSubtitle}>Choose Your Profile Picture</Text>
+      </View>
+
+      <TouchableOpacity
+        style={bsStyles.panelButton}
+        onPress={selectPicture}>
+        <Text style={bsStyles.panelButtonTitle}>Choose From Library</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={bsStyles.panelButton}
+        onPress={takePhoto}>
+        <Text style={bsStyles.panelButtonTitle}>Take Photo</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={bsStyles.panelButton}
+        onPress={() => bs.current.snapTo(1)}>
+        <Text style={bsStyles.panelButtonTitle}>Cancel</Text>
+      </TouchableOpacity>
     </View>
-    <TouchableOpacity style={bsStyles.panelButton}>
-      <Text style={bsStyles.panelButtonTitle}>Take Photo</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={bsStyles.panelButton}>
-      <Text style={bsStyles.panelButtonTitle}>Choose From Library</Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      style={bsStyles.panelButton}
-      onPress={() => bs.current.snapTo(1)}>
-      <Text style={bsStyles.panelButtonTitle}>Cancel</Text>
-    </TouchableOpacity>
-  </View>
-)
+  );
+};

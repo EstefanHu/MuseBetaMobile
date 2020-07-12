@@ -50,7 +50,7 @@ export const HeaderActions = ({ navigation }) => {
         <Image
           style={styles.image}
           source={
-            photo ? getProfileImage + '/' + photo
+            photo ? { uri: getProfileImage + '/' + photo }
               : DefaultImage
           }
         />

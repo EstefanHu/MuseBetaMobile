@@ -82,7 +82,7 @@ export const ProfileOverviewScreen = ({ navigation }) => {
           <Image
             style={styles.profileImage}
             source={
-              photo ? getProfileImage + '/' + photo
+              photo ? { uri: getProfileImage + '/' + photo }
                 : DefaultImage
             }
           />
