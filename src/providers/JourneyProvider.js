@@ -9,7 +9,7 @@ const journeyReducer = (state, action) => {
         status: 'docked',
         storyId: action.payload
       };
-    case 'complete_story':
+    case 'clear_dock':
       return {
         ...state,
         status: 'inactive',
@@ -24,12 +24,12 @@ const journeyReducer = (state, action) => {
 const dockStory = dispatch => storyId =>
   dispatch({ type: 'dock_story', payload: storyId });
 
-const completeStory = dispatch => () =>
-  dispatch({ type: 'complete_story' });
+const clearDock = dispatch => () =>
+  dispatch({ type: 'clear_dock' });
 
 export const { Context, Provider } = createDataContext(
   journeyReducer,
-  { dockStory, completeStory },
+  { dockStory, clearDock },
   {
     status: 'inactive',
     storyId: null,

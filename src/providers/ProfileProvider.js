@@ -100,9 +100,9 @@ const fetchLibrary = dispatch => async () => {
   }
 }
 
-const addToLibrary = dispatch => async story => {
+const addToLibrary = dispatch => async storyId => {
   try {
-    const response = await useFetch(addStoryToLibrary, 'PATCH', { id: story._id });
+    const response = await useFetch(addStoryToLibrary, 'PATCH', { id: storyId });
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
     dispatch({ type: 'add_to_library', payload: response.payload });
