@@ -107,54 +107,53 @@ export const ProfileUpdateScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity
-          style={styles.action}
-          onPress={() => navigation.navigate('UpdateNameModal')}>
+        <View style={styles.action}>
           <View>
             <Text style={styles.label}>Name</Text>
             <Text style={styles.infoLabel}>{name}</Text>
           </View>
-          <MaterialIcons name='edit' size={20} color='grey' />
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('UpdateNameModal')}>
+            <MaterialIcons name='edit' size={20} color='grey' />
+          </TouchableOpacity>
+        </View>
 
-        <TouchableOpacity
-          style={styles.action}
-          onPress={() => navigation.navigate('UpdateEmailModal')}>
+        <View
+          style={styles.action}>
           <View>
             <Text style={styles.label}>Email</Text>
             <Text style={styles.infoLabel}>{email}</Text>
           </View>
-          <MaterialIcons name='edit' size={20} color='grey' />
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('UpdateEmailModal')}>
+            <MaterialIcons name='edit' size={20} color='grey' />
+          </TouchableOpacity>
+        </View >
 
         {
           links.length > 0 ? links.map(l => (
-            <TouchableOpacity
+            <View
               style={styles.action}
               onPress={() => navigation.navigate('')}>
               <View>
-                <Text style={styles.label}>Email</Text>
-                <Text style={styles.infoLabel}>{email}</Text>
+                <Text style={styles.label}>Link</Text>
+                <Text style={styles.infoLabel}>{l}</Text>
               </View>
               <MaterialIcons name='edit' size={20} color='grey' />
-            </TouchableOpacity>
+            </View>
           )) : null
         }
-
-        <TouchableOpacity onPress={() => null} style={styles.submit}>
-          <Text style={styles.submitLabel}>Submit</Text>
-        </TouchableOpacity>
-      </Animated.View>
+      </Animated.View >
       <BottomSheet
-          ref={bs}
-          snapPoints={[330, 0]}
-          initialSnap={1}
-          callbackNode={fall}
-          enabledBottomClamp={true}
-          renderHeader={() => <Header />}
-          renderContent={() => <Panel bs={bs} />}
-        />
-    </View>
+        ref={bs}
+        snapPoints={[330, 0]}
+        initialSnap={1}
+        callbackNode={fall}
+        enabledBottomClamp={true}
+        renderHeader={() => <Header />}
+        renderContent={() => <Panel bs={bs} />}
+      />
+    </View >
   );
 };
 
