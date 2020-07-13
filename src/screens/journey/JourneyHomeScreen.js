@@ -5,7 +5,8 @@ import {
   Text,
   TouchableOpacity,
   SafeAreaView,
-  FlatList
+  FlatList,
+  Dimensions
 } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 
@@ -14,19 +15,21 @@ import { Context as StoryContext } from './../../providers/StoryProvider.js';
 import { Context as LocationContext } from './../../providers/LocationProvider.js';
 
 import { StoryCard } from './../../components/StoryCard.js';
+import { Filter } from '../../components/Filter.js';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    paddingHorizontal: 10,
   },
   launcher: {
     backgroundColor: 'white',
-    width: '100%',
+    width: Dimensions.get('window').width - 20,
     paddingVertical: 20,
     paddingHorizontal: 30,
     marginTop: 10,
+    borderRadius: 5,
+    backgroundColor: 'white',
   },
   launcherHero: {
     color: 'grey',
@@ -55,12 +58,13 @@ export const JourneyHomeScreen = ({ navigation }) => {
   const { state: { stories }, fetchNearStories } = useContext(StoryContext);
   const { state: { longitude, latitude }, getCoords } = useContext(LocationContext);
   const [refreshing, setRefreshing] = useState(false);
+  const [channel, setChannel] = useState('All');
 
   const story = stories.find(s => s._id === storyId);
 
   useEffect(() => {
     longitude ?
-      fetchNearStories(100, longitude, latitude, 'mi')
+      fetchNearStories(5, longitude, latitude, 'mi')
       : getCoords();
   }, [longitude]);
 
@@ -69,12 +73,13 @@ export const JourneyHomeScreen = ({ navigation }) => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await fetchNearStories(100, longitude, latitude, 'mi');
+    await fetchNearStories(5, longitude, latitude, 'mi');
     setRefreshing(false);
   };
 
   return (
     <SafeAreaView style={styles.container}>
+      <Filter navigation={navigation} channel={channel} setChannel={c => setChannel(c)} />
       <View style={styles.launcher}>
         {
           status === 'docked' ?
@@ -87,21 +92,28 @@ export const JourneyHomeScreen = ({ navigation }) => {
                 <Text>Launch</Text>
               </TouchableOpacity>
             </>
-            : <Text style={styles.launcherHero}>No Story.</Text>
+            : <>
+              <Text style={styles.launcherHero}>No story loaded.</Text>
+              <Text>Launch recommendation?</Text>
+            </>
         }
       </View>
-      <Text style={styles.hero}>Stories around you</Text>
       <FlatList
         ref={ref}
         data={stories}
         onRefresh={onRefresh}
         refreshing={refreshing}
         keyExtractor={item => item._id}
+        ListHeaderComponent={() => (
+          <Text style={styles.hero}>Stories around you</Text>
+        )}
         renderItem={({ item }) => {
-          return <StoryCard
-            navigation={navigation}
-            item={item}
-          />
+          return item.channel === channel
+            || channel === 'All' ?
+            <StoryCard
+              navigation={navigation}
+              item={item}
+            /> : null
         }}
       />
     </SafeAreaView >
