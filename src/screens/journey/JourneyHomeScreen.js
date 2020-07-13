@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -30,41 +30,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20
   },
-  homeFeed: {
-
-  }
-});
-
-export const JourneyHomeScreen = ({ navigation }) => {
-  const { state: { status } } = useContext(JourneyContext);
-
-  const ref = React.useRef(null);
-  useScrollToTop(ref);
-
-  return (
-    <SafeAreaView style={styles.container}>
-      {
-        status === 'docked' ?
-          <Launch navigation={navigation} />
-          : <View style={styles.launcher}>
-            <Text style={styles.launcherHero}>No Story.</Text>
-          </View>
-      }
-      <FlatList
-        ref={ref}
-      />
-    </SafeAreaView >
-  );
-};
-
-const launchStyles = StyleSheet.create({
-  launcher: {
-    backgroundColor: 'white',
-    width: '100%',
-    paddingVertical: 20,
-    paddingHorizontal: 30,
-    marginTop: 10,
-  },
   launchButton: {
     backgroundColor: 'rgb(255,50,50)',
   },
@@ -72,24 +37,59 @@ const launchStyles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 20
-  }
+  },
+  hero: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: 'grey',
+    marginTop: 20,
+    marginBottom: 10,
+  },
 });
 
-const Launch = ({ navigation }) => {
+export const JourneyHomeScreen = ({ navigation }) => {
+  const { state: { status, storyId } } = useContext(JourneyContext);
   const { state: { stories } } = useContext(StoryContext);
-  const { state: { storyId } } = useContext(JourneyContext);
+  const [refreshing, setRefreshing] = useState(false);
 
   const story = stories.find(s => s._id === storyId);
 
+  const ref = React.useRef(null);
+  useScrollToTop(ref);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchStories(city);
+    setRefreshing(false);
+  };
+
   return (
-    <View style={launchStyles.launcher}>
-      <Text>{story.title}</Text>
-      <TouchableOpacity
-        style={launchStyles.launchButton}
-        onPress={() => navigation.navigate('JourneyLaunchScreen', { story })}
-      >
-        <Text>Launch</Text>
-      </TouchableOpacity>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.launcher}>
+        {
+          status === 'docked' ?
+            <>
+              <Text>{story.title}</Text>
+              <TouchableOpacity
+                style={styles.launchButton}
+                onPress={() => navigation.navigate('JourneyLaunchScreen', { story })}
+              >
+                <Text>Launch</Text>
+              </TouchableOpacity>
+            </>
+            : <Text style={styles.launcherHero}>No Story.</Text>
+        }
+      </View>
+      <Text style={styles.hero}>Stories around you</Text>
+      <FlatList
+        ref={ref}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
+        keyExtractor={item => item._id}
+        renderItem={({ item }) => {
+          <Text>Hello World</Text>
+        }}
+      />
+    </SafeAreaView >
   );
 };
