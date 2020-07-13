@@ -20,6 +20,7 @@ import { MetaModal } from './../modals/MetaModal.js'
 import { UpdateNameModal } from './../modals/UpdateNameModal.js';
 import { UpdateEmailModal } from './../modals/UpdateEmailModal.js';
 import { UpdatePasswordModal } from './../modals/UpdatePasswordModal.js';
+import { SupportStack } from './SupportStack.js';
 
 const Stack = createStackNavigator();
 
@@ -133,6 +134,12 @@ export const RootStack = () => {
         component={UpdatePasswordModal}
         options={{ animationEnabled: true }}
       />
+      <Stack.Screen
+        name='SupportStack'
+        component={SupportStack}
+        options={{ animationEnabled: true }}
+        mode={'modal'}
+      />
     </Stack.Navigator>
-  )
+  );
 };

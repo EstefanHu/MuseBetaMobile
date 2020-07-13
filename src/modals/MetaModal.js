@@ -64,6 +64,13 @@ const styles = StyleSheet.create({
 export const MetaModal = ({ navigation }) => {
   const { state: { name, email, photo } } = useContext(ProfileContext);
 
+  const popThenNavigateTo = async route => {
+    await navigation.pop();
+    setTimeout(() => {
+      navigation.push(route);
+    }, 500);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -112,7 +119,7 @@ export const MetaModal = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.action}
-            onPress={() => null}
+            onPress={() => popThenNavigateTo('SupportStack')}
           >
             <FontAwesome name='question-circle' size={20} color='rgb(80, 80, 80)' />
             <Text style={styles.actionLabel}>Help & Feedback</Text>

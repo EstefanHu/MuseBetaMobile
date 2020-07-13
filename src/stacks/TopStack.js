@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 
 export const TopStack = () => (
   <Stack.Navigator
-    initialRouteName={'ProfileTopTabs'}
+    // initialRouteName={'ProfileTopTabs'}
   >
     <Stack.Screen
       name='TopListScreen'
