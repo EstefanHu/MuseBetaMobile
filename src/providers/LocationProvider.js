@@ -1,4 +1,7 @@
 import createDataContext from './createDataContext.js';
+import { Linking, Alert } from 'react-native';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
 
 const LocationReducer = (state, action) => {
   switch (action.type) {
@@ -41,13 +44,39 @@ const approximateLocation = dispatch => async () => {
   };
 };
 
-const setCoords = dispatch => async location =>
-  dispatch({ type: 'get_location', payload: location });
+const getCoords = dispatch => async () => {
+  try {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    let location;
+    if (status === 'granted') {
+      location = await Location.getCurrentPositionAsync({});
+    } else {
+      Alert.alert(
+        'Grant Location',
+        'Permission is required for :Muse explore feature',
+        [
+          {
+            text: 'Later',
+            style: 'cancel'
+          },
+          {
+            text: 'Settings',
+            onPress: () => Linking.openSettings(),
+          }
+        ],
+        { cancelable: false }
+      )
+    }
+    dispatch({ type: 'get_location', payload: location });
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 
 export const { Provider, Context } = createDataContext(
   LocationReducer,
-  { addErrorMessage, clearErrorMessage, approximateLocation, setCoords },
+  { addErrorMessage, clearErrorMessage, approximateLocation, getCoords },
   {
     errorMessage: '',
     longitude: null,

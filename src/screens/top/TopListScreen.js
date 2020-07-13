@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 });
 
 export const TopListScreen = ({ navigation }) => {
-  const { state: { stories }, fetchStories } = useContext(StoryContext);
+  const { state: { top }, fetchTopStories } = useContext(StoryContext);
   const { state: { city } } = useContext(LocationContext);
   const [refreshing, setRefreshing] = useState(false);
   const [channel, setChannel] = useState('All');
@@ -30,12 +30,12 @@ export const TopListScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (city)
-      fetchStories(city);
+      fetchTopStories(city);
   }, [city]);
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await fetchStories(city);
+    await fetchTopStories(city);
     setRefreshing(false);
   };
 
@@ -43,7 +43,7 @@ export const TopListScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <Filter navigation={navigation} channel={channel} setChannel={c => setChannel(c)} />
       <FlatList
-        data={stories}
+        data={top}
         ref={ref}
         showsVerticalScrollIndicator={false}
         onRefresh={onRefresh}
@@ -59,5 +59,5 @@ export const TopListScreen = ({ navigation }) => {
         }}
       />
     </SafeAreaView>
-  )
+  );
 };

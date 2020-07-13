@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import decode from 'jwt-decode';
 
 import { Context as AuthContext } from './../providers/AuthProvider.js';
+import { Context as LocationContext } from './../providers/LocationProvider.js';
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 
 import { BottomTabs } from './../layout/BottomTabs.js';
@@ -27,6 +28,7 @@ const Stack = createStackNavigator();
 
 export const RootStack = () => {
   const { state: { token, isNew }, logout } = useContext(AuthContext);
+  const { getCoords } = useContext(LocationContext);
   const { getMe } = useContext(ProfileContext);
 
   useEffect(() => {
@@ -36,6 +38,10 @@ export const RootStack = () => {
 
     getMe();
   }, []);
+
+  useEffect(() => {
+    getCoords();
+  }, [])
 
   return (
     <Stack.Navigator

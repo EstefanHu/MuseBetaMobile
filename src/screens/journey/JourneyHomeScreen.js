@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
 export const JourneyHomeScreen = ({ navigation }) => {
   const { state: { status, storyId } } = useContext(JourneyContext);
-  const { state: { stories } } = useContext(StoryContext);
+  const { state: { stories }, fetchNearStories } = useContext(StoryContext);
   const [refreshing, setRefreshing] = useState(false);
 
   const story = stories.find(s => s._id === storyId);
@@ -59,7 +59,7 @@ export const JourneyHomeScreen = ({ navigation }) => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await fetchStories(city);
+    await fetchNearStories(5, );
     setRefreshing(false);
   };
 

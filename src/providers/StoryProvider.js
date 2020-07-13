@@ -9,8 +9,8 @@ const storyReducer = (state, action) => {
       return { ...state, genre: action.payload };
     case 'set_focused_story':
       return { ...state, focusedStoryId: action.payload }
-    case 'fetch_stories':
-      return { ...state, stories: action.payload };
+    case 'fetch_top_stories':
+      return { ...state, top: action.payload };
     case 'fetch_single_story':
       return {
         ...state,
@@ -58,11 +58,22 @@ const setFocusedStoryId = dispatch => storyId => {
   dispatch({ type: 'set_focused_story', payload: storyId });
 }
 
-const fetchStories = dispatch => async city => {
+const fetchNearStories = dispatch => async (distance, lon, lat, unit) => {
+  try {
+    const URL = `${storyUrl}/story-within/${distance}/center/${lon},${lat}/unit/${unit}`
+    const response = await useFetch(URL, 'GET', null);
+    if (response.status !== 'success') return dispatch({ type: 'add_error', payload: response.payload });
+    dispatch({ type: 'fetch_near_stories', payload: response.payload });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const fetchTopStories = dispatch => async city => {
   try {
     const response = await useFetch(`${storyUrl}?city=${city}`, 'GET', null);
     if (response.status !== 'success') return dispatch({ type: 'add_error', payload: response.payload });
-    dispatch({ type: 'fetch_stories', payload: response.payload });
+    dispatch({ type: 'fetch_top_stories', payload: response.payload });
   } catch (error) {
     console.log(error);
   }
@@ -102,7 +113,8 @@ export const { Context, Provider } = createDataContext(
   {
     setGenre,
     setFocusedStoryId,
-    fetchStories,
+    fetchNearStories,
+    fetchTopStories,
     fetchSingleStory,
     addStory,
     editStory,
@@ -112,6 +124,7 @@ export const { Context, Provider } = createDataContext(
     genre: 'All',
     focusedStoryId: null,
     error: null,
-    stories: []
+    stories: [],
+    top: []
   }
 );
