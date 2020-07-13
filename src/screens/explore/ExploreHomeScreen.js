@@ -114,8 +114,6 @@ const Map = ({ navigation, bs, setPaddingTop }) => {
       compassOffset={{ x: -5, y: 5 }}
       showsUserLocation
       showsMyLocationButton
-      onMapReady={() => console.log('hello')}
-      onPoiClick={e => console.log(e.nativeEvent)}
     >
       {
         stories.map(item => (
