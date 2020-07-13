@@ -145,28 +145,17 @@ const ReadButton = ({ id }) => {
   const [isDocked, setIsDocked] = useState(false);
 
   useEffect(() => {
-    if (id === storyId) {
-      console.log(id);
-      setIsDocked(true);
-    }
+    setIsDocked(id === storyId)
   }, [storyId]);
 
-  const dockStoryToJourney = () => {
-    dockStory(id);
-  }
-
-  const clearStoryFromJourney = () => {
-    clearDock();
-  }
-
   return isDocked ?
-    <TouchableOpacity onPress={clearStoryFromJourney}>
+    <TouchableOpacity onPress={clearDock}>
       <View style={styles.button} >
         <Feather name='book-open' size={22} color='grey' />
         <Text>  Read</Text>
       </View>
     </TouchableOpacity >
-    : <TouchableOpacity onPress={dockStoryToJourney}>
+    : <TouchableOpacity onPress={() => dockStory(id)}>
       <View style={styles.button}>
         <Feather name='book' size={22} color='grey' />
         <Text>  Read</Text>
@@ -179,8 +168,7 @@ const SaveButton = ({ id }) => {
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
-    libraryIds.includes(id) ?
-      setIsSaved(true) : setIsSaved(false);
+    setIsSaved(libraryIds.includes(id));
   }, [libraryIds]);
 
   const saveStory = async story => {

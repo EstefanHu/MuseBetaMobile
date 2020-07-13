@@ -1,5 +1,4 @@
 import createDataContext from './createDataContext.js';
-import { useFetch } from './../hooks/useFetch.js';
 
 const journeyReducer = (state, action) => {
   switch (action.type) {
