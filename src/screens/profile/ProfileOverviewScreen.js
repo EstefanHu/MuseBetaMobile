@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,7 +6,6 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
-  FlatList,
   Dimensions
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -14,8 +13,6 @@ import { getProfileImage } from './../../constants/network.js';
 
 import { Context as ProfileContext } from './../../providers/ProfileProvider.js';
 
-import { StoryCard } from './../../components/StoryCard.js';
-import { NoStory } from './../../components/NoStory.js';
 
 import DefaultImage from './../../../assets/user-default.png';
 
@@ -61,19 +58,7 @@ const styles = StyleSheet.create({
 });
 
 export const ProfileOverviewScreen = ({ navigation }) => {
-  const { state: { id, name, credibility, stories, photo },
-    fetchStories } = useContext(ProfileContext);
-  const [refreshing, setRefreshing] = useState(false);
-
-  useEffect(() => {
-    fetchStories(id);
-  }, []);
-
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await fetchStories(id);
-    setRefreshing(false);
-  }
+  const { state: { name, credibility, photo } } = useContext(ProfileContext);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -97,27 +82,6 @@ export const ProfileOverviewScreen = ({ navigation }) => {
           <MaterialCommunityIcons name='settings' size={25} color='grey' />
         </TouchableOpacity>
       </View>
-
-      {
-        stories.length > 0 ?
-          <FlatList
-            data={stories}
-            onRefresh={onRefresh}
-            refreshing={refreshing}
-            keyExtractor={item => item._id}
-            renderItem={({ item }) =>
-              <StoryCard
-                navigation={navigation}
-                item={item}
-              />
-            }
-          />
-          : <NoStory
-            navigation={navigation}
-            action={'Create First!'}
-            url={'CreateStoryModal'}
-          />
-      }
     </SafeAreaView>
   );
 };
