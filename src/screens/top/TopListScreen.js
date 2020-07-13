@@ -4,6 +4,8 @@ import {
   FlatList,
   SafeAreaView,
 } from 'react-native';
+import { useScrollToTop } from '@react-navigation/native';
+
 import { Context as StoryContext } from '../../providers/StoryProvider.js';
 import { Context as LocationContext } from '../../providers/LocationProvider.js';
 
@@ -23,6 +25,9 @@ export const TopListScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [channel, setChannel] = useState('All');
 
+  const ref = React.useRef(null);
+  useScrollToTop(ref);
+
   useEffect(() => {
     if (city)
       fetchStories(city);
@@ -39,6 +44,7 @@ export const TopListScreen = ({ navigation }) => {
       <Filter navigation={navigation} channel={channel} setChannel={c => setChannel(c)} />
       <FlatList
         data={stories}
+        ref={ref}
         showsVerticalScrollIndicator={false}
         onRefresh={onRefresh}
         refreshing={refreshing}

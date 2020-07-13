@@ -18,4 +18,4 @@ export const JourneyStack = () => (
       component={ProfileTopTabs}
     />
   </Stack.Navigator>
-)
+);

@@ -7,7 +7,6 @@ import {
   ImageBackground,
   FlatList,
 } from 'react-native';
-import { getProfileImage } from './../../constants/network.js';
 
 import { Context as ProfileContext } from './../../providers/ProfileProvider.js';
 
