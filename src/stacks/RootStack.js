@@ -21,6 +21,7 @@ import { UpdateNameModal } from './../modals/UpdateNameModal.js';
 import { UpdateEmailModal } from './../modals/UpdateEmailModal.js';
 import { UpdatePasswordModal } from './../modals/UpdatePasswordModal.js';
 import { SupportStack } from './SupportStack.js';
+import { SettingsStack } from './SettingsStack.js';
 
 const Stack = createStackNavigator();
 
@@ -133,6 +134,12 @@ export const RootStack = () => {
         name='UpdatePasswordModal'
         component={UpdatePasswordModal}
         options={{ animationEnabled: true }}
+      />
+      <Stack.Screen
+        name='SettingsStack'
+        component={SettingsStack}
+        options={{ animationEnabled: true }}
+        mode={'modal'}
       />
       <Stack.Screen
         name='SupportStack'

@@ -67,7 +67,7 @@ export const MetaModal = ({ navigation }) => {
   const popThenNavigateTo = async route => {
     await navigation.pop();
     setTimeout(() => {
-      navigation.push(route);
+      navigation.navigate(route);
     }, 500);
   };
 
@@ -102,7 +102,7 @@ export const MetaModal = ({ navigation }) => {
         <View style={styles.section}>
           <TouchableOpacity
             style={styles.action}
-            onPress={() => navigation.navigate('ProfileTopTabs')}
+            onPress={() => popThenNavigateTo('ProfileTopTabs')}
           >
             <FontAwesome name='user' size={20} color='rgb(80, 80, 80)' />
             <Text style={styles.actionLabel}>Your profile</Text>
@@ -112,7 +112,7 @@ export const MetaModal = ({ navigation }) => {
         <View style={styles.section}>
           <TouchableOpacity
             style={styles.action}
-            onPress={() => null}
+            onPress={() => popThenNavigateTo('SettingsStack')}
           >
             <Ionicons name='md-settings' size={20} color='rgb(80, 80, 80)' />
             <Text style={styles.actionLabel}>Settings</Text>
