@@ -7,12 +7,13 @@ import {
   Image,
 } from 'react-native';
 import {
-  Ionicons,
+  Feather,
   FontAwesome
 } from '@expo/vector-icons';
 import { getProfileImage } from './../constants/network.js';
 
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
+import { Context as JourneyContext } from './../providers/JourneyProvider.js';
 
 import DefaultImage from './../../assets/user-default.png';
 
@@ -94,12 +95,18 @@ const styles = StyleSheet.create({
 
 export const StoryCard = ({ navigation, item }) => {
   const { state: { libraryIds, authorPhoto }, addToLibrary, removeFromLibrary } = useContext(ProfileContext);
+  const { state: { storyId }, dockStory } = useContext(JourneyContext);
   const [isSaved, setIsSaved] = useState(false);
+  const [isDocked, setIsDocked] = useState(false);
 
   useEffect(() => {
     libraryIds.includes(item._id) ?
       setIsSaved(true) : setIsSaved(false);
   }, [libraryIds]);
+
+  useEffect(() => {
+    if (item._id === storyId) setIsDocked(true);
+  }, [storyId]);
 
   const saveStory = async story => {
     await addToLibrary(story);
@@ -109,6 +116,10 @@ export const StoryCard = ({ navigation, item }) => {
   const removeStory = async id => {
     removeFromLibrary(id);
     setIsSaved(false);
+  }
+
+  const dockStoryToJourney = () => {
+    dockStory(item._id);
   }
 
   return (
@@ -151,14 +162,21 @@ export const StoryCard = ({ navigation, item }) => {
 
       <View style={styles.actions}>
         <View style={styles.actionsWrapper}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('StoryDetailScreen', { _id: item._id })}
-          >
-            <View style={styles.button}>
-              <Ionicons name='md-book' size={22} color='grey' />
-              <Text>  Read</Text>
-            </View>
-          </TouchableOpacity>
+          {
+            isDocked ?
+              <TouchableOpacity onPress={dockStoryToJourney}>
+                <View style={styles.button}>
+                  <Feather name='book-open' size={22} color='grey' />
+                  <Text>  Read</Text>
+                </View>
+              </TouchableOpacity>
+              : <TouchableOpacity onPress={dockStoryToJourney}>
+                <View style={styles.button}>
+                  <Feather name='book' size={22} color='grey' />
+                  <Text>  Read</Text>
+                </View>
+              </TouchableOpacity>
+          }
           {
             isSaved ?
               <TouchableOpacity onPress={() => removeStory(item._id)}>
