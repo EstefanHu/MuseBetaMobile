@@ -41,6 +41,7 @@ export const BottomTabs = () => {
         activeTintColor: 'rgb(255,50,50)',
         inactiveTintColor: 'gray',
       }}
+      initialRouteName={'Journey'}
     >
       <Tabs.Screen name='Top' component={TopStack} />
       <Tabs.Screen name='Explore' component={ExploreStack} />

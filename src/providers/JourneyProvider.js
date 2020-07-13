@@ -1,4 +1,6 @@
 import createDataContext from './createDataContext.js';
+import { useFetch } from './../hooks/useFetch.js';
+import { storyUrl } from './../constants/network.js';
 
 const journeyReducer = (state, action) => {
   switch (action.type) {
@@ -26,9 +28,20 @@ const dockStory = dispatch => storyId =>
 const clearDock = dispatch => () =>
   dispatch({ type: 'clear_dock' });
 
+const fetchJourney = dispatch => async id => {
+  try {
+    const response = await useFetch(`${storyUrl}/${id}`, 'GET', null);
+    if (response.status !== 'success')
+      return dispatch({ status: 'add_error', payload: response.payload });
+    dispatch({ type: 'fetch_journey', payload: response.payload });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const { Context, Provider } = createDataContext(
   journeyReducer,
-  { dockStory, clearDock },
+  { dockStory, clearDock, fetchJourney },
   {
     status: 'inactive',
     storyId: null,

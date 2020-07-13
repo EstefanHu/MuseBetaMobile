@@ -5,21 +5,14 @@ import { Context as JourneyContext } from './../providers/JourneyProvider.js';
 
 import { ProfileTopTabs } from './../layout/ProfileTopTabs.js';
 
-import { JourneyDeploymentScreen } from '../screens/journey/JourneyHomeScreen.js';
+import { JourneyHomeScreen } from './../screens/journey/JourneyHomeScreen.js';
+import { JourneyLaunchScreen } from './../screens/journey/JourneyLaunchScreen.js';
 
 const Stack = createStackNavigator();
 
 export const JourneyStack = () => {
-  const { state: { status } } = useContext(JourneyContext);
-
   return (
-    <Stack.Navigator
-      initialRouteName={
-        status === 'inactive' ?
-          'JourneyHomeScreen'
-          : "JourneyLaunchScreen"
-      }
-    >
+    <Stack.Navigator>
       <Stack.Screen
         name='JourneyHomeScreen'
         component={JourneyHomeScreen}

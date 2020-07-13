@@ -6,6 +6,7 @@ import {
   Permissions,
   Linking
 } from 'react-native';
+import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,21 +17,15 @@ const styles = StyleSheet.create({
 });
 
 export const JourneyLaunchScreen = () => {
-  const [status, setStatus] = useState(null);
-  const [hasError, setHasError] = useState(null);
+  const { state: { status }, fetchJourney } = useContext(JourneyContext);
 
   useEffect(() => {
-    const { status } = await Permissions.getAsync(Permissions.LOCATION);
-    console.log(status);
-    setStatus(status);
 
   }, []);
 
-  const linkSettings = () => Linking.openURL('app-settings:');
-
   return (
     <View style={styles.container}>
-      <Text>Jello</Text>
+      <Text>Launch</Text>
     </View>
   );
 };
