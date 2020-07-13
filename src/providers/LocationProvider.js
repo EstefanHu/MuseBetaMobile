@@ -73,7 +73,6 @@ const getCoords = dispatch => async () => {
   }
 }
 
-
 export const { Provider, Context } = createDataContext(
   LocationReducer,
   { addErrorMessage, clearErrorMessage, approximateLocation, getCoords },

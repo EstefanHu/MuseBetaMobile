@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -11,6 +11,9 @@ import { useScrollToTop } from '@react-navigation/native';
 
 import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
+import { Context as LocationContext } from './../../providers/LocationProvider.js';
+
+import { StoryCard } from './../../components/StoryCard.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -50,16 +53,23 @@ const styles = StyleSheet.create({
 export const JourneyHomeScreen = ({ navigation }) => {
   const { state: { status, storyId } } = useContext(JourneyContext);
   const { state: { stories }, fetchNearStories } = useContext(StoryContext);
+  const { state: { longitude, latitude }, getCoords } = useContext(LocationContext);
   const [refreshing, setRefreshing] = useState(false);
 
   const story = stories.find(s => s._id === storyId);
+
+  useEffect(() => {
+    longitude ?
+      fetchNearStories(100, longitude, latitude, 'mi')
+      : getCoords();
+  }, [longitude]);
 
   const ref = React.useRef(null);
   useScrollToTop(ref);
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await fetchNearStories(5, );
+    await fetchNearStories(100, longitude, latitude, 'mi');
     setRefreshing(false);
   };
 
@@ -83,11 +93,15 @@ export const JourneyHomeScreen = ({ navigation }) => {
       <Text style={styles.hero}>Stories around you</Text>
       <FlatList
         ref={ref}
+        data={stories}
         onRefresh={onRefresh}
         refreshing={refreshing}
         keyExtractor={item => item._id}
         renderItem={({ item }) => {
-          <Text>Hello World</Text>
+          return <StoryCard
+            navigation={navigation}
+            item={item}
+          />
         }}
       />
     </SafeAreaView >

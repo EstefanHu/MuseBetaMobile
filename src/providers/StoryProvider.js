@@ -9,6 +9,8 @@ const storyReducer = (state, action) => {
       return { ...state, genre: action.payload };
     case 'set_focused_story':
       return { ...state, focusedStoryId: action.payload }
+    case 'fetch_near_stories':
+      return { ...state, stories: action.payload };
     case 'fetch_top_stories':
       return { ...state, top: action.payload };
     case 'fetch_single_story':
@@ -63,7 +65,7 @@ const fetchNearStories = dispatch => async (distance, lon, lat, unit) => {
     const URL = `${storyUrl}/story-within/${distance}/center/${lon},${lat}/unit/${unit}`
     const response = await useFetch(URL, 'GET', null);
     if (response.status !== 'success') return dispatch({ type: 'add_error', payload: response.payload });
-    dispatch({ type: 'fetch_near_stories', payload: response.payload });
+    dispatch({ type: 'fetch_near_stories', payload: response.payload.data });
   } catch (error) {
     console.log(error);
   }
