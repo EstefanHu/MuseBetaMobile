@@ -4,7 +4,7 @@ import {
   View,
   Text,
 } from 'react-native';
-import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
+import { Context as JourneyContext } from '../../providers/JourneyProvider.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const JourneyDeploymentScreen = () => {
+export const JourneyHomeScreen = () => {
   const { state: { status } } = useContext(JourneyContext);
 
   return (
