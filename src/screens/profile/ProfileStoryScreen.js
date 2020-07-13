@@ -1,26 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
-  StyleSheet,
   View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-  FlatList,
+  RefreshControl,
+  ScrollView
 } from 'react-native';
 
 import { Context as ProfileContext } from './../../providers/ProfileProvider.js';
 
-
 import { StoryCard } from './../../components/StoryCard.js';
 import { NoStory } from './../../components/NoStory.js';
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  }
-});
 
 export const ProfileStoryScreen = ({ navigation }) => {
   const { state: { id, stories }, fetchStories } = useContext(ProfileContext);
@@ -37,27 +25,32 @@ export const ProfileStoryScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      {
-        stories.length > 0 ?
-          <FlatList
-            data={stories}
-            onRefresh={onRefresh}
-            refreshing={refreshing}
-            keyExtractor={item => item._id}
-            renderItem={({ item }) =>
+    <ScrollView
+      style={{flex: 1}}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }
+    >
+      <View style={{ alignItems: 'center' }}>
+        {
+          stories.length > 0 ?
+            stories.map(item =>
               <StoryCard
+                key={item._id}
                 navigation={navigation}
                 item={item}
               />
-            }
-          />
-          : <NoStory
-            navigation={navigation}
-            action={'Create First!'}
-            url={'CreateStoryModal'}
-          />
-      }
-    </View>
+            )
+            : <NoStory
+              navigation={navigation}
+              action={'Create First!'}
+              url={'CreateStoryModal'}
+            />
+        }
+      </View>
+    </ScrollView>
   );
 };
