@@ -59,6 +59,7 @@ export const JourneyHomeScreen = ({ navigation }) => {
   const { state: { longitude, latitude }, getCoords } = useContext(LocationContext);
   const [refreshing, setRefreshing] = useState(false);
   const [channel, setChannel] = useState('All');
+  const [recommendation, setRecommendation] = useState();
 
   const story = stories.find(s => s._id === storyId);
 
@@ -67,6 +68,14 @@ export const JourneyHomeScreen = ({ navigation }) => {
       fetchNearStories(5, longitude, latitude, 'mi')
       : getCoords();
   }, [longitude]);
+
+  useEffect(() => {
+    setRecommendation(
+      Math.floor(
+        Math.random() *
+        Math.floor(stories.length)
+      ))
+  }, [stories]);
 
   const ref = React.useRef(null);
   useScrollToTop(ref);
@@ -95,6 +104,7 @@ export const JourneyHomeScreen = ({ navigation }) => {
             : <>
               <Text style={styles.launcherHero}>No story loaded.</Text>
               <Text>Launch recommendation?</Text>
+              <Text>{recommendation && stories[recommendation].title}</Text>
             </>
         }
       </View>
