@@ -23,6 +23,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  placeholder: {
+    backgroundColor: 'rgb(240,240,240)',
+    width: Dimensions.get('window').width - 20,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    marginTop: 10,
+    borderRadius: 5,
+  },
   launcher: {
     backgroundColor: 'white',
     width: Dimensions.get('window').width - 20,
@@ -30,7 +38,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginTop: 10,
     borderRadius: 5,
-    backgroundColor: 'white',
   },
   launcherHero: {
     color: 'grey',
@@ -70,9 +77,8 @@ export const JourneyHomeScreen = ({ navigation }) => {
   const { state: { longitude, latitude }, getCoords } = useContext(LocationContext);
   const [refreshing, setRefreshing] = useState(false);
   const [channel, setChannel] = useState('All');
-  const [recommendation, setRecommendation] = useState();
 
-  const story = stories.find(s => s._id === storyId);
+  const [dockedStory, setDockedStory] = useState();
 
   useEffect(() => {
     longitude ?
@@ -81,14 +87,16 @@ export const JourneyHomeScreen = ({ navigation }) => {
   }, [longitude]);
 
   useEffect(() => {
-    setRecommendation(
-      stories[
+    let displayStory;
+    storyId ?
+      displayStory = stories.find(s => s._id === storyId)
+      : displayStory = stories[
       Math.floor(
         Math.random() *
         Math.floor(stories.length)
       )]
-    )
-  }, [stories]);
+    setDockedStory(displayStory);
+  }, [stories, storyId]);
 
   const scroll = React.useRef(null);
   useScrollToTop(scroll);
@@ -96,13 +104,22 @@ export const JourneyHomeScreen = ({ navigation }) => {
   const previewMap = React.useRef(null);
 
   const fitMarkers = () => {
-    previewMap.current.fitToSuppliedMarkers([
+    const MARKERS = [
       {
-        latitude: recommendation.startLocation.coordinates[1],
-        longitude: recommendation.startLocation.coordinates[0]
+        latitude: dockedStory.startLocation.coordinates[1],
+        longitude: dockedStory.startLocation.coordinates[0]
       },
       { latitude: latitude, longitude: longitude }
-    ])
+    ]
+    const EDGE_PADDING = {
+      edgePadding: {
+        top: 30,
+        right: 60,
+        bottom: 30,
+        left: 60
+      }
+    }
+    previewMap.current.fitToCoordinates(MARKERS, EDGE_PADDING);
   }
 
   const onRefresh = async () => {
@@ -124,58 +141,46 @@ export const JourneyHomeScreen = ({ navigation }) => {
         ListHeaderComponent={
           () => <>
             <Text style={styles.launcherHero}>
-              {
-                status === 'docked' ?
-                  'Story loaded!' : 'No story loaded.'
-              }
+              {status === 'docked' ? 'Story loaded!' : 'No story loaded.'}
             </Text>
 
-            <View style={styles.launcher}>
-              {
-                status === 'docked' ?
-                  <>
-                    <Text>{story.title}</Text>
-
-                  </>
-                  : <>
-                    <Text>Launch recommendation?</Text>
-                    {
-                      recommendation && <>
-                        <Text>{recommendation && recommendation.title}</Text>
-                        <MapView
-                          style={styles.mapStyle}
-                          ref={previewMap}
-                          initialRegion={{
-                            longitude: longitude,
-                            latitude: latitude,
-                            longitudeDelta: 0.1,
-                            latitudeDelta: 0.1
-                          }}
-                          showsUserLocation
-                          scrollEnabled={false}
-                          onMapReady={fitMarkers}
-                        >
-                          <Marker
-                            coordinate={{
-                              latitude: recommendation.startLocation.coordinates[1],
-                              longitude: recommendation.startLocation.coordinates[0]
-                            }}
-                          />
-                        </MapView>
-                      </>
-                    }
-                  </>
-              }
-              <TouchableOpacity
-                style={styles.launchButton}
-                onPress={() => navigation.navigate(
-                  'JourneyLaunchScreen',
-                  { story: story ? story : recommendation }
-                )}
-              >
-                <Text style={styles.launchButtonText}>Launch</Text>
-              </TouchableOpacity>
-            </View>
+            {
+              dockedStory ?
+                <View style={styles.launcher}>
+                  <Text>Launch recommendation?</Text>
+                  <Text>{dockedStory.title}</Text>
+                  <MapView
+                    style={styles.mapStyle}
+                    ref={previewMap}
+                    initialRegion={{
+                      longitude: longitude,
+                      latitude: latitude,
+                      longitudeDelta: 0.1,
+                      latitudeDelta: 0.1
+                    }}
+                    showsUserLocation
+                    scrollEnabled={false}
+                    onMapReady={fitMarkers}
+                  >
+                    <Marker
+                      coordinate={{
+                        latitude: dockedStory.startLocation.coordinates[1],
+                        longitude: dockedStory.startLocation.coordinates[0]
+                      }}
+                    />
+                  </MapView>
+                  <TouchableOpacity
+                    style={styles.launchButton}
+                    onPress={() => navigation.navigate(
+                      'JourneyLaunchScreen',
+                      { story: dockedStory }
+                    )}
+                  >
+                    <Text style={styles.launchButtonText}>Launch</Text>
+                  </TouchableOpacity>
+                </View>
+                : <View style={styles.placeholder} />
+            }
             <Text style={styles.hero}>Stories around you</Text>
           </>
         }
