@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
   launcherHero: {
     color: 'grey',
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 20,
+    marginTop: 10
   },
   mapStyle: {
     height: 150,
@@ -56,11 +57,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   hero: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: 'bold',
     color: 'grey',
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: 15,
   },
 });
 
@@ -114,62 +114,71 @@ export const JourneyHomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Filter navigation={navigation} channel={channel} setChannel={c => setChannel(c)} />
-      <View style={styles.launcher}>
-        {
-          status === 'docked' ?
-            <>
-              <Text>{story.title}</Text>
-
-            </>
-            : <>
-              <Text style={styles.launcherHero}>No story loaded.</Text>
-              <Text>Launch recommendation?</Text>
-              {
-                recommendation && <>
-                  <Text>{recommendation && recommendation.title}</Text>
-                  <MapView
-                    style={styles.mapStyle}
-                    ref={previewMap}
-                    initialRegion={{
-                      longitude: longitude,
-                      latitude: latitude,
-                      longitudeDelta: 0.1,
-                      latitudeDelta: 0.1
-                    }}
-                    showsUserLocation
-                    scrollEnabled={false}
-                    onMapReady={fitMarkers}
-                  >
-                    <Marker
-                      coordinate={{
-                        latitude: recommendation.startLocation.coordinates[1],
-                        longitude: recommendation.startLocation.coordinates[0]
-                      }}
-                    />
-                  </MapView>
-                </>
-              }
-            </>
-        }
-        <TouchableOpacity
-          style={styles.launchButton}
-          onPress={() => navigation.navigate(
-            'JourneyLaunchScreen',
-            { story: story ? story : recommendation }
-          )}
-        >
-          <Text style={styles.launchButtonText}>Launch</Text>
-        </TouchableOpacity>
-      </View>
       <FlatList
         ref={scroll}
         data={stories}
         onRefresh={onRefresh}
         refreshing={refreshing}
         keyExtractor={item => item._id}
-        ListHeaderComponent={() => (
-          <Text style={styles.hero}>Stories around you</Text>
-        )}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          () => <>
+            <Text style={styles.launcherHero}>
+              {
+                status === 'docked' ?
+                  'Story loaded!' : 'No story loaded.'
+              }
+            </Text>
+
+            <View style={styles.launcher}>
+              {
+                status === 'docked' ?
+                  <>
+                    <Text>{story.title}</Text>
+
+                  </>
+                  : <>
+                    <Text>Launch recommendation?</Text>
+                    {
+                      recommendation && <>
+                        <Text>{recommendation && recommendation.title}</Text>
+                        <MapView
+                          style={styles.mapStyle}
+                          ref={previewMap}
+                          initialRegion={{
+                            longitude: longitude,
+                            latitude: latitude,
+                            longitudeDelta: 0.1,
+                            latitudeDelta: 0.1
+                          }}
+                          showsUserLocation
+                          scrollEnabled={false}
+                          onMapReady={fitMarkers}
+                        >
+                          <Marker
+                            coordinate={{
+                              latitude: recommendation.startLocation.coordinates[1],
+                              longitude: recommendation.startLocation.coordinates[0]
+                            }}
+                          />
+                        </MapView>
+                      </>
+                    }
+                  </>
+              }
+              <TouchableOpacity
+                style={styles.launchButton}
+                onPress={() => navigation.navigate(
+                  'JourneyLaunchScreen',
+                  { story: story ? story : recommendation }
+                )}
+              >
+                <Text style={styles.launchButtonText}>Launch</Text>
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.hero}>Stories around you</Text>
+          </>
+        }
         renderItem={({ item }) => {
           return item.channel === channel
             || channel === 'All' ?
