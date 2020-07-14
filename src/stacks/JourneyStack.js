@@ -1,7 +1,6 @@
-import React, { useEffect, useContext } from 'react';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { Context as JourneyContext } from './../providers/JourneyProvider.js';
 
 import { ProfileTopTabs } from './../layout/ProfileTopTabs.js';
 
