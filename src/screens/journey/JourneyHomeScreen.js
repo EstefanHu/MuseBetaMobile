@@ -111,15 +111,16 @@ export const JourneyHomeScreen = ({ navigation }) => {
       },
       { latitude: latitude, longitude: longitude }
     ]
-    const EDGE_PADDING = {
+    const OPTIONS = {
       edgePadding: {
         top: 30,
         right: 60,
         bottom: 30,
         left: 60
-      }
+      },
+      animated: false
     }
-    previewMap.current.fitToCoordinates(MARKERS, EDGE_PADDING);
+    previewMap.current.fitToCoordinates(MARKERS, OPTIONS);
   }
 
   const onRefresh = async () => {
