@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import {
   StyleSheet,
   View,
   Dimensions,
   Text,
-  Alert,
-  Platform,
   TouchableOpacity
 } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
-import Animated, { reanimated } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
 import { Context as LocationContext } from './../../providers/LocationProvider.js';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';

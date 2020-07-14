@@ -1,7 +1,6 @@
 import createDataContext from './createDataContext.js';
 import { useFetch } from './../hooks/useFetch.js';
 import { storyUrl } from '../constants/network.js';
-import { AsyncStorage } from 'react-native';
 
 const storyReducer = (state, action) => {
   switch (action.type) {

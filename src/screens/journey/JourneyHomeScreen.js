@@ -9,6 +9,7 @@ import {
   Dimensions
 } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
+import MapView, { Marker } from 'react-native-maps';
 
 import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
@@ -25,8 +26,8 @@ const styles = StyleSheet.create({
   launcher: {
     backgroundColor: 'white',
     width: Dimensions.get('window').width - 20,
-    paddingVertical: 20,
-    paddingHorizontal: 30,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
     marginTop: 10,
     borderRadius: 5,
     backgroundColor: 'white',
@@ -36,13 +37,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20
   },
+  mapStyle: {
+    height: 150,
+    width: '100%',
+    borderRadius: 5,
+    marginBottom: 15,
+  },
   launchButton: {
     backgroundColor: 'rgb(255,50,50)',
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
   },
   launchButtonText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 20,
   },
   hero: {
     fontSize: 25,
@@ -71,14 +82,28 @@ export const JourneyHomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     setRecommendation(
+      stories[
       Math.floor(
         Math.random() *
         Math.floor(stories.length)
-      ))
+      )]
+    )
   }, [stories]);
 
-  const ref = React.useRef(null);
-  useScrollToTop(ref);
+  const scroll = React.useRef(null);
+  useScrollToTop(scroll);
+
+  const previewMap = React.useRef(null);
+
+  const fitMarkers = () => {
+    previewMap.current.fitToSuppliedMarkers([
+      {
+        latitude: recommendation.startLocation.coordinates[1],
+        longitude: recommendation.startLocation.coordinates[0]
+      },
+      { latitude: latitude, longitude: longitude }
+    ])
+  }
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -94,22 +119,50 @@ export const JourneyHomeScreen = ({ navigation }) => {
           status === 'docked' ?
             <>
               <Text>{story.title}</Text>
-              <TouchableOpacity
-                style={styles.launchButton}
-                onPress={() => navigation.navigate('JourneyLaunchScreen', { story })}
-              >
-                <Text>Launch</Text>
-              </TouchableOpacity>
+
             </>
             : <>
               <Text style={styles.launcherHero}>No story loaded.</Text>
               <Text>Launch recommendation?</Text>
-              <Text>{recommendation && stories[recommendation].title}</Text>
+              {
+                recommendation && <>
+                  <Text>{recommendation && recommendation.title}</Text>
+                  <MapView
+                    style={styles.mapStyle}
+                    ref={previewMap}
+                    initialRegion={{
+                      longitude: longitude,
+                      latitude: latitude,
+                      longitudeDelta: 0.1,
+                      latitudeDelta: 0.1
+                    }}
+                    showsUserLocation
+                    scrollEnabled={false}
+                    onMapReady={fitMarkers}
+                  >
+                    <Marker
+                      coordinate={{
+                        latitude: recommendation.startLocation.coordinates[1],
+                        longitude: recommendation.startLocation.coordinates[0]
+                      }}
+                    />
+                  </MapView>
+                </>
+              }
             </>
         }
+        <TouchableOpacity
+          style={styles.launchButton}
+          onPress={() => navigation.navigate(
+            'JourneyLaunchScreen',
+            { story: story ? story : recommendation }
+          )}
+        >
+          <Text style={styles.launchButtonText}>Launch</Text>
+        </TouchableOpacity>
       </View>
       <FlatList
-        ref={ref}
+        ref={scroll}
         data={stories}
         onRefresh={onRefresh}
         refreshing={refreshing}
