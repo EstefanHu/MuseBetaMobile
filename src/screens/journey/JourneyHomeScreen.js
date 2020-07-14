@@ -23,14 +23,65 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  placeholder: {
-    backgroundColor: 'rgb(240,240,240)',
-    width: Dimensions.get('window').width - 20,
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    marginTop: 10,
-    borderRadius: 5,
-  },
+});
+
+export const JourneyHomeScreen = ({ navigation }) => {
+  const { state: { stories }, fetchNearStories } = useContext(StoryContext);
+  const { state: { longitude, latitude }, getCoords } = useContext(LocationContext);
+  const [refreshing, setRefreshing] = useState(false);
+  const [channel, setChannel] = useState('All');
+
+  useEffect(() => {
+    longitude ?
+      fetchNearStories(5, longitude, latitude, 'mi')
+      : getCoords();
+  }, [longitude]);
+
+  const scroll = React.useRef(null);
+  useScrollToTop(scroll);
+
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchNearStories(5, longitude, latitude, 'mi');
+    setRefreshing(false);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Filter
+        navigation={navigation}
+        channel={channel}
+        setChannel={c => setChannel(c)}
+      />
+      <FlatList
+        ref={scroll}
+        data={stories}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
+        keyExtractor={item => item._id}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={() =>
+          <Header
+            stories={stories}
+            longitude={longitude}
+            latitude={latitude}
+          />
+        }
+        renderItem={({ item }) => {
+          return item.channel === channel
+            || channel === 'All' ?
+            <StoryCard
+              navigation={navigation}
+              item={item}
+            /> : null
+        }}
+      />
+    </SafeAreaView >
+  );
+};
+
+const headerStyles = StyleSheet.create({
   launcher: {
     backgroundColor: 'white',
     width: Dimensions.get('window').width - 20,
@@ -63,81 +114,48 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
   },
+  placeholder: {
+    backgroundColor: 'rgb(240,240,240)',
+    width: Dimensions.get('window').width - 20,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    marginTop: 10,
+    borderRadius: 5,
+  },
   hero: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'grey',
     marginTop: 15,
   },
-});
-
-export const JourneyHomeScreen = ({ navigation }) => {
-  const { state: { stories }, fetchNearStories } = useContext(StoryContext);
-  const { state: { longitude, latitude }, getCoords } = useContext(LocationContext);
-  const [refreshing, setRefreshing] = useState(false);
-  const [channel, setChannel] = useState('All');
-
-  useEffect(() => {
-    longitude ?
-      fetchNearStories(5, longitude, latitude, 'mi')
-      : getCoords();
-  }, [longitude]);
-
-  const scroll = React.useRef(null);
-  useScrollToTop(scroll);
-
-
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await fetchNearStories(5, longitude, latitude, 'mi');
-    setRefreshing(false);
-  };
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <Filter navigation={navigation} channel={channel} setChannel={c => setChannel(c)} />
-      <FlatList
-        ref={scroll}
-        data={stories}
-        onRefresh={onRefresh}
-        refreshing={refreshing}
-        keyExtractor={item => item._id}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={() =>
-          <Header
-            stories={stories}
-            longitude={longitude}
-            latitude={latitude}
-          />
-        }
-        renderItem={({ item }) => {
-          return item.channel === channel
-            || channel === 'All' ?
-            <StoryCard
-              navigation={navigation}
-              item={item}
-            /> : null
-        }}
-      />
-    </SafeAreaView >
-  );
-};
+})
 
 const Header = ({ stories, longitude, latitude }) => {
-  const { state: { status, storyId } } = useContext(JourneyContext);
+  const { state: { status, storyId, story }, fetchJourney } = useContext(JourneyContext);
   const [dockedStory, setDockedStory] = useState();
 
   useEffect(() => {
-    let displayStory;
-    storyId ?
-      displayStory = stories.find(s => s._id === storyId)
-      : displayStory = stories[
-      Math.floor(
-        Math.random() *
-        Math.floor(stories.length)
-      )]
-    setDockedStory(displayStory);
+    (async () => {
+      let displayStory;
+      if (storyId) {
+        displayStory = stories.find(s => s._id === storyId);
+        if (!displayStory)
+          displayStory = story ? story : await fetchJourney(storyId);
+      } else {
+        displayStory = stories[
+          Math.floor(
+            Math.random() *
+            Math.floor(stories.length)
+          )];
+      }
+      setDockedStory(displayStory);
+    })();
   }, [stories, storyId]);
+
+  useEffect(() => {
+    if (previewMap.current && dockedStory)
+      fitMarkers();
+  }, [dockedStory, previewMap]);
 
   const previewMap = React.useRef(null);
 
@@ -151,28 +169,28 @@ const Header = ({ stories, longitude, latitude }) => {
     ]
     const OPTIONS = {
       edgePadding: {
-        top: 30,
+        top: 40,
         right: 60,
         bottom: 30,
         left: 60
       },
-      animated: false
+      // animated: false
     }
     previewMap.current.fitToCoordinates(MARKERS, OPTIONS);
   }
 
   return (
     <>
-      <Text style={styles.launcherHero}>
+      <Text style={headerStyles.launcherHero}>
         {status === 'docked' ? 'Story loaded!' : 'No story loaded.'}
       </Text>
       {
         dockedStory ?
-          <View style={styles.launcher}>
+          <View style={headerStyles.launcher}>
             <Text>Launch recommendation?</Text>
             <Text>{dockedStory.title}</Text>
             <MapView
-              style={styles.mapStyle}
+              style={headerStyles.mapStyle}
               ref={previewMap}
               initialRegion={{
                 longitude: longitude,
@@ -182,7 +200,6 @@ const Header = ({ stories, longitude, latitude }) => {
               }}
               showsUserLocation
               scrollEnabled={false}
-              onMapReady={fitMarkers}
             >
               <Marker
                 coordinate={{
@@ -192,18 +209,18 @@ const Header = ({ stories, longitude, latitude }) => {
               />
             </MapView>
             <TouchableOpacity
-              style={styles.launchButton}
+              style={headerStyles.launchButton}
               onPress={() => navigation.navigate(
                 'JourneyLaunchScreen',
                 { story: dockedStory }
               )}
             >
-              <Text style={styles.launchButtonText}>Launch</Text>
+              <Text style={headerStyles.launchButtonText}>Launch</Text>
             </TouchableOpacity>
           </View>
-          : <View style={styles.placeholder} />
+          : <View style={headerStyles.placeholder} />
       }
-      <Text style={styles.hero}>Stories around you</Text>
+      <Text style={headerStyles.hero}>Stories around you</Text>
     </>
   );
 };

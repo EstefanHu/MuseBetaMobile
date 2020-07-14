@@ -34,6 +34,7 @@ const fetchJourney = dispatch => async id => {
     if (response.status !== 'success')
       return dispatch({ status: 'add_error', payload: response.payload });
     dispatch({ type: 'fetch_journey', payload: response.payload });
+    return response.payload;
   } catch (error) {
     console.log(error);
   }
