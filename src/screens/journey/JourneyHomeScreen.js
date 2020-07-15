@@ -73,7 +73,6 @@ export const JourneyHomeScreen = ({ navigation }) => {
             {
               story ?
                 <LaunchPad
-                  stories={stories}
                   longitude={longitude}
                   latitude={latitude}
                 />
@@ -143,33 +142,17 @@ const launchPadStyles = StyleSheet.create({
   },
 })
 
-const LaunchPad = ({ stories, longitude, latitude }) => {
+const LaunchPad = ({ longitude, latitude }) => {
   const { state: { story } } = useContext(JourneyContext);
-  const [id, setId] = useState();
-  const [title, setTitle] = useState('');
-  const [coordinates, setCoordinates] = useState();
-
-  useEffect(() => {
-    (async () => {
-      let displayStory = story;
-      setId(displayStory._id);
-      setTitle(displayStory.title);
-      setCoordinates(displayStory.startLocation.coordinates);
-    })();
-  }, [stories, story]);
-
-  useEffect(() => {
-    if (previewMap.current && coordinates)
-      fitMarkers();
-  }, [coordinates, previewMap]);
-
   const previewMap = React.useRef(null);
+
+  useEffect(() => fitMarkers(), [story, previewMap]);
 
   const fitMarkers = () => {
     const MARKERS = [
       {
-        latitude: coordinates[1],
-        longitude: coordinates[0]
+        latitude: story.startLocation.coordinates[1],
+        longitude: story.startLocation.coordinates[0]
       },
       { latitude: latitude, longitude: longitude }
     ]
@@ -186,7 +169,7 @@ const LaunchPad = ({ stories, longitude, latitude }) => {
 
   return (
     <View style={launchPadStyles.launcher} >
-      <Text style={launchPadStyles.title}>{title}</Text>
+      <Text style={launchPadStyles.title}>{story.title}</Text>
       <MapView
         style={launchPadStyles.mapStyle}
         ref={previewMap}
@@ -199,19 +182,16 @@ const LaunchPad = ({ stories, longitude, latitude }) => {
         showsUserLocation
         scrollEnabled={false}
       >
-        {
-          coordinates &&
-          <Marker
-            coordinate={{
-              latitude: coordinates[1],
-              longitude: coordinates[0]
-            }}
-          />
-        }
+        <Marker
+          coordinate={{
+            latitude: story.startLocation.coordinates[1],
+            longitude: story.startLocation.coordinates[0]
+          }}
+        />
       </MapView>
       <TouchableOpacity
         style={launchPadStyles.launchButton}
-        onPress={() => navigation.navigate('JourneyLaunchScreen', { id })}
+        onPress={() => navigation.navigate('JourneyLaunchScreen', { story })}
       >
         <Text style={launchPadStyles.launchButtonText}>Launch</Text>
       </TouchableOpacity>
