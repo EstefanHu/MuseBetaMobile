@@ -145,21 +145,19 @@ const launchPadStyles = StyleSheet.create({
 })
 
 const LaunchPad = ({ stories, longitude, latitude }) => {
-  const { state: { story }, fetchJourney } = useContext(JourneyContext);
+  const { state: { story } } = useContext(JourneyContext);
   const [id, setId] = useState();
   const [title, setTitle] = useState('');
   const [coordinates, setCoordinates] = useState();
 
   useEffect(() => {
     (async () => {
-      let displayStory = stories.find(s => s._id === storyId);
-      if (!displayStory)
-        displayStory = story ? story : await fetchJourney(storyId);
+      let displayStory = story;
       setId(displayStory._id);
       setTitle(displayStory.title);
       setCoordinates(displayStory.startLocation.coordinates);
     })();
-  }, [stories, storyId]);
+  }, [stories, story]);
 
   useEffect(() => {
     if (previewMap.current && coordinates)
