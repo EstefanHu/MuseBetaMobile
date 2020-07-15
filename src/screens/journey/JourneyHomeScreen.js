@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 export const JourneyHomeScreen = ({ navigation }) => {
   const { state: { stories }, fetchNearStories } = useContext(StoryContext);
   const { state: { longitude, latitude }, getCoords } = useContext(LocationContext);
-  const { state: { story } } = useContext(JourneyContext);
+  const { state: { story }, dockStory } = useContext(JourneyContext);
   const [refreshing, setRefreshing] = useState(false);
   const [channel, setChannel] = useState('All');
 
@@ -48,12 +48,11 @@ export const JourneyHomeScreen = ({ navigation }) => {
     setRefreshing(false);
   };
 
-  const getRecommendation = () => {
-    Math.floor(
+  const getRecommendation =
+    () => dockStory(stories[Math.floor(
       Math.random() *
       Math.floor(stories.length)
-    );
-  };
+    )]);
 
   return (
     <SafeAreaView style={styles.container}>
