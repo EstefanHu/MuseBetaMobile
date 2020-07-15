@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 export const JourneyHomeScreen = ({ navigation }) => {
   const { state: { stories }, fetchNearStories } = useContext(StoryContext);
   const { state: { longitude, latitude }, getCoords } = useContext(LocationContext);
-  const { state: { storyId } } = useContext(JourneyContext);
+  const { state: { story } } = useContext(JourneyContext);
   const [refreshing, setRefreshing] = useState(false);
   const [channel, setChannel] = useState('All');
 
@@ -72,7 +72,7 @@ export const JourneyHomeScreen = ({ navigation }) => {
         ListHeaderComponent={() =>
           <>
             {
-              storyId ?
+              story ?
                 <LaunchPad
                   stories={stories}
                   longitude={longitude}
@@ -145,7 +145,7 @@ const launchPadStyles = StyleSheet.create({
 })
 
 const LaunchPad = ({ stories, longitude, latitude }) => {
-  const { state: { storyId, story }, fetchJourney } = useContext(JourneyContext);
+  const { state: { story }, fetchJourney } = useContext(JourneyContext);
   const [id, setId] = useState();
   const [title, setTitle] = useState('');
   const [coordinates, setCoordinates] = useState();
