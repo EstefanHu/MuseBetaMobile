@@ -136,7 +136,7 @@ const LaunchPad = ({ stories, longitude, latitude }) => {
   const { state: { storyId, story }, fetchJourney } = useContext(JourneyContext);
   const [id, setId] = useState();
   const [title, setTitle] = useState('');
-  const [coordinates, setCoordinates] = useState([]);
+  const [coordinates, setCoordinates] = useState();
 
   useEffect(() => {
     (async () => {
@@ -199,12 +199,15 @@ const LaunchPad = ({ stories, longitude, latitude }) => {
         showsUserLocation
         scrollEnabled={false}
       >
-        <Marker
-          coordinate={{
-            latitude: coordinates[1],
-            longitude: coordinates[0]
-          }}
-        />
+        {
+          coordinates &&
+          <Marker
+            coordinate={{
+              latitude: coordinates[1],
+              longitude: coordinates[0]
+            }}
+          />
+        }
       </MapView>
       <TouchableOpacity
         style={launchPadStyles.launchButton}
