@@ -73,6 +73,7 @@ export const JourneyHomeScreen = ({ navigation }) => {
             {
               story ?
                 <LaunchPad
+                  navigation={navigation}
                   longitude={longitude}
                   latitude={latitude}
                 />
@@ -142,7 +143,7 @@ const launchPadStyles = StyleSheet.create({
   },
 })
 
-const LaunchPad = ({ longitude, latitude }) => {
+const LaunchPad = ({ navigation, longitude, latitude }) => {
   const { state: { story } } = useContext(JourneyContext);
   const previewMap = React.useRef(null);
 
