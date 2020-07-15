@@ -42,9 +42,9 @@ export const HeaderActions = ({ navigation }) => {
         onPress={() => navigation.navigate('CreateStoryModal')}>
         <MaterialCommunityIcons style={styles.icon} name='plus' size={22} color='grey' />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ScanQRModal')}>
+      {/* <TouchableOpacity onPress={() => navigation.navigate('ScanQRModal')}>
         <MaterialCommunityIcons style={styles.icon} name='qrcode-scan' size={22} color='grey' />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity
         onPress={() => navigation.navigate('MetaModal')}>
         <Image

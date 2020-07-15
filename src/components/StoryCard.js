@@ -133,20 +133,20 @@ export const StoryCard = ({ navigation, item }) => (
 
     <View style={styles.actions}>
       <View style={styles.actionsWrapper}>
-        <ReadButton id={item._id} />
+        <ReadButton storyRef={item} />
         <SaveButton id={item._id} />
       </View>
     </View>
   </View>
 );
 
-const ReadButton = ({ id }) => {
-  const { state: { storyId }, dockStory, clearDock } = useContext(JourneyContext);
+const ReadButton = ({ storyRef }) => {
+  const { state: { story }, dockStory, clearDock } = useContext(JourneyContext);
   const [isDocked, setIsDocked] = useState(false);
 
   useEffect(() => {
-    setIsDocked(id === storyId)
-  }, [storyId]);
+    setIsDocked(storyRef === story)
+  }, [story]);
 
   return isDocked ?
     <TouchableOpacity onPress={clearDock}>
@@ -155,7 +155,7 @@ const ReadButton = ({ id }) => {
         <Text>  Read</Text>
       </View>
     </TouchableOpacity >
-    : <TouchableOpacity onPress={() => dockStory(id)}>
+    : <TouchableOpacity onPress={() => dockStory(storyRef)}>
       <View style={styles.button}>
         <Feather name='book' size={22} color='grey' />
         <Text>  Read</Text>

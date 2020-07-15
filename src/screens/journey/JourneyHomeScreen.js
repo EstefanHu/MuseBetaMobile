@@ -48,6 +48,13 @@ export const JourneyHomeScreen = ({ navigation }) => {
     setRefreshing(false);
   };
 
+  const getRecommendation = () => {
+    Math.floor(
+      Math.random() *
+      Math.floor(stories.length)
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Filter
@@ -71,7 +78,7 @@ export const JourneyHomeScreen = ({ navigation }) => {
                   longitude={longitude}
                   latitude={latitude}
                 />
-                : <NoStory />
+                : <NoStory getRecommendation={getRecommendation} />
             }
             <Text style={launchPadStyles.hero}>Stories around you</Text>
           </>
@@ -103,6 +110,11 @@ const launchPadStyles = StyleSheet.create({
     width: '100%',
     borderRadius: 5,
     marginBottom: 15,
+  },
+  title: {
+    fontSize: 20,
+    marginBottom: 10,
+    fontWeight: 'bold'
   },
   launchButton: {
     backgroundColor: 'rgb(255,50,50)',
@@ -140,18 +152,9 @@ const LaunchPad = ({ stories, longitude, latitude }) => {
 
   useEffect(() => {
     (async () => {
-      let displayStory;
-      if (storyId) {
-        displayStory = stories.find(s => s._id === storyId);
-        if (!displayStory)
-          displayStory = story ? story : await fetchJourney(storyId);
-      } else {
-        displayStory = stories[
-          Math.floor(
-            Math.random() *
-            Math.floor(stories.length)
-          )];
-      }
+      let displayStory = stories.find(s => s._id === storyId);
+      if (!displayStory)
+        displayStory = story ? story : await fetchJourney(storyId);
       setId(displayStory._id);
       setTitle(displayStory.title);
       setCoordinates(displayStory.startLocation.coordinates);
@@ -186,7 +189,7 @@ const LaunchPad = ({ stories, longitude, latitude }) => {
 
   return (
     <View style={launchPadStyles.launcher} >
-      <Text>{title}</Text>
+      <Text style={launchPadStyles.title}>{title}</Text>
       <MapView
         style={launchPadStyles.mapStyle}
         ref={previewMap}
@@ -258,26 +261,20 @@ const noStoryStyles = StyleSheet.create({
   },
 });
 
-const NoStory = () => {
-  const getRecommendation = () => {
-    console.log('recommendation');
-  }
-
-  return (
-    <View style={noStoryStyles.launcher}>
-      <View style={noStoryStyles.noStoryContainer}>
-        <Ionicons name='ios-navigate' size={90} color='lightgrey' />
-        <View style={noStoryStyles.noStoryText}>
-          <Text style={noStoryStyles.noStoryHero}>No story loaded.</Text>
-          <Text style={noStoryStyles.instructions}>Find a story and click {'\n'} 'Read' to load a story.</Text>
-        </View>
+const NoStory = ({ getRecommendation }) => (
+  <View style={noStoryStyles.launcher}>
+    <View style={noStoryStyles.noStoryContainer}>
+      <Ionicons name='ios-navigate' size={90} color='lightgrey' />
+      <View style={noStoryStyles.noStoryText}>
+        <Text style={noStoryStyles.noStoryHero}>No story loaded.</Text>
+        <Text style={noStoryStyles.instructions}>Find a story and click {'\n'} 'Read' to load a story.</Text>
       </View>
-      <TouchableOpacity
-        style={noStoryStyles.launchButton}
-        onPress={getRecommendation}
-      >
-        <Text style={noStoryStyles.launchButtonText}>Get Recommendation</Text>
-      </TouchableOpacity>
     </View>
-  );
-};
+    <TouchableOpacity
+      style={noStoryStyles.launchButton}
+      onPress={getRecommendation}
+    >
+      <Text style={noStoryStyles.launchButtonText}>Get Recommendation</Text>
+    </TouchableOpacity>
+  </View>
+);
