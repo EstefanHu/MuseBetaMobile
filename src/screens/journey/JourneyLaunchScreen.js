@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
 
 export const JourneyLaunchScreen = ({ route, navigation }) => {
   const initialRegion = React.useRef(region);
+  const previewMap = React.useRef(null);
   const { state: { status }, fetchJourney } = useContext(JourneyContext);
   const { state: { longitude, latitude } } = useContext(LocationContext);
   const [region, setRegion] = useState({
@@ -32,16 +33,34 @@ export const JourneyLaunchScreen = ({ route, navigation }) => {
     longitudeDelta: 0.1,
     latitudeDelta: 0.1
   });
-  const story = route.params?.story;
+  const { story } = route.params;
 
-  useEffect(() => {
+  useEffect(() => fitMarkers(), []);
 
-  }, []);
+  const fitMarkers = () => {
+    const MARKERS = [
+      {
+        latitude: story.startLocation.coordinates[1],
+        longitude: story.startLocation.coordinates[0]
+      },
+      { latitude: latitude, longitude: longitude }
+    ]
+    const OPTIONS = {
+      edgePadding: {
+        top: 80,
+        right: 40,
+        bottom: 50,
+        left: 40
+      }
+    }
+    previewMap.current.fitToCoordinates(MARKERS, OPTIONS);
+  }
 
   return (
     <View style={styles.container}>
       <MapView
         style={styles.mapStyle}
+        ref={previewMap}
         region={region}
         onRegionChangeComplete={setRegion}
         mapType={"mutedStandard"}
