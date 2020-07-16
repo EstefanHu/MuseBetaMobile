@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import decode from 'jwt-decode';
+import { Feather } from '@expo/vector-icons';
 
 import { Context as AuthContext } from './../providers/AuthProvider.js';
 import { Context as LocationContext } from './../providers/LocationProvider.js';
@@ -69,7 +70,21 @@ export const RootStack = () => {
       <Stack.Screen
         name='CreateStack'
         component={CreateStack}
-        options={{ animationEnabled: true }}
+        options={{
+          animationEnabled: true,
+          headerStyle: {
+            backgroundColor: 'rgb(40,40,40)',
+            shadowRadius: 0,
+            shadowColor: 'transparent',
+            shadowOffset: { height: 0 },
+          },
+          headerTitle: () => null,
+          headerBackTitle: () => null,
+          headerBackImage:
+            () => <Feather
+              style={{ marginLeft: 10 }}
+              name='x' size={24} color='white' />
+        }}
       />
       <Stack.Screen
         name='StoryCardModal'

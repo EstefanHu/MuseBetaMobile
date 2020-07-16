@@ -23,7 +23,6 @@ export const CreateStack = () => {
 
   return (
     <Stack.Navigator
-      screenOptions={{ headershown: false }}
       initialRouteName={
         isDenied ? 'CreatePermissionsScreen'
           : 'CreateStarterScreen'
@@ -32,9 +31,6 @@ export const CreateStack = () => {
       <Stack.Screen
         name='CreatePermissionsScreen'
         component={CreatePermissionsScreen}
-        options={{
-          headerTitle: 'hello'
-        }}
       />
       <Stack.Screen
         name='CreateStarterScreen'
