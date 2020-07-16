@@ -8,7 +8,7 @@ import { CreatePermissionsScreen } from '../screens/create/CreatePermissionsScre
 const Stack = createStackNavigator();
 
 export const CreateStack = () => {
-  const [isDenied, setIsDenied] = useState(true);
+  const [permissionStatus, setPermissionStatus] = useState();
 
   useEffect(() => {
     (async () => {
@@ -17,20 +17,22 @@ export const CreateStack = () => {
         Permissions.CAMERA,
         Permissions.CAMERA_ROLL,
       );
-      if (status === 'granted') setIsDenied(false);
+
+      setPermissionStatus(status);
     })();
   }, []);
 
   return (
     <Stack.Navigator
       initialRouteName={
-        isDenied ? 'CreatePermissionsScreen'
-          : 'CreateStarterScreen'
+        permissionStatus === 'granted' ? 'CreateStarterScreen'
+          : 'CreatePermissionsScreen'
       }
     >
       <Stack.Screen
         name='CreatePermissionsScreen'
         component={CreatePermissionsScreen}
+        initialParams={{ status: permissionStatus }}
       />
       <Stack.Screen
         name='CreateStarterScreen'

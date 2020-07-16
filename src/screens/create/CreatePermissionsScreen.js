@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
 
 export const CreatePermissionsScreen = () => {
   const [hasDenied, setHasDenied] = useState(false);
-
 
   const askPermissions = () => console.log('hello');
 
