@@ -15,7 +15,6 @@ import { Logo } from './../components/Logo.js';
 
 import { StoryCardModal } from './../modals/StoryCardModal.js';
 import { ReportModal } from './../modals/ReportModal.js';
-import { CreateStoryModal } from '../modals/CreateStoryModal.js';
 import { ScanQRModal } from './../modals/ScanQRModal.js';
 import { MetaModal } from './../modals/MetaModal.js'
 import { UpdateNameModal } from './../modals/UpdateNameModal.js';
@@ -23,6 +22,7 @@ import { UpdateEmailModal } from './../modals/UpdateEmailModal.js';
 import { UpdatePasswordModal } from './../modals/UpdatePasswordModal.js';
 import { SupportStack } from './SupportStack.js';
 import { SettingsStack } from './SettingsStack.js';
+import { CreateStack } from './CreateStack.js';
 
 const Stack = createStackNavigator();
 
@@ -67,6 +67,14 @@ export const RootStack = () => {
         })}
       />
       <Stack.Screen
+        name='CreateStack'
+        component={CreateStack}
+        options={{
+          animationEnabled: true,
+          header: () => null
+        }}
+      />
+      <Stack.Screen
         name='StoryCardModal'
         component={StoryCardModal}
         options={{
@@ -101,14 +109,6 @@ export const RootStack = () => {
           animationEnabled: true,
           headerTitle: null
         })}
-      />
-      <Stack.Screen
-        name='CreateStoryModal'
-        component={CreateStoryModal}
-        options={{
-          animationEnabled: true,
-          header: () => null
-        }}
       />
       <Stack.Screen
         name='ScanQRModal'

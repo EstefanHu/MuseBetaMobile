@@ -39,7 +39,7 @@ export const HeaderActions = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('CreateStoryModal')}>
+        onPress={() => navigation.navigate('CreateStack')}>
         <MaterialCommunityIcons style={styles.icon} name='plus' size={22} color='grey' />
       </TouchableOpacity>
       {/* <TouchableOpacity onPress={() => navigation.navigate('ScanQRModal')}>
@@ -56,5 +56,5 @@ export const HeaderActions = ({ navigation }) => {
         />
       </TouchableOpacity>
     </View>
-  )
+  );
 };
