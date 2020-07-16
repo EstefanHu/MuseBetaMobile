@@ -32,6 +32,9 @@ export const CreateStack = () => {
       <Stack.Screen
         name='CreatePermissionsScreen'
         component={CreatePermissionsScreen}
+        options={{
+          headerTitle: 'hello'
+        }}
       />
       <Stack.Screen
         name='CreateStarterScreen'

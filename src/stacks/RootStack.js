@@ -69,10 +69,7 @@ export const RootStack = () => {
       <Stack.Screen
         name='CreateStack'
         component={CreateStack}
-        options={{
-          animationEnabled: true,
-          header: () => null
-        }}
+        options={{ animationEnabled: true }}
       />
       <Stack.Screen
         name='StoryCardModal'
