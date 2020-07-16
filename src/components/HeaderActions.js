@@ -8,12 +8,12 @@ import {
 import {
   MaterialCommunityIcons
 } from '@expo/vector-icons';
+import * as Permissions from 'expo-permissions';
 import { getProfileImage } from './../constants/network.js';
 
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 
 import DefaultImage from './../../assets/user-default.png';
-
 
 const styles = StyleSheet.create({
   container: {
@@ -36,10 +36,19 @@ const styles = StyleSheet.create({
 export const HeaderActions = ({ navigation }) => {
   const { state: { photo } } = useContext(ProfileContext);
 
+  const navigateToCreate = async () => {
+    const { status } = await Permissions.getAsync(
+      Permissions.AUDIO_RECORDING,
+      Permissions.CAMERA,
+      Permissions.CAMERA_ROLL,
+    );
+    navigation.navigate('CreateStack', { status });
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('CreateStack')}>
+        onPress={navigateToCreate}>
         <MaterialCommunityIcons style={styles.icon} name='plus' size={22} color='grey' />
       </TouchableOpacity>
       {/* <TouchableOpacity onPress={() => navigation.navigate('ScanQRModal')}>

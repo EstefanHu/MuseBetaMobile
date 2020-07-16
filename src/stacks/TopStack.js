@@ -15,7 +15,6 @@ export const TopStack = () => (
     <Stack.Screen
       name='TopListScreen'
       component={TopListScreen}
-      initialParams={{ channel: 'All' }}
     />
     <Stack.Screen
       name='TopDetailScreen'

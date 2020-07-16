@@ -53,9 +53,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export const CreatePermissionsScreen = () => {
-  const [hasDenied, setHasDenied] = useState(false);
-
+export const CreatePermissionsScreen = ({ route }) => {
+  
   const askPermissions = () => console.log('hello');
 
   return (
@@ -66,7 +65,7 @@ export const CreatePermissionsScreen = () => {
       <Text style={styles.header}>Tell a story</Text>
       <Text style={styles.info}>To get started, allow access to Photos, Camera, and Microphone</Text>
       {
-        hasDenied ?
+        route.params?.status === 'denied' ?
           <TouchableOpacity
             style={styles.getStarted}
             onPress={() => Linking.openSettings()}
