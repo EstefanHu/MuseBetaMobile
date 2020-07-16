@@ -14,9 +14,9 @@ import {
   FontAwesome,
   Ionicons
 } from '@expo/vector-icons';
-import { getProfileImage } from './../constants/network.js';
+import { getProfileImage } from '../constants/network.js';
 
-import { Context as ProfileContext } from './../providers/ProfileProvider.js';
+import { Context as ProfileContext } from '../providers/ProfileProvider.js';
 
 import DefaultImage from './../../assets/user-default.png';
 
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const MetaModal = ({ navigation }) => {
+export const AccountModal = ({ navigation }) => {
   const { state: { name, email, photo } } = useContext(ProfileContext);
 
   const popThenNavigateTo = async route => {

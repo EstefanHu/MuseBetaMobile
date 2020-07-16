@@ -16,7 +16,7 @@ import { Logo } from './../components/Logo.js';
 import { StoryCardModal } from './../modals/StoryCardModal.js';
 import { ReportModal } from './../modals/ReportModal.js';
 import { ScanQRModal } from './../modals/ScanQRModal.js';
-import { MetaModal } from './../modals/MetaModal.js'
+import { AccountModal } from '../modals/AccountModal.js'
 import { UpdateNameModal } from './../modals/UpdateNameModal.js';
 import { UpdateEmailModal } from './../modals/UpdateEmailModal.js';
 import { UpdatePasswordModal } from './../modals/UpdatePasswordModal.js';
@@ -116,8 +116,8 @@ export const RootStack = () => {
         }}
       />
       <Stack.Screen
-        name='MetaModal'
-        component={MetaModal}
+        name='AccountModal'
+        component={AccountModal}
         options={{
           animationEnabled: true,
           header: () => null
