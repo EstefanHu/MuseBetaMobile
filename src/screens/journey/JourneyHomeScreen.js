@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import MapView, { Marker } from 'react-native-maps';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
@@ -180,8 +180,11 @@ const LaunchPad = ({ navigation, longitude, latitude }) => {
           longitudeDelta: 0.1,
           latitudeDelta: 0.1
         }}
-        showsUserLocation
         scrollEnabled={false}
+        pitchEnabled={false}
+        rotateEnabled={false}
+        scrollEnabled={false}
+        zoomEnabled={false}
       >
         <Marker
           coordinate={{
@@ -189,6 +192,9 @@ const LaunchPad = ({ navigation, longitude, latitude }) => {
             longitude: story.startLocation.coordinates[0]
           }}
         />
+        <Marker coordinate={{ latitude, longitude }}>
+          <FontAwesome5 name='walking' size={20} color='black' />
+        </Marker>
       </MapView>
       <TouchableOpacity
         style={launchPadStyles.launchButton}
