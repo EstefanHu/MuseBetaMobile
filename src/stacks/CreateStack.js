@@ -20,9 +20,6 @@ export const CreateStack = () => (
     <Stack.Screen
       name='CreatePreliminaryScreen'
       component={CreatePreliminaryScreen}
-      options={{
-        headerLeft: () => null
-      }}
     />
     <Stack.Screen
       name='CreateChannelScreen'

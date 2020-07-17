@@ -45,7 +45,7 @@ export const RootStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={isNew ? 'WelcomeStack' : 'BottomTabs'}
-      // initialRouteName={'MetaModal'}
+      initialRouteName={'CreateStack'}
       screenOptions={{ animationEnabled: false }}
       mode='modal'
     >
