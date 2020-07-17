@@ -6,18 +6,18 @@ import { CreatePermissionsScreen } from '../screens/create/CreatePermissionsScre
 
 const Stack = createStackNavigator();
 
-export const CreateStack = () => (
+export const CreateStack = ({ route }) => (
   <Stack.Navigator
-    // initialRouteName={
-    //   route.params?.status === 'granted'
-    //     ? 'CreateStarterScreen'
-    //     : 'CreatePermissionsScreen'
-    // }
+    initialRouteName={
+      route.params?.status === 'granted'
+        ? 'CreateStarterScreen'
+        : 'CreatePermissionsScreen'
+    }
   >
     <Stack.Screen
       name='CreatePermissionsScreen'
       component={CreatePermissionsScreen}
-      // initialParams={{ status: route.params?.status }}
+      initialParams={{ status: route.params?.status }}
     />
     <Stack.Screen
       name='CreateStarterScreen'
