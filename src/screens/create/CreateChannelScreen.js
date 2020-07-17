@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { CHANNELS } from './../../constants/channels.js';
 import { Picker } from '@react-native-community/picker'
 
@@ -82,45 +83,52 @@ export const CreateChannelScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.header}>Channel</Text>
-        <Text style={styles.describe}>Choose channel to be posted in</Text>
-      </View>
-
-      <SafeAreaView style={styles.form}>
-        <View style={styles.field}>
-          <Text style={styles.label}>Channel:</Text>
-          <Picker
-            style={styles.input}
-            selectedValue={channel}
-            itemStyle={{ color: 'white', fontSize: 30 }}
-            onValueChange={itemValue => setChannel(itemValue)}
-          >
-            {
-              CHANNELS.map(c => (
-                <Picker.Item
-                  key={c.label}
-                  label={c.label}
-                  value={c.value}
-                />
-              ))
-            }
-          </Picker>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'rgb(40,40,40)' }}>
+      <View style={styles.container}>
+        <View>
+          <Ionicons
+            style={{ marginLeft: -10 }}
+            name='ios-arrow-back' size={24} color='white'
+            onPress={() => navigation.pop()}
+          />
+          <Text style={styles.header}>Channel</Text>
+          <Text style={styles.describe}>Choose channel to be posted in</Text>
         </View>
-        <View style={styles.requestContainer}>
-          <Text style={styles.request}>Channel not included?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SettingsStack')}>
-            <Text style={styles.requestLink}> Request another!</Text>
+
+        <View style={styles.form}>
+          <View style={styles.field}>
+            <Text style={styles.label}>Channel:</Text>
+            <Picker
+              style={styles.input}
+              selectedValue={channel}
+              itemStyle={{ color: 'white', fontSize: 30 }}
+              onValueChange={itemValue => setChannel(itemValue)}
+            >
+              {
+                CHANNELS.map(c => (
+                  <Picker.Item
+                    key={c.label}
+                    label={c.label}
+                    value={c.value}
+                  />
+                ))
+              }
+            </Picker>
+          </View>
+          <View style={styles.requestContainer}>
+            <Text style={styles.request}>Channel not included?</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('SettingsStack')}>
+              <Text style={styles.requestLink}> Request another!</Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            style={styles.submit}
+            onPress={validateForNext}
+          >
+            <Text style={styles.submitText}>Next</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.submit}
-          onPress={validateForNext}
-        >
-          <Text style={styles.submitText}>Next</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };

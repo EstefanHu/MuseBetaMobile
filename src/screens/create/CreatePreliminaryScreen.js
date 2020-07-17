@@ -10,21 +10,16 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  ScrollView
 } from 'react-native';
 
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
+import { Ionicons } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgb(40,40,40)',
-  },
-  inner: {
-    flex: 1,
     paddingHorizontal: 24,
     justifyContent: 'space-between',
-    paddingBottom: 20
   },
   form: {
     flexGrow: 2,
@@ -34,7 +29,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 50,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: 5,
   },
   describe: {
     color: 'rgb(220,220,220)',
@@ -89,56 +84,63 @@ export const CreatePreliminaryScreen = ({ navigation }) => {
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" || Platform.isPad ? "padding" : "height"}
-      style={styles.container}
-      keyboardVerticalOffset={70}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.inner}>
-          <View>
-            <Text style={styles.header}>Preliminary</Text>
-            <Text style={styles.describe}>Start your story with an introduction</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'rgb(40,40,40)' }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" || Platform.isPad ? "padding" : "height"}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={70}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.container}>
+            <Ionicons
+              style={{ marginLeft: -10 }}
+              name='ios-arrow-back' size={24} color='white'
+              onPress={() => navigation.pop()}
+            />
+            <View>
+              <Text style={styles.header}>Preliminary</Text>
+              <Text style={styles.describe}>Start your story with an introduction</Text>
+            </View>
+
+            <View style={styles.form}>
+              <View style={styles.field}>
+                <Text style={styles.label}>Title:</Text>
+                <TextInput
+                  underlineColorAndroid='rgba(0,0,0,0)'
+                  style={styles.input}
+                  maxLength={50}
+                  autoCorrect
+                  value={title}
+                  onChangeText={text => setTitle(text)}
+                />
+                <Text style={styles.count}>{title.length}/50</Text>
+              </View>
+
+              <View style={styles.field}>
+                <Text style={styles.label}>Pitch:</Text>
+                <TextInput
+                  underlineColorAndroid='rgba(0,0,0,0)'
+                  style={styles.input}
+                  multiline
+                  numberOfLines={3}
+                  maxLength={280}
+                  autoCorrect
+                  value={pitch}
+                  onChangeText={text => setPitch(text)}
+                />
+                <Text style={styles.count}>{pitch.length}/280</Text>
+              </View>
+
+              <TouchableOpacity
+                style={styles.submit}
+                onPress={validateForNext}
+              >
+                <Text style={styles.submitText}>Next</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-
-          <SafeAreaView style={styles.form}>
-            <View style={styles.field}>
-              <Text style={styles.label}>Title:</Text>
-              <TextInput
-                underlineColorAndroid='rgba(0,0,0,0)'
-                style={styles.input}
-                maxLength={50}
-                autoCorrect
-                value={title}
-                onChangeText={text => setTitle(text)}
-              />
-              <Text style={styles.count}>{title.length}/50</Text>
-            </View>
-
-            <View style={styles.field}>
-              <Text style={styles.label}>Pitch:</Text>
-              <TextInput
-                underlineColorAndroid='rgba(0,0,0,0)'
-                style={styles.input}
-                multiline
-                numberOfLines={3}
-                maxLength={280}
-                autoCorrect
-                value={pitch}
-                onChangeText={text => setPitch(text)}
-              />
-              <Text style={styles.count}>{pitch.length}/280</Text>
-            </View>
-
-            <TouchableOpacity
-              style={styles.submit}
-              onPress={validateForNext}
-            >
-              <Text style={styles.submitText}>Next</Text>
-            </TouchableOpacity>
-          </SafeAreaView>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </SafeAreaView >
   );
 };

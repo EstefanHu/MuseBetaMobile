@@ -5,11 +5,13 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
-  Alert
+  Alert,
+  SafeAreaView
 } from 'react-native';
 import {
   FontAwesome,
-  MaterialCommunityIcons
+  MaterialCommunityIcons,
+  Feather
 } from '@expo/vector-icons';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
 
@@ -17,13 +19,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    backgroundColor: 'rgb(40,40,40)'
   },
   header: {
     color: 'rgb(230,230,230)',
     fontSize: 40,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: 5,
   },
   choices: {
     flexDirection: 'row',
@@ -75,75 +76,82 @@ export const CreateLauncherScreen = ({ navigation }) => {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Create story.</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'rgb(40,40,40)' }}>
+      <View style={styles.container}>
+        <Feather
+          style={{ marginLeft: -10 }}
+          name='x' size={24} color='white'
+          onPress={() => navigation.pop()}
+        />
+        <Text style={styles.header}>Create story.</Text>
 
-      <View style={styles.choices}>
-        <TouchableOpacity
-          style={styles.option}
-          onPress={() => beginOption('Text')}
-        >
-          <Text style={styles.label}>text</Text>
-          <FontAwesome
-            style={styles.icon}
-            name='file-text'
-            size={70}
-            color='rgb(120,120,120)'
-          />
-        </TouchableOpacity>
+        <View style={styles.choices}>
+          <TouchableOpacity
+            style={styles.option}
+            onPress={() => beginOption('Text')}
+          >
+            <Text style={styles.label}>text</Text>
+            <FontAwesome
+              style={styles.icon}
+              name='file-text'
+              size={70}
+              color='rgb(120,120,120)'
+            />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.option}
-          onPress={underDevelopment}
-        >
-          <Text style={styles.label}>image</Text>
-          <FontAwesome
-            style={styles.icon}
-            name='camera'
-            size={70}
-            color='rgb(120,120,120)'
-          />
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.option}
+            onPress={underDevelopment}
+          >
+            <Text style={styles.label}>image</Text>
+            <FontAwesome
+              style={styles.icon}
+              name='camera'
+              size={70}
+              color='rgb(120,120,120)'
+            />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.option}
-          onPress={underDevelopment}
-        >
-          <Text style={styles.label}>video</Text>
-          <FontAwesome
-            style={styles.icon}
-            name='video-camera'
-            size={70}
-            color='rgb(120,120,120)'
-          />
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.option}
+            onPress={underDevelopment}
+          >
+            <Text style={styles.label}>video</Text>
+            <FontAwesome
+              style={styles.icon}
+              name='video-camera'
+              size={70}
+              color='rgb(120,120,120)'
+            />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.option}
-          onPress={underDevelopment}
-        >
-          <Text style={styles.label}>audio</Text>
-          <FontAwesome
-            style={styles.icon}
-            name='microphone'
-            size={70}
-            color='rgb(120,120,120)'
-          />
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.option}
+            onPress={underDevelopment}
+          >
+            <Text style={styles.label}>audio</Text>
+            <FontAwesome
+              style={styles.icon}
+              name='microphone'
+              size={70}
+              color='rgb(120,120,120)'
+            />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.option}
-          onPress={underDevelopment}
-        >
-          <Text style={styles.label}>path</Text>
-          <MaterialCommunityIcons
-            style={styles.icon}
-            name='map-marker-path'
-            size={70}
-            color='rgb(120,120,120)'
-          />
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.option}
+            onPress={underDevelopment}
+          >
+            <Text style={styles.label}>path</Text>
+            <MaterialCommunityIcons
+              style={styles.icon}
+              name='map-marker-path'
+              size={70}
+              color='rgb(120,120,120)'
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };

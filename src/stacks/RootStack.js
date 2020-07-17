@@ -3,7 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import decode from 'jwt-decode';
 import {
   Feather,
-  Ionicons
 } from '@expo/vector-icons';
 
 import { Context as AuthContext } from './../providers/AuthProvider.js';
@@ -45,7 +44,7 @@ export const RootStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={isNew ? 'WelcomeStack' : 'BottomTabs'}
-      initialRouteName={'CreateStack'}
+      // initialRouteName={'CreateStack'}
       screenOptions={{ animationEnabled: false }}
       mode='modal'
     >
@@ -72,20 +71,7 @@ export const RootStack = () => {
         options={{
           animationEnabled: true,
           cardOverlayEnabled: true,
-          headerStyle: {
-            backgroundColor: 'rgb(40,40,40)',
-            shadowRadius: 0,
-            shadowColor: 'transparent',
-            shadowOffset: { height: 0 },
-          },
-          headerTitle: null,
-          headerBackTitleVisible: false,
-          headerBackImage:
-            () => <Feather
-              style={{ marginLeft: 10 }}
-              name='x' size={24} color='white'
-              onPress={() => navigation.pop()}
-            />
+          header: () => null
         }}
       />
       <Stack.Screen
