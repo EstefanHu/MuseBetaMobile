@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   field: {
-    marginBottom: 15,
     paddingBottom: 5,
   },
   label: {
@@ -59,15 +58,16 @@ const styles = StyleSheet.create({
   },
   count: {
     color: 'rgb(220,220,220)',
-    fontSize: 10
+    fontSize: 10,
+    textAlign: 'right'
   },
   submit: {
     backgroundColor: 'rgb(255,50,50)',
     width: '100%',
-    paddingVertical: 8,
+    paddingVertical: 10,
     alignItems: 'center',
     borderRadius: 3,
-    marginTop: 5
+    marginTop: 15
   },
   submitText: {
     color: 'white',

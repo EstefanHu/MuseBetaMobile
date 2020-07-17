@@ -24,6 +24,8 @@ import { UpdatePasswordModal } from './../modals/UpdatePasswordModal.js';
 import { SupportStack } from './SupportStack.js';
 import { SettingsStack } from './SettingsStack.js';
 import { CreateStack } from './CreateStack.js';
+import { CreateLauncherModal } from './../modals/CreateLauncherModal.js';
+import { CreatePermissionsModal } from './../modals/CreatePermissionsModal.js';
 
 const Stack = createStackNavigator();
 
@@ -79,7 +81,9 @@ export const RootStack = () => {
           headerBackImage:
             () => <Feather
               style={{ marginLeft: 10 }}
-              name='x' size={24} color='white' />
+              name='x' size={24} color='white'
+              onPress={() => navigation.pop()}
+            />
         }}
       />
       <Stack.Screen
@@ -108,6 +112,49 @@ export const RootStack = () => {
               }
             };
           }
+        }}
+      />
+      <Stack.Screen
+        name='CreateLauncherModal'
+        component={CreateLauncherModal}
+        options={{
+          animationEnabled: true,
+          headerStyle: {
+            backgroundColor: 'rgb(40,40,40)',
+            shadowRadius: 0,
+            shadowColor: 'transparent',
+            shadowOffset: { height: 0 },
+          },
+          headerTitle: null,
+          headerBackTitleVisible: false,
+          headerBackImage:
+            () => <Feather
+              style={{ marginLeft: 10 }}
+              name='x' size={24} color='white'
+              onPress={() => navigation.pop()}
+            />
+        }}
+      />
+      <Stack.Screen
+        name='CreatePermissionsModal'
+        component={CreatePermissionsModal}
+        // initialParams={{ status: route.params?.status }}
+        options={{
+          animationEnabled: true,
+          headerStyle: {
+            backgroundColor: 'rgb(40,40,40)',
+            shadowRadius: 0,
+            shadowColor: 'transparent',
+            shadowOffset: { height: 0 },
+          },
+          headerTitle: null,
+          headerBackTitleVisible: false,
+          headerBackImage:
+            () => <Feather
+              style={{ marginLeft: 10 }}
+              name='x' size={24} color='white'
+              onPress={() => navigation.pop()}
+            />
         }}
       />
       <Stack.Screen

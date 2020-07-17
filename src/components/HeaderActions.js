@@ -50,10 +50,11 @@ export const HeaderActions = ({ navigation }) => {
         Permissions.CAMERA_ROLL,
       );
 
-      navigation.navigate('CreateStack', { status });
+      if (status === 'granted')
+        navigation.navigate('CreatePermissionsModal', { status });
     };
 
-    navigation.navigate('CreateStack', { status });
+    navigation.navigate('CreateLauncherModal');
   }
 
   return (
