@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
     justifyContent: 'space-between',
-    backgroundColor: 'rgb(40,40,40)'
+    backgroundColor: 'rgb(40,40,40)',
+    paddingBottom: 10,
   },
   header: {
     color: 'white',

@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
     justifyContent: 'space-between',
+    paddingBottom: 10,
   },
   form: {
     flexGrow: 2,
