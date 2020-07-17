@@ -6,7 +6,10 @@ import {
   Dimensions,
   TouchableOpacity
 } from 'react-native';
-
+import {
+  FontAwesome,
+  MaterialCommunityIcons
+} from '@expo/vector-icons';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
 
 const styles = StyleSheet.create({
@@ -39,6 +42,10 @@ const styles = StyleSheet.create({
   label: {
     color: 'rgb(200,200,200)',
     fontSize: 20,
+  },
+  icon: {
+    textAlign: 'center',
+    marginTop: 15
   }
 });
 
@@ -60,38 +67,64 @@ export const CreateStarterScreen = ({ navigation }) => {
           onPress={() => beginOption('Text')}
         >
           <Text style={styles.label}>text</Text>
+          <FontAwesome
+            style={styles.icon}
+            name='file-text'
+            size={70}
+            color='rgb(120,120,120)'
+          />
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.option}
           onPress={() => beginOption('Image')}
-
         >
           <Text style={styles.label}>image</Text>
+          <FontAwesome
+            style={styles.icon}
+            name='camera'
+            size={70}
+            color='rgb(120,120,120)'
+          />
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.option}
           onPress={() => beginOption('Video')}
-
         >
           <Text style={styles.label}>video</Text>
+          <FontAwesome
+            style={styles.icon}
+            name='video-camera'
+            size={70}
+            color='rgb(120,120,120)'
+          />
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.option}
           onPress={() => beginOption('Audio')}
-
         >
           <Text style={styles.label}>audio</Text>
+          <FontAwesome
+            style={styles.icon}
+            name='microphone'
+            size={70}
+            color='rgb(120,120,120)'
+          />
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.option}
           onPress={() => beginOption('Path')}
-
         >
           <Text style={styles.label}>path</Text>
+          <MaterialCommunityIcons
+            style={styles.icon}
+            name='map-marker-path'
+            size={70}
+            color='rgb(120,120,120)'
+          />
         </TouchableOpacity>
       </View>
     </View>
