@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,9 +9,11 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Picker
 } from 'react-native';
 import { CHANNELS } from './../../constants/channels.js';
+import { Picker } from '@react-native-community/picker'
+
+import { Context as StoryContext } from './../../providers/StoryProvider.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
   },
   inner: {
     flex: 1,
-    padding: 24,
+    paddingHorizontal: 24,
     justifyContent: 'space-between',
   },
   header: {
@@ -33,11 +35,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   field: {
-    marginBottom: 15,
     paddingBottom: 5,
   },
   label: {
     fontSize: 12,
+    marginBottom: 3,
     color: 'white'
   },
   input: {
@@ -48,7 +50,18 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    height: 40
+  },
+  requestContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  request: {
+    marginBottom: 20,
+    color: 'rgb(200,200,200)'
+  },
+  requestLink: {
+    color: 'rgb(255,50,50)',
+    textDecorationLine: 'underline',
   },
   submit: {
     backgroundColor: 'rgb(255,50,50)',
@@ -67,10 +80,12 @@ const styles = StyleSheet.create({
 });
 
 export const CreateChannelScreen = ({ navigation }) => {
+  const { state: { newStory }, updateNewStory } = useContext(StoryContext);
   const [channel, setChannel] = useState();
 
   const validateForNext = () => {
-    console.log('yup');
+    updateNewStory({ ...newStory, channel });
+    navigation.navigate(`Create${newStory.type}Screen`);
   }
 
   return (
@@ -82,8 +97,8 @@ export const CreateChannelScreen = ({ navigation }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inner}>
           <View>
-            <Text style={styles.header}>Preliminary</Text>
-            <Text style={styles.describe}>Start your story with an introduction</Text>
+            <Text style={styles.header}>Channel</Text>
+            <Text style={styles.describe}>Choose channel to be posted in</Text>
           </View>
 
           <SafeAreaView style={styles.form}>
@@ -91,15 +106,26 @@ export const CreateChannelScreen = ({ navigation }) => {
               <Text style={styles.label}>Channel:</Text>
               <Picker
                 style={styles.input}
-                onValueChange={(itemValue, itemIndex) => setChannel(itemValue)}
+                selectedValue={channel}
+                itemStyle={{ color: 'white', fontSize: 30 }}
+                onValueChange={itemValue => setChannel(itemValue)}
               >
-                {CHANNELS.map(c => (
-                  <Picker.Item
-                    label={c.label}
-                    value={c.value}
-                  />
-                ))}
+                {
+                  CHANNELS.map(c => (
+                    <Picker.Item
+                      key={c.label}
+                      label={c.label}
+                      value={c.value}
+                    />
+                  ))
+                }
               </Picker>
+            </View>
+            <View style={styles.requestContainer}>
+              <Text style={styles.request}>Channel not included?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('SettingsStack')}>
+                <Text style={styles.requestLink}> Request another!</Text>
+              </TouchableOpacity>
             </View>
             <TouchableOpacity
               style={styles.submit}

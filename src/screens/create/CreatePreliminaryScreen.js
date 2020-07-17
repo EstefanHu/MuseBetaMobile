@@ -84,7 +84,6 @@ export const CreatePreliminaryScreen = ({ navigation }) => {
   const [pitch, setPitch] = useState('');
 
   const validateForNext = () => {
-    console.log(newStory.type);
     updateNewStory({ ...newStory, title, pitch });
     navigation.navigate('CreateChannelScreen');
   }
