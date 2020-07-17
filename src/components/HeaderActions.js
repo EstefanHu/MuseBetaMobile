@@ -37,11 +37,21 @@ export const HeaderActions = ({ navigation }) => {
   const { state: { photo } } = useContext(ProfileContext);
 
   const navigateToCreate = async () => {
-    const { status } = await Permissions.getAsync(
+    const { status, canAskAgain } = await Permissions.getAsync(
       Permissions.AUDIO_RECORDING,
       Permissions.CAMERA,
       Permissions.CAMERA_ROLL,
     );
+
+    if (status === 'denied' && canAskAgain) {
+      const { status } = await Permissions.askAsync(
+        Permissions.AUDIO_RECORDING,
+        Permissions.CAMERA,
+        Permissions.CAMERA_ROLL,
+      );
+
+      navigation.navigate('CreateStack', { status });
+    };
 
     navigation.navigate('CreateStack', { status });
   }
