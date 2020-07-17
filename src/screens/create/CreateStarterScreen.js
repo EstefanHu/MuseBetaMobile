@@ -4,7 +4,8 @@ import {
   View,
   Text,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 import {
   FontAwesome,
@@ -57,6 +58,22 @@ export const CreateStarterScreen = ({ navigation }) => {
     navigation.navigate('CreatePreliminaryScreen');
   }
 
+  const underDevelopment = () => Alert.alert(
+    'Feature Under Development',
+    'Send recommendation to developer?',
+    [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Contact',
+        onPress: () => navigation.navigate('SettingsStack'),
+      }
+    ],
+    { cancelable: true }
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Create story.</Text>
@@ -77,7 +94,7 @@ export const CreateStarterScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.option}
-          onPress={() => beginOption('Image')}
+          onPress={underDevelopment}
         >
           <Text style={styles.label}>image</Text>
           <FontAwesome
@@ -90,7 +107,7 @@ export const CreateStarterScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.option}
-          onPress={() => beginOption('Video')}
+          onPress={underDevelopment}
         >
           <Text style={styles.label}>video</Text>
           <FontAwesome
@@ -103,7 +120,7 @@ export const CreateStarterScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.option}
-          onPress={() => beginOption('Audio')}
+          onPress={underDevelopment}
         >
           <Text style={styles.label}>audio</Text>
           <FontAwesome
@@ -116,7 +133,7 @@ export const CreateStarterScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.option}
-          onPress={() => beginOption('Path')}
+          onPress={underDevelopment}
         >
           <Text style={styles.label}>path</Text>
           <MaterialCommunityIcons
