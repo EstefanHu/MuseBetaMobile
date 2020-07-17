@@ -9,21 +9,19 @@ import { JourneyLaunchScreen } from './../screens/journey/JourneyLaunchScreen.js
 
 const Stack = createStackNavigator();
 
-export const JourneyStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name='JourneyHomeScreen'
-        component={JourneyHomeScreen}
-      />
-      <Stack.Screen
-        name='JourneyLaunchScreen'
-        component={JourneyLaunchScreen}
-      />
-      <Stack.Screen
-        name='ProfileTopTabs'
-        component={ProfileTopTabs}
-      />
-    </Stack.Navigator>
-  );
-}
+export const JourneyStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name='JourneyHomeScreen'
+      component={JourneyHomeScreen}
+    />
+    <Stack.Screen
+      name='JourneyLaunchScreen'
+      component={JourneyLaunchScreen}
+    />
+    <Stack.Screen
+      name='ProfileTopTabs'
+      component={ProfileTopTabs}
+    />
+  </Stack.Navigator>
+);

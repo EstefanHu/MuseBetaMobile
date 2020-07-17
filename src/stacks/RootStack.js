@@ -40,10 +40,6 @@ export const RootStack = () => {
     getMe();
   }, []);
 
-  useEffect(() => {
-    getCoords();
-  }, [])
-
   return (
     <Stack.Navigator
       initialRouteName={isNew ? 'WelcomeStack' : 'BottomTabs'}
