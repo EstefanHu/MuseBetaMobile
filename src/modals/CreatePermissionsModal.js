@@ -63,10 +63,14 @@ export const CreatePermissionsModal = ({ route, navigation }) => {
       Permissions.CAMERA,
       Permissions.CAMERA_ROLL
     );
-    if (status === 'granted')
-      return navigation.navigate('CreateStarterScreen');
-
-    setStatus(status);
+    if (status === 'granted') {
+      navigation.pop();
+      setTimeout(() => {
+        navigation.navigate('CreateLauncherModal');
+      }, 500);
+    } else {
+      setStatus(status);
+    }
   };
 
   return (

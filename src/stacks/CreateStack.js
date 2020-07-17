@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Ionicons } from '@expo/vector-icons';
 
 import { CreatePreliminaryScreen } from '../screens/create/CreatePreliminaryScreen.js';
 import { CreateChannelScreen } from '../screens/create/CreateChannelScreen.js';
@@ -16,10 +15,6 @@ export const CreateStack = () => (
     <Stack.Screen
       name='CreatePreliminaryScreen'
       component={CreatePreliminaryScreen}
-      options={{
-        headerBackImage:
-          () => <Ionicons name='ios-arrow-back' size={24} color='white' />
-      }}
     />
     <Stack.Screen
       name='CreateChannelScreen'

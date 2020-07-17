@@ -55,7 +55,7 @@ export const CreateLauncherModal = ({ navigation }) => {
 
   const beginOption = option => {
     updateNewStory({ ...newStory, type: option });
-    navigation.navigate('CreatePreliminaryScreen');
+    navigation.navigate('CreateStack');
   }
 
   const underDevelopment = () => Alert.alert(

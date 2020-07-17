@@ -1,7 +1,10 @@
 import React, { useEffect, useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import decode from 'jwt-decode';
-import { Feather } from '@expo/vector-icons';
+import {
+  Feather,
+  Ionicons
+} from '@expo/vector-icons';
 
 import { Context as AuthContext } from './../providers/AuthProvider.js';
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
@@ -66,6 +69,7 @@ export const RootStack = () => {
       <Stack.Screen
         name='CreateStack'
         component={CreateStack}
+        mode={'card'}
         options={{
           animationEnabled: true,
           headerStyle: {
@@ -77,9 +81,8 @@ export const RootStack = () => {
           headerTitle: null,
           headerBackTitleVisible: false,
           headerBackImage:
-            () => <Feather
-              style={{ marginLeft: 10 }}
-              name='x' size={24} color='white'
+            () => <Ionicons style={{ marginLeft: 10 }}
+              name='ios-arrow-back' size={24} color='white'
               onPress={() => navigation.pop()}
             />
         }}
@@ -129,7 +132,6 @@ export const RootStack = () => {
             () => <Feather
               style={{ marginLeft: 10 }}
               name='x' size={24} color='white'
-              onPress={() => navigation.pop()}
             />
         }}
       />
@@ -150,7 +152,6 @@ export const RootStack = () => {
             () => <Feather
               style={{ marginLeft: 10 }}
               name='x' size={24} color='white'
-              onPress={() => navigation.pop()}
             />
         }}
       />

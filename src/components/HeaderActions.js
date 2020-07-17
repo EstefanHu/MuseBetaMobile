@@ -43,18 +43,25 @@ export const HeaderActions = ({ navigation }) => {
       Permissions.CAMERA_ROLL,
     );
 
-    if (status === 'denied' && canAskAgain) {
-      const { status } = await Permissions.askAsync(
-        Permissions.AUDIO_RECORDING,
-        Permissions.CAMERA,
-        Permissions.CAMERA_ROLL,
-      );
+    switch (status) {
+      case 'undetermined':
+        return navigation.navigate(
+          'CreatePermissionsModal', { status: 'undetermined' });
+      case 'denied':
+        if (canAskAgain) {
+          const { status } = await Permissions.askAsync(
+            Permissions.AUDIO_RECORDING,
+            Permissions.CAMERA,
+            Permissions.CAMERA_ROLL,
+          );
 
-      if (status === 'granted')
-        navigation.navigate('CreatePermissionsModal', { status });
-    };
-
-    navigation.navigate('CreateLauncherModal');
+          if (status === 'granted')
+            return navigation.navigate('CreateLauncherModal');
+        }
+        return navigation.navigate('CreatePermissionsModal', { status: 'denied' });
+      default:
+        return navigation.navigate('CreateLauncherModal');
+    }
   }
 
   return (

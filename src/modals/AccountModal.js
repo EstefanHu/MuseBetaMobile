@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
 export const AccountModal = ({ navigation }) => {
   const { state: { name, email, photo } } = useContext(ProfileContext);
 
-  const popThenNavigateTo = async route => {
-    await navigation.pop();
+  const popThenNavigateTo = route => {
+    navigation.pop();
     setTimeout(() => {
       navigation.navigate(route);
     }, 500);
