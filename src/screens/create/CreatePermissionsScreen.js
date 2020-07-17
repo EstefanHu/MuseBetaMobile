@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -53,9 +53,20 @@ const styles = StyleSheet.create({
   }
 });
 
-export const CreatePermissionsScreen = ({ route }) => {
-  
-  const askPermissions = () => console.log('hello');
+export const CreatePermissionsScreen = ({ route, navigation }) => {
+  const [status, setStatus] = useState(route.params?.status);
+
+  const askPermissions = async () => {
+    const { status } = await Permissions.askAsync(
+      Permissions.AUDIO_RECORDING,
+      Permissions.CAMERA,
+      Permissions.CAMERA_ROLL
+    );
+    if (status === 'granted')
+      return navigation.navigate('CreateStarterScreen');
+
+    setStatus(status);
+  };
 
   return (
     <View style={styles.container}>
@@ -65,7 +76,7 @@ export const CreatePermissionsScreen = ({ route }) => {
       <Text style={styles.header}>Tell a story</Text>
       <Text style={styles.info}>To get started, allow access to Photos, Camera, and Microphone</Text>
       {
-        route.params?.status === 'denied' ?
+        status === 'denied' ?
           <TouchableOpacity
             style={styles.getStarted}
             onPress={() => Linking.openSettings()}

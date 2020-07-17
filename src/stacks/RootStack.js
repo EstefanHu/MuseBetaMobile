@@ -78,8 +78,8 @@ export const RootStack = () => {
             shadowColor: 'transparent',
             shadowOffset: { height: 0 },
           },
-          headerTitle: () => null,
-          headerBackTitle: () => null,
+          headerTitle: null,
+          headerBackTitleVisible: false,
           headerBackImage:
             () => <Feather
               style={{ marginLeft: 10 }}

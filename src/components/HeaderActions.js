@@ -42,13 +42,14 @@ export const HeaderActions = ({ navigation }) => {
       Permissions.CAMERA,
       Permissions.CAMERA_ROLL,
     );
+
     navigation.navigate('CreateStack', { status });
   }
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={navigateToCreate}>
+        onPress={() => navigation.navigate('CreateStack')}>
         <MaterialCommunityIcons style={styles.icon} name='plus' size={22} color='grey' />
       </TouchableOpacity>
       {/* <TouchableOpacity onPress={() => navigation.navigate('ScanQRModal')}>
