@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     color: 'white',
     marginBottom: 30,
     fontSize: 18,
+    textAlign: 'center'
   },
   getStarted: {
     backgroundColor: 'rgb(255,50,50)',
@@ -74,7 +75,7 @@ export const CreatePermissionsScreen = ({ route, navigation }) => {
         <Entypo name='open-book' size={200} color='lightgrey' />
       </View>
       <Text style={styles.header}>Tell a story</Text>
-      <Text style={styles.info}>To get started, allow access to Photos, Camera, and Microphone</Text>
+      <Text style={styles.info}>To get started, {status === 'denied' && 'open Settings and'} allow access to Photos, Camera, and Microphone</Text>
       {
         status === 'denied' ?
           <TouchableOpacity
