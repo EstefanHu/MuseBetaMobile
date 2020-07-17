@@ -1,7 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { CreatePreliminaryScreen } from '../screens/create/CreatePreliminaryScreen.js';
+import { CreateLauncherScreen } from './../screens/create/CreateLauncherScreen.js';
+import { CreatePreliminaryScreen } from './../screens/create/CreatePreliminaryScreen.js';
 import { CreateChannelScreen } from '../screens/create/CreateChannelScreen.js';
 import { CreateTextScreen } from './../screens/create/CreateTextScreen.js';
 import { CreateImageScreen } from './../screens/create/CreateImageScreen.js';
@@ -13,8 +14,15 @@ const Stack = createStackNavigator();
 export const CreateStack = () => (
   <Stack.Navigator>
     <Stack.Screen
+      name='CreateLauncherScreen'
+      component={CreateLauncherScreen}
+    />
+    <Stack.Screen
       name='CreatePreliminaryScreen'
       component={CreatePreliminaryScreen}
+      options={{
+        headerLeft: () => null
+      }}
     />
     <Stack.Screen
       name='CreateChannelScreen'

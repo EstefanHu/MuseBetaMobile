@@ -56,11 +56,11 @@ export const HeaderActions = ({ navigation }) => {
           );
 
           if (status === 'granted')
-            return navigation.navigate('CreateLauncherModal');
+            return navigation.navigate('CreateStack');
         }
         return navigation.navigate('CreatePermissionsModal', { status: 'denied' });
       default:
-        return navigation.navigate('CreateLauncherModal');
+        return navigation.navigate('CreateStack');
     }
   }
 

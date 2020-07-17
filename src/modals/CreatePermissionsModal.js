@@ -66,7 +66,7 @@ export const CreatePermissionsModal = ({ route, navigation }) => {
     if (status === 'granted') {
       navigation.pop();
       setTimeout(() => {
-        navigation.navigate('CreateLauncherModal');
+        navigation.navigate('CreateStack');
       }, 500);
     } else {
       setStatus(status);

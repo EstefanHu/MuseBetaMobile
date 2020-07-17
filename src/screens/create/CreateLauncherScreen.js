@@ -11,7 +11,7 @@ import {
   FontAwesome,
   MaterialCommunityIcons
 } from '@expo/vector-icons';
-import { Context as StoryContext } from './../providers/StoryProvider.js';
+import { Context as StoryContext } from './../../providers/StoryProvider.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -50,12 +50,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export const CreateLauncherModal = ({ navigation }) => {
+export const CreateLauncherScreen = ({ navigation }) => {
   const { state: { newStory }, updateNewStory } = useContext(StoryContext);
 
   const beginOption = option => {
     updateNewStory({ ...newStory, type: option });
-    navigation.navigate('CreateStack');
+    navigation.navigate('CreatePreliminaryScreen');
   }
 
   const underDevelopment = () => Alert.alert(
