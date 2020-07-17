@@ -4,7 +4,6 @@ import decode from 'jwt-decode';
 import { Feather } from '@expo/vector-icons';
 
 import { Context as AuthContext } from './../providers/AuthProvider.js';
-import { Context as LocationContext } from './../providers/LocationProvider.js';
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 
 import { BottomTabs } from './../layout/BottomTabs.js';
@@ -31,7 +30,6 @@ const Stack = createStackNavigator();
 
 export const RootStack = () => {
   const { state: { token, isNew }, logout } = useContext(AuthContext);
-  const { getCoords } = useContext(LocationContext);
   const { getMe } = useContext(ProfileContext);
 
   useEffect(() => {
@@ -138,7 +136,6 @@ export const RootStack = () => {
       <Stack.Screen
         name='CreatePermissionsModal'
         component={CreatePermissionsModal}
-        // initialParams={{ status: route.params?.status }}
         options={{
           animationEnabled: true,
           headerStyle: {
