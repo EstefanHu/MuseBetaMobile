@@ -57,14 +57,14 @@ export const CreateStarterScreen = ({ navigation }) => {
       <View style={styles.choices}>
         <TouchableOpacity
           style={styles.option}
-          onPress={() => beginOption('text')}
+          onPress={() => beginOption('Text')}
         >
           <Text style={styles.label}>text</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.option}
-          onPress={() => beginOption('image')}
+          onPress={() => beginOption('Image')}
 
         >
           <Text style={styles.label}>image</Text>
@@ -72,7 +72,7 @@ export const CreateStarterScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.option}
-          onPress={() => beginOption('video')}
+          onPress={() => beginOption('Video')}
 
         >
           <Text style={styles.label}>video</Text>
@@ -80,7 +80,7 @@ export const CreateStarterScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.option}
-          onPress={() => beginOption('audio')}
+          onPress={() => beginOption('Audio')}
 
         >
           <Text style={styles.label}>audio</Text>
@@ -88,7 +88,7 @@ export const CreateStarterScreen = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.option}
-          onPress={() => beginOption('path')}
+          onPress={() => beginOption('Path')}
 
         >
           <Text style={styles.label}>path</Text>
