@@ -104,14 +104,14 @@ const Map = ({ navigation, bs, setPaddingTop }) => {
       style={styles.mapStyle}
       region={region}
       // onRegionChange={console.log}
-      onRegionChangeComplete={setRegion}
+      onRegionChange={() => setRegion()}
       mapType={"mutedStandard"}
+      pitchEnabled={true}
+      rotateEnabled={true}
       showsScale
-      showsIndoors
       loadingEnabled
       compassOffset={{ x: -5, y: 5 }}
       showsUserLocation
-      showsMyLocationButton
     >
       {
         stories.map(item => (

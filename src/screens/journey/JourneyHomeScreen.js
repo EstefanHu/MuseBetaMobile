@@ -198,7 +198,7 @@ const LaunchPad = ({ navigation, longitude, latitude }) => {
       </MapView>
       <TouchableOpacity
         style={launchPadStyles.launchButton}
-        onPress={() => navigation.navigate('JourneyLaunchScreen', { story })}
+        onPress={() => navigation.navigate('JourneyLaunchScreen')}
       >
         <Text style={launchPadStyles.launchButtonText}>Launch</Text>
       </TouchableOpacity>

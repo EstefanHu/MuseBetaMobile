@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,6 +6,7 @@ import {
   Dimensions,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
 import { Context as LocationContext } from './../../providers/LocationProvider.js';
@@ -23,9 +24,8 @@ const styles = StyleSheet.create({
 });
 
 export const JourneyLaunchScreen = ({ route, navigation }) => {
-  const initialRegion = React.useRef(region);
   const previewMap = React.useRef(null);
-  const { state: { status }, fetchJourney } = useContext(JourneyContext);
+  const { state: { story }, fetchJourney } = useContext(JourneyContext);
   const { state: { longitude, latitude } } = useContext(LocationContext);
   const [region, setRegion] = useState({
     longitude: longitude,
@@ -33,9 +33,10 @@ export const JourneyLaunchScreen = ({ route, navigation }) => {
     longitudeDelta: 0.1,
     latitudeDelta: 0.1
   });
-  const { story } = route.params;
 
-  useEffect(() => fitMarkers(), []);
+  React.useEffect(() => {
+    fitMarkers()
+  }, [story, previewMap]);
 
   const fitMarkers = () => {
     const MARKERS = [
@@ -48,9 +49,9 @@ export const JourneyLaunchScreen = ({ route, navigation }) => {
     const OPTIONS = {
       edgePadding: {
         top: 80,
-        right: 40,
+        right: 50,
         bottom: 50,
-        left: 40
+        left: 50
       }
     }
     previewMap.current.fitToCoordinates(MARKERS, OPTIONS);
@@ -62,7 +63,7 @@ export const JourneyLaunchScreen = ({ route, navigation }) => {
         style={styles.mapStyle}
         ref={previewMap}
         region={region}
-        onRegionChangeComplete={setRegion}
+        onRegionChange={() => setRegion()}
         mapType={"mutedStandard"}
         showsScale
         showsIndoors
