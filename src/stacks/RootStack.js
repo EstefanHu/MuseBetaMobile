@@ -71,6 +71,7 @@ export const RootStack = () => {
         mode={'card'}
         options={{
           animationEnabled: true,
+          cardOverlayEnabled: true,
           headerStyle: {
             backgroundColor: 'rgb(40,40,40)',
             shadowRadius: 0,

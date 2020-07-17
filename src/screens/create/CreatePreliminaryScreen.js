@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -13,19 +13,20 @@ import {
   ScrollView
 } from 'react-native';
 
+import { Context as StoryContext } from './../../providers/StoryProvider.js';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgb(40,40,40)'
+    backgroundColor: 'rgb(40,40,40)',
   },
   inner: {
     flex: 1,
     paddingHorizontal: 24,
     justifyContent: 'space-between',
+    paddingBottom: 20
   },
   form: {
-    // flex: 1,
-    // height: '100%'
     flexGrow: 2,
     justifyContent: 'flex-end',
   },
@@ -78,11 +79,14 @@ const styles = StyleSheet.create({
 });
 
 export const CreatePreliminaryScreen = ({ navigation }) => {
+  const { state: { newStory }, updateNewStory } = useContext(StoryContext);
   const [title, setTitle] = useState('');
   const [pitch, setPitch] = useState('');
 
   const validateForNext = () => {
-    console.log('yup');
+    console.log(newStory.type);
+    updateNewStory({ ...newStory, title, pitch });
+    navigation.navigate('CreateChannelScreen');
   }
 
   return (
