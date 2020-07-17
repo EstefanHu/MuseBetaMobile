@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   SafeAreaView,
   TouchableWithoutFeedback,
@@ -31,25 +30,25 @@ const styles = StyleSheet.create({
   },
   describe: {
     color: 'rgb(220,220,220)',
-    fontSize: 18,
+    fontSize: 20,
   },
   field: {
     marginBottom: 15,
     paddingBottom: 5,
   },
   label: {
-    fontSize: 15,
-    color: 'rgb(250,250,250)',
-    marginBottom: 3
+    fontSize: 12,
+    color: 'white'
   },
   input: {
-    fontSize: 20,
+    fontSize: 18,
     width: '100%',
     color: 'white',
     backgroundColor: 'rgb(60,60,60)',
     borderRadius: 3,
-    paddingVertical: 8,
-    paddingHorizontal: 13,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    height: 40
   },
   submit: {
     backgroundColor: 'rgb(255,50,50)',
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     alignItems: 'center',
     borderRadius: 3,
-    marginTop: 5
+    marginTop: 10
   },
   submitText: {
     color: 'white',
@@ -68,9 +67,7 @@ const styles = StyleSheet.create({
 });
 
 export const CreateStarterScreen = ({ navigation }) => {
-  const [title, setTitle] = useState();
   const [channel, setChannel] = useState();
-  const [pitch, setPitch] = useState();
 
   const validateForNext = () => {
     console.log('yup');
@@ -91,27 +88,18 @@ export const CreateStarterScreen = ({ navigation }) => {
 
           <SafeAreaView style={styles.form}>
             <View style={styles.field}>
-              <Text style={styles.label}>Title:</Text>
-              <TextInput
-                underlineColorAndroid='rgba(0,0,0,0)'
+              <Text style={styles.label}>Channel:</Text>
+              <Picker
                 style={styles.input}
-                autoCorrect
-                value={title}
-                onChangeText={text => setTitle(text)}
-              />
-            </View>
-            <View style={styles.field}>
-              <Text style={styles.label}>Pitch:</Text>
-              <TextInput
-                underlineColorAndroid='rgba(0,0,0,0)'
-                style={styles.input}
-                multiline
-                numberOfLines={3}
-                maxLength={140}
-                autoCorrect
-                value={pitch}
-                onChangeText={text => setPitch(text)}
-              />
+                onValueChange={(itemValue, itemIndex) => setChannel(itemValue)}
+              >
+                {CHANNELS.map(c => (
+                  <Picker.Item
+                    label={c.label}
+                    value={c.value}
+                  />
+                ))}
+              </Picker>
             </View>
             <TouchableOpacity
               style={styles.submit}

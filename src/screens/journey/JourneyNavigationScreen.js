@@ -4,9 +4,10 @@ import {
   View,
   Text,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import MapView, { Marker } from 'react-native-maps';
-import { useFocusEffect } from '@react-navigation/native';
 
 import { Context as JourneyContext } from '../../providers/JourneyProvider.js';
 import { Context as LocationContext } from '../../providers/LocationProvider.js';
@@ -14,13 +15,30 @@ import { Context as LocationContext } from '../../providers/LocationProvider.js'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   mapStyle: {
     width: Dimensions.get('window').width,
     height: '100%',
   },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: Dimensions.get('window').width,
+    position: 'absolute',
+    paddingBottom: 10,
+  },
+  actionButton: {
+    backgroundColor: 'white',
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 10,
+  },
+  actionText: {
+    fontSize: 20,
+
+  }
 });
 
 export const JourneyNavigationScreen = ({ route, navigation }) => {
@@ -81,6 +99,14 @@ export const JourneyNavigationScreen = ({ route, navigation }) => {
 
         </Marker>
       </MapView>
+      <View style={styles.actions}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={fitMarkers}
+        >
+          <MaterialIcons name='crop-free' size={30} color='black' />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
