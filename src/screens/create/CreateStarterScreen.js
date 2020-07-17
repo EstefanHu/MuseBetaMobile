@@ -1,57 +1,99 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
-  SafeAreaView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView
+  Dimensions,
+  TouchableOpacity
 } from 'react-native';
 
-import { Context as StoryContext } from './../../providers/NewStoryProvider.js';
+import { Context as StoryContext } from './../../providers/StoryProvider.js';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 20,
     backgroundColor: 'rgb(40,40,40)'
   },
-  inner: {
-    flex: 1,
-    paddingHorizontal: 24,
-    justifyContent: 'space-between',
-  },
   header: {
-    color: 'white',
+    color: 'rgb(230,230,230)',
     fontSize: 40,
     fontWeight: 'bold',
     marginTop: 10,
   },
   choices: {
-
+    flexDirection: 'row',
+    marginTop: 10,
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+  },
+  option: {
+    width: Dimensions.get('window').width / 2 - 27.5,
+    height: Dimensions.get('window').width / 2 - 27.5,
+    backgroundColor: 'rgb(60,60,60)',
+    borderRadius: 5,
+    marginBottom: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+  },
+  label: {
+    color: 'rgb(200,200,200)',
+    fontSize: 20,
   }
 });
 
 export const CreateStarterScreen = ({ navigation }) => {
+  const { state: { newStory }, updateNewStory } = useContext(StoryContext);
+
+  const beginOption = option => {
+    updateNewStory({ ...newStory, type: option });
+    navigation.navigate('CreatePreliminaryScreen');
+  }
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" || Platform.isPad ? "padding" : "height"}
-      style={styles.container}
-      keyboardVerticalOffset={70}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.inner}>
-          <Text style={styles.header}>Launch story.</Text>
+    <View style={styles.container}>
+      <Text style={styles.header}>Create story.</Text>
 
-          <SafeAreaView style={styles.choices}>
+      <View style={styles.choices}>
+        <TouchableOpacity
+          style={styles.option}
+          onPress={() => beginOption('text')}
+        >
+          <Text style={styles.label}>text</Text>
+        </TouchableOpacity>
 
-          </SafeAreaView>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        <TouchableOpacity
+          style={styles.option}
+          onPress={() => beginOption('image')}
+
+        >
+          <Text style={styles.label}>image</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.option}
+          onPress={() => beginOption('video')}
+
+        >
+          <Text style={styles.label}>video</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.option}
+          onPress={() => beginOption('audio')}
+
+        >
+          <Text style={styles.label}>audio</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.option}
+          onPress={() => beginOption('path')}
+
+        >
+          <Text style={styles.label}>path</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };

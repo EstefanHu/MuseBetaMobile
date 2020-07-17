@@ -46,6 +46,8 @@ const storyReducer = (state, action) => {
       return { ...state, error: action.payload };
     case 'remove_error':
       return { ...state, error: null };
+    case 'update_new_story':
+      return { ...state, newStory: action.payload };
     default:
       return state;
   }
@@ -109,6 +111,9 @@ const deleteStory = dispatch => id => {
   dispatch({ type: 'delete_story', payload: id });
 }
 
+const updateNewStory = dispatch => story =>
+  dispatch({ type: 'update_new_story', payload: story });
+
 export const { Context, Provider } = createDataContext(
   storyReducer,
   {
@@ -119,7 +124,8 @@ export const { Context, Provider } = createDataContext(
     fetchSingleStory,
     addStory,
     editStory,
-    deleteStory
+    deleteStory,
+    updateNewStory
   },
   {
     genre: 'All',
