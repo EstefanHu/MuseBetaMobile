@@ -3,15 +3,15 @@ import {
   StyleSheet,
   View,
   Text,
+  TextInput,
   TouchableOpacity,
   SafeAreaView,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Picker
+  ScrollView
 } from 'react-native';
-import { CHANNELS } from './../../constants/channels.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,35 +20,46 @@ const styles = StyleSheet.create({
   },
   inner: {
     flex: 1,
-    padding: 24,
+    paddingHorizontal: 24,
     justifyContent: 'space-between',
+  },
+  form: {
+    // flex: 1,
+    // height: '100%'
+    flexGrow: 2,
+    justifyContent: 'flex-end',
   },
   header: {
     color: 'white',
     fontSize: 50,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginTop: 10,
   },
   describe: {
     color: 'rgb(220,220,220)',
-    fontSize: 20,
+    fontSize: 18,
   },
   field: {
     marginBottom: 15,
     paddingBottom: 5,
   },
   label: {
-    fontSize: 12,
-    color: 'white'
+    fontSize: 15,
+    color: 'rgb(250,250,250)',
+    marginBottom: 3
   },
   input: {
-    fontSize: 18,
+    fontSize: 20,
     width: '100%',
     color: 'white',
     backgroundColor: 'rgb(60,60,60)',
     borderRadius: 3,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    height: 40
+    paddingVertical: 8,
+    paddingHorizontal: 13,
+  },
+  count: {
+    color: 'rgb(220,220,220)',
+    fontSize: 10
   },
   submit: {
     backgroundColor: 'rgb(255,50,50)',
@@ -56,7 +67,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     alignItems: 'center',
     borderRadius: 3,
-    marginTop: 10
+    marginTop: 5
   },
   submitText: {
     color: 'white',
@@ -66,8 +77,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export const CreateChannelScreen = ({ navigation }) => {
-  const [channel, setChannel] = useState();
+export const CreatePreliminaryScreen = ({ navigation }) => {
+  const [title, setTitle] = useState('');
+  const [pitch, setPitch] = useState('');
 
   const validateForNext = () => {
     console.log('yup');
@@ -88,19 +100,33 @@ export const CreateChannelScreen = ({ navigation }) => {
 
           <SafeAreaView style={styles.form}>
             <View style={styles.field}>
-              <Text style={styles.label}>Channel:</Text>
-              <Picker
+              <Text style={styles.label}>Title:</Text>
+              <TextInput
+                underlineColorAndroid='rgba(0,0,0,0)'
                 style={styles.input}
-                onValueChange={(itemValue, itemIndex) => setChannel(itemValue)}
-              >
-                {CHANNELS.map(c => (
-                  <Picker.Item
-                    label={c.label}
-                    value={c.value}
-                  />
-                ))}
-              </Picker>
+                maxLength={50}
+                autoCorrect
+                value={title}
+                onChangeText={text => setTitle(text)}
+              />
+              <Text style={styles.count}>{title.length}/50</Text>
             </View>
+
+            <View style={styles.field}>
+              <Text style={styles.label}>Pitch:</Text>
+              <TextInput
+                underlineColorAndroid='rgba(0,0,0,0)'
+                style={styles.input}
+                multiline
+                numberOfLines={3}
+                maxLength={280}
+                autoCorrect
+                value={pitch}
+                onChangeText={text => setPitch(text)}
+              />
+              <Text style={styles.count}>{pitch.length}/280</Text>
+            </View>
+
             <TouchableOpacity
               style={styles.submit}
               onPress={validateForNext}

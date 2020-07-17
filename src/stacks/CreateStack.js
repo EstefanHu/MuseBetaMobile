@@ -3,6 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { CreateStarterScreen } from './../screens/create/CreateStarterScreen.js';
 import { CreatePermissionsScreen } from '../screens/create/CreatePermissionsScreen.js';
+import { CreatePreliminaryScreen } from '../screens/create/CreatePreliminaryScreen.js';
+import { CreateChannelScreen } from '../screens/create/CreateChannelScreen.js';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +24,14 @@ export const CreateStack = ({ route }) => (
     <Stack.Screen
       name='CreateStarterScreen'
       component={CreateStarterScreen}
+    />
+    <Stack.Screen
+      name='CreatePreliminaryScreen'
+      component={CreatePreliminaryScreen}
+    />
+    <Stack.Screen
+      name='CreateChannelScreen'
+      component={CreateChannelScreen}
     />
   </Stack.Navigator>
 );

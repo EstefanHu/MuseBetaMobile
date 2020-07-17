@@ -10,7 +10,6 @@ import {
   Context as LocationContext
 } from './src/providers/LocationProvider.js';
 import { Provider as StoryProvider } from './src/providers/StoryProvider.js';
-import { Provider as NewStoryProvider } from './src/providers/NewStoryProvider.js';
 import { Provider as ProfileProvider } from './src/providers/ProfileProvider.js';
 import { Provider as JourneyProvider } from './src/providers/JourneyProvider.js';
 
@@ -48,15 +47,13 @@ export default () => {
       <AuthProvider>
         <LocationProvider>
           <StoryProvider>
-            <NewStoryProvider>
-              <ProfileProvider>
-                <JourneyProvider>
-                  {/* <React.StrictMode> */}
-                  <App />
-                  {/* </React.StrictMode> */}
-                </JourneyProvider>
-              </ProfileProvider>
-            </NewStoryProvider>
+            <ProfileProvider>
+              <JourneyProvider>
+                {/* <React.StrictMode> */}
+                <App />
+                {/* </React.StrictMode> */}
+              </JourneyProvider>
+            </ProfileProvider>
           </StoryProvider>
         </LocationProvider>
       </AuthProvider>
