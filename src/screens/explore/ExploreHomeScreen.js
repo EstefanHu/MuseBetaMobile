@@ -103,11 +103,10 @@ const Map = ({ navigation, bs, setPaddingTop }) => {
     <MapView
       style={styles.mapStyle}
       region={region}
-      // onRegionChange={console.log}
       onRegionChange={() => setRegion()}
       mapType={"mutedStandard"}
-      pitchEnabled={true}
-      rotateEnabled={true}
+      pitchEnabled
+      rotateEnabled
       showsScale
       loadingEnabled
       compassOffset={{ x: -5, y: 5 }}

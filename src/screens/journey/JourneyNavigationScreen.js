@@ -8,8 +8,8 @@ import {
 import MapView, { Marker } from 'react-native-maps';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
-import { Context as LocationContext } from './../../providers/LocationProvider.js';
+import { Context as JourneyContext } from '../../providers/JourneyProvider.js';
+import { Context as LocationContext } from '../../providers/LocationProvider.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const JourneyLaunchScreen = ({ route, navigation }) => {
+export const JourneyNavigationScreen = ({ route, navigation }) => {
   const previewMap = React.useRef(null);
   const { state: { story }, fetchJourney } = useContext(JourneyContext);
   const { state: { longitude, latitude } } = useContext(LocationContext);

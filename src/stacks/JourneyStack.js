@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ProfileTopTabs } from './../layout/ProfileTopTabs.js';
 
 import { JourneyHomeScreen } from './../screens/journey/JourneyHomeScreen.js';
-import { JourneyLaunchScreen } from './../screens/journey/JourneyLaunchScreen.js';
+import { JourneyNavigationScreen } from '../screens/journey/JourneyNavigationScreen.js';
 
 const Stack = createStackNavigator();
 
@@ -16,8 +16,8 @@ export const JourneyStack = () => (
       component={JourneyHomeScreen}
     />
     <Stack.Screen
-      name='JourneyLaunchScreen'
-      component={JourneyLaunchScreen}
+      name='JourneyNavigationScreen'
+      component={JourneyNavigationScreen}
     />
     <Stack.Screen
       name='ProfileTopTabs'
