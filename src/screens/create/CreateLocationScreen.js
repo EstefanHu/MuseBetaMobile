@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
 });
 
 export const CreateLocationScreen = ({ navigation }) => {
-  const { state: { longitude, latitude } } = useContext(LocationContext);
+  const { state: { longitude, latitude }, getCoords } = useContext(LocationContext);
   const { state: { newStory }, updateNewStory } = useContext(StoryContext);
   const [region, setRegion] = useState({
     longitude: longitude,
@@ -84,10 +84,6 @@ export const CreateLocationScreen = ({ navigation }) => {
   });
   const [storyLongitude, setStoryLongitude] = useState(longitude);
   const [storyLatitude, setStoryLatitude] = useState(latitude);
-
-  const recalculate = () => {
-
-  }
 
   const validateForNext = () => {
     updateNewStory({
@@ -140,7 +136,7 @@ export const CreateLocationScreen = ({ navigation }) => {
           </MapView>
           <TouchableOpacity
             style={styles.action}
-            onPress={() => null}
+            onPress={getCoords}
           >
             <Text style={styles.actionText}>Replot</Text>
           </TouchableOpacity>

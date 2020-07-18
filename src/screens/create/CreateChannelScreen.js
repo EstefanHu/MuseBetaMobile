@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     textTransform: 'uppercase'
-  }
+  },
 });
 
 export const CreateChannelScreen = ({ navigation }) => {

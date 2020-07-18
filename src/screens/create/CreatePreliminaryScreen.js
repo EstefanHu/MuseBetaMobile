@@ -89,7 +89,6 @@ export const CreatePreliminaryScreen = ({ navigation }) => {
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" || Platform.isPad ? "padding" : "height"}
         style={{ flex: 1 }}
-        keyboardVerticalOffset={70}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.container}>
@@ -109,6 +108,7 @@ export const CreatePreliminaryScreen = ({ navigation }) => {
                 <TextInput
                   underlineColorAndroid='rgba(0,0,0,0)'
                   style={styles.input}
+                  autoFocus
                   maxLength={50}
                   autoCorrect
                   value={title}
