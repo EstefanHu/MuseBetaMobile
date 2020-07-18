@@ -7,7 +7,11 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
-import { Foundation } from '@expo/vector-icons';
+import {
+  Foundation,
+  MaterialIcons,
+  Feather
+} from '@expo/vector-icons';
 import Animated from 'react-native-reanimated';
 
 import { Context as LocationContext } from './../../providers/LocationProvider.js';
@@ -18,9 +22,8 @@ import BottomSheet from 'reanimated-bottom-sheet';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   },
   header: {
     backgroundColor: 'white',
@@ -57,21 +60,64 @@ const styles = StyleSheet.create({
       { translateX: 9 },
       { translateY: 15 }
     ]
-  }
+  },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: Dimensions.get('window').width,
+    position: 'absolute',
+    paddingBottom: 10,
+  },
+  actionButton: {
+    backgroundColor: 'white',
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    borderRadius: 10,
+    marginHorizontal: 5,
+  },
 });
 
 export const ExploreHomeScreen = ({ navigation }) => {
-  const { state: { longitude } } = useContext(LocationContext);
+  const { state: { longitude, latitude } } = useContext(LocationContext);
 
   const bs = React.createRef();
   const fall = new Animated.Value(1);
 
+  const mapRef = React.useRef(null);
+
+  const recenter = () => {
+    mapRef.current.animateToRegion(
+      {
+        longitude,
+        latitude,
+        longitudeDelta: 0.1,
+        latitudeDelta: 0.1
+      },
+      1000
+    );
+  }
+
   return (
     <View style={styles.container}>
-      {longitude && <Map navigation={navigation} bs={bs} />}
+      {longitude && <Map navigation={navigation} bs={bs} mapRef={mapRef} />}
+      <View style={styles.actions}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={recenter}
+        >
+          <MaterialIcons name='crop-free' size={25} color='black' />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => null}
+        >
+          <Feather name='navigation' size={25} color='black' />
+        </TouchableOpacity>
+      </View>
       <BottomSheet
         ref={bs}
-        snapPoints={[330, 0]}
+        snapPoints={[355, 0]}
         initialSnap={1}
         callbackNode={fall}
         enabledBottomInitialAnimation={true}
@@ -88,8 +134,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
   );
 };
 
-const Map = ({ navigation, bs, setPaddingTop }) => {
-  const initialRegion = useRef(region);
+const Map = ({ navigation, bs, mapRef }) => {
   const { state: { longitude, latitude } } = useContext(LocationContext);
   const { state: { stories } } = useContext(StoryContext);
   const [region, setRegion] = useState({
@@ -102,6 +147,7 @@ const Map = ({ navigation, bs, setPaddingTop }) => {
   return (
     <MapView
       style={styles.mapStyle}
+      ref={mapRef}
       region={region}
       onRegionChange={() => setRegion()}
       mapType={"mutedStandard"}
@@ -132,9 +178,6 @@ const Map = ({ navigation, bs, setPaddingTop }) => {
           </Marker>
         ))
       }
-      <TouchableOpacity>
-        <Text>Recenter</Text>
-      </TouchableOpacity>
-    </MapView>
-  )
-}
+    </MapView >
+  );
+};
