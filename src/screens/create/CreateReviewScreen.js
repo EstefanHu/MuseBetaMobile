@@ -13,7 +13,11 @@ import { Context as LocationContext } from './../../providers/LocationProvider.j
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    paddingHorizontal: 24,
+    justifyContent: 'space-between',
+    backgroundColor: 'rgb(40,40,40)',
+    paddingBottom: 10,
   },
   header: {
     color: 'white',
@@ -24,9 +28,23 @@ const styles = StyleSheet.create({
     color: 'rgb(220,220,220)',
     fontSize: 20,
   },
+  publish: {
+    backgroundColor: 'rgb(255,50,50)',
+    width: '100%',
+    paddingVertical: 8,
+    alignItems: 'center',
+    borderRadius: 3,
+    marginTop: 10
+  },
+  publishText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 20,
+    textTransform: 'uppercase'
+  }
 });
 
-export const CreateReviewScreen = () => {
+export const CreateReviewScreen = ({ navigation }) => {
   const { state: { newStory } } = useContext(StoryContext);
   const { state: { city } } = useContext(LocationContext);
 

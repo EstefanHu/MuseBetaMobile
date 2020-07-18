@@ -9,6 +9,7 @@ import { CreateImageScreen } from './../screens/create/CreateImageScreen.js';
 import { CreateVideoScreen } from './../screens/create/CreateVideoScreen.js';
 import { CreateAudioScreen } from './../screens/create/CreateAudioScreen.js';
 import { CreateLocationScreen } from './../screens/create/CreateLocationScreen.js';
+import { CreateReviewScreen } from './../screens/create/CreateReviewScreen.js';
 
 const Stack = createStackNavigator();
 
@@ -45,6 +46,10 @@ export const CreateStack = () => (
     <Stack.Screen
       name='CreateLocationScreen'
       component={CreateLocationScreen}
+    />
+    <Stack.Screen
+      name='CreateReviewScreen'
+      component={CreateReviewScreen}
     />
   </Stack.Navigator>
 );
