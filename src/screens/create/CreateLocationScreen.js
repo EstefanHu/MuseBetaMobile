@@ -84,8 +84,8 @@ export const CreateLocationScreen = ({ navigation }) => {
     latitudeDelta: 0.1
   });
 
-  const replot = () => {
-    getCoords();
+  const replot = async () => {
+    await getCoords();
     previewMap.current.animateToRegion(
       {
         longitude,
