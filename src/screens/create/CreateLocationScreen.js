@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -19,13 +19,43 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingBottom: 10,
     backgroundColor: 'rgb(40,40,40)',
-    alignItems: 'center',
     justifyContent: 'space-between',
   },
+  header: {
+    color: 'white',
+    fontSize: 50,
+    fontWeight: 'bold'
+  },
+  coordContainer: {
+    paddingTop: 10,
+    paddingLeft: 10
+  },
+  describe: {
+    color: 'rgb(220,220,220)',
+    fontSize: 20,
+  },
+  coord: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   mapStyle: {
-    width: 200,
-    height: 300,
+    width: '100%',
+    height: Dimensions.get('window').height * 0.5,
     borderRadius: 5,
+    marginTop: 5,
+  },
+  action: {
+    backgroundColor: 'white',
+    width: '100%',
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderRadius: 3,
+    marginTop: 10
+  },
+  actionText: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    textTransform: 'uppercase'
   },
   submit: {
     backgroundColor: 'rgb(255,50,50)',
@@ -52,35 +82,70 @@ export const CreateLocationScreen = ({ navigation }) => {
     longitudeDelta: 0.1,
     latitudeDelta: 0.1
   });
+  const [storyLongitude, setStoryLongitude] = useState(longitude);
+  const [storyLatitude, setStoryLatitude] = useState(latitude);
+
+  const recalculate = () => {
+
+  }
 
   const validateForNext = () => {
-    updateNewStory({ ...newStory, title, pitch });
-    // navigation.navigate('');
+    updateNewStory({
+      ...newStory,
+      startLocation: {
+        type: 'String',
+        default: 'Point',
+        enum: ['Point']
+      },
+      coordinates: [storyLongitude, storyLatitude]
+    });
+    navigation.navigate('CreateReviewScreen');
   }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'rgb(40,40,40)' }}>
       <View style={styles.container}>
-        <Ionicons
-          style={{ marginLeft: -10 }}
-          name='ios-arrow-back' size={24} color='white'
-          onPress={() => navigation.pop()}
-        />
-        <MapView
-          style={styles.mapStyle}
-          region={region}
-          onRegionChange={() => setRegion()}
-          mapType={"mutedStandard"}
-          pitchEnabled
-          rotateEnabled
-          showsScale
-          loadingEnabled
-          compassOffset={{ x: -5, y: 5 }}
-        >
-          <Marker
-            coordinate={{ latitude, longitude }}
+        <View>
+          <Ionicons
+            style={{ marginLeft: -10, width: 15 }}
+            name='ios-arrow-back' size={24} color='white'
+            onPress={() => navigation.pop()}
           />
-        </MapView>
+          <Text style={styles.header}>Coordinates</Text>
+          <Text style={styles.describe}>Choose where to plot story</Text>
+        </View>
+
+        <View>
+          <MapView
+            style={styles.mapStyle}
+            region={region}
+            onRegionChange={() => setRegion()}
+            mapType={"mutedStandard"}
+            pitchEnabled
+            rotateEnabled
+            showsScale
+            loadingEnabled
+            compassOffset={{ x: -5, y: 5 }}
+          >
+            <View style={styles.coordContainer}>
+              <Text style={styles.coord}>Lat: {storyLatitude}</Text>
+              <Text style={styles.coord}>Long: {storyLongitude}</Text>
+            </View>
+            <Marker
+              coordinate={{
+                latitude: storyLatitude,
+                longitude: storyLongitude
+              }}
+            />
+          </MapView>
+          <TouchableOpacity
+            style={styles.action}
+            onPress={() => null}
+          >
+            <Text style={styles.actionText}>Replot</Text>
+          </TouchableOpacity>
+        </View>
+
         <TouchableOpacity
           style={styles.submit}
           onPress={validateForNext}
