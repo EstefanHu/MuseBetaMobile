@@ -45,11 +45,12 @@ const styles = StyleSheet.create({
 });
 
 export const CreateReviewScreen = ({ navigation }) => {
-  const { state: { newStory } } = useContext(StoryContext);
+  const { state: { newStory }, publishStory } = useContext(StoryContext);
   const { state: { city } } = useContext(LocationContext);
 
-  const publishStory = () => {
-    console.log('publishing');
+  const postStory = () => {
+    publishStory(newStory);
+    navigation.navigate('BottomTabs');
   }
 
   return (
@@ -68,7 +69,7 @@ export const CreateReviewScreen = ({ navigation }) => {
         <View>
           <TouchableOpacity
             style={styles.publish}
-            onPress={publishStory}
+            onPress={postStory}
           >
             <Text style={styles.publishText}>Publish</Text>
           </TouchableOpacity>

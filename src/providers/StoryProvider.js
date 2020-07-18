@@ -20,18 +20,12 @@ const storyReducer = (state, action) => {
             .filter(s => s._id !== action.payload._id)
             .push(action.payload)
       };
-    case 'add_story':
+    case 'publish_story':
       return {
         ...state,
         stories: [
-          ...state.stories, {
-            id: action.payload._id,
-            title: action.payload.title,
-            pitch: action.payload.pitch,
-            genre: action.payload.genre,
-            startLocation: action.payload.startLocation,
-            body: action.payload.body
-          }
+          ...state.stories,
+          action.payload
         ]
       };
     case 'edit_story':
@@ -92,16 +86,6 @@ const fetchSingleStory = dispatch => async id => {
   }
 }
 
-const addStory = dispatch => async story => {
-  try {
-    const response = await fetch(storyUrl, 'POST', story);
-    if (response.status === 'failure') return dispatch({ type: 'add_error', payload: response.payload });
-    dispatch({ type: 'add_story', payload: response.payload });
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 const editStory = dispatch => (id, title, description, genre, body, callback) => {
   dispatch({ type: 'edit_story', payload: { id, title, description, genre, body } });
   callback();
@@ -114,6 +98,17 @@ const deleteStory = dispatch => id => {
 const updateNewStory = dispatch => story =>
   dispatch({ type: 'update_new_story', payload: story });
 
+const publishStory = dispatch => async story => {
+  try {
+    const response = await useFetch(storyUrl, 'POST', story);
+    if (response.status !== 'success')
+      return dispatch({ type: 'add_error', payload: response.payload });
+    dispatch({ type: 'publish_story', payload: response.payload });
+  } catch (error) {
+    console.lor(error);
+  }
+}
+
 export const { Context, Provider } = createDataContext(
   storyReducer,
   {
@@ -122,16 +117,17 @@ export const { Context, Provider } = createDataContext(
     fetchNearStories,
     fetchTopStories,
     fetchSingleStory,
-    addStory,
     editStory,
     deleteStory,
-    updateNewStory
+    updateNewStory,
+    publishStory
   },
   {
     genre: 'All',
     focusedStoryId: null,
     error: null,
     stories: [],
+    newStory: {},
     top: []
   }
 );

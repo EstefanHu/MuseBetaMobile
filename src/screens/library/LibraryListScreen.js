@@ -41,6 +41,7 @@ export const LibraryListScreen = ({ navigation }) => {
           <FlatList
             data={library}
             onRefresh={onRefresh}
+            showsVerticalScrollIndicator={false}
             refreshing={refreshing}
             keyExtractor={item => item._id}
             renderItem={({ item }) => {

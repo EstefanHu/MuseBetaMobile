@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
 });
 
 export const CreateLocationScreen = ({ navigation }) => {
-  const { state: { longitude, latitude }, getCoords } = useContext(LocationContext);
+  const { state: { longitude, latitude, city, zip }, getCoords } = useContext(LocationContext);
   const { state: { newStory }, updateNewStory } = useContext(StoryContext);
   const [region, setRegion] = useState({
     longitude: longitude,
@@ -82,18 +82,17 @@ export const CreateLocationScreen = ({ navigation }) => {
     longitudeDelta: 0.1,
     latitudeDelta: 0.1
   });
-  const [storyLongitude, setStoryLongitude] = useState(longitude);
-  const [storyLatitude, setStoryLatitude] = useState(latitude);
+
+  const replot = () => {
+    getCoords();
+  }
 
   const validateForNext = () => {
     updateNewStory({
       ...newStory,
       startLocation: {
-        type: 'String',
-        default: 'Point',
-        enum: ['Point']
-      },
-      coordinates: [storyLongitude, storyLatitude]
+        coordinates: [longitude, latitude]
+      }, city, zip
     });
     navigation.navigate('CreateReviewScreen');
   }
@@ -124,13 +123,13 @@ export const CreateLocationScreen = ({ navigation }) => {
             compassOffset={{ x: -5, y: 5 }}
           >
             <View style={styles.coordContainer}>
-              <Text style={styles.coord}>Lat: {storyLatitude}</Text>
-              <Text style={styles.coord}>Long: {storyLongitude}</Text>
+              <Text style={styles.coord}>Lat: {latitude}</Text>
+              <Text style={styles.coord}>Long: {longitude}</Text>
             </View>
             <Marker
               coordinate={{
-                latitude: storyLatitude,
-                longitude: storyLongitude
+                latitude: latitude,
+                longitude: longitude
               }}
             />
           </MapView>
