@@ -88,7 +88,7 @@ export const CreateChannelScreen = ({ navigation }) => {
       <View style={styles.container}>
         <View>
           <Ionicons
-            style={{ marginLeft: -10 }}
+            style={{ marginLeft: -10, width: 15 }}
             name='ios-arrow-back' size={24} color='white'
             onPress={() => navigation.pop()}
           />

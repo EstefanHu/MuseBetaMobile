@@ -94,7 +94,7 @@ export const CreatePreliminaryScreen = ({ navigation }) => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.container}>
             <Ionicons
-              style={{ marginLeft: -10 }}
+              style={{ marginLeft: -10, width: 15 }}
               name='ios-arrow-back' size={24} color='white'
               onPress={() => navigation.pop()}
             />

@@ -79,7 +79,7 @@ export const CreateLauncherScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: 'rgb(40,40,40)' }}>
       <View style={styles.container}>
         <Feather
-          style={{ marginLeft: -10 }}
+          style={{ marginLeft: -10, width: 15 }}
           name='x' size={24} color='white'
           onPress={() => navigation.pop()}
         />

@@ -10,7 +10,6 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  ScrollView
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -77,8 +76,8 @@ export const CreateTextScreen = ({ navigation }) => {
   const [body, setBody] = useState('');
 
   const validateForNext = () => {
-    updateNewStory({ ...newStory, channel });
-    navigation.navigate(`Create${newStory.type}Screen`);
+    updateNewStory({ ...newStory, body });
+    navigation.navigate('CreateLocationScreen');
   }
 
   return (
@@ -92,7 +91,7 @@ export const CreateTextScreen = ({ navigation }) => {
           <View style={styles.container}>
             <View>
               <Ionicons
-                style={{ marginLeft: -10 }}
+                style={{ marginLeft: -10, width: 15 }}
                 name='ios-arrow-back' size={24} color='white'
                 onPress={() => navigation.pop()}
               />
@@ -106,6 +105,7 @@ export const CreateTextScreen = ({ navigation }) => {
                 <TextInput
                   underlineColorAndroid='rgba(0,0,0,0)'
                   style={styles.input}
+                  autoFocus
                   multiline
                   numberOfLines={3}
                   maxLength={50000}
