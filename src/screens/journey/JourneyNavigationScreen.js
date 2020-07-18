@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 7,
     borderRadius: 10,
+    marginHorizontal: 5,
   },
 });
 
@@ -75,7 +76,7 @@ export const JourneyNavigationScreen = ({ route, navigation }) => {
   }
 
   const beginNavigation = () => {
-    
+
   }
 
   return (
