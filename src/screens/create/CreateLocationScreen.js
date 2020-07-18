@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
 });
 
 export const CreateLocationScreen = ({ navigation }) => {
+  const previewMap = React.useRef(null);
   const { state: { longitude, latitude, city, zip }, getCoords } = useContext(LocationContext);
   const { state: { newStory }, updateNewStory } = useContext(StoryContext);
   const [region, setRegion] = useState({
@@ -85,6 +86,15 @@ export const CreateLocationScreen = ({ navigation }) => {
 
   const replot = () => {
     getCoords();
+    previewMap.current.animateToRegion(
+      {
+        longitude,
+        latitude,
+        longitudeDelta: 0.08,
+        latitudeDelta: 0.08
+      },
+      1200
+    );
   }
 
   const validateForNext = () => {
@@ -113,6 +123,7 @@ export const CreateLocationScreen = ({ navigation }) => {
         <View>
           <MapView
             style={styles.mapStyle}
+            ref={previewMap}
             region={region}
             onRegionChange={() => setRegion()}
             mapType={"mutedStandard"}
@@ -135,7 +146,7 @@ export const CreateLocationScreen = ({ navigation }) => {
           </MapView>
           <TouchableOpacity
             style={styles.action}
-            onPress={getCoords}
+            onPress={replot}
           >
             <Text style={styles.actionText}>Replot</Text>
           </TouchableOpacity>
