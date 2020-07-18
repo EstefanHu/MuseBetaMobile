@@ -2,6 +2,7 @@ import createDataContext from './createDataContext.js';
 import { Linking, Alert } from 'react-native';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
+import { useFetch } from './../hooks/useFetch.js';
 
 const LocationReducer = (state, action) => {
   switch (action.type) {
@@ -70,6 +71,14 @@ const getCoords = dispatch => async () => {
     dispatch({ type: 'get_location', payload: location });
   } catch (error) {
     console.log(error)
+  }
+}
+
+const beginNavigation = dispatch = async () => {
+  try {
+    const response = await useFetch()
+  } catch (error) {
+    console.log(error);
   }
 }
 

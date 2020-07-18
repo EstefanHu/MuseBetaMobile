@@ -6,7 +6,10 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { 
+  MaterialIcons,
+  Feather
+ } from '@expo/vector-icons';
 import MapView, { Marker } from 'react-native-maps';
 
 import { Context as JourneyContext } from '../../providers/JourneyProvider.js';
@@ -31,14 +34,10 @@ const styles = StyleSheet.create({
   },
   actionButton: {
     backgroundColor: 'white',
-    paddingHorizontal: 15,
-    paddingVertical: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
     borderRadius: 10,
   },
-  actionText: {
-    fontSize: 20,
-
-  }
 });
 
 export const JourneyNavigationScreen = ({ route, navigation }) => {
@@ -75,6 +74,10 @@ export const JourneyNavigationScreen = ({ route, navigation }) => {
     previewMap.current.fitToCoordinates(MARKERS, OPTIONS);
   }
 
+  const beginNavigation = () => {
+    
+  }
+
   return (
     <View style={styles.container}>
       <MapView
@@ -104,7 +107,14 @@ export const JourneyNavigationScreen = ({ route, navigation }) => {
           style={styles.actionButton}
           onPress={fitMarkers}
         >
-          <MaterialIcons name='crop-free' size={30} color='black' />
+          <MaterialIcons name='crop-free' size={25} color='black' />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+        style={styles.actionButton}
+        onPress={beginNavigation}
+        >
+          <Feather name='navigation' size={25} color='black' />
         </TouchableOpacity>
       </View>
     </View>
