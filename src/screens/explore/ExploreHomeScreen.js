@@ -13,7 +13,6 @@ import {
   Feather
 } from '@expo/vector-icons';
 import Animated from 'react-native-reanimated';
-import * as Device from 'expo-device';
 
 import { Context as LocationContext } from './../../providers/LocationProvider.js';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
@@ -82,18 +81,13 @@ const styles = StyleSheet.create({
 
 export const ExploreHomeScreen = ({ navigation }) => {
   const { state: { longitude, latitude } } = useContext(LocationContext);
-  const { state: { primaryHeaderHeight } } = useContext(LayoutContext);
+  const { state: { headerHeight, bottomTabHeight } } = useContext(LayoutContext);
   const [topHeight, setTopHeight] = useState('100%');
 
-  console.log(Device.modelId)
-
   useEffect(() => {
-    const dimensions = Dimensions.get('window').height
-    const height =
-      dimensions
-      - primaryHeaderHeight
-      // - Device.modelId > 
-      - 48; // 48 is size of pannel 34 is inset
+    const dimensions = Dimensions.get('window').height;
+    console.log(headerHeight)
+    const height = dimensions - headerHeight - (+bottomTabHeight) - 48; // 48 is size of pannel 34 is inset
     setTopHeight(height);
   }, []);
 
