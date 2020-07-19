@@ -7,6 +7,7 @@ import {
 } from '@expo/vector-icons';
 
 import { Context as JourneyContext } from './../providers/JourneyProvider.js';
+import { Context as LayoutContext } from './../providers/LayoutProvider.js';
 
 import { TopStack } from '../stacks/TopStack.js';
 import { ExploreStack } from './../stacks/ExploreStack.js';
@@ -14,10 +15,16 @@ import { LibraryStack } from './../stacks/LibraryStack.js';
 import { NewsStack } from './../stacks/NewsStack.js';
 import { JourneyStack } from '../stacks/JourneyStack.js';
 
+import { useHeaderHeight } from '@react-navigation/stack';
+
 const Tabs = createBottomTabNavigator();
 
 export const BottomTabs = () => {
   const { state: { status } } = useContext(JourneyContext);
+  const { setPrimaryHeaderHeight } = useContext(LayoutContext);
+
+  const height = useHeaderHeight();
+  React.useEffect(() => { setPrimaryHeaderHeight(height) }, [])
 
   return (
     <Tabs.Navigator
@@ -39,7 +46,8 @@ export const BottomTabs = () => {
       })}
       tabBarOptions={{
         activeTintColor: 'rgb(255,50,50)',
-        inactiveTintColor: 'gray',
+        inactiveTintColor: 'grey',
+
       }}
       initialRouteName={'Journey'}
     >
@@ -50,4 +58,4 @@ export const BottomTabs = () => {
       <Tabs.Screen name='Library' component={LibraryStack} />
     </Tabs.Navigator>
   );
-};
+};  

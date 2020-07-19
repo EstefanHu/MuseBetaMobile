@@ -1,11 +1,11 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import {
   StyleSheet,
   View,
   Dimensions,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import {
   Foundation,
@@ -13,9 +13,11 @@ import {
   Feather
 } from '@expo/vector-icons';
 import Animated from 'react-native-reanimated';
+import * as Device from 'expo-device';
 
 import { Context as LocationContext } from './../../providers/LocationProvider.js';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
+import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 
@@ -32,7 +34,8 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     shadowOpacity: 0.2,
     paddingTop: 20,
-    borderTopEndRadius: 15,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   },
   panelHeader: {
     alignItems: 'center',
@@ -79,6 +82,20 @@ const styles = StyleSheet.create({
 
 export const ExploreHomeScreen = ({ navigation }) => {
   const { state: { longitude, latitude } } = useContext(LocationContext);
+  const { state: { primaryHeaderHeight } } = useContext(LayoutContext);
+  const [topHeight, setTopHeight] = useState('100%');
+
+  console.log(Device.modelId)
+
+  useEffect(() => {
+    const dimensions = Dimensions.get('window').height
+    const height =
+      dimensions
+      - primaryHeaderHeight
+      // - Device.modelId > 
+      - 48; // 48 is size of pannel 34 is inset
+    setTopHeight(height);
+  }, []);
 
   const bs = React.createRef();
   const fall = new Animated.Value(1);
@@ -99,7 +116,14 @@ export const ExploreHomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {longitude && <Map navigation={navigation} bs={bs} mapRef={mapRef} />}
+      {
+        longitude &&
+        <Map
+          navigation={navigation}
+          bs={bs}
+          mapRef={mapRef}
+        />
+      }
       <View style={styles.actions}>
         <TouchableOpacity
           style={styles.actionButton}
@@ -117,7 +141,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
       </View>
       <BottomSheet
         ref={bs}
-        snapPoints={[355, 0]}
+        snapPoints={[topHeight, 0]}
         initialSnap={1}
         callbackNode={fall}
         enabledBottomInitialAnimation={true}
