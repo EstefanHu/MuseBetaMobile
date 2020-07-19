@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import {
   StyleSheet,
@@ -19,12 +19,12 @@ import { Context as StoryContext } from './../../providers/StoryProvider.js';
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
+import { MapActions } from '../../components/MapActions.js';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-end',
   },
   header: {
     backgroundColor: 'white',
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -1, height: -3 },
     shadowRadius: 2,
     shadowOpacity: 0.2,
-    paddingTop: 20,
+    paddingTop: 5,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
   },
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   panelHandle: {
     width: 40,
-    height: 8,
+    height: 6,
     borderRadius: 4,
     backgroundColor: '#00000040',
     marginBottom: 10,
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#FFFFFF',
     paddingTop: 20,
+    height: '100%'
   },
   mapStyle: {
     width: Dimensions.get('window').width,
@@ -63,32 +64,22 @@ const styles = StyleSheet.create({
       { translateY: 15 }
     ]
   },
-  actions: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: Dimensions.get('window').width,
-    position: 'absolute',
-    paddingBottom: 10,
-  },
-  actionButton: {
-    backgroundColor: 'white',
-    paddingHorizontal: 10,
-    paddingVertical: 7,
-    borderRadius: 10,
-    marginHorizontal: 5,
-  },
 });
 
+const PANNEL_HEADER_HEIGHT = 48;
+
 export const ExploreHomeScreen = ({ navigation }) => {
-  const { state: { longitude, latitude } } = useContext(LocationContext);
   const { state: { headerHeight, bottomTabHeight } } = useContext(LayoutContext);
   const [topHeight, setTopHeight] = useState('100%');
+  const [previewHeight, setPreviewHeight] = useState('50%');
+  const [dockHeight, setDockheight] = useState(150);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const dimensions = Dimensions.get('window').height;
-    console.log(headerHeight)
-    const height = dimensions - headerHeight - (+bottomTabHeight) - 48; // 48 is size of pannel 34 is inset
+    const height = dimensions - headerHeight - bottomTabHeight - PANNEL_HEADER_HEIGHT;
     setTopHeight(height);
+    setPreviewHeight(bottomTabHeight + PANNEL_HEADER_HEIGHT);
+    setDockheight(bottomTabHeight + PANNEL_HEADER_HEIGHT);
   }, []);
 
   const bs = React.createRef();
@@ -96,47 +87,32 @@ export const ExploreHomeScreen = ({ navigation }) => {
 
   const mapRef = React.useRef(null);
 
-  const recenter = () => {
-    mapRef.current.animateToRegion(
-      {
-        longitude,
-        latitude,
-        longitudeDelta: 0.1,
-        latitudeDelta: 0.1
-      },
-      1000
-    );
+
+
+  const toggleBs = () => {
+    if (bs.current !== 0) {
+      bs.current.snapTo(2);
+      setTimeout(() => {
+        bs.current.snapTo(1);
+      }, 500);
+    } else {
+      bs.current.snapTo(2);
+    }
   }
 
   return (
     <View style={styles.container}>
-      {
-        longitude &&
-        <Map
-          navigation={navigation}
-          bs={bs}
-          mapRef={mapRef}
-        />
-      }
-      <View style={styles.actions}>
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={recenter}
-        >
-          <MaterialIcons name='crop-free' size={25} color='black' />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => null}
-        >
-          <Feather name='navigation' size={25} color='black' />
-        </TouchableOpacity>
-      </View>
+      <Map
+        navigation={navigation}
+        bs={bs}
+        mapRef={mapRef}
+        toggleBs={toggleBs}
+      />
+      <MapActions mapRef={mapRef} />
       <BottomSheet
         ref={bs}
-        snapPoints={[topHeight, 0]}
-        initialSnap={1}
+        snapPoints={[topHeight, previewHeight, dockHeight]}
+        initialSnap={2}
         callbackNode={fall}
         enabledBottomInitialAnimation={true}
         renderContent={() => <Text style={styles.panel}>Hello World</Text>}
@@ -152,7 +128,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
   );
 };
 
-const Map = ({ navigation, bs, mapRef }) => {
+const Map = ({ navigation, bs, mapRef, toggleBs }) => {
   const { state: { longitude, latitude } } = useContext(LocationContext);
   const { state: { stories } } = useContext(StoryContext);
   const [region, setRegion] = useState({
@@ -173,7 +149,7 @@ const Map = ({ navigation, bs, mapRef }) => {
       rotateEnabled
       showsScale
       loadingEnabled
-      compassOffset={{ x: -5, y: 5 }}
+      compassOffset={{ x: -6, y: 105 }}
       showsUserLocation
     >
       {
@@ -184,7 +160,7 @@ const Map = ({ navigation, bs, mapRef }) => {
               latitude: item.startLocation.coordinates[1],
               longitude: item.startLocation.coordinates[0]
             }}
-            onPress={() => bs.current.snapTo(0)}
+            onPress={toggleBs}
             tracksViewChanges={false}
             onMapReady={() => console.log('hello')}
           >
