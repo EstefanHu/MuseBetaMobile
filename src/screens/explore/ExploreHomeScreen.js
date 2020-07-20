@@ -24,6 +24,7 @@ import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 import BottomSheet from 'reanimated-bottom-sheet';
 import { Map } from './../../components/Map.js';
 import { StoryPreview } from '../../components/StoryPreview.js';
+import { BSSearch } from './../../components/BSSearch.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -143,6 +144,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
             <BottomSheetBody
               navigation={navigation}
               search={search}
+              isSearching={isSearching}
               stories={stories}
               library={library}
             />
@@ -262,49 +264,54 @@ const bsbStyles = StyleSheet.create({
   },
 });
 
-const BottomSheetBody = ({ navigation, search, stories, library }) => {
+const BottomSheetBody = ({ navigation, search, isSearching, stories, library }) => {
 
   return (
     <View style={bsbStyles.panel}>
-      <View style={bsbStyles.section}>
-        <View style={bsbStyles.sectionHeader}>
-          <Text style={bsbStyles.sectionLable}>Docked Story</Text>
-        </View>
-      </View>
+      {
+        isSearching ? <BSSearch navigation={navigation} />
+          : <>
+            <View style={bsbStyles.section}>
+              <View style={bsbStyles.sectionHeader}>
+                <Text style={bsbStyles.sectionLable}>Docked Story</Text>
+              </View>
+            </View>
 
-      <View style={bsbStyles.section}>
-        <View style={bsbStyles.sectionHeader}>
-          <Text style={bsbStyles.sectionLable}>Library Preview</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Library')}>
-            <Text style={bsbStyles.more}>See All</Text>
-          </TouchableOpacity>
-        </View>
-        {
-          library.slice(0, 5).map(item => (
-            <StoryPreview
-              navigation={navigation}
-              item={item}
-            />
-          ))
-        }
-      </View>
+            <View style={bsbStyles.section}>
+              <View style={bsbStyles.sectionHeader}>
+                <Text style={bsbStyles.sectionLable}>Library Preview</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Library')}>
+                  <Text style={bsbStyles.more}>See All</Text>
+                </TouchableOpacity>
+              </View>
+              {
+                library.slice(0, 5).map(item => (
+                  <StoryPreview
+                    navigation={navigation}
+                    item={item}
+                  />
+                ))
+              }
+            </View>
 
-      <View style={bsbStyles.section}>
-        <View style={bsbStyles.sectionHeader}>
-          <Text style={bsbStyles.sectionLable}>Near By</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Near')}>
-            <Text style={bsbStyles.more}>See All</Text>
-          </TouchableOpacity>
-        </View>
-        {
-          stories.slice(0, 5).map(item => (
-            <StoryPreview
-              navigation={navigation}
-              item={item}
-            />
-          ))
-        }
-      </View>
+            <View style={bsbStyles.section}>
+              <View style={bsbStyles.sectionHeader}>
+                <Text style={bsbStyles.sectionLable}>Near By</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Near')}>
+                  <Text style={bsbStyles.more}>See All</Text>
+                </TouchableOpacity>
+              </View>
+              {
+                stories.slice(0, 5).map(item => (
+                  <StoryPreview
+                    navigation={navigation}
+                    item={item}
+                  />
+                ))
+              }
+            </View>
+          </>
+      }
     </View>
   );
 };
