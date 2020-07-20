@@ -6,8 +6,12 @@ const layoutReducer = (state, action) => {
   switch (action.type) {
     case 'set_header_height':
       return { ...state, headerHeight: action.payload };
-    case 'set_bottom_tab_height':
-      return { ...state, bottomTabHeight: action.payload };
+    case 'set_inset':
+      return {
+        ...state,
+        topInset: action.payload.topInset,
+        bottomInset: action.payload.bottomInset,
+      };
     default:
       return state;
   }
@@ -16,10 +20,15 @@ const layoutReducer = (state, action) => {
 const setHeaderHeight = dispatch => height =>
   dispatch({ type: 'set_header_height', payload: height });
 
-const setBottomTabHeight = dispatch => () => {
+const setInsets = dispatch => () => {
   try {
-    const height = NO_BEZEL.includes(Device.modelId) ? 34 : 30;
-    dispatch({ type: 'set_bottom_tab_height', payload: height });
+    dispatch({
+      type: 'set_inset',
+      payload: {
+        topInset: NO_BEZEL.includes(Device.modelId) ? 44 : 20,
+        bottomInset: NO_BEZEL.includes(Device.modelId) ? 34 : 30
+      }
+    })
   } catch (error) {
     console.log(error);
   }
@@ -29,10 +38,11 @@ export const { Context, Provider } = createDataContext(
   layoutReducer,
   {
     setHeaderHeight,
-    setBottomTabHeight
+    setInsets,
   },
   {
     headerHeight: null,
-    bottomTabHeight: null
+    topInset: null,
+    bottomInset: null
   }
 );

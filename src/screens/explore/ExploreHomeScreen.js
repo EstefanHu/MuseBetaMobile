@@ -46,7 +46,7 @@ const PANNEL_HEADER_HEIGHT = 30;
 export const ExploreHomeScreen = ({ navigation }) => {
   const { state: { stories } } = React.useContext(StoryContext);
   const { state: { longitude, latitude } } = React.useContext(LocationContext);
-  const { state: { headerHeight, bottomTabHeight } } = React.useContext(LayoutContext);
+  const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
 
   const [search, setSearch] = React.useState('');
 
@@ -86,7 +86,6 @@ export const ExploreHomeScreen = ({ navigation }) => {
         toggleBs={toggleBs}
         stories={stories}
       />
-      {/* <View style={{ width: 34, height: 34, position: "absolute", bottom: 0, zIndex: 100, backgroundColor: 'green' }}></View> */}
       <View style={styles.actions}>
         <TouchableOpacity
           style={styles.actionButton}
@@ -106,10 +105,10 @@ export const ExploreHomeScreen = ({ navigation }) => {
         ref={bs}
         snapPoints={[
           Dimensions.get('window').height - headerHeight
-          - bottomTabHeight - PANNEL_HEADER_HEIGHT,
+          - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
           Dimensions.get('window').height / 2 - headerHeight
-          - bottomTabHeight - PANNEL_HEADER_HEIGHT,
-          bottomTabHeight + PANNEL_HEADER_HEIGHT
+          - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
+          bottomInset + PANNEL_HEADER_HEIGHT
         ]}
         initialSnap={2}
         callbackNode={fall}

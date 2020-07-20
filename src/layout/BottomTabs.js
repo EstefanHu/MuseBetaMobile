@@ -21,12 +21,12 @@ const Tabs = createBottomTabNavigator();
 
 export const BottomTabs = () => {
   const { state: { status } } = useContext(JourneyContext);
-  const { setHeaderHeight, setBottomTabHeight } = useContext(LayoutContext);
+  const { setHeaderHeight, setInsets } = useContext(LayoutContext);
 
   const height = useHeaderHeight();
   React.useEffect(() => {
     setHeaderHeight(height);
-    setBottomTabHeight();
+    setInsets();
   }, []);
 
   return (
