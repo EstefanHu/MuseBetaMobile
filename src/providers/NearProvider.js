@@ -1,6 +1,6 @@
 import createDataContext from './createDataContext.js';
 
-const journeyReducer = (state, action) => {
+const nearReducer = (state, action) => {
   switch (action.type) {
     case 'dock_story':
       return {
@@ -26,7 +26,7 @@ const clearDock = dispatch => () =>
   dispatch({ type: 'clear_dock' });
 
 export const { Context, Provider } = createDataContext(
-  journeyReducer,
+  nearReducer,
   { dockStory, clearDock },
   {
     status: 'inactive',

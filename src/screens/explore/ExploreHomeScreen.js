@@ -135,6 +135,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
         renderContent={
           () =>
             <BottomSheetBody
+              navigation={navigation}
               search={search}
               stories={stories}
             />
@@ -275,7 +276,7 @@ const bsbStyles = StyleSheet.create({
   }
 });
 
-const BottomSheetBody = ({ search, stories }) => {
+const BottomSheetBody = ({ navigation, search, stories }) => {
 
   return (
     <View style={bsbStyles.panel}>
@@ -287,13 +288,22 @@ const BottomSheetBody = ({ search, stories }) => {
 
       <View style={bsbStyles.section}>
         <View style={bsbStyles.sectionHeader}>
+          <Text style={bsbStyles.sectionLable}>Library Preview</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Library')}>
+            <Text style={bsbStyles.more}>See All</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <View style={bsbStyles.section}>
+        <View style={bsbStyles.sectionHeader}>
           <Text style={bsbStyles.sectionLable}>Near By</Text>
           <TouchableOpacity onPress={() => console.log('more')}>
             <Text style={bsbStyles.more}>See All</Text>
           </TouchableOpacity>
         </View>
         {
-          stories.slice(0, 9).map(item => (
+          stories.slice(0, 4).map(item => (
             <TouchableOpacity
               key={item._id}
               style={bsbStyles.listItem}
@@ -302,7 +312,13 @@ const BottomSheetBody = ({ search, stories }) => {
                 <FontAwesome name='book' size={18} color='rgba(255,255,255,0.9)' />
               </View>
               <View style={bsbStyles.itemInfo}>
-                <Text style={bsbStyles.title}>{item.title}</Text>
+                <Text style={bsbStyles.title}>
+                  {
+                    ((item.title).length > 40) ?
+                      (((item.title).substring(0, 40 - 3)) + '...') :
+                      item.title
+                  }
+                </Text>
               </View>
             </TouchableOpacity>
           ))

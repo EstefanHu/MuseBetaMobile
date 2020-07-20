@@ -12,11 +12,11 @@ import { useScrollToTop } from '@react-navigation/native';
 import MapView, { Marker } from 'react-native-maps';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
-import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
-import { Context as StoryContext } from './../../providers/StoryProvider.js';
-import { Context as LocationContext } from './../../providers/LocationProvider.js';
+import { Context as NearContext } from '../../providers/NearProvider.js';
+import { Context as StoryContext } from '../../providers/StoryProvider.js';
+import { Context as LocationContext } from '../../providers/LocationProvider.js';
 
-import { StoryCard } from './../../components/StoryCard.js';
+import { StoryCard } from '../../components/StoryCard.js';
 import { Filter } from '../../components/Filter.js';
 
 const styles = StyleSheet.create({
@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export const JourneyHomeScreen = ({ navigation }) => {
+export const NearHomeScreen = ({ navigation }) => {
   const { state: { stories }, fetchNearStories } = useContext(StoryContext);
   const { state: { longitude, latitude } } = useContext(LocationContext);
-  const { state: { story }, dockStory } = useContext(JourneyContext);
+  const { state: { story }, dockStory } = useContext(NearContext);
   const [refreshing, setRefreshing] = useState(false);
   const [channel, setChannel] = useState('All');
 
@@ -138,7 +138,7 @@ const launchPadStyles = StyleSheet.create({
 })
 
 const LaunchPad = ({ navigation, longitude, latitude }) => {
-  const { state: { story } } = useContext(JourneyContext);
+  const { state: { story } } = useContext(NearContext);
   const previewMap = React.useRef(null);
 
   useEffect(() => fitMarkers(), [story, previewMap]);
@@ -192,7 +192,7 @@ const LaunchPad = ({ navigation, longitude, latitude }) => {
       </MapView>
       <TouchableOpacity
         style={launchPadStyles.launchButton}
-        onPress={() => navigation.navigate('JourneyNavigationScreen')}
+        onPress={() => navigation.navigate('NearNavigationScreen')}
       >
         <Text style={launchPadStyles.launchButtonText}>Launch</Text>
       </TouchableOpacity>

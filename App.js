@@ -11,7 +11,7 @@ import {
 } from './src/providers/LocationProvider.js';
 import { Provider as StoryProvider } from './src/providers/StoryProvider.js';
 import { Provider as ProfileProvider } from './src/providers/ProfileProvider.js';
-import { Provider as JourneyProvider } from './src/providers/JourneyProvider.js';
+import { Provider as JourneyProvider } from './src/providers/NearProvider.js';
 import { Provider as LayoutProvider } from './src/providers/LayoutProvider.js';
 
 import { AuthStack } from './src/stacks/AuthStack.js';

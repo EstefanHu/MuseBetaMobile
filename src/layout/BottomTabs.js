@@ -6,7 +6,7 @@ import {
   Feather
 } from '@expo/vector-icons';
 
-import { Context as JourneyContext } from './../providers/JourneyProvider.js';
+import { Context as NearContext } from './../providers/NearProvider.js';
 import { Context as StoryContext } from './../providers/StoryProvider.js';
 import { Context as LocationContext } from './../providers/LocationProvider.js';
 import { Context as LayoutContext } from './../providers/LayoutProvider.js';
@@ -15,14 +15,14 @@ import { TopStack } from '../stacks/TopStack.js';
 import { ExploreStack } from './../stacks/ExploreStack.js';
 import { LibraryStack } from './../stacks/LibraryStack.js';
 import { NewsStack } from './../stacks/NewsStack.js';
-import { JourneyStack } from '../stacks/JourneyStack.js';
+import { NearStack } from '../stacks/NearStack.js';
 
 import { useHeaderHeight } from '@react-navigation/stack';
 
 const Tabs = createBottomTabNavigator();
 
 export const BottomTabs = () => {
-  const { state: { status } } = useContext(JourneyContext);
+  const { state: { status } } = useContext(NearContext);
   const { setHeaderHeight, setInsets } = useContext(LayoutContext);
   const { fetchNearStories } = React.useContext(StoryContext);
   const { state: { longitude, latitude }, getCoords } = React.useContext(LocationContext);
@@ -45,7 +45,7 @@ export const BottomTabs = () => {
         tabBarIcon: ({ _, color, size }) => {
           if (route.name === 'Top') {
             return <FontAwesome5 name='tasks' size={size} color={color} />;
-          } else if (route.name === 'Journey') {
+          } else if (route.name === 'Near') {
             if (status === 'docked') return <MaterialCommunityIcons name='navigation' size={size} color={color} />
             return <Feather name='navigation' size={size} color={color} />
           } else if (route.name === 'Explore') {
@@ -65,7 +65,7 @@ export const BottomTabs = () => {
       initialRouteName={'Explore'}
     >
       <Tabs.Screen name='Top' component={TopStack} />
-      <Tabs.Screen name='Journey' component={JourneyStack} />
+      <Tabs.Screen name='Near' component={NearStack} />
       <Tabs.Screen name='Explore' component={ExploreStack} />
       <Tabs.Screen name='News' component={NewsStack} />
       <Tabs.Screen name='Library' component={LibraryStack} />

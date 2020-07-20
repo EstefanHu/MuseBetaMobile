@@ -11,10 +11,10 @@ import {
   Feather
 } from '@expo/vector-icons';
 
-import { Context as JourneyContext } from '../../providers/JourneyProvider.js';
+import { Context as NearContext } from '../../providers/NearProvider.js';
 import { Context as LocationContext } from '../../providers/LocationProvider.js';
 
-import { Map } from './../../components/Map.js';
+import { Map } from '../../components/Map.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,16 +40,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export const JourneyNavigationScreen = ({ route, navigation }) => {
+export const NearNavigationScreen = ({ route, navigation }) => {
   const mapRef = React.useRef(null);
-  const { state: { story }, fetchJourney } = useContext(JourneyContext);
+  const { state: { story } } = useContext(NearContext);
   const { state: { longitude, latitude } } = useContext(LocationContext);
-  const [region, setRegion] = React.useState({
-    longitude: longitude,
-    latitude: latitude,
-    longitudeDelta: 0.1,
-    latitudeDelta: 0.1
-  });
 
   React.useEffect(() => {
     fitMarkers()
@@ -74,16 +68,15 @@ export const JourneyNavigationScreen = ({ route, navigation }) => {
     mapRef.current.fitToCoordinates(MARKERS, OPTIONS);
   }
 
-  const beginNavigation = () => {
-
-  }
-
   return (
     <View style={styles.container}>
       <Map
         navigation={navigation}
         mapRef={mapRef}
+        // toggleBs={() => bs.current.snapTo(1)}
         stories={[story]}
+        longitude={longitude}
+        latitude={latitude}
       />
       <View style={styles.actions}>
         <TouchableOpacity

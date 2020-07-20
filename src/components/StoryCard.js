@@ -13,7 +13,7 @@ import {
 import { getProfileImage } from './../constants/network.js';
 
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
-import { Context as JourneyContext } from './../providers/JourneyProvider.js';
+import { Context as JourneyContext } from '../providers/NearProvider.js';
 
 import DefaultImage from './../../assets/user-default.png';
 
