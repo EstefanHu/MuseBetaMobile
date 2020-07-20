@@ -23,10 +23,6 @@ export const LibraryListScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [channel, setChannel] = useState('All');
 
-  useEffect(() => {
-    fetchLibrary();
-  }, []);
-
   const onRefresh = async () => {
     setRefreshing(true);
     await fetchLibrary();

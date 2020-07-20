@@ -19,11 +19,11 @@ import Animated from 'react-native-reanimated';
 
 import { Context as LocationContext } from './../../providers/LocationProvider.js';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
+import { Context as ProfileContext } from '../../providers/ProfileProvider.js'; // TODO: Temp
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 import { Map } from './../../components/Map.js';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
   container: {
@@ -48,11 +48,16 @@ const PANNEL_HEADER_HEIGHT = 30;
 
 export const ExploreHomeScreen = ({ navigation }) => {
   const { state: { stories }, fetchNearStories } = React.useContext(StoryContext);
+  const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
   const { state: { longitude, latitude }, getCoords } = React.useContext(LocationContext);
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
 
   const [isSearching, setIsSearching] = React.useState(false);
   const [search, setSearch] = React.useState('');
+
+  React.useEffect(() => {
+    fetchLibrary();
+  }, []);
 
   const recenter = () => {
     mapRef.current.animateToRegion(
@@ -66,7 +71,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
     );
   }
   const bs = React.useRef(null);
-  const fall = new Animated.Value(1);
+  const fall = new Animated.Value(2);
 
   const mapRef = React.useRef(null);
   const inputRef = React.useRef(null);
@@ -117,6 +122,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
         ]}
         initialSnap={2}
         callbackNode={fall}
+        enabledBottomInitialAnimation={false}
         enabledBottomClamp={true}
         onCloseStart={() => cancelSearch(1)}
         onCloseEnd={() => cancelSearch(2)}
@@ -138,6 +144,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
               navigation={navigation}
               search={search}
               stories={stories}
+              library={library}
             />
         }
       />
