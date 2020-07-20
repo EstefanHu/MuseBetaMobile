@@ -209,7 +209,6 @@ const BottomSheetHeader = ({ search, setSearch, bs,
               value={search}
               onChangeText={text => setSearch(text)}
               onFocus={startSearch}
-              // onBlur={cancelSearch}
               clearButtonMode={'always'}
             />
           </View>

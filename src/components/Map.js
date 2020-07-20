@@ -68,5 +68,5 @@ export const Map = ({ navigation, bs, mapRef, toggleBs, stories }) => {
         ))
       }
     </MapView >
-  )
-}
+  );
+};
