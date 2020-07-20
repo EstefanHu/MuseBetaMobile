@@ -6,7 +6,8 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 import {
   Feather,
@@ -48,6 +49,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
   const { state: { longitude, latitude } } = React.useContext(LocationContext);
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
 
+  const [isSearching, setIsSearching] = React.useState(false);
   const [search, setSearch] = React.useState('');
 
   const recenter = () => {
@@ -65,6 +67,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
   const fall = new Animated.Value(1);
 
   const mapRef = React.useRef(null);
+  const inputRef = React.useRef(null);
 
   const toggleBs = () => {
     if (bs.current !== 0) {
@@ -75,6 +78,12 @@ export const ExploreHomeScreen = ({ navigation }) => {
     } else {
       bs.current.snapTo(2);
     }
+  }
+
+  const cancelSearch = () => {
+    inputRef.current.blur();
+    setIsSearching(false);
+    Keyboard.dismiss();
   }
 
   return (
@@ -113,8 +122,19 @@ export const ExploreHomeScreen = ({ navigation }) => {
         initialSnap={2}
         callbackNode={fall}
         enabledBottomClamp={true}
-        renderHeader={() => <BottomSheetHeader search={search} setSearch={setSearch} bs={bs} />}
+        renderHeader={
+          () =>
+            <BottomSheetHeader
+              search={search}
+              setSearch={setSearch}
+              isSearching={isSearching}
+              setIsSearching={setIsSearching}
+              bs={bs}
+              inputRef={inputRef}
+            />
+        }
         renderContent={() => <BottomSheetBody />}
+        onCloseStart={cancelSearch}
       />
     </View>
   );
@@ -169,18 +189,16 @@ const bsStyles = StyleSheet.create({
   },
 })
 
-const BottomSheetHeader = ({ search, setSearch, bs }) => {
-  const inputRef = React.useRef(null);
-  const [isSearching, setIsSearching] = React.useState(false);
-
+const BottomSheetHeader = ({ search, setSearch,
+  isSearching, setIsSearching, bs, inputRef }) => {
   const startSearch = () => {
-    inputRef.current.focus()
+    inputRef.current.focus();
     setIsSearching(true);
     bs.current.snapTo(0);
   }
 
   const cancelSearch = () => {
-    inputRef.current.blur()
+    inputRef.current.blur();
     setIsSearching(false);
     bs.current.snapTo(1);
   }
