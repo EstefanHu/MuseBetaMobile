@@ -69,13 +69,12 @@ export const ExploreHomeScreen = ({ navigation }) => {
   const mapRef = React.useRef(null);
   const inputRef = React.useRef(null);
 
-  const cancelSearch = React.useCallback(() => {
+  const cancelSearch = (idx) => {
     inputRef.current.blur();
     setIsSearching(false);
-    bs.current.snapTo(1);
-
+    bs.current.snapTo(idx);
     Keyboard.dismiss();
-  });
+  };
 
   return (
     <View style={styles.container}>
@@ -115,20 +114,21 @@ export const ExploreHomeScreen = ({ navigation }) => {
         initialSnap={2}
         callbackNode={fall}
         enabledBottomClamp={true}
+        onCloseStart={() => cancelSearch(1)}
+        onCloseEnd={() => cancelSearch(2)}
         renderHeader={
           () =>
             <BottomSheetHeader
               search={search}
               setSearch={setSearch}
               isSearching={isSearching}
-              setIsSearching={isSearching => setIsSearching(isSearching)}
+              setIsSearching={setIsSearching}
               bs={bs}
               inputRef={inputRef}
               cancelSearch={cancelSearch}
             />
         }
         renderContent={() => <BottomSheetBody />}
-        onCloseStart={cancelSearch}
       />
     </View>
   );
@@ -183,9 +183,8 @@ const bsStyles = StyleSheet.create({
   },
 })
 
-const BottomSheetHeader = ({ search, setSearch,
-  isSearching, setIsSearching, bs, inputRef, cancelSearch }) => {
-
+const BottomSheetHeader = ({ search, setSearch, bs,
+  isSearching, setIsSearching, inputRef, cancelSearch }) => {
   const startSearch = () => {
     inputRef.current.focus();
     setIsSearching(true);
@@ -200,7 +199,7 @@ const BottomSheetHeader = ({ search, setSearch,
       <View style={bsStyles.searchContainer}>
         <TouchableWithoutFeedback onPress={startSearch}>
           <View style={bsStyles.searchInputContainer}>
-            <MaterialIcons name='search' size={22} color='black' />
+            <MaterialIcons name='search' size={22} color='grey' />
             <TextInput
               ref={inputRef}
               style={bsStyles.searchInput}
@@ -210,12 +209,13 @@ const BottomSheetHeader = ({ search, setSearch,
               value={search}
               onChangeText={text => setSearch(text)}
               onFocus={startSearch}
+              // onBlur={cancelSearch}
               clearButtonMode={'always'}
             />
           </View>
         </TouchableWithoutFeedback>
         {
-          isSearching && <TouchableOpacity onPress={cancelSearch}>
+          isSearching && <TouchableOpacity onPress={() => cancelSearch(1)}>
             <Text style={bsStyles.cancelSearch}>Cancel</Text>
           </TouchableOpacity>
         }
