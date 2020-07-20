@@ -12,7 +12,6 @@ import {
 import {
   Feather,
   MaterialIcons,
-  FontAwesome
 } from '@expo/vector-icons';
 
 import Animated from 'react-native-reanimated';
@@ -24,6 +23,7 @@ import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 import { Map } from './../../components/Map.js';
+import { StoryPreview } from '../../components/StoryPreview.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -260,30 +260,9 @@ const bsbStyles = StyleSheet.create({
     color: 'rgba(0, 100, 255, 0.7)',
     fontSize: 13
   },
-  listItem: {
-    paddingVertical: 10,
-    flexDirection: 'row',
-    borderBottomColor: 'rgba(200,200,200,0.8)',
-    borderBottomWidth: 1,
-  },
-  itemIcon: {
-    width: 35,
-    height: 35,
-    borderRadius: 25,
-    backgroundColor: 'rgba(255,50,50,0.8)',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  itemInfo: {
-    paddingHorizontal: 10
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  }
 });
 
-const BottomSheetBody = ({ navigation, search, stories }) => {
+const BottomSheetBody = ({ navigation, search, stories, library }) => {
 
   return (
     <View style={bsbStyles.panel}>
@@ -300,34 +279,29 @@ const BottomSheetBody = ({ navigation, search, stories }) => {
             <Text style={bsbStyles.more}>See All</Text>
           </TouchableOpacity>
         </View>
+        {
+          library.slice(0, 5).map(item => (
+            <StoryPreview
+              navigation={navigation}
+              item={item}
+            />
+          ))
+        }
       </View>
 
       <View style={bsbStyles.section}>
         <View style={bsbStyles.sectionHeader}>
           <Text style={bsbStyles.sectionLable}>Near By</Text>
-          <TouchableOpacity onPress={() => console.log('more')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Near')}>
             <Text style={bsbStyles.more}>See All</Text>
           </TouchableOpacity>
         </View>
         {
-          stories.slice(0, 4).map(item => (
-            <TouchableOpacity
-              key={item._id}
-              style={bsbStyles.listItem}
-            >
-              <View style={bsbStyles.itemIcon}>
-                <FontAwesome name='book' size={18} color='rgba(255,255,255,0.9)' />
-              </View>
-              <View style={bsbStyles.itemInfo}>
-                <Text style={bsbStyles.title}>
-                  {
-                    ((item.title).length > 40) ?
-                      (((item.title).substring(0, 40 - 3)) + '...') :
-                      item.title
-                  }
-                </Text>
-              </View>
-            </TouchableOpacity>
+          stories.slice(0, 5).map(item => (
+            <StoryPreview
+              navigation={navigation}
+              item={item}
+            />
           ))
         }
       </View>
