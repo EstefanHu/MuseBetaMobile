@@ -18,7 +18,7 @@ const setHeaderHeight = dispatch => height =>
 
 const setBottomTabHeight = dispatch => () => {
   try {
-    const height = NO_BEZEL.includes(Device.modelId) ? 34 : 10;
+    const height = NO_BEZEL.includes(Device.modelId) ? 34 : 30;
     dispatch({ type: 'set_bottom_tab_height', payload: height });
   } catch (error) {
     console.log(error);

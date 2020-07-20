@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -41,25 +41,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const PANNEL_HEADER_HEIGHT = 48;
+const PANNEL_HEADER_HEIGHT = 30;
 
 export const ExploreHomeScreen = ({ navigation }) => {
-  const { state: { stories } } = useContext(StoryContext);
+  const { state: { stories } } = React.useContext(StoryContext);
   const { state: { longitude, latitude } } = React.useContext(LocationContext);
-  const { state: { headerHeight, bottomTabHeight } } = useContext(LayoutContext);
-  const [topHeight, setTopHeight] = useState('100%');
-  const [previewHeight, setPreviewHeight] = useState('50%');
-  const [dockHeight, setDockheight] = useState(150);
+  const { state: { headerHeight, bottomTabHeight } } = React.useContext(LayoutContext);
 
-  const [search, setSearch] = useState('');
-
-  React.useEffect(() => {
-    const dimensions = Dimensions.get('window').height;
-    const height = dimensions - headerHeight - bottomTabHeight - PANNEL_HEADER_HEIGHT;
-    setTopHeight(height);
-    setPreviewHeight(bottomTabHeight + PANNEL_HEADER_HEIGHT);
-    setDockheight(bottomTabHeight + PANNEL_HEADER_HEIGHT);
-  }, []);
+  const [search, setSearch] = React.useState('');
 
   const recenter = () => {
     mapRef.current.animateToRegion(
@@ -97,6 +86,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
         toggleBs={toggleBs}
         stories={stories}
       />
+      {/* <View style={{ width: 34, height: 34, position: "absolute", bottom: 0, zIndex: 100, backgroundColor: 'green' }}></View> */}
       <View style={styles.actions}>
         <TouchableOpacity
           style={styles.actionButton}
@@ -114,10 +104,16 @@ export const ExploreHomeScreen = ({ navigation }) => {
       </View>
       <BottomSheet
         ref={bs}
-        snapPoints={[topHeight, previewHeight, dockHeight]}
+        snapPoints={[
+          Dimensions.get('window').height - headerHeight
+          - bottomTabHeight - PANNEL_HEADER_HEIGHT,
+          Dimensions.get('window').height / 2 - headerHeight
+          - bottomTabHeight - PANNEL_HEADER_HEIGHT,
+          bottomTabHeight + PANNEL_HEADER_HEIGHT
+        ]}
         initialSnap={2}
         callbackNode={fall}
-        enabledBottomInitialAnimation={true}
+        enabledBottomClamp={true}
         renderHeader={() => <BottomSheetHeader search={search} setSearch={setSearch} bs={bs} />}
         renderContent={() => <BottomSheetBody />}
       />
@@ -127,35 +123,33 @@ export const ExploreHomeScreen = ({ navigation }) => {
 
 const bsStyles = StyleSheet.create({
   header: {
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255,255,255,0.8)',
     shadowColor: '#333333',
     shadowOffset: { width: -1, height: -3 },
     shadowRadius: 2,
     shadowOpacity: 0.2,
-    paddingTop: 5,
+    paddingVertical: 5,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
-    paddingHorizontal: 20
-  },
-  panelHeader: {
-    alignItems: 'center',
+    paddingHorizontal: 20,
+    alignItems: 'center'
   },
   panelHandle: {
     width: 40,
     height: 6,
     borderRadius: 4,
     backgroundColor: '#00000040',
-    marginBottom: 10,
+    marginBottom: 6,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center'
   },
   searchInputContainer: {
-    backgroundColor: 'lightgrey',
-    borderRadius: 5,
+    backgroundColor: 'rgba(200,200,200,0.4)',
+    borderRadius: 10,
     paddingHorizontal: 8,
-    paddingVertical: 5,
+    paddingVertical: 6,
     flexDirection: 'row',
     flex: 1,
   },
@@ -169,9 +163,9 @@ const bsStyles = StyleSheet.create({
     fontSize: 16
   },
   panel: {
-    padding: 20,
-    backgroundColor: '#FFFFFF',
-    paddingTop: 20,
+    paddingHorizontal: 10,
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    paddingTop: 10,
     height: '100%'
   },
 })
@@ -180,14 +174,15 @@ const BottomSheetHeader = ({ search, setSearch, bs }) => {
   const inputRef = React.useRef(null);
   const [isSearching, setIsSearching] = React.useState(false);
 
-  const searching = () => {
+  const startSearch = () => {
+    inputRef.current.focus()
     setIsSearching(true);
     bs.current.snapTo(0);
   }
 
   const cancelSearch = () => {
+    inputRef.current.blur()
     setIsSearching(false);
-    inputRef.current.blur();
     bs.current.snapTo(1);
   }
 
@@ -197,7 +192,7 @@ const BottomSheetHeader = ({ search, setSearch, bs }) => {
         <View style={bsStyles.panelHandle}></View>
       </View>
       <View style={bsStyles.searchContainer}>
-        <TouchableWithoutFeedback onPress={() => inputRef.current.focus()}>
+        <TouchableWithoutFeedback onPress={startSearch}>
           <View style={bsStyles.searchInputContainer}>
             <MaterialIcons name='search' size={22} color='black' />
             <TextInput
@@ -208,7 +203,8 @@ const BottomSheetHeader = ({ search, setSearch, bs }) => {
               onSubmitEditing={() => console.log('testing')}
               value={search}
               onChangeText={text => setSearch(text)}
-              onFocus={searching}
+              onFocus={startSearch}
+              onBlur={cancelSearch}
               clearButtonMode={'always'}
             />
           </View>
