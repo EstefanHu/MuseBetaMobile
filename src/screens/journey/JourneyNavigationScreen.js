@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,14 +6,15 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import { 
+import {
   MaterialIcons,
   Feather
- } from '@expo/vector-icons';
-import MapView, { Marker } from 'react-native-maps';
+} from '@expo/vector-icons';
 
 import { Context as JourneyContext } from '../../providers/JourneyProvider.js';
 import { Context as LocationContext } from '../../providers/LocationProvider.js';
+
+import { Map } from './../../components/Map.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,26 +27,24 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   actions: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: Dimensions.get('window').width,
     position: 'absolute',
-    paddingBottom: 10,
+    right: 7,
+    top: 15,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    paddingHorizontal: 9,
+    paddingVertical: 5,
   },
   actionButton: {
-    backgroundColor: 'white',
-    paddingHorizontal: 10,
-    paddingVertical: 7,
-    borderRadius: 10,
-    marginHorizontal: 5,
+    paddingVertical: 5,
   },
 });
 
 export const JourneyNavigationScreen = ({ route, navigation }) => {
-  const previewMap = React.useRef(null);
+  const mapRef = React.useRef(null);
   const { state: { story }, fetchJourney } = useContext(JourneyContext);
   const { state: { longitude, latitude } } = useContext(LocationContext);
-  const [region, setRegion] = useState({
+  const [region, setRegion] = React.useState({
     longitude: longitude,
     latitude: latitude,
     longitudeDelta: 0.1,
@@ -54,7 +53,7 @@ export const JourneyNavigationScreen = ({ route, navigation }) => {
 
   React.useEffect(() => {
     fitMarkers()
-  }, [story, previewMap]);
+  }, [story, mapRef]);
 
   const fitMarkers = () => {
     const MARKERS = [
@@ -72,7 +71,7 @@ export const JourneyNavigationScreen = ({ route, navigation }) => {
         left: 50
       }
     }
-    previewMap.current.fitToCoordinates(MARKERS, OPTIONS);
+    mapRef.current.fitToCoordinates(MARKERS, OPTIONS);
   }
 
   const beginNavigation = () => {
@@ -81,41 +80,24 @@ export const JourneyNavigationScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <MapView
-        style={styles.mapStyle}
-        ref={previewMap}
-        region={region}
-        onRegionChange={() => setRegion()}
-        mapType={"mutedStandard"}
-        showsScale
-        showsIndoors
-        loadingEnabled
-        compassOffset={{ x: -5, y: 5 }}
-        showsUserLocation
-        showsMyLocationButton
-      >
-        <Marker
-          coordinate={{
-            latitude: story.startLocation.coordinates[1],
-            longitude: story.startLocation.coordinates[0]
-          }}
-        >
-
-        </Marker>
-      </MapView>
+      <Map
+        navigation={navigation}
+        mapRef={mapRef}
+        stories={[story]}
+      />
       <View style={styles.actions}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => null}
+        >
+          <Feather name='info' size={25} color='black' />
+        </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.actionButton}
           onPress={fitMarkers}
         >
           <MaterialIcons name='crop-free' size={25} color='black' />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-        style={styles.actionButton}
-        onPress={beginNavigation}
-        >
-          <Feather name='navigation' size={25} color='black' />
         </TouchableOpacity>
       </View>
     </View>

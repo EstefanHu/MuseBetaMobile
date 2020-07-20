@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import MapView, { Marker, Callout } from 'react-native-maps';
 import {
   StyleSheet,
   View,
@@ -8,10 +7,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {
-  Foundation,
+  Feather,
   MaterialIcons,
-  Feather
 } from '@expo/vector-icons';
+
 import Animated from 'react-native-reanimated';
 
 import { Context as LocationContext } from './../../providers/LocationProvider.js';
@@ -19,12 +18,24 @@ import { Context as StoryContext } from './../../providers/StoryProvider.js';
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
-import { MapActions } from '../../components/MapActions.js';
+import { Map } from './../../components/Map.js';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+  },
+  actions: {
+    position: 'absolute',
+    right: 7,
+    top: 15,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    paddingHorizontal: 9,
+    paddingVertical: 5,
+  },
+  actionButton: {
+    paddingVertical: 5,
   },
   header: {
     backgroundColor: 'white',
@@ -52,23 +63,14 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     height: '100%'
   },
-  mapStyle: {
-    width: Dimensions.get('window').width,
-    height: '100%',
-  },
-  callout: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    transform: [
-      { translateX: 9 },
-      { translateY: 15 }
-    ]
-  },
+
 });
 
 const PANNEL_HEADER_HEIGHT = 48;
 
 export const ExploreHomeScreen = ({ navigation }) => {
+  const { state: { stories } } = useContext(StoryContext);
+  const { state: { longitude, latitude } } = React.useContext(LocationContext);
   const { state: { headerHeight, bottomTabHeight } } = useContext(LayoutContext);
   const [topHeight, setTopHeight] = useState('100%');
   const [previewHeight, setPreviewHeight] = useState('50%');
@@ -82,12 +84,21 @@ export const ExploreHomeScreen = ({ navigation }) => {
     setDockheight(bottomTabHeight + PANNEL_HEADER_HEIGHT);
   }, []);
 
+  const recenter = () => {
+    mapRef.current.animateToRegion(
+      {
+        longitude,
+        latitude,
+        longitudeDelta: 0.1,
+        latitudeDelta: 0.1
+      },
+      1000
+    );
+  }
   const bs = React.createRef();
   const fall = new Animated.Value(1);
 
   const mapRef = React.useRef(null);
-
-
 
   const toggleBs = () => {
     if (bs.current !== 0) {
@@ -107,8 +118,23 @@ export const ExploreHomeScreen = ({ navigation }) => {
         bs={bs}
         mapRef={mapRef}
         toggleBs={toggleBs}
+        stories={stories}
       />
-      <MapActions mapRef={mapRef} />
+      <View style={styles.actions}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => null}
+        >
+          <Feather name='info' size={25} color='black' />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={recenter}
+        >
+          <MaterialIcons name='crop-free' size={25} color='black' />
+        </TouchableOpacity>
+      </View>
       <BottomSheet
         ref={bs}
         snapPoints={[topHeight, previewHeight, dockHeight]}
@@ -125,53 +151,5 @@ export const ExploreHomeScreen = ({ navigation }) => {
         }
       />
     </View>
-  );
-};
-
-const Map = ({ navigation, bs, mapRef, toggleBs }) => {
-  const { state: { longitude, latitude } } = useContext(LocationContext);
-  const { state: { stories } } = useContext(StoryContext);
-  const [region, setRegion] = useState({
-    longitude: longitude,
-    latitude: latitude,
-    longitudeDelta: 0.1,
-    latitudeDelta: 0.1
-  });
-
-  return (
-    <MapView
-      style={styles.mapStyle}
-      ref={mapRef}
-      region={region}
-      onRegionChange={() => setRegion()}
-      mapType={"mutedStandard"}
-      pitchEnabled
-      rotateEnabled
-      showsScale
-      loadingEnabled
-      compassOffset={{ x: -6, y: 105 }}
-      showsUserLocation
-    >
-      {
-        stories.map(item => (
-          <Marker
-            key={item._id}
-            coordinate={{
-              latitude: item.startLocation.coordinates[1],
-              longitude: item.startLocation.coordinates[0]
-            }}
-            onPress={toggleBs}
-            tracksViewChanges={false}
-            onMapReady={() => console.log('hello')}
-          >
-            <Callout tooltip alphaHitTest={true}>
-              <View style={styles.callout}>
-                <Foundation name='arrow-down' size={35} color='black' />
-              </View>
-            </Callout>
-          </Marker>
-        ))
-      }
-    </MapView >
   );
 };
