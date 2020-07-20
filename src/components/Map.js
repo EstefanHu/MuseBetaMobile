@@ -3,11 +3,11 @@ import {
   StyleSheet,
   View,
   Dimensions,
+  Text,
+  ActivityIndicator
 } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { Foundation } from '@expo/vector-icons';
-
-import { Context as LocationContext } from './../providers/LocationProvider.js';
 
 const styles = StyleSheet.create({
   mapStyle: {
@@ -24,8 +24,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Map = ({ navigation, bs, mapRef, toggleBs, stories }) => {
-  const { state: { longitude, latitude } } = React.useContext(LocationContext);
+export const Map = ({ navigation, bs, mapRef, toggleBs, stories, longitude, latitude }) => {
+  if (longitude === null)
+    return <ActivityIndicator
+      size='large'
+      color='rgb(255,50,50)'
+      style={{ flex: 1 }}
+    />
+
   const [region, setRegion] = React.useState({
     longitude: longitude,
     latitude: latitude,
@@ -43,7 +49,6 @@ export const Map = ({ navigation, bs, mapRef, toggleBs, stories }) => {
       pitchEnabled
       rotateEnabled
       showsScale
-      loadingEnabled
       compassOffset={{ x: -6, y: 105 }}
       showsUserLocation
     >

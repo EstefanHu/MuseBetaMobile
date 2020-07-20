@@ -28,16 +28,10 @@ const styles = StyleSheet.create({
 
 export const JourneyHomeScreen = ({ navigation }) => {
   const { state: { stories }, fetchNearStories } = useContext(StoryContext);
-  const { state: { longitude, latitude }, getCoords } = useContext(LocationContext);
+  const { state: { longitude, latitude } } = useContext(LocationContext);
   const { state: { story }, dockStory } = useContext(JourneyContext);
   const [refreshing, setRefreshing] = useState(false);
   const [channel, setChannel] = useState('All');
-
-  useEffect(() => {
-    longitude ?
-      fetchNearStories(5, longitude, latitude, 'mi')
-      : getCoords();
-  }, [longitude]);
 
   const scroll = React.useRef(null);
   useScrollToTop(scroll);

@@ -7,6 +7,8 @@ import {
 } from '@expo/vector-icons';
 
 import { Context as JourneyContext } from './../providers/JourneyProvider.js';
+import { Context as StoryContext } from './../providers/StoryProvider.js';
+import { Context as LocationContext } from './../providers/LocationProvider.js';
 import { Context as LayoutContext } from './../providers/LayoutProvider.js';
 
 import { TopStack } from '../stacks/TopStack.js';
@@ -22,6 +24,8 @@ const Tabs = createBottomTabNavigator();
 export const BottomTabs = () => {
   const { state: { status } } = useContext(JourneyContext);
   const { setHeaderHeight, setInsets } = useContext(LayoutContext);
+  const { fetchNearStories } = React.useContext(StoryContext);
+  const { state: { longitude, latitude }, getCoords } = React.useContext(LocationContext);
 
   const height = useHeaderHeight();
   React.useEffect(() => {
@@ -29,17 +33,23 @@ export const BottomTabs = () => {
     setInsets();
   }, []);
 
+  React.useEffect(() => {
+    longitude ?
+      fetchNearStories(5, longitude, latitude, 'mi')
+      : getCoords();
+  }, [longitude, latitude]);
+
   return (
     <Tabs.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ _, color, size }) => {
           if (route.name === 'Top') {
             return <FontAwesome5 name='tasks' size={size} color={color} />;
-          } else if (route.name === 'Explore') {
-            return <FontAwesome5 name='compass' size={size} color={color} />;
           } else if (route.name === 'Journey') {
             if (status === 'docked') return <MaterialCommunityIcons name='navigation' size={size} color={color} />
             return <Feather name='navigation' size={size} color={color} />
+          } else if (route.name === 'Explore') {
+            return <FontAwesome5 name='compass' size={size} color={color} />;
           } else if (route.name === 'News') {
             return <MaterialCommunityIcons name='email-outline' size={size} color={color} />
           } else if (route.name === 'Library') {
@@ -52,11 +62,11 @@ export const BottomTabs = () => {
         inactiveTintColor: 'grey',
 
       }}
-      initialRouteName={'Journey'}
+      initialRouteName={'Explore'}
     >
       <Tabs.Screen name='Top' component={TopStack} />
-      <Tabs.Screen name='Explore' component={ExploreStack} />
       <Tabs.Screen name='Journey' component={JourneyStack} />
+      <Tabs.Screen name='Explore' component={ExploreStack} />
       <Tabs.Screen name='News' component={NewsStack} />
       <Tabs.Screen name='Library' component={LibraryStack} />
     </Tabs.Navigator>

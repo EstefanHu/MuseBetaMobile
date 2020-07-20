@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
 const PANNEL_HEADER_HEIGHT = 30;
 
 export const ExploreHomeScreen = ({ navigation }) => {
-  const { state: { stories } } = React.useContext(StoryContext);
-  const { state: { longitude, latitude } } = React.useContext(LocationContext);
+  const { state: { stories }, fetchNearStories } = React.useContext(StoryContext);
+  const { state: { longitude, latitude }, getCoords } = React.useContext(LocationContext);
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
 
   const [isSearching, setIsSearching] = React.useState(false);
@@ -86,6 +86,8 @@ export const ExploreHomeScreen = ({ navigation }) => {
         mapRef={mapRef}
         toggleBs={() => bs.current.snapTo(1)}
         stories={stories}
+        longitude={longitude}
+        latitude={latitude}
       />
 
       <Animated.View style={[styles.actions, { opacity: 1 }]}>
@@ -179,7 +181,7 @@ const bsStyles = StyleSheet.create({
     flex: 1,
   },
   cancelSearch: {
-    color: 'blue',
+    color: 'rgba(0,100,255,0.7)',
     marginLeft: 10,
     fontSize: 16
   }
@@ -233,7 +235,7 @@ const bsbStyles = StyleSheet.create({
     height: '100%'
   },
   section: {
-
+    marginBottom: 30
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -279,6 +281,12 @@ const BottomSheetBody = ({ search, stories }) => {
     <View style={bsbStyles.panel}>
       <View style={bsbStyles.section}>
         <View style={bsbStyles.sectionHeader}>
+          <Text style={bsbStyles.sectionLable}>Docked Story</Text>
+        </View>
+      </View>
+
+      <View style={bsbStyles.section}>
+        <View style={bsbStyles.sectionHeader}>
           <Text style={bsbStyles.sectionLable}>Near By</Text>
           <TouchableOpacity onPress={() => console.log('more')}>
             <Text style={bsbStyles.more}>See All</Text>
@@ -303,22 +311,3 @@ const BottomSheetBody = ({ search, stories }) => {
     </View>
   );
 };
-
-
-// <FlatList
-//           data={stories}
-//           keyExtractor={item => item._id}
-//           renderItem={({ item }) => {
-//             return <View
-//               key={item._id}
-//               style={bsbStyles.listItem}
-//             >
-//               <View style={bsbStyles.itemIcon}>
-
-//               </View>
-//               <View style={bsbStyles.itemInfo}>
-//                 <Text style={bsbStyles.title}>{item.title}</Text>
-//               </View>
-//             </View>
-//           }}
-//         />
