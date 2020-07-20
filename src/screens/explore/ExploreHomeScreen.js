@@ -7,11 +7,12 @@ import {
   TouchableOpacity,
   TextInput,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import {
   Feather,
   MaterialIcons,
+  FontAwesome
 } from '@expo/vector-icons';
 
 import Animated from 'react-native-reanimated';
@@ -22,6 +23,7 @@ import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 import { Map } from './../../components/Map.js';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
   container: {
@@ -128,7 +130,13 @@ export const ExploreHomeScreen = ({ navigation }) => {
               cancelSearch={cancelSearch}
             />
         }
-        renderContent={() => <BottomSheetBody />}
+        renderContent={
+          () =>
+            <BottomSheetBody
+              search={search}
+              stories={stories}
+            />
+        }
       />
     </View>
   );
@@ -174,14 +182,8 @@ const bsStyles = StyleSheet.create({
     color: 'blue',
     marginLeft: 10,
     fontSize: 16
-  },
-  panel: {
-    paddingHorizontal: 10,
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    paddingTop: 10,
-    height: '100%'
-  },
-})
+  }
+});
 
 const BottomSheetHeader = ({ search, setSearch, bs,
   isSearching, setIsSearching, inputRef, cancelSearch }) => {
@@ -223,11 +225,100 @@ const BottomSheetHeader = ({ search, setSearch, bs,
   );
 };
 
-const BottomSheetBody = () => {
+const bsbStyles = StyleSheet.create({
+  panel: {
+    paddingHorizontal: 20,
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    paddingTop: 10,
+    height: '100%'
+  },
+  section: {
+
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(200,200,200,0.8)',
+    paddingBottom: 5,
+  },
+  sectionLable: {
+    color: 'grey',
+    fontSize: 13
+  },
+  more: {
+    color: 'rgba(0, 100, 255, 0.7)',
+    fontSize: 13
+  },
+  listItem: {
+    paddingVertical: 10,
+    flexDirection: 'row',
+    borderBottomColor: 'rgba(200,200,200,0.8)',
+    borderBottomWidth: 1,
+  },
+  itemIcon: {
+    width: 35,
+    height: 35,
+    borderRadius: 25,
+    backgroundColor: 'rgba(255,50,50,0.8)',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  itemInfo: {
+    paddingHorizontal: 10
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  }
+});
+
+const BottomSheetBody = ({ search, stories }) => {
 
   return (
-    <View style={bsStyles.panel}>
-      <Text>Hello World</Text>
+    <View style={bsbStyles.panel}>
+      <View style={bsbStyles.section}>
+        <View style={bsbStyles.sectionHeader}>
+          <Text style={bsbStyles.sectionLable}>Near By</Text>
+          <TouchableOpacity onPress={() => console.log('more')}>
+            <Text style={bsbStyles.more}>See All</Text>
+          </TouchableOpacity>
+        </View>
+        {
+          stories.slice(0, 9).map(item => (
+            <TouchableOpacity
+              key={item._id}
+              style={bsbStyles.listItem}
+            >
+              <View style={bsbStyles.itemIcon}>
+                <FontAwesome name='book' size={18} color='rgba(255,255,255,0.9)' />
+              </View>
+              <View style={bsbStyles.itemInfo}>
+                <Text style={bsbStyles.title}>{item.title}</Text>
+              </View>
+            </TouchableOpacity>
+          ))
+        }
+      </View>
     </View>
   );
 };
+
+
+// <FlatList
+//           data={stories}
+//           keyExtractor={item => item._id}
+//           renderItem={({ item }) => {
+//             return <View
+//               key={item._id}
+//               style={bsbStyles.listItem}
+//             >
+//               <View style={bsbStyles.itemIcon}>
+
+//               </View>
+//               <View style={bsbStyles.itemInfo}>
+//                 <Text style={bsbStyles.title}>{item.title}</Text>
+//               </View>
+//             </View>
+//           }}
+//         />
