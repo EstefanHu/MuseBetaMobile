@@ -63,28 +63,19 @@ export const ExploreHomeScreen = ({ navigation }) => {
       1000
     );
   }
-  const bs = React.createRef();
+  const bs = React.useRef(null);
   const fall = new Animated.Value(1);
 
   const mapRef = React.useRef(null);
   const inputRef = React.useRef(null);
 
-  const toggleBs = () => {
-    if (bs.current !== 0) {
-      bs.current.snapTo(2);
-      setTimeout(() => {
-        bs.current.snapTo(1);
-      }, 500);
-    } else {
-      bs.current.snapTo(2);
-    }
-  }
-
-  const cancelSearch = () => {
+  const cancelSearch = React.useCallback(() => {
     inputRef.current.blur();
     setIsSearching(false);
+    bs.current.snapTo(1);
+
     Keyboard.dismiss();
-  }
+  });
 
   return (
     <View style={styles.container}>
@@ -92,10 +83,11 @@ export const ExploreHomeScreen = ({ navigation }) => {
         navigation={navigation}
         bs={bs}
         mapRef={mapRef}
-        toggleBs={toggleBs}
+        toggleBs={() => bs.current.snapTo(1)}
         stories={stories}
       />
-      <View style={styles.actions}>
+
+      <Animated.View style={[styles.actions, { opacity: 1 }]}>
         <TouchableOpacity
           style={styles.actionButton}
           onPress={() => null}
@@ -109,7 +101,8 @@ export const ExploreHomeScreen = ({ navigation }) => {
         >
           <MaterialIcons name='crop-free' size={25} color='black' />
         </TouchableOpacity>
-      </View>
+      </Animated.View>
+
       <BottomSheet
         ref={bs}
         snapPoints={[
@@ -128,9 +121,10 @@ export const ExploreHomeScreen = ({ navigation }) => {
               search={search}
               setSearch={setSearch}
               isSearching={isSearching}
-              setIsSearching={setIsSearching}
+              setIsSearching={isSearching => setIsSearching(isSearching)}
               bs={bs}
               inputRef={inputRef}
+              cancelSearch={cancelSearch}
             />
         }
         renderContent={() => <BottomSheetBody />}
@@ -190,17 +184,12 @@ const bsStyles = StyleSheet.create({
 })
 
 const BottomSheetHeader = ({ search, setSearch,
-  isSearching, setIsSearching, bs, inputRef }) => {
+  isSearching, setIsSearching, bs, inputRef, cancelSearch }) => {
+
   const startSearch = () => {
     inputRef.current.focus();
     setIsSearching(true);
     bs.current.snapTo(0);
-  }
-
-  const cancelSearch = () => {
-    inputRef.current.blur();
-    setIsSearching(false);
-    bs.current.snapTo(1);
   }
 
   return (
@@ -221,7 +210,6 @@ const BottomSheetHeader = ({ search, setSearch,
               value={search}
               onChangeText={text => setSearch(text)}
               onFocus={startSearch}
-              onBlur={cancelSearch}
               clearButtonMode={'always'}
             />
           </View>
