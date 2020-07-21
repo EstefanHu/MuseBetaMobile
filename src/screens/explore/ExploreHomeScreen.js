@@ -17,6 +17,7 @@ import { Context as StoryContext } from './../../providers/StoryProvider.js';
 
 import { Map } from './../../components/Map.js';
 import { InitialBottomSheet } from './InitialBottomSheet.js';
+import { SearchBottomSheet } from './SearchBottomSheet.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,14 +38,12 @@ const styles = StyleSheet.create({
   },
 });
 
-
 export const ExploreHomeScreen = ({ navigation }) => {
-  const { state: { stories }, fetchNearStories } = React.useContext(StoryContext);
-  const { state: { longitude, latitude }, getCoords } = React.useContext(LocationContext);
+  const { state: { stories } } = React.useContext(StoryContext);
+  const { state: { longitude, latitude } } = React.useContext(LocationContext);
 
   const [isSearching, setIsSearching] = React.useState(false);
   const [search, setSearch] = React.useState('');
-
 
   const recenter = () => {
     mapRef.current.animateToRegion(
@@ -110,6 +109,10 @@ export const ExploreHomeScreen = ({ navigation }) => {
         inputRef={inputRef}
         stories={stories}
       />
+      {/* <SearchBottomSheet
+        navigation={navigation}
+
+      /> */}
     </View>
   );
 };

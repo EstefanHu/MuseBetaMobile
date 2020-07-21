@@ -8,9 +8,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {
-  MaterialIcons,
-} from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 import { Context as ProfileContext } from '../../providers/ProfileProvider.js'; // TODO: Temp
@@ -110,6 +108,7 @@ export const InitialBottomSheet = ({ navigation, initialBS, fall,
             isSearching={isSearching}
             stories={stories}
             library={library}
+            initialBS={initialBS}
           />
       }
     />
@@ -154,7 +153,7 @@ const BottomSheetHeader = ({ search, setSearch, initialBS,
           </TouchableOpacity>
         }
       </View>
-    </View >
+    </View>
   );
 };
 
@@ -185,13 +184,16 @@ const bsbStyles = StyleSheet.create({
   },
 });
 
-const BottomSheetBody = ({ navigation, search, isSearching, stories, library }) => {
+const BottomSheetBody = ({ navigation, search, isSearching, stories, library, initialBS }) => {
 
   return (
     <View style={bsbStyles.panel}>
       {
-        isSearching ? <BSSearch navigation={navigation} />
-          : <>
+        isSearching ?
+          <BSSearch
+            navigation={navigation}
+            initialBS={initialBS}
+            /> : <>
             <View style={bsbStyles.section}>
               <View style={bsbStyles.sectionHeader}>
                 <Text style={bsbStyles.sectionLabel}>Docked Story</Text>
