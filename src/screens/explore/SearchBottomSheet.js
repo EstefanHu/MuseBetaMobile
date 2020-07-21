@@ -11,10 +11,8 @@ import {
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
-import { Context as ProfileContext } from '../../providers/ProfileProvider.js'; // TODO: Temp
 
 import BottomSheet from 'reanimated-bottom-sheet';
-import { StoryPreview } from '../../components/StoryPreview.js';
 
 
 const styles = StyleSheet.create({
@@ -43,49 +41,46 @@ const styles = StyleSheet.create({
   },
 });
 
-export const SearchBottomSheet = ({ navigation, searchBS, fall, }) => {
+const PANNEL_HEADER_HEIGHT = 30;
+
+export const SearchBottomSheet = ({ searchBS, isActive, setIsActive }) => {
+  const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
+
+  const activeSnapPoints = [
+    Dimensions.get('window').height - headerHeight
+    - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
+    Dimensions.get('window').height / 2 - headerHeight
+    - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
+    bottomInset + PANNEL_HEADER_HEIGHT
+  ];
+
+  const inactiveSnapPoints = [-10, -10, -10];
 
   return (
     <BottomSheet
       ref={searchBS}
-      snapPoints={[
-        Dimensions.get('window').height - headerHeight
-        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-        Dimensions.get('window').height / 2 - headerHeight
-        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-        bottomInset + PANNEL_HEADER_HEIGHT
-      ]}
+      snapPoints={isActive ? activeSnapPoints : inactiveSnapPoints}
       initialSnap={2}
-      callbackNode={fall}
       enabledBottomInitialAnimation={false}
       enabledBottomClamp={true}
-      onCloseStart={() => cancelSearch(1)}
-      onCloseEnd={() => cancelSearch(2)}
       renderHeader={
         () =>
           <BottomSheetHeader
-            search={search}
-            setSearch={setSearch}
-            isSearching={isSearching}
-            setIsSearching={setIsSearching}
             searchBS={searchBS}
-            inputRef={inputRef}
-            cancelSearch={cancelSearch}
+            setIsActive={setIsActive}
           />
       }
       renderContent={
         () =>
           <BottomSheetBody
-            navigation={navigation}
-            search={search}
-            isSearching={isSearching}
+            searchBS={searchBS}
           />
       }
     />
   );
 };
 
-const BottomSheetHeader = ({ navigation, type }) => {
+const BottomSheetHeader = ({ type, setIsActive }) => {
 
   return (
     <View style={styles.header}>
@@ -101,7 +96,7 @@ const BottomSheetHeader = ({ navigation, type }) => {
 
         <TouchableOpacity
           style={styles.back}
-          onPress={() => console.log('hello')}
+          onPress={() => setIsActive(false)}
         >
           <MaterialIcons name='cancel' size={22} color='grey' />
         </TouchableOpacity>

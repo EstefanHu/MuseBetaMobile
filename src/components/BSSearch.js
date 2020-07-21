@@ -50,9 +50,11 @@ import {
   MaterialCommunityIcons
 } from '@expo/vector-icons';
 
-export const BSSearch = ({ navigation, initialBS }) => {
+export const BSSearch = ({ initialBS, searchBS, setSearchBSIsActive }) => {
   const openSubject = subject => {
     initialBS.current.snapTo(2);
+    searchBS.current.snapTo(1);
+    setSearchBSIsActive(true);
   }
 
   return (

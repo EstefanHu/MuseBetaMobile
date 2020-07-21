@@ -17,8 +17,6 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import { StoryPreview } from '../../components/StoryPreview.js';
 import { BSSearch } from './../../components/BSSearch.js';
 
-const PANNEL_HEADER_HEIGHT = 30;
-
 const styles = StyleSheet.create({
   header: {
     backgroundColor: 'rgba(255,255,255,0.8)',
@@ -62,7 +60,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export const InitialBottomSheet = ({ navigation, initialBS, fall,
+const PANNEL_HEADER_HEIGHT = 30;
+
+export const InitialBottomSheet = ({ navigation, initialBS, searchBS, fall, setSearchBSIsActive,
   search, setSearch, isSearching, setIsSearching, cancelSearch, inputRef, stories }) => {
 
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
@@ -109,6 +109,8 @@ export const InitialBottomSheet = ({ navigation, initialBS, fall,
             stories={stories}
             library={library}
             initialBS={initialBS}
+            searchBS={searchBS}
+            setSearchBSIsActive={setSearchBSIsActive}
           />
       }
     />
@@ -184,7 +186,8 @@ const bsbStyles = StyleSheet.create({
   },
 });
 
-const BottomSheetBody = ({ navigation, search, isSearching, stories, library, initialBS }) => {
+const BottomSheetBody = ({ navigation, search, isSearching,
+  stories, library, initialBS, searchBS, setSearchBSIsActive }) => {
 
   return (
     <View style={bsbStyles.panel}>
@@ -193,7 +196,9 @@ const BottomSheetBody = ({ navigation, search, isSearching, stories, library, in
           <BSSearch
             navigation={navigation}
             initialBS={initialBS}
-            /> : <>
+            searchBS={searchBS}
+            setSearchBSIsActive={setSearchBSIsActive}
+          /> : <>
             <View style={bsbStyles.section}>
               <View style={bsbStyles.sectionHeader}>
                 <Text style={bsbStyles.sectionLabel}>Docked Story</Text>
