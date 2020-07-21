@@ -224,6 +224,7 @@ const BottomSheetHeader = ({ search, setSearch, bs,
               onChangeText={text => setSearch(text)}
               onFocus={startSearch}
               clearButtonMode={'always'}
+              autoCorrect={false}
             />
           </View>
         </TouchableWithoutFeedback>
@@ -254,7 +255,7 @@ const bsbStyles = StyleSheet.create({
     borderBottomColor: 'rgba(200,200,200,0.8)',
     paddingBottom: 5,
   },
-  sectionLable: {
+  sectionLabel: {
     color: 'grey',
     fontSize: 13
   },
@@ -273,13 +274,13 @@ const BottomSheetBody = ({ navigation, search, isSearching, stories, library }) 
           : <>
             <View style={bsbStyles.section}>
               <View style={bsbStyles.sectionHeader}>
-                <Text style={bsbStyles.sectionLable}>Docked Story</Text>
+                <Text style={bsbStyles.sectionLabel}>Docked Story</Text>
               </View>
             </View>
 
             <View style={bsbStyles.section}>
               <View style={bsbStyles.sectionHeader}>
-                <Text style={bsbStyles.sectionLable}>Library Preview</Text>
+                <Text style={bsbStyles.sectionLabel}>Library Preview</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('Library')}>
                   <Text style={bsbStyles.more}>See All</Text>
                 </TouchableOpacity>
@@ -287,6 +288,7 @@ const BottomSheetBody = ({ navigation, search, isSearching, stories, library }) 
               {
                 library.slice(0, 5).map(item => (
                   <StoryPreview
+                    key={item._id}
                     navigation={navigation}
                     item={item}
                   />
@@ -296,7 +298,7 @@ const BottomSheetBody = ({ navigation, search, isSearching, stories, library }) 
 
             <View style={bsbStyles.section}>
               <View style={bsbStyles.sectionHeader}>
-                <Text style={bsbStyles.sectionLable}>Near By</Text>
+                <Text style={bsbStyles.sectionLabel}>Nearnby</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('Near')}>
                   <Text style={bsbStyles.more}>See All</Text>
                 </TouchableOpacity>
@@ -304,6 +306,7 @@ const BottomSheetBody = ({ navigation, search, isSearching, stories, library }) 
               {
                 stories.slice(0, 5).map(item => (
                   <StoryPreview
+                    key={item._id}
                     navigation={navigation}
                     item={item}
                   />
