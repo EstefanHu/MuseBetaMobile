@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  Dimensions,
 } from 'react-native';
 import {
   Feather,
@@ -20,7 +21,7 @@ import DefaultImage from './../../assets/user-default.png';
 const styles = StyleSheet.create({
   card: {
     backgroundColor: 'white',
-    width: 350,
+    width: Dimensions.get('window').width * 0.95,
     paddingVertical: 15,
     borderRadius: 5,
     marginTop: 10,

@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
@@ -92,7 +93,7 @@ export const NearHomeScreen = ({ navigation }) => {
 const launchPadStyles = StyleSheet.create({
   launcher: {
     backgroundColor: 'white',
-    width: Dimensions.get('window').width - 20,
+    width: Dimensions.get('window').width * 0.95,
     paddingVertical: 15,
     paddingHorizontal: 15,
     marginTop: 10,
@@ -120,14 +121,6 @@ const launchPadStyles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 20,
-  },
-  placeholder: {
-    backgroundColor: 'rgb(240,240,240)',
-    width: Dimensions.get('window').width - 20,
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    marginTop: 10,
-    borderRadius: 5,
   },
   hero: {
     fontSize: 20,
@@ -203,7 +196,7 @@ const LaunchPad = ({ navigation, longitude, latitude }) => {
 const noStoryStyles = StyleSheet.create({
   launcher: {
     backgroundColor: 'white',
-    width: Dimensions.get('window').width - 20,
+    width: Dimensions.get('window').width * 0.95,
     paddingVertical: 15,
     paddingHorizontal: 15,
     marginTop: 10,
