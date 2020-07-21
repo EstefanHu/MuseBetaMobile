@@ -9,7 +9,6 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-
   },
   section: {
     marginBottom: 30,
@@ -52,6 +51,9 @@ import {
 } from '@expo/vector-icons';
 
 export const BSSearch = ({ navigation }) => {
+  const openSubject = subject => {
+    console.log(subject)
+  }
 
   return (
     <ScrollView
@@ -65,7 +67,7 @@ export const BSSearch = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.item}
-          onPress={() => null}
+          onPress={() => openSubject('story')}
         >
           <View style={[styles.icon, { backgroundColor: 'rgba(255,50,50,0.8)' }]}>
             <FontAwesome name='book' size={18} color='rgba(255,255,255,0.9)' />
@@ -75,7 +77,7 @@ export const BSSearch = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.item}
-          onPress={() => null}
+          onPress={() => openSubject('journey')}
         >
           <View style={[styles.icon, { backgroundColor: 'rgba(255,50,50,0.8)' }]}>
             <MaterialCommunityIcons name='map-marker-path' size={18} color='rgba(255,255,255,0.9)' />
@@ -85,7 +87,7 @@ export const BSSearch = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.item}
-          onPress={() => null}
+          onPress={() => openSubject('campfire')}
         >
           <View style={[styles.icon, { backgroundColor: 'rgba(230,180,0,0.8)' }]}>
             <MaterialCommunityIcons name='campfire' size={18} color='rgba(255,255,255,0.9)' />
@@ -95,7 +97,7 @@ export const BSSearch = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.item}
-          onPress={() => null}>
+          onPress={() => openSubject('monument')}>
           <View style={[styles.icon, { backgroundColor: 'rgba(50,50,255,0.8)' }]}>
             <FontAwesome5 name='monument' size={18} color='rgba(255,255,255,0.9)' />
           </View>
@@ -104,7 +106,7 @@ export const BSSearch = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.item}
-          onPress={() => null}>
+          onPress={() => openSubject('chapter')}>
           <View style={[styles.icon, { backgroundColor: 'rgba(0,220,180,0.8)' }]}>
             <MaterialCommunityIcons name='lighthouse' size={18} color='rgba(255,255,255,0.9)' />
           </View>
