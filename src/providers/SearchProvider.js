@@ -1,4 +1,5 @@
 import createDataContext from './createDataContext.js';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const searchReducer = (state, action) => {
   switch (action.type) {
@@ -20,7 +21,7 @@ const searchReducer = (state, action) => {
 const getHistory = dispatch => async () => {
   try {
     const history = await AsyncStorage.getItem('SearchHistory');
-    dispatch({ type: 'get_history', payload: history });
+    dispatch({ type: 'get_history', payload: history ? history : [] });
   } catch (error) {
     console.log(error);
   };

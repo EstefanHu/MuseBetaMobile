@@ -63,95 +63,109 @@ const styles = StyleSheet.create({
 
 
 export const BSSearch = ({ initialBS, searchBS }) => {
-  const { state: { history }, getHistory, clearHistory } = React.useContext(SearchContext);
+  const { state: { history, query }, getHistory, clearHistory } = React.useContext(SearchContext);
 
-  React.useEffect(() => getHistory, []);
+  React.useEffect(() => { (async () => { getHistory() })() }, []);
 
   const openSubject = subject => {
     initialBS.current.snapTo(2);
     searchBS.current.snapTo(1);
   }
 
-  return (
-    <ScrollView
-      style={styles.container}
-      keyboardDismissMode='on-drag'
-    >
-      {
-        history.length > 0 ? <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionLabel}>Recent Searches</Text>
-            <TouchableOpacity onPress={clearHistory}>
-              <Text style={styles.more}>Clear</Text>
-            </TouchableOpacity>
-          </View>
-          {
-            history.map((item, idx) => (
-              <TouchableOpacity
-                key={idx}
-                style={styles.item}
-                onPress={() => console.log('search: ', item)}
-              >
-                <FontAwesome style={{ marginHorizontal: 10 }} name='search' size={22} color='grey' />
-                <Text style={styles.searchItem}>{item}</Text>
-              </TouchableOpacity>
-            ))
-          }
-        </View> : null
-      }
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionLabel}>Search Nearby</Text>
-        </View>
-
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => openSubject('story')}
-        >
-          <View style={[styles.icon, { backgroundColor: 'rgba(255,50,50,0.8)' }]}>
-            <FontAwesome name='book' size={18} color='rgba(255,255,255,0.9)' />
-          </View>
-          <Text style={styles.label}>Story</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => openSubject('journey')}
-        >
-          <View style={[styles.icon, { backgroundColor: 'rgba(255,50,50,0.8)' }]}>
-            <MaterialCommunityIcons name='map-marker-path' size={18} color='rgba(255,255,255,0.9)' />
-          </View>
-          <Text style={styles.label}>Journey</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => openSubject('campfire')}
-        >
-          <View style={[styles.icon, { backgroundColor: 'rgba(230,180,0,0.8)' }]}>
-            <MaterialCommunityIcons name='campfire' size={18} color='rgba(255,255,255,0.9)' />
-          </View>
-          <Text style={styles.label}>Campfire</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => openSubject('monument')}>
-          <View style={[styles.icon, { backgroundColor: 'rgba(50,50,255,0.8)' }]}>
-            <FontAwesome5 name='monument' size={18} color='rgba(255,255,255,0.9)' />
-          </View>
-          <Text style={styles.label}>Monument</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => openSubject('chapter')}>
-          <View style={[styles.icon, { backgroundColor: 'rgba(0,220,180,0.8)' }]}>
-            <MaterialCommunityIcons name='lighthouse' size={18} color='rgba(255,255,255,0.9)' />
-          </View>
-          <Text style={styles.label}>Chapter</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView >
-  );
+  return query ?
+    <SearchingView query={query} />
+    : <CatagoryView
+      history={history}
+      clearHistory={clearHistory}
+      openSubject={openSubject}
+    />
 };
+
+const SearchingView = ({ query, results }) => (
+  <View>
+
+  </View>
+);
+
+const CatagoryView = ({ history, clearHistory, openSubject }) => (
+  <ScrollView
+    style={styles.container}
+    keyboardDismissMode='on-drag'
+  >
+    {
+      history.length > 0 ? <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionLabel}>Recent Searches</Text>
+          <TouchableOpacity onPress={clearHistory}>
+            <Text style={styles.more}>Clear</Text>
+          </TouchableOpacity>
+        </View>
+        {
+          history.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.item}
+              onPress={() => console.log('search: ', item)}
+            >
+              <FontAwesome style={{ marginHorizontal: 10 }} name='search' size={22} color='grey' />
+              <Text style={styles.searchItem}>{item}</Text>
+            </TouchableOpacity>
+          ))
+        }
+      </View> : null
+    }
+    <View style={styles.section}>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionLabel}>Search Nearby</Text>
+      </View>
+
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => openSubject('story')}
+      >
+        <View style={[styles.icon, { backgroundColor: 'rgba(255,50,50,0.8)' }]}>
+          <FontAwesome name='book' size={18} color='rgba(255,255,255,0.9)' />
+        </View>
+        <Text style={styles.label}>Story</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => openSubject('journey')}
+      >
+        <View style={[styles.icon, { backgroundColor: 'rgba(255,50,50,0.8)' }]}>
+          <MaterialCommunityIcons name='map-marker-path' size={18} color='rgba(255,255,255,0.9)' />
+        </View>
+        <Text style={styles.label}>Journey</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => openSubject('campfire')}
+      >
+        <View style={[styles.icon, { backgroundColor: 'rgba(230,180,0,0.8)' }]}>
+          <MaterialCommunityIcons name='campfire' size={18} color='rgba(255,255,255,0.9)' />
+        </View>
+        <Text style={styles.label}>Campfire</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => openSubject('monument')}>
+        <View style={[styles.icon, { backgroundColor: 'rgba(50,50,255,0.8)' }]}>
+          <FontAwesome5 name='monument' size={18} color='rgba(255,255,255,0.9)' />
+        </View>
+        <Text style={styles.label}>Monument</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => openSubject('chapter')}>
+        <View style={[styles.icon, { backgroundColor: 'rgba(0,220,180,0.8)' }]}>
+          <MaterialCommunityIcons name='lighthouse' size={18} color='rgba(255,255,255,0.9)' />
+        </View>
+        <Text style={styles.label}>Chapter</Text>
+      </TouchableOpacity>
+    </View>
+  </ScrollView >
+);
