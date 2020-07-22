@@ -86,53 +86,8 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, inputRef, 
       inputRef.current.blur();
       cancelQuery();
       Keyboard.dismiss();
+      growSearchBar();
     }
-  }
-
-  return bottomInset ?
-    <BottomSheet
-      ref={initialBS}
-      snapPoints={[
-        SCREEN_HEIGHT - headerHeight
-        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-        SCREEN_HEIGHT / 2 - headerHeight
-        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-        catagory ? 0 : bottomInset + PANNEL_HEADER_HEIGHT
-      ]}
-      initialSnap={2}
-      enabledBottomInitialAnimation={true}
-      onCloseStart={cancelSearch}
-      onCloseEnd={cancelSearch}
-      renderHeader={
-        () =>
-          <BottomSheetHeader
-            initialBS={initialBS}
-            inputRef={inputRef}
-            cancelSearch={cancelSearch}
-            initialized={initialized}
-          />
-      }
-      renderContent={
-        () =>
-          <BottomSheetBody
-            navigation={navigation}
-            stories={stories}
-            library={library}
-            initialBS={initialBS}
-            searchBS={searchBS}
-          />
-      }
-    /> : null
-};
-
-const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch, initialized }) => {
-  const { state: { query }, initializeQuery, updateQuery } = React.useContext(SearchContext);
-
-  const startSearch = () => {
-    inputRef.current.focus();
-    initialBS.current.snapTo(0);
-    initializeQuery();
-    shrinkSearchBar()
   }
 
   const widthAnim = React.useRef(new Animated.Value(SCREEN_WIDTH - 40)).current;
@@ -166,6 +121,56 @@ const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch, initialized }) =
     }).start();
   };
 
+  return bottomInset ?
+    <BottomSheet
+      ref={initialBS}
+      snapPoints={[
+        SCREEN_HEIGHT - headerHeight
+        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
+        SCREEN_HEIGHT / 2 - headerHeight
+        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
+        catagory ? 0 : bottomInset + PANNEL_HEADER_HEIGHT
+      ]}
+      initialSnap={2}
+      enabledBottomInitialAnimation={true}
+      onCloseStart={cancelSearch}
+      onCloseEnd={cancelSearch}
+      renderHeader={
+        () =>
+          <BottomSheetHeader
+            initialBS={initialBS}
+            inputRef={inputRef}
+            cancelSearch={cancelSearch}
+            initialized={initialized}
+            widthAnim={widthAnim}
+            marginAnim={marginAnim}
+            shrinkSearchBar={shrinkSearchBar}
+            growSearchBar={growSearchBar}
+          />
+      }
+      renderContent={
+        () =>
+          <BottomSheetBody
+            navigation={navigation}
+            stories={stories}
+            library={library}
+            initialBS={initialBS}
+            searchBS={searchBS}
+          />
+      }
+    /> : null
+};
+
+const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch,
+  widthAnim, marginAnim, shrinkSearchBar, growSearchBar }) => {
+  const { state: { query }, initializeQuery, updateQuery } = React.useContext(SearchContext);
+
+  const startSearch = () => {
+    inputRef.current.focus();
+    initialBS.current.snapTo(0);
+    initializeQuery();
+    shrinkSearchBar()
+  }
 
   return (
     <View style={styles.header}>
