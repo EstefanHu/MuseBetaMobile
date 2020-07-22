@@ -14,7 +14,6 @@ import Animated from 'react-native-reanimated';
 
 import { Context as LocationContext } from './../../providers/LocationProvider.js';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
-import { Context as SearchContext } from './../../providers/SearchProvider.js';
 
 import { Map } from './../../components/Map.js';
 import { InitialBottomSheet } from './InitialBottomSheet.js';
@@ -42,7 +41,6 @@ const styles = StyleSheet.create({
 export const ExploreHomeScreen = ({ navigation }) => {
   const { state: { stories } } = React.useContext(StoryContext);
   const { state: { longitude, latitude } } = React.useContext(LocationContext);
-  const { state: { initialized }, cancelQuery } = React.useContext(SearchContext);
 
   const recenter = () => {
     mapRef.current.animateToRegion(
@@ -60,14 +58,6 @@ export const ExploreHomeScreen = ({ navigation }) => {
 
   const mapRef = React.useRef(null);
   const inputRef = React.useRef(null);
-
-  const cancelSearch = () => {
-    if (initialized) {
-      inputRef.current.blur();
-      cancelQuery();
-      Keyboard.dismiss();
-    }
-  }
 
   return (
     <View style={styles.container}>
@@ -99,7 +89,6 @@ export const ExploreHomeScreen = ({ navigation }) => {
         navigation={navigation}
         initialBS={initialBS}
         searchBS={searchBS}
-        cancelSearch={cancelSearch}
         inputRef={inputRef}
         stories={stories}
       />

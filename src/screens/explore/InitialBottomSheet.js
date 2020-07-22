@@ -70,15 +70,22 @@ const styles = StyleSheet.create({
 const PANNEL_HEADER_HEIGHT = 30;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-export const InitialBottomSheet = ({ navigation, initialBS, searchBS, cancelSearch, inputRef, stories }) => {
+export const InitialBottomSheet = ({ navigation, initialBS, searchBS, inputRef, stories }) => {
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
   const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
-  const { state: { catagory } } = React.useContext(SearchContext);
-
+  const { state: { initialized, catagory }, cancelQuery } = React.useContext(SearchContext);
 
   React.useEffect(() => {
     fetchLibrary();
   }, []);
+
+  const cancelSearch = () => {
+    if (initialized) {
+      inputRef.current.blur();
+      cancelQuery();
+      Keyboard.dismiss();
+    }
+  }
 
   return bottomInset ?
     <BottomSheet
@@ -100,6 +107,7 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, cancelSear
             initialBS={initialBS}
             inputRef={inputRef}
             cancelSearch={cancelSearch}
+            initialized={initialized}
           />
       }
       renderContent={
@@ -115,8 +123,8 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, cancelSear
     /> : null
 };
 
-const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch }) => {
-  const { state: { initialized, query }, initializeQuery, updateQuery } = React.useContext(SearchContext);
+const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch, initialized }) => {
+  const { state: { query }, initializeQuery, updateQuery } = React.useContext(SearchContext);
 
   const startSearch = () => {
     inputRef.current.focus();

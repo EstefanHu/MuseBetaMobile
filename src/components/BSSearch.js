@@ -129,6 +129,7 @@ const CatagoryView = ({ history, clearHistory, openSubject }) => (
   <ScrollView
     keyboardDismissMode='on-drag'
     keyboardShouldPersistTaps='handled'
+    bounces={false}
   >
     {
       history.length > 0 ? <View style={catagoryStyles.section}>
