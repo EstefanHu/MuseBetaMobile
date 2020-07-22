@@ -4,11 +4,22 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  Dimensions
 } from 'react-native';
+import {
+  Ionicons
+} from '@expo/vector-icons';
+
+import { Context as SearchContext } from './../providers/SearchProvider.js';
+import { Context as LayoutContext } from './../providers/LayoutProvider.js';
+import { Context as StoryContext } from './../providers/StoryProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
-import { TextInput } from 'react-native-gesture-handler';
+
+const PANNEL_HEADER_HEIGHT = 30;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   header: {
@@ -39,41 +50,110 @@ const styles = StyleSheet.create({
   },
 });
 
-export const StoryBottomSheet = ({ navigation, story }) => {
-  const [search, setSearch] = React.useState('');
+export const StoryBottomSheet = ({ initialBS, storyBS }) => {
+  const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
+  const { state: { storyId }, clearStory } = React.useContext(SearchContext);
+  const { state: { stories } } = React.useContext(StoryContext);
 
-  return (
+  const story = stories.find(s => s._id === storyId);
+
+  const deactivate = () => {
+    initialBS.current.snapTo(1);
+    storyBS.current.snapTo(2);
+    clearStory();
+  }
+
+  return bottomInset ?
     <BottomSheet
-      ref={bs}
-      snapPoints={[topHeight, previewHeight, dockHeight]}
+      ref={storyBS}
+      snapPoints={[
+        SCREEN_HEIGHT - headerHeight
+        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
+        SCREEN_HEIGHT / 2 - headerHeight
+        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
+        storyId ? bottomInset + PANNEL_HEADER_HEIGHT : 0
+      ]}
       initialSnap={2}
-      callbackNode={fall}
       enabledBottomInitialAnimation={true}
-      renderHeader={() => <bsHeader search={search} setSearch={setSearch} />}
-      renderContent={() => <bsBody />}
-    />
-  );
+      renderHeader={
+        () =>
+          <BottomSheetHeader
+            story={story}
+            deactivate={deactivate}
+          />
+      }
+      renderContent={
+        () =>
+          <BottomSheetBody
+          />
+      }
+    /> : null
 };
 
-const bsHeader = ({ search, setSearch }) => {
+const headerStyles = StyleSheet.create({
+  header: {
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(200,200,200,0.4)',
+    borderLeftWidth: 1,
+    borderLeftColor: 'rgba(200,200,200,0.4)',
+    borderRightWidth: 1,
+    borderRightColor: 'rgba(200,200,200,0.4)',
+    paddingVertical: 5,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    paddingHorizontal: 20,
+    alignItems: 'center'
+  },
+  panelHandle: {
+    width: 40,
+    height: 6,
+    borderRadius: 4,
+    backgroundColor: '#00000040',
+    marginBottom: 6,
+  },
+  headerInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  back: {
+    backgroundColor: 'lightgrey',
+    width: 25,
+    height: 25,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+});
 
-  return (
-    <View style={styles.header}>
-      <View style={styles.panelHeader}>
-        <View style={styles.panelHandle}></View>
-      </View>
-      <TextInput
-        underlineColorAndroid='rgba(0,0,0,0)'
-        placeholder="Search"
-        onSubmitEditing={() => console.log('testing')}
-        value={search}
-        onChangeText={text => setSearch(text)}
-      />
+const BottomSheetHeader = ({ story, deactivate }) => (
+  <View style={headerStyles.header}>
+    <View style={headerStyles.panelHeader}>
+      <View style={headerStyles.panelHandle}></View>
     </View>
-  )
-}
 
-const bsBody = () => {
+    <View style={headerStyles.headerInfo}>
+      <View>
+        <Text style={headerStyles.title}>Story</Text>
+        <Text style={headerStyles.results}></Text>
+      </View>
+
+      <TouchableOpacity
+        style={headerStyles.back}
+        onPress={deactivate}
+      >
+        <Ionicons name='ios-close' size={25} color='white' />
+      </TouchableOpacity>
+    </View>
+  </View>
+);
+
+const BottomSheetBody = () => {
 
   return (
     <View style={styles.panel}>

@@ -50,7 +50,7 @@ export default () => {
         <LocationProvider>
           <StoryProvider>
             <ProfileProvider>
-              <NearProvider>
+              {/* <NearProvider> */}
                 <LayoutProvider>
                   <SearchProvider>
                     {/* <React.StrictMode> */}
@@ -58,7 +58,7 @@ export default () => {
                     {/* </React.StrictMode> */}
                   </SearchProvider>
                 </LayoutProvider>
-              </NearProvider>
+              {/* </NearProvider> */}
             </ProfileProvider>
           </StoryProvider>
         </LocationProvider>

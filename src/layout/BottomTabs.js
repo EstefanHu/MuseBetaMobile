@@ -6,7 +6,7 @@ import {
   Feather
 } from '@expo/vector-icons';
 
-import { Context as NearContext } from './../providers/NearProvider.js';
+// import { Context as NearContext } from './../providers/NearProvider.js';
 import { Context as StoryContext } from './../providers/StoryProvider.js';
 import { Context as LocationContext } from './../providers/LocationProvider.js';
 import { Context as LayoutContext } from './../providers/LayoutProvider.js';
@@ -22,7 +22,7 @@ import { useHeaderHeight } from '@react-navigation/stack';
 const Tabs = createBottomTabNavigator();
 
 export const BottomTabs = () => {
-  const { state: { status } } = useContext(NearContext);
+  // const { state: { status } } = useContext(NearContext);
   const { setHeaderHeight, setInsets } = useContext(LayoutContext);
   const { fetchNearStories } = React.useContext(StoryContext);
   const { state: { longitude, latitude }, getCoords } = React.useContext(LocationContext);
@@ -46,7 +46,7 @@ export const BottomTabs = () => {
           if (route.name === 'Top') {
             return <FontAwesome5 name='tasks' size={size} color={color} />;
           } else if (route.name === 'Near') {
-            if (status === 'docked') return <MaterialCommunityIcons name='navigation' size={size} color={color} />
+            // if (status === 'docked') return <MaterialCommunityIcons name='navigation' size={size} color={color} />
             return <Feather name='navigation' size={size} color={color} />
           } else if (route.name === 'Explore') {
             return <FontAwesome5 name='compass' size={size} color={color} />;
@@ -65,9 +65,9 @@ export const BottomTabs = () => {
       initialRouteName={'Explore'}
     >
       <Tabs.Screen name='Top' component={TopStack} />
-      <Tabs.Screen name='Near' component={NearStack} />
+      {/* <Tabs.Screen name='Near' component={NearStack} /> */}
       <Tabs.Screen name='Explore' component={ExploreStack} />
-      <Tabs.Screen name='News' component={NewsStack} />
+      {/* <Tabs.Screen name='News' component={NewsStack} /> */}
       <Tabs.Screen name='Library' component={LibraryStack} />
     </Tabs.Navigator>
   );

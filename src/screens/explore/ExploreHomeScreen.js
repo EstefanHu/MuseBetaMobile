@@ -18,6 +18,7 @@ import { Context as StoryContext } from './../../providers/StoryProvider.js';
 import { Map } from './../../components/Map.js';
 import { InitialBottomSheet } from './InitialBottomSheet.js';
 import { SearchBottomSheet } from './SearchBottomSheet.js';
+import { StoryBottomSheet } from '../../components/StoryBottomSheet.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -53,11 +54,13 @@ export const ExploreHomeScreen = ({ navigation }) => {
       1000
     );
   }
-  const initialBS = React.useRef(null);
-  const searchBS = React.useRef(null);
 
   const mapRef = React.useRef(null);
   const inputRef = React.useRef(null);
+
+  const initialBS = React.useRef(null);
+  const searchBS = React.useRef(null);
+  const storyBS = React.useRef(null);
 
   return (
     <View style={styles.container}>
@@ -91,10 +94,15 @@ export const ExploreHomeScreen = ({ navigation }) => {
         searchBS={searchBS}
         inputRef={inputRef}
         stories={stories}
+        storyBS={storyBS}
       />
       <SearchBottomSheet
         initialBS={initialBS}
         searchBS={searchBS}
+      />
+      <StoryBottomSheet
+        initialBS={initialBS}
+        storyBS={storyBS}
       />
     </View>
   );

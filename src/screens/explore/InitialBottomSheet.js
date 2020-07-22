@@ -72,10 +72,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export const InitialBottomSheet = ({ navigation, initialBS, searchBS, inputRef, stories }) => {
+export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, inputRef, stories }) => {
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
   const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
-  const { state: { initialized, catagory }, cancelQuery } = React.useContext(SearchContext);
+  const { state: { initialized, storyId, catagory }, cancelQuery } = React.useContext(SearchContext);
 
   React.useEffect(() => {
     fetchLibrary();
@@ -129,7 +129,7 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, inputRef, 
         - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
         SCREEN_HEIGHT / 2 - headerHeight
         - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-        catagory ? 0 : bottomInset + PANNEL_HEADER_HEIGHT
+        storyId || catagory ? 0 : bottomInset + PANNEL_HEADER_HEIGHT
       ]}
       initialSnap={2}
       enabledBottomInitialAnimation={true}
@@ -156,6 +156,7 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, inputRef, 
             library={library}
             initialBS={initialBS}
             searchBS={searchBS}
+            storyBS={storyBS}
           />
       }
     /> : null
@@ -241,7 +242,7 @@ const bsbStyles = StyleSheet.create({
   },
 });
 
-const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS }) => {
+const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS, storyBS }) => {
   const { state: { initialized } } = React.useContext(SearchContext);
 
   return (
@@ -270,8 +271,9 @@ const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS }) 
                 library.slice(0, 5).map(item => (
                   <StoryPreview
                     key={item._id}
-                    navigation={navigation}
                     item={item}
+                    initialBS={initialBS}
+                    storyBS={storyBS}
                   />
                 ))
               }
@@ -288,8 +290,9 @@ const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS }) 
                 stories.slice(0, 5).map(item => (
                   <StoryPreview
                     key={item._id}
-                    navigation={navigation}
                     item={item}
+                    initialBS={initialBS}
+                    storyBS={storyBS}
                   />
                 ))
               }

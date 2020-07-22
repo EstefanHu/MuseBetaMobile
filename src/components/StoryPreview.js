@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
+import { Context as SearchContext } from './../providers/SearchProvider.js';
+
 const styles = StyleSheet.create({
   listItem: {
     paddingVertical: 10,
@@ -31,11 +33,20 @@ const styles = StyleSheet.create({
   }
 });
 
-export const StoryPreview = ({ navigation, item }) => {
+export const StoryPreview = ({ item, initialBS, storyBS }) => {
+  const { setStory } = React.useContext(SearchContext);
+
+  const openItem = () => {
+    setStory(item);
+    initialBS.current.snapTo(2);
+    storyBS.current.snapTo(1);
+  }
+
   return (
     <TouchableOpacity
       key={item._id}
       style={styles.listItem}
+      onPress={openItem}
     >
       <View style={styles.itemIcon}>
         <FontAwesome name='book' size={18} color='rgba(255,255,255,0.9)' />

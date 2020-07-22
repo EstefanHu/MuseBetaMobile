@@ -11,6 +11,10 @@ const searchReducer = (state, action) => {
       return { ...state, catagory: action.payload };
     case 'clear_catagory':
       return { ...state, catagory: null };
+    case 'set_story':
+      return { ...state, storyId: action.payload };
+    case 'clear_story':
+      return { ...state, storyId: null };
     case 'initialize_query':
       return { ...state, initialized: true };
     case 'update_query':
@@ -45,6 +49,11 @@ const setCatagory = dispatch => catagory =>
 
 const clearCatagory = dispatch => () => dispatch({ type: 'clear_catagory' });
 
+const setStory = dispatch => storyId =>
+  dispatch({ type: 'set_story', payload: storyId });
+
+const clearStory = dispatch => () => dispatch({ type: 'clear_story' });
+
 const initializeQuery = dispatch => () => dispatch({ type: 'initialize_query' });
 
 const updateQuery = dispatch => async query => {
@@ -64,6 +73,8 @@ export const { Context, Provider } = createDataContext(
     clearHistory,
     setCatagory,
     clearCatagory,
+    setStory,
+    clearStory,
     initializeQuery,
     updateQuery,
     cancelQuery
@@ -71,6 +82,7 @@ export const { Context, Provider } = createDataContext(
   {
     initialized: false,
     catagory: null,
+    storyId: null,
     query: null,
     history: [],
     results: []

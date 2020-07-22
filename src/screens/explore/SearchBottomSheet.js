@@ -49,7 +49,6 @@ export const SearchBottomSheet = ({ initialBS, searchBS }) => {
       renderHeader={
         () =>
           <BottomSheetHeader
-            searchBS={searchBS}
             deactivate={deactivate}
             catagory={catagory}
             results={results}
