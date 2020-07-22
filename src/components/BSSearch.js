@@ -4,8 +4,14 @@ import {
   View,
   Text,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from 'react-native';
+import {
+  FontAwesome,
+  FontAwesome5,
+  MaterialCommunityIcons
+} from '@expo/vector-icons';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const styles = StyleSheet.create({
   container: {
@@ -44,13 +50,25 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   }
 });
-import {
-  FontAwesome,
-  FontAwesome5,
-  MaterialCommunityIcons
-} from '@expo/vector-icons';
+
+
 
 export const BSSearch = ({ initialBS, searchBS, setSearchBSIsActive }) => {
+  const [history, setHistory] = React.useState([]);
+
+  React.useEffect(() => {
+    (async () => {
+      const storedHistory = await AsyncStorage.getItem('SearchHistory');
+      if (storedHistory && storedHistory.length > 0)
+        setHistory(storedHistory);
+    })();
+  });
+
+  const clearHistory = async () => {
+    await AsyncStorage.removeItem('SearchHistory');
+    setHistory([]);
+  }
+
   const openSubject = subject => {
     initialBS.current.snapTo(2);
     searchBS.current.snapTo(1);
@@ -62,6 +80,28 @@ export const BSSearch = ({ initialBS, searchBS, setSearchBSIsActive }) => {
       style={styles.container}
       keyboardDismissMode='on-drag'
     >
+      {
+        history.length > 0 ? <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionLabel}>Recent Searches</Text>
+            <TouchableOpacity onPress={clearHistory}>
+              <Text style={styles.more}>Clear</Text>
+            </TouchableOpacity>
+            {
+              history.map((item, idx) => (
+                <TouchableOpacity
+                  key={idx}
+                  style={styles.historyItem}
+                  onPress={() => console.log('search: ', item)}
+                >
+                  <FontAwesome name='search' size={22} color='grey' />
+                  <Text style={styles.historyLabel}>{item}</Text>
+                </TouchableOpacity>
+              ))
+            }
+          </View>
+        </View> : null
+      }
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionLabel}>Search Nearby</Text>

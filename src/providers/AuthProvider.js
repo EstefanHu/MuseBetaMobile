@@ -1,7 +1,7 @@
 import createDataContext from './createDataContext.js';
 import { useFetch } from './../hooks/useFetch.js';
 import { loginUrl, registerUrl } from './../constants/network.js';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const authReducer = (state, action) => {
   switch (action.type) {
