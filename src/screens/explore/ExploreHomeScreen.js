@@ -62,10 +62,9 @@ export const ExploreHomeScreen = ({ navigation }) => {
   const mapRef = React.useRef(null);
   const inputRef = React.useRef(null);
 
-  const cancelSearch = (idx) => {
+  const cancelSearch = () => {
     inputRef.current.blur();
     cancelQuery();
-    initialBS.current.snapTo(idx);
     Keyboard.dismiss();
   };
 
@@ -104,7 +103,10 @@ export const ExploreHomeScreen = ({ navigation }) => {
         inputRef={inputRef}
         stories={stories}
       />
-      <SearchBottomSheet searchBS={searchBS} />
+      <SearchBottomSheet
+        initialBS={initialBS}
+        searchBS={searchBS}
+      />
     </View>
   );
 };

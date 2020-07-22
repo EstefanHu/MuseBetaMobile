@@ -19,15 +19,16 @@ import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 import BottomSheet from 'reanimated-bottom-sheet';
 
 const PANNEL_HEADER_HEIGHT = 30;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-export const SearchBottomSheet = ({ searchBS }) => {
+export const SearchBottomSheet = ({ initialBS, searchBS }) => {
   const { state: { query }, cancelQuery } = React.useContext(SearchContext);
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
 
   const activeSnapPoints = [
-    Dimensions.get('window').height - headerHeight
+    SCREEN_HEIGHT - headerHeight
     - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-    Dimensions.get('window').height / 2 - headerHeight
+    SCREEN_HEIGHT / 2 - headerHeight
     - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
     bottomInset + PANNEL_HEADER_HEIGHT
   ];
@@ -44,6 +45,8 @@ export const SearchBottomSheet = ({ searchBS }) => {
       initialSnap={2}
       enabledBottomInitialAnimation={false}
       enabledBottomClamp={true}
+      onCloseEnd={() => initialBS.current.snapTo(2)}
+      onOpenEnd={() => initialBS.current.snapTo(2)}
       renderHeader={
         () =>
           <BottomSheetHeader

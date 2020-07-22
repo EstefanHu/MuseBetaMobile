@@ -89,8 +89,8 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, fall, canc
       initialSnap={2}
       callbackNode={fall}
       enabledBottomClamp={true}
-      onCloseStart={() => cancelSearch(1)}
-      onCloseEnd={() => cancelSearch(2)}
+      onCloseStart={cancelSearch}
+      // onCloseEnd={() => cancelSearch()}
       renderHeader={
         () =>
           <BottomSheetHeader
@@ -145,7 +145,11 @@ const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch }) => {
           </View>
         </TouchableWithoutFeedback>
         {
-          initialized && <TouchableOpacity onPress={() => cancelSearch(1)}>
+          initialized && <TouchableOpacity
+            onPress={() => {
+              initialBS.current.snapTo(1);
+              cancelSearch();
+            }}>
             <Text style={styles.cancelSearch}>Cancel</Text>
           </TouchableOpacity>
         }
