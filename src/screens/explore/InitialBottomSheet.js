@@ -12,6 +12,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 import { Context as ProfileContext } from '../../providers/ProfileProvider.js'; // TODO: Temp
+import { Context as SearchContext } from './../../providers/SearchProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 import { StoryPreview } from '../../components/StoryPreview.js';
@@ -67,8 +68,7 @@ const styles = StyleSheet.create({
 const PANNEL_HEADER_HEIGHT = 30;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-export const InitialBottomSheet = ({ navigation, initialBS, searchBS, fall,
-  search, setSearch, isSearching, setIsSearching, cancelSearch, inputRef, stories }) => {
+export const InitialBottomSheet = ({ navigation, initialBS, searchBS, fall, cancelSearch, inputRef, stories }) => {
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
   const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
 
@@ -94,10 +94,6 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, fall,
       renderHeader={
         () =>
           <BottomSheetHeader
-            search={search}
-            setSearch={setSearch}
-            isSearching={isSearching}
-            setIsSearching={setIsSearching}
             initialBS={initialBS}
             inputRef={inputRef}
             cancelSearch={cancelSearch}
@@ -107,8 +103,6 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, fall,
         () =>
           <BottomSheetBody
             navigation={navigation}
-            search={search}
-            isSearching={isSearching}
             stories={stories}
             library={library}
             initialBS={initialBS}
@@ -118,13 +112,13 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, fall,
     /> : null
 };
 
-const BottomSheetHeader = ({ search, setSearch, initialBS,
-  isSearching, setIsSearching, inputRef, cancelSearch }) => {
+const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch }) => {
+  const { state: { initialized, query }, initializeQuery, updateQuery } = React.useContext(SearchContext);
 
   const startSearch = () => {
     inputRef.current.focus();
-    setIsSearching(true);
     initialBS.current.snapTo(0);
+    initializeQuery();
   }
 
   return (
@@ -142,8 +136,8 @@ const BottomSheetHeader = ({ search, setSearch, initialBS,
               underlineColorAndroid='rgba(0,0,0,0)'
               placeholder="Search"
               onSubmitEditing={() => console.log('testing')}
-              value={search}
-              onChangeText={text => setSearch(text)}
+              value={query}
+              onChangeText={text => updateQuery(text)}
               onFocus={startSearch}
               clearButtonMode={'always'}
               autoCorrect={false}
@@ -151,7 +145,7 @@ const BottomSheetHeader = ({ search, setSearch, initialBS,
           </View>
         </TouchableWithoutFeedback>
         {
-          isSearching && <TouchableOpacity onPress={() => cancelSearch(1)}>
+          initialized && <TouchableOpacity onPress={() => cancelSearch(1)}>
             <Text style={styles.cancelSearch}>Cancel</Text>
           </TouchableOpacity>
         }
@@ -187,13 +181,13 @@ const bsbStyles = StyleSheet.create({
   },
 });
 
-const BottomSheetBody = ({ navigation, search, isSearching,
-  stories, library, initialBS, searchBS }) => {
+const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS }) => {
+  const { state: { initialized } } = React.useContext(SearchContext);
 
   return (
     <View style={bsbStyles.panel}>
       {
-        isSearching ?
+        initialized ?
           <BSSearch
             navigation={navigation}
             initialBS={initialBS}
@@ -225,7 +219,7 @@ const BottomSheetBody = ({ navigation, search, isSearching,
 
             <View style={bsbStyles.section}>
               <View style={bsbStyles.sectionHeader}>
-                <Text style={bsbStyles.sectionLabel}>Nearnby</Text>
+                <Text style={bsbStyles.sectionLabel}>Nearby</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('Near')}>
                   <Text style={bsbStyles.more}>See All</Text>
                 </TouchableOpacity>

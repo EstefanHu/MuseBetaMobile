@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
+import { Context as SearchContext } from './../../providers/SearchProvider.js';
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -46,6 +47,7 @@ const styles = StyleSheet.create({
 const PANNEL_HEADER_HEIGHT = 30;
 
 export const SearchBottomSheet = ({ searchBS }) => {
+  const { state: { query }, cancelQuery } = React.useContext(SearchContext);
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
 
   const activeSnapPoints = [
@@ -58,6 +60,7 @@ export const SearchBottomSheet = ({ searchBS }) => {
 
   const deactivate = () => {
     console.log('deactivate');
+    cancelQuery();
   }
 
   return (
