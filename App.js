@@ -11,7 +11,6 @@ import {
 } from './src/providers/LocationProvider.js';
 import { Provider as StoryProvider } from './src/providers/StoryProvider.js';
 import { Provider as ProfileProvider } from './src/providers/ProfileProvider.js';
-import { Provider as NearProvider } from './src/providers/NearProvider.js';
 import { Provider as LayoutProvider } from './src/providers/LayoutProvider.js';
 import { Provider as SearchProvider } from './src/providers/SearchProvider.js';
 
@@ -50,15 +49,13 @@ export default () => {
         <LocationProvider>
           <StoryProvider>
             <ProfileProvider>
-              {/* <NearProvider> */}
-                <LayoutProvider>
-                  <SearchProvider>
-                    {/* <React.StrictMode> */}
-                    <App />
-                    {/* </React.StrictMode> */}
-                  </SearchProvider>
-                </LayoutProvider>
-              {/* </NearProvider> */}
+              <LayoutProvider>
+                <SearchProvider>
+                  {/* <React.StrictMode> */}
+                  <App />
+                  {/* </React.StrictMode> */}
+                </SearchProvider>
+              </LayoutProvider>
             </ProfileProvider>
           </StoryProvider>
         </LocationProvider>

@@ -12,8 +12,8 @@ import { useScrollToTop } from '@react-navigation/native';
 import MapView, { Marker } from 'react-native-maps';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
-import { Context as NearContext } from '../../providers/NearProvider.js';
-import { Context as StoryContext } from '../../providers/StoryProvider.js';
+import { Context as StoryContext } from './../../providers/StoryProvider.js';
+import { Context as SearchContext } from './../../providers/SearchProvider.js';
 import { Context as LocationContext } from '../../providers/LocationProvider.js';
 
 import { StoryCard } from '../../components/StoryCard.js';
@@ -30,7 +30,10 @@ const styles = StyleSheet.create({
 export const NearHomeScreen = ({ navigation }) => {
   const { state: { stories }, fetchNearStories } = useContext(StoryContext);
   const { state: { longitude, latitude } } = useContext(LocationContext);
-  const { state: { story }, dockStory } = useContext(NearContext);
+  const { state: { storyId } } = React.useContext(SearchContext);
+
+  const story = stories.find(s => s._id === storyId);
+  
   const [refreshing, setRefreshing] = useState(false);
   const [channel, setChannel] = useState('All');
 

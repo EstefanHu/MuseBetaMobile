@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -11,7 +11,8 @@ import {
   Feather
 } from '@expo/vector-icons';
 
-import { Context as NearContext } from '../../providers/NearProvider.js';
+import { Context as StoryContext } from './../../providers/StoryProvider.js';
+import { Context as SearchContext } from './../../providers/SearchProvider.js';
 import { Context as LocationContext } from '../../providers/LocationProvider.js';
 
 import { Map } from '../../components/Map.js';
@@ -42,8 +43,11 @@ const styles = StyleSheet.create({
 
 export const NearNavigationScreen = ({ route, navigation }) => {
   const mapRef = React.useRef(null);
-  const { state: { story } } = useContext(NearContext);
-  const { state: { longitude, latitude } } = useContext(LocationContext);
+  const { state: { longitude, latitude } } = React.useContext(LocationContext);
+  const { state: { stories } } = React.useContext(StoryContext);
+  const { state: { storyId } } = React.useContext(SearchContext);
+
+  const story = stories.find(s => s._id === storyId);
 
   React.useEffect(() => {
     fitMarkers()

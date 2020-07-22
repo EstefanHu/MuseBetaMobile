@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -14,7 +14,7 @@ import {
 import { getProfileImage } from './../constants/network.js';
 
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
-import { Context as JourneyContext } from '../providers/NearProvider.js';
+import { Context as SearchContext } from '../providers/SearchProvider.js';
 
 import DefaultImage from './../../assets/user-default.png';
 
@@ -142,21 +142,21 @@ export const StoryCard = ({ navigation, item }) => (
 );
 
 const ReadButton = ({ storyRef }) => {
-  const { state: { story }, dockStory, clearDock } = useContext(JourneyContext);
-  const [isDocked, setIsDocked] = useState(false);
+  const { state: { storyId }, setStory, clearStory } = React.useContext(SearchContext);
+  const [isDocked, setIsDocked] = React.useState(false);
 
-  useEffect(() => {
-    setIsDocked(storyRef === story)
-  }, [story]);
+  React.useEffect(() => {
+    setIsDocked(storyRef._id === storyId)
+  }, [storyId]);
 
   return isDocked ?
-    <TouchableOpacity onPress={clearDock}>
+    <TouchableOpacity onPress={clearStory}>
       <View style={styles.button} >
         <Feather name='book-open' size={22} color='grey' />
         <Text>  Read</Text>
       </View>
     </TouchableOpacity >
-    : <TouchableOpacity onPress={() => dockStory(storyRef)}>
+    : <TouchableOpacity onPress={() => setStory(storyRef._id)}>
       <View style={styles.button}>
         <Feather name='book' size={22} color='grey' />
         <Text>  Read</Text>
@@ -165,10 +165,10 @@ const ReadButton = ({ storyRef }) => {
 };
 
 const SaveButton = ({ id }) => {
-  const { state: { libraryIds }, addToLibrary, removeFromLibrary } = useContext(ProfileContext);
-  const [isSaved, setIsSaved] = useState(false);
+  const { state: { libraryIds }, addToLibrary, removeFromLibrary } = React.useContext(ProfileContext);
+  const [isSaved, setIsSaved] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setIsSaved(libraryIds.includes(id));
   }, [libraryIds]);
 
