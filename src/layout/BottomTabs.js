@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   FontAwesome5,
@@ -6,7 +6,6 @@ import {
   Feather
 } from '@expo/vector-icons';
 
-// import { Context as NearContext } from './../providers/NearProvider.js';
 import { Context as StoryContext } from './../providers/StoryProvider.js';
 import { Context as LocationContext } from './../providers/LocationProvider.js';
 import { Context as LayoutContext } from './../providers/LayoutProvider.js';
@@ -22,8 +21,7 @@ import { useHeaderHeight } from '@react-navigation/stack';
 const Tabs = createBottomTabNavigator();
 
 export const BottomTabs = () => {
-  // const { state: { status } } = useContext(NearContext);
-  const { setHeaderHeight, setInsets } = useContext(LayoutContext);
+  const { setHeaderHeight, setInsets } = React.useContext(LayoutContext);
   const { fetchNearStories } = React.useContext(StoryContext);
   const { state: { longitude, latitude }, getCoords } = React.useContext(LocationContext);
 
@@ -46,7 +44,6 @@ export const BottomTabs = () => {
           if (route.name === 'Top') {
             return <FontAwesome5 name='tasks' size={size} color={color} />;
           } else if (route.name === 'Near') {
-            // if (status === 'docked') return <MaterialCommunityIcons name='navigation' size={size} color={color} />
             return <Feather name='navigation' size={size} color={color} />
           } else if (route.name === 'Explore') {
             return <FontAwesome5 name='compass' size={size} color={color} />;
