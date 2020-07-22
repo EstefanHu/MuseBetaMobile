@@ -48,6 +48,14 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     marginLeft: 10,
+  },
+  more: {
+    color: 'rgba(0, 100, 255, 0.7)',
+    fontSize: 13
+  },
+  searchItem: {
+    fontSize: 18,
+    marginLeft: 10,
   }
 });
 
@@ -87,19 +95,19 @@ export const BSSearch = ({ initialBS, searchBS, setSearchBSIsActive }) => {
             <TouchableOpacity onPress={clearHistory}>
               <Text style={styles.more}>Clear</Text>
             </TouchableOpacity>
-            {
-              history.map((item, idx) => (
-                <TouchableOpacity
-                  key={idx}
-                  style={styles.historyItem}
-                  onPress={() => console.log('search: ', item)}
-                >
-                  <FontAwesome name='search' size={22} color='grey' />
-                  <Text style={styles.historyLabel}>{item}</Text>
-                </TouchableOpacity>
-              ))
-            }
           </View>
+          {
+            history.map((item, idx) => (
+              <TouchableOpacity
+                key={idx}
+                style={styles.item}
+                onPress={() => console.log('search: ', item)}
+              >
+                <FontAwesome style={{ marginHorizontal: 10 }} name='search' size={22} color='grey' />
+                <Text style={styles.searchItem}>{item}</Text>
+              </TouchableOpacity>
+            ))
+          }
         </View> : null
       }
       <View style={styles.section}>
