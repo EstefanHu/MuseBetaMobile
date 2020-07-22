@@ -13,6 +13,7 @@ import { Provider as StoryProvider } from './src/providers/StoryProvider.js';
 import { Provider as ProfileProvider } from './src/providers/ProfileProvider.js';
 import { Provider as NearProvider } from './src/providers/NearProvider.js';
 import { Provider as LayoutProvider } from './src/providers/LayoutProvider.js';
+import { Provider as SearchProvider } from './src/providers/SearchProvider.js';
 
 import { AuthStack } from './src/stacks/AuthStack.js';
 import { RootStack } from './src/stacks/RootStack.js';
@@ -51,9 +52,11 @@ export default () => {
             <ProfileProvider>
               <NearProvider>
                 <LayoutProvider>
-                  {/* <React.StrictMode> */}
-                  <App />
-                  {/* </React.StrictMode> */}
+                  <SearchProvider>
+                    {/* <React.StrictMode> */}
+                    <App />
+                    {/* </React.StrictMode> */}
+                  </SearchProvider>
                 </LayoutProvider>
               </NearProvider>
             </ProfileProvider>
@@ -61,5 +64,5 @@ export default () => {
         </LocationProvider>
       </AuthProvider>
     </SafeAreaProvider>
-  )
-}
+  );
+};

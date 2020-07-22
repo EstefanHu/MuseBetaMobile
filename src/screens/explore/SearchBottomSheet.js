@@ -16,11 +16,13 @@ import BottomSheet from 'reanimated-bottom-sheet';
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    shadowColor: '#333333',
-    shadowOffset: { width: -1, height: -3 },
-    shadowRadius: 2,
-    shadowOpacity: 0.2,
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(200,200,200,0.4)',
+    borderLeftWidth: 1,
+    borderLeftColor: 'rgba(200,200,200,0.4)',
+    borderRightWidth: 1,
+    borderRightColor: 'rgba(200,200,200,0.4)',
     paddingVertical: 5,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
@@ -36,7 +38,8 @@ const styles = StyleSheet.create({
   },
   headerInfo: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    width: '100%',
   },
 });
 
@@ -91,7 +94,7 @@ const BottomSheetHeader = ({ type, deactivate }) => {
 
       <View style={styles.headerInfo}>
         <View>
-          <Text>{type}</Text>
+          <Text>Search Header</Text>
           <Text></Text>
         </View>
 
