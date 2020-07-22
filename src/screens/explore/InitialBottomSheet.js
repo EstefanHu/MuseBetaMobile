@@ -72,12 +72,12 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 export const InitialBottomSheet = ({ navigation, initialBS, searchBS, cancelSearch, inputRef, stories }) => {
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
   const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
+  const { state: { catagory } } = React.useContext(SearchContext);
+
 
   React.useEffect(() => {
     fetchLibrary();
   }, []);
-
-  const fall = new Animated.Value(.5);
 
   return bottomInset ?
     <BottomSheet
@@ -87,14 +87,11 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, cancelSear
         - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
         SCREEN_HEIGHT / 2 - headerHeight
         - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-        bottomInset + PANNEL_HEADER_HEIGHT
+        catagory ? 0 : bottomInset + PANNEL_HEADER_HEIGHT
       ]}
       initialSnap={2}
-      callbackNode={fall}
-      enabledBottomClamp={true}
-      onCloseStart={cancelSearch}
       enabledBottomInitialAnimation={true}
-      // onCloseEnd={() => cancelSearch()}
+      onCloseStart={cancelSearch}
       renderHeader={
         () =>
           <BottomSheetHeader

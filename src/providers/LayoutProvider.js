@@ -25,7 +25,7 @@ const setInsets = dispatch => () => {
     dispatch({
       type: 'set_inset',
       payload: {
-        topInset: NO_BEZEL.includes(Device.modelId) ? 24 : 20,
+        topInset: NO_BEZEL.includes(Device.modelId) ? 24 : 0,
         bottomInset: NO_BEZEL.includes(Device.modelId) ? 34 : 30
       }
     })

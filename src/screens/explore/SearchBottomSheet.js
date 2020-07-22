@@ -22,36 +22,37 @@ const PANNEL_HEADER_HEIGHT = 30;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export const SearchBottomSheet = ({ initialBS, searchBS }) => {
-  const { state: { query }, cancelQuery } = React.useContext(SearchContext);
+  const { state: { catagory, query, results }, cancelQuery, clearCatagory } = React.useContext(SearchContext);
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
 
-  const activeSnapPoints = [
-    SCREEN_HEIGHT - headerHeight
-    - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-    SCREEN_HEIGHT / 2 - headerHeight
-    - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-    bottomInset + PANNEL_HEADER_HEIGHT
-  ];
-
   const deactivate = () => {
-    console.log('deactivate');
-    cancelQuery();
+    initialBS.current.snapTo(1);
+    searchBS.current.snapTo(2);
+    clearCatagory();
   }
 
-  return (
+  return bottomInset ?
     <BottomSheet
       ref={searchBS}
-      snapPoints={activeSnapPoints}
+      snapPoints={[
+        SCREEN_HEIGHT - headerHeight
+        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
+        SCREEN_HEIGHT / 2 - headerHeight
+        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
+        catagory ? bottomInset + PANNEL_HEADER_HEIGHT : 0
+      ]}
       initialSnap={2}
-      enabledBottomInitialAnimation={false}
+      enabledBottomInitialAnimation={true}
       enabledBottomClamp={true}
-      onCloseEnd={() => initialBS.current.snapTo(2)}
+      onCloseStart={() => initialBS.current.snapTo(2)}
       onOpenEnd={() => initialBS.current.snapTo(2)}
       renderHeader={
         () =>
           <BottomSheetHeader
             searchBS={searchBS}
             deactivate={deactivate}
+            catagory={catagory}
+            results={results}
           />
       }
       renderContent={
@@ -60,8 +61,7 @@ export const SearchBottomSheet = ({ initialBS, searchBS }) => {
             searchBS={searchBS}
           />
       }
-    />
-  );
+    /> : null
 };
 
 const headerStyles = StyleSheet.create({
@@ -105,31 +105,27 @@ const headerStyles = StyleSheet.create({
   }
 });
 
-const BottomSheetHeader = ({ deactivate }) => {
-  const { state: { catagory, results } } = React.useContext(SearchContext);
-
-  return (
-    <View style={headerStyles.header}>
-      <View style={headerStyles.panelHeader}>
-        <View style={headerStyles.panelHandle}></View>
-      </View>
-
-      <View style={headerStyles.headerInfo}>
-        <View>
-          <Text style={headerStyles.title}>{catagory}</Text>
-          <Text style={headerStyles.results}>{results.length} found</Text>
-        </View>
-
-        <TouchableOpacity
-          style={headerStyles.back}
-          onPress={deactivate}
-        >
-          <Ionicons name='ios-close' size={25} color='white' />
-        </TouchableOpacity>
-      </View>
+const BottomSheetHeader = ({ catagory, results, deactivate }) => (
+  <View style={headerStyles.header}>
+    <View style={headerStyles.panelHeader}>
+      <View style={headerStyles.panelHandle}></View>
     </View>
-  );
-};
+
+    <View style={headerStyles.headerInfo}>
+      <View>
+        <Text style={headerStyles.title}>{catagory}</Text>
+        <Text style={headerStyles.results}>{results.length} found</Text>
+      </View>
+
+      <TouchableOpacity
+        style={headerStyles.back}
+        onPress={deactivate}
+      >
+        <Ionicons name='ios-close' size={25} color='white' />
+      </TouchableOpacity>
+    </View>
+  </View>
+);
 
 const bodyStyles = StyleSheet.create({
   container: {
