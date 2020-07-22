@@ -8,12 +8,15 @@ import {
   Dimensions
 } from 'react-native';
 import {
-  Ionicons
+  Ionicons,
+  Feather,
+  FontAwesome
 } from '@expo/vector-icons';
 
 import { Context as SearchContext } from './../providers/SearchProvider.js';
 import { Context as LayoutContext } from './../providers/LayoutProvider.js';
 import { Context as StoryContext } from './../providers/StoryProvider.js';
+import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 
@@ -147,10 +150,54 @@ const bodyStyles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 20,
-  }
+  },
+  actionContainer: {
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
+  },
+  actionButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 90,
+    height: 50,
+    borderRadius: 5,
+    backgroundColor: 'rgba(100,100,100,0.1)',
+  },
+  actionLabel: {
+    color: 'rgb(255,50,50)',
+    fontSize: 12,
+  },
+  section: {
+    paddingTop: 10
+  },
+  sectionLabel: {
+    fontSize: 13,
+    color: 'grey'
+  },
+  pitch: {
+    fontSize: 16
+  },
 });
 
 const BottomSheetBody = ({ story }) => {
+  const { state: { libraryIds }, addToLibrary, removeFromLibrary } = React.useContext(ProfileContext);
+  const [isSaved, setIsSaved] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsSaved(libraryIds.includes(story?._id));
+  }, [libraryIds]);
+
+  const saveStory = async () => {
+    await addToLibrary(story);
+    setIsSaved(true);
+  }
+
+  const removeStory = async () => {
+    removeFromLibrary(story._id);
+    setIsSaved(false);
+  }
 
   return (
     <View style={bodyStyles.panel}>
@@ -159,7 +206,38 @@ const BottomSheetBody = ({ story }) => {
       >
         <Text style={bodyStyles.beginText}>Begin Story</Text>
       </TouchableOpacity>
-      <Text>Hello World</Text>
+
+      <View style={bodyStyles.actionContainer}>
+        {
+          isSaved ?
+            <TouchableOpacity onPress={removeStory}>
+              <View style={bodyStyles.actionButton}>
+                <FontAwesome name='bookmark' size={18} color='rgb(255,50,50)' />
+                <Text style={bodyStyles.actionLabel}>Remove</Text>
+              </View>
+            </TouchableOpacity>
+            : <TouchableOpacity onPress={saveStory}>
+              <View style={bodyStyles.actionButton}>
+                <FontAwesome name='bookmark-o' size={18} color='rgb(255,50,50)' />
+                <Text style={bodyStyles.actionLabel}>Save</Text>
+              </View>
+            </TouchableOpacity>
+        }
+
+        <TouchableOpacity
+          style={bodyStyles.actionButton}
+          onPress={() => null}
+        >
+          <Feather name='share' size={18} color='rgb(255,50,50)' />
+          <Text style={bodyStyles.actionLabel}>Share</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={bodyStyles.section}>
+        <Text style={bodyStyles.sectionLabel}>Hello World</Text>
+        <Text style={bodyStyles.pitch}>{story?.pitch}</Text>
+      </View>
+
     </View>
   );
 };
