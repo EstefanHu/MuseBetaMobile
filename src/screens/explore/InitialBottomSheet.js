@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Animated from 'react-native-reanimated';
@@ -92,6 +93,7 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, cancelSear
       initialSnap={2}
       enabledBottomInitialAnimation={true}
       onCloseStart={cancelSearch}
+      onCloseEnd={cancelSearch}
       renderHeader={
         () =>
           <BottomSheetHeader

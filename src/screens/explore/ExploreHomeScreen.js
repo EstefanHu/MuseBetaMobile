@@ -62,10 +62,12 @@ export const ExploreHomeScreen = ({ navigation }) => {
   const inputRef = React.useRef(null);
 
   const cancelSearch = () => {
-    inputRef.current.blur();
-    cancelQuery();
-    Keyboard.dismiss();
-  };
+    if (initialized) {
+      inputRef.current.blur();
+      cancelQuery();
+      Keyboard.dismiss();
+    }
+  }
 
   return (
     <View style={styles.container}>
