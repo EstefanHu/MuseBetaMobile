@@ -15,11 +15,13 @@ import {
 import { Context as SearchContext } from './../providers/SearchProvider.js';
 
 export const BSSearch = ({ initialBS, searchBS }) => {
-  const { state: { history, query, results }, getHistory, clearHistory } = React.useContext(SearchContext);
+  const { state: { history, query, results },
+    getHistory, clearHistory, setCatagory } = React.useContext(SearchContext);
 
   React.useEffect(() => { (async () => { getHistory() })() }, []);
 
   const openSubject = subject => {
+    setCatagory(subject);
     initialBS.current.snapTo(2);
     searchBS.current.snapTo(1);
   }
@@ -154,7 +156,7 @@ const CatagoryView = ({ history, clearHistory, openSubject }) => (
 
       <TouchableOpacity
         style={catagoryStyles.item}
-        onPress={() => openSubject('story')}
+        onPress={() => openSubject('Story')}
       >
         <View style={[catagoryStyles.icon, { backgroundColor: 'rgba(255,50,50,0.8)' }]}>
           <FontAwesome name='book' size={18} color='rgba(255,255,255,0.9)' />
@@ -164,7 +166,7 @@ const CatagoryView = ({ history, clearHistory, openSubject }) => (
 
       <TouchableOpacity
         style={catagoryStyles.item}
-        onPress={() => openSubject('journey')}
+        onPress={() => openSubject('Journey')}
       >
         <View style={[catagoryStyles.icon, { backgroundColor: 'rgba(255,50,50,0.8)' }]}>
           <MaterialCommunityIcons name='map-marker-path' size={18} color='rgba(255,255,255,0.9)' />
@@ -174,7 +176,7 @@ const CatagoryView = ({ history, clearHistory, openSubject }) => (
 
       <TouchableOpacity
         style={catagoryStyles.item}
-        onPress={() => openSubject('campfire')}
+        onPress={() => openSubject('Campfire')}
       >
         <View style={[catagoryStyles.icon, { backgroundColor: 'rgba(230,180,0,0.8)' }]}>
           <MaterialCommunityIcons name='campfire' size={18} color='rgba(255,255,255,0.9)' />
@@ -184,7 +186,7 @@ const CatagoryView = ({ history, clearHistory, openSubject }) => (
 
       <TouchableOpacity
         style={catagoryStyles.item}
-        onPress={() => openSubject('monument')}>
+        onPress={() => openSubject('Monument')}>
         <View style={[catagoryStyles.icon, { backgroundColor: 'rgba(50,50,255,0.8)' }]}>
           <FontAwesome5 name='monument' size={18} color='rgba(255,255,255,0.9)' />
         </View>
@@ -193,7 +195,7 @@ const CatagoryView = ({ history, clearHistory, openSubject }) => (
 
       <TouchableOpacity
         style={catagoryStyles.item}
-        onPress={() => openSubject('chapter')}>
+        onPress={() => openSubject('Chapter')}>
         <View style={[catagoryStyles.icon, { backgroundColor: 'rgba(0,220,180,0.8)' }]}>
           <MaterialCommunityIcons name='lighthouse' size={18} color='rgba(255,255,255,0.9)' />
         </View>

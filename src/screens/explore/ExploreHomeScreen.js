@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 export const ExploreHomeScreen = ({ navigation }) => {
   const { state: { stories } } = React.useContext(StoryContext);
   const { state: { longitude, latitude } } = React.useContext(LocationContext);
-  const { cancelQuery } = React.useContext(SearchContext);
+  const { state: { initialized }, cancelQuery } = React.useContext(SearchContext);
 
   const recenter = () => {
     mapRef.current.animateToRegion(

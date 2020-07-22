@@ -8,41 +8,15 @@ import {
   TextInput,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  MaterialIcons,
+  Ionicons
+} from '@expo/vector-icons';
 
 import { Context as SearchContext } from './../../providers/SearchProvider.js';
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
-
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: 'white',
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(200,200,200,0.4)',
-    borderLeftWidth: 1,
-    borderLeftColor: 'rgba(200,200,200,0.4)',
-    borderRightWidth: 1,
-    borderRightColor: 'rgba(200,200,200,0.4)',
-    paddingVertical: 5,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    paddingHorizontal: 20,
-    alignItems: 'center'
-  },
-  panelHandle: {
-    width: 40,
-    height: 6,
-    borderRadius: 4,
-    backgroundColor: '#00000040',
-    marginBottom: 6,
-  },
-  headerInfo: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-});
 
 const PANNEL_HEADER_HEIGHT = 30;
 
@@ -87,35 +61,86 @@ export const SearchBottomSheet = ({ searchBS }) => {
   );
 };
 
-const BottomSheetHeader = ({ type, deactivate }) => {
+const headerStyles = StyleSheet.create({
+  header: {
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(200,200,200,0.4)',
+    borderLeftWidth: 1,
+    borderLeftColor: 'rgba(200,200,200,0.4)',
+    borderRightWidth: 1,
+    borderRightColor: 'rgba(200,200,200,0.4)',
+    paddingVertical: 5,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    paddingHorizontal: 20,
+    alignItems: 'center'
+  },
+  panelHandle: {
+    width: 40,
+    height: 6,
+    borderRadius: 4,
+    backgroundColor: '#00000040',
+    marginBottom: 6,
+  },
+  headerInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  back: {
+    backgroundColor: 'lightgrey',
+    width: 25,
+    height: 25,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+});
+
+const BottomSheetHeader = ({ deactivate }) => {
+  const { state: { catagory, results } } = React.useContext(SearchContext);
 
   return (
-    <View style={styles.header}>
-      <View style={styles.panelHeader}>
-        <View style={styles.panelHandle}></View>
+    <View style={headerStyles.header}>
+      <View style={headerStyles.panelHeader}>
+        <View style={headerStyles.panelHandle}></View>
       </View>
 
-      <View style={styles.headerInfo}>
+      <View style={headerStyles.headerInfo}>
         <View>
-          <Text>Search Header</Text>
-          <Text></Text>
+          <Text style={headerStyles.title}>{catagory}</Text>
+          <Text style={headerStyles.results}>{results.length} found</Text>
         </View>
 
         <TouchableOpacity
-          style={styles.back}
+          style={headerStyles.back}
           onPress={deactivate}
         >
-          <MaterialIcons name='cancel' size={22} color='grey' />
+          <Ionicons name='ios-close' size={25} color='white' />
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-const BottomSheetBody = () => {
+const bodyStyles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20,
+    backgroundColor: 'white',
+    paddingTop: 10,
+    height: '100%'
+  }
+});
+
+const BottomSheetBody = ({ searchBS }) => {
 
   return (
-    <View>
+    <View style={bodyStyles.container}>
 
     </View>
   );
