@@ -65,7 +65,7 @@ export const SearchBottomSheet = ({ initialBS, searchBS }) => {
 
 const headerStyles = StyleSheet.create({
   header: {
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255,255,255,0.8)',
     borderTopWidth: 1,
     borderTopColor: 'rgba(200,200,200,0.4)',
     borderLeftWidth: 1,
@@ -129,7 +129,7 @@ const BottomSheetHeader = ({ catagory, results, deactivate }) => (
 const bodyStyles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255,255,255,0.8)',
     paddingTop: 10,
     height: '100%'
   }

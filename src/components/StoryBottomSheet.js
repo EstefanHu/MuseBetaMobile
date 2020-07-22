@@ -21,35 +21,6 @@ const PANNEL_HEADER_HEIGHT = 30;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: 'white',
-    shadowColor: '#333333',
-    shadowOffset: { width: -1, height: -3 },
-    shadowRadius: 2,
-    shadowOpacity: 0.2,
-    paddingTop: 5,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-  },
-  panelHeader: {
-    alignItems: 'center',
-  },
-  panelHandle: {
-    width: 40,
-    height: 6,
-    borderRadius: 4,
-    backgroundColor: '#00000040',
-    marginBottom: 10,
-  },
-  panel: {
-    padding: 20,
-    backgroundColor: '#FFFFFF',
-    paddingTop: 20,
-    height: '100%'
-  },
-});
-
 export const StoryBottomSheet = ({ initialBS, storyBS }) => {
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
   const { state: { storyId }, clearStory } = React.useContext(SearchContext);
@@ -92,7 +63,7 @@ export const StoryBottomSheet = ({ initialBS, storyBS }) => {
 
 const headerStyles = StyleSheet.create({
   header: {
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255,255,255,0.8)',
     borderTopWidth: 1,
     borderTopColor: 'rgba(200,200,200,0.4)',
     borderLeftWidth: 1,
@@ -153,10 +124,19 @@ const BottomSheetHeader = ({ story, deactivate }) => (
   </View>
 );
 
+const bodyStyles = StyleSheet.create({
+  panel: {
+    padding: 20,
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    paddingTop: 20,
+    height: '100%'
+  },
+});
+
 const BottomSheetBody = () => {
 
   return (
-    <View style={styles.panel}>
+    <View style={bodyStyles.panel}>
       <Text>Hello World</Text>
     </View>
   );
