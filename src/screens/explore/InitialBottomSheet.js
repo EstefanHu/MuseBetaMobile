@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import Animated from 'react-native-reanimated';
 
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 import { Context as ProfileContext } from '../../providers/ProfileProvider.js'; // TODO: Temp
@@ -68,13 +69,15 @@ const styles = StyleSheet.create({
 const PANNEL_HEADER_HEIGHT = 30;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-export const InitialBottomSheet = ({ navigation, initialBS, searchBS, fall, cancelSearch, inputRef, stories }) => {
+export const InitialBottomSheet = ({ navigation, initialBS, searchBS, cancelSearch, inputRef, stories }) => {
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
   const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
 
   React.useEffect(() => {
     fetchLibrary();
   }, []);
+
+  const fall = new Animated.Value(.5);
 
   return bottomInset ?
     <BottomSheet
@@ -90,6 +93,7 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, fall, canc
       callbackNode={fall}
       enabledBottomClamp={true}
       onCloseStart={cancelSearch}
+      enabledBottomInitialAnimation={true}
       // onCloseEnd={() => cancelSearch()}
       renderHeader={
         () =>

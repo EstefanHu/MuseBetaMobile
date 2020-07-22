@@ -57,7 +57,6 @@ export const ExploreHomeScreen = ({ navigation }) => {
   }
   const initialBS = React.useRef(null);
   const searchBS = React.useRef(null);
-  const fall = new Animated.Value(1);
 
   const mapRef = React.useRef(null);
   const inputRef = React.useRef(null);
@@ -98,7 +97,6 @@ export const ExploreHomeScreen = ({ navigation }) => {
         navigation={navigation}
         initialBS={initialBS}
         searchBS={searchBS}
-        fall={fall}
         cancelSearch={cancelSearch}
         inputRef={inputRef}
         stories={stories}
