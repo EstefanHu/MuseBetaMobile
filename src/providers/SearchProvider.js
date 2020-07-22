@@ -60,6 +60,7 @@ export const { Context, Provider } = createDataContext(
   {
     initialized: false,
     query: null,
-    history: []
+    history: [],
+    results: []
   }
 );
