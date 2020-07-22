@@ -9,6 +9,8 @@ import {
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { Foundation } from '@expo/vector-icons';
 
+import { Context as SearchContext } from './../providers/SearchProvider.js';
+
 const styles = StyleSheet.create({
   mapStyle: {
     width: Dimensions.get('window').width,
@@ -24,13 +26,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Map = ({ bs, mapRef, stories, longitude, latitude }) => {
+export const Map = ({ initialBS, bs, mapRef, stories, longitude, latitude }) => {
   if (longitude === null)
     return <ActivityIndicator
       size='large'
       color='rgb(255,50,50)'
       style={{ flex: 1 }}
     />
+
+  const { setStory } = React.useContext(SearchContext);
 
   const [region, setRegion] = React.useState({
     longitude: longitude,
@@ -39,7 +43,9 @@ export const Map = ({ bs, mapRef, stories, longitude, latitude }) => {
     latitudeDelta: 0.1
   });
 
-  const toggleBs = () => {
+  const toggleBs = storyId => {
+    setStory(storyId)
+    initialBS.current.snapTo(2);
     bs.current.snapTo(1);
   }
 
@@ -64,7 +70,7 @@ export const Map = ({ bs, mapRef, stories, longitude, latitude }) => {
               latitude: item.startLocation.coordinates[1],
               longitude: item.startLocation.coordinates[0]
             }}
-            onPress={toggleBs}
+            onPress={() => toggleBs(item._id)}
             tracksViewChanges={false}
           >
             <Callout tooltip alphaHitTest={true}>

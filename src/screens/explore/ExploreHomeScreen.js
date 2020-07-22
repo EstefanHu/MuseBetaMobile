@@ -65,7 +65,8 @@ export const ExploreHomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Map
-        bs={initialBS}
+        initialBS={initialBS}
+        bs={storyBS}
         mapRef={mapRef}
         stories={stories}
         longitude={longitude}

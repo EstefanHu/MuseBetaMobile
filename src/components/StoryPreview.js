@@ -37,7 +37,7 @@ export const StoryPreview = ({ item, initialBS, storyBS }) => {
   const { setStory } = React.useContext(SearchContext);
 
   const openItem = () => {
-    setStory(item);
+    setStory(item._id);
     initialBS.current.snapTo(2);
     storyBS.current.snapTo(1);
   }

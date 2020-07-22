@@ -56,6 +56,7 @@ export const StoryBottomSheet = ({ initialBS, storyBS }) => {
       renderContent={
         () =>
           <BottomSheetBody
+            story={story}
           />
       }
     /> : null
@@ -92,6 +93,9 @@ const headerStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  distance: {
+
+  },
   back: {
     backgroundColor: 'lightgrey',
     width: 25,
@@ -110,8 +114,8 @@ const BottomSheetHeader = ({ story, deactivate }) => (
 
     <View style={headerStyles.headerInfo}>
       <View>
-        <Text style={headerStyles.title}>Story</Text>
-        <Text style={headerStyles.results}></Text>
+        <Text style={headerStyles.title}>{story?.title}</Text>
+        <Text style={bodyStyles.distance}>distance...</Text>
       </View>
 
       <TouchableOpacity
@@ -131,12 +135,30 @@ const bodyStyles = StyleSheet.create({
     paddingTop: 20,
     height: '100%'
   },
+  beginButton: {
+    backgroundColor: 'rgb(255,50,50)',
+    width: '100%',
+    paddingVertical: 10,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  beginText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 20,
+  }
 });
 
-const BottomSheetBody = () => {
+const BottomSheetBody = ({ story }) => {
 
   return (
     <View style={bodyStyles.panel}>
+      <TouchableOpacity
+        style={bodyStyles.beginButton}
+      >
+        <Text style={bodyStyles.beginText}>Begin Story</Text>
+      </TouchableOpacity>
       <Text>Hello World</Text>
     </View>
   );
