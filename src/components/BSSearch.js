@@ -11,7 +11,8 @@ import {
   FontAwesome5,
   MaterialCommunityIcons
 } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-community/async-storage';
+
+import { Context as SearchContext } from './../providers/SearchProvider.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,20 +63,9 @@ const styles = StyleSheet.create({
 
 
 export const BSSearch = ({ initialBS, searchBS }) => {
-  const [history, setHistory] = React.useState([]);
+  const { state: { history }, getHistory, clearHistory } = React.useContext(SearchContext);
 
-  React.useEffect(() => {
-    (async () => {
-      const storedHistory = await AsyncStorage.getItem('SearchHistory');
-      if (storedHistory && storedHistory.length > 0)
-        setHistory(storedHistory);
-    })();
-  });
-
-  const clearHistory = async () => {
-    await AsyncStorage.removeItem('SearchHistory');
-    setHistory([]);
-  }
+  React.useEffect(() => getHistory, []);
 
   const openSubject = subject => {
     initialBS.current.snapTo(2);
