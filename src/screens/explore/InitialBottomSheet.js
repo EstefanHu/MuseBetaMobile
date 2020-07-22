@@ -10,7 +10,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import Animated from 'react-native-reanimated';
+import Animated, { Easing } from 'react-native-reanimated';
 
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 import { Context as ProfileContext } from '../../providers/ProfileProvider.js'; // TODO: Temp
@@ -19,6 +19,10 @@ import { Context as SearchContext } from './../../providers/SearchProvider.js';
 import BottomSheet from 'reanimated-bottom-sheet';
 import { StoryPreview } from '../../components/StoryPreview.js';
 import { BSSearch } from './../../components/BSSearch.js';
+
+const PANNEL_HEADER_HEIGHT = 30;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   header: {
@@ -33,9 +37,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     paddingHorizontal: 20,
-    alignItems: 'center',
-    width: Dimensions.get('window').width + 2,
+    width: SCREEN_WIDTH + 2,
     transform: [{ translateX: -1 }]
+  },
+  panelHeader: {
+    width: '100%',
+    alignItems: 'center'
   },
   panelHandle: {
     width: 40,
@@ -54,21 +61,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 6,
     flexDirection: 'row',
-    flex: 1,
   },
   searchInput: {
     paddingHorizontal: 5,
     flex: 1,
   },
   cancelSearch: {
-    color: 'rgba(0,100,255,0.7)',
-    marginLeft: 10,
-    fontSize: 16
+    color: 'rgba(0,100,255,0.8)',
+    fontSize: 18
   }
 });
-
-const PANNEL_HEADER_HEIGHT = 30;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export const InitialBottomSheet = ({ navigation, initialBS, searchBS, inputRef, stories }) => {
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
@@ -130,7 +132,40 @@ const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch, initialized }) =
     inputRef.current.focus();
     initialBS.current.snapTo(0);
     initializeQuery();
+    shrinkSearchBar()
   }
+
+  const widthAnim = React.useRef(new Animated.Value(SCREEN_WIDTH - 40)).current;
+  const marginAnim = React.useRef(new Animated.Value(20)).current;
+
+  const shrinkSearchBar = () => {
+    Animated.timing(widthAnim, {
+      toValue: SCREEN_WIDTH - 100,
+      duration: 350,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
+
+    Animated.timing(marginAnim, {
+      toValue: 10,
+      duration: 350,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
+  };
+
+  const growSearchBar = () => {
+    Animated.timing(widthAnim, {
+      toValue: SCREEN_WIDTH - 40,
+      duration: 300,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
+
+    Animated.timing(marginAnim, {
+      toValue: 20,
+      duration: 300,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
+  };
+
 
   return (
     <View style={styles.header}>
@@ -139,7 +174,10 @@ const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch, initialized }) =
       </View>
       <View style={styles.searchContainer}>
         <TouchableWithoutFeedback onPress={startSearch}>
-          <View style={styles.searchInputContainer}>
+          <Animated.View style={[
+            styles.searchInputContainer,
+            { width: widthAnim }
+          ]}>
             <MaterialIcons name='search' size={22} color='grey' />
             <TextInput
               ref={inputRef}
@@ -153,17 +191,19 @@ const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch, initialized }) =
               clearButtonMode={'always'}
               autoCorrect={false}
             />
-          </View>
+          </Animated.View>
         </TouchableWithoutFeedback>
-        {
-          initialized && <TouchableOpacity
-            onPress={() => {
-              initialBS.current.snapTo(1);
-              cancelSearch();
-            }}>
-            <Text style={styles.cancelSearch}>Cancel</Text>
-          </TouchableOpacity>
-        }
+        <TouchableOpacity
+          onPress={() => {
+            initialBS.current.snapTo(1);
+            cancelSearch();
+            growSearchBar();
+          }}>
+          <Animated.Text style={[
+            styles.cancelSearch,
+            { marginLeft: marginAnim }
+          ]}>Cancel</Animated.Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
