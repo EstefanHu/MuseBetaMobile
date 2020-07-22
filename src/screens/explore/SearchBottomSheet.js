@@ -14,7 +14,6 @@ import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 
-
 const styles = StyleSheet.create({
   header: {
     backgroundColor: 'rgba(255,255,255,0.8)',
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
 
 const PANNEL_HEADER_HEIGHT = 30;
 
-export const SearchBottomSheet = ({ searchBS, isActive, setIsActive }) => {
+export const SearchBottomSheet = ({ searchBS }) => {
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
 
   const activeSnapPoints = [
@@ -54,12 +53,14 @@ export const SearchBottomSheet = ({ searchBS, isActive, setIsActive }) => {
     bottomInset + PANNEL_HEADER_HEIGHT
   ];
 
-  const inactiveSnapPoints = [-10, -10, -10];
+  const deactivate = () => {
+    console.log('deactivate');
+  }
 
   return (
     <BottomSheet
       ref={searchBS}
-      snapPoints={isActive ? activeSnapPoints : inactiveSnapPoints}
+      snapPoints={activeSnapPoints}
       initialSnap={2}
       enabledBottomInitialAnimation={false}
       enabledBottomClamp={true}
@@ -67,7 +68,7 @@ export const SearchBottomSheet = ({ searchBS, isActive, setIsActive }) => {
         () =>
           <BottomSheetHeader
             searchBS={searchBS}
-            setIsActive={setIsActive}
+            deactivate={deactivate}
           />
       }
       renderContent={
@@ -80,7 +81,7 @@ export const SearchBottomSheet = ({ searchBS, isActive, setIsActive }) => {
   );
 };
 
-const BottomSheetHeader = ({ type, setIsActive }) => {
+const BottomSheetHeader = ({ type, deactivate }) => {
 
   return (
     <View style={styles.header}>
@@ -96,7 +97,7 @@ const BottomSheetHeader = ({ type, setIsActive }) => {
 
         <TouchableOpacity
           style={styles.back}
-          onPress={() => setIsActive(false)}
+          onPress={deactivate}
         >
           <MaterialIcons name='cancel' size={22} color='grey' />
         </TouchableOpacity>

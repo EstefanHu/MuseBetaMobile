@@ -43,7 +43,6 @@ export const ExploreHomeScreen = ({ navigation }) => {
   const { state: { longitude, latitude } } = React.useContext(LocationContext);
 
   const [isSearching, setIsSearching] = React.useState(false);
-  const [searchBSIsActive, setSearchBSIsActive] = React.useState(false);
   const [search, setSearch] = React.useState('');
 
   const recenter = () => {
@@ -74,10 +73,8 @@ export const ExploreHomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Map
-        navigation={navigation}
         bs={initialBS}
         mapRef={mapRef}
-        toggleBs={() => initialBS.current.snapTo(1)}
         stories={stories}
         longitude={longitude}
         latitude={latitude}
@@ -111,13 +108,8 @@ export const ExploreHomeScreen = ({ navigation }) => {
         cancelSearch={cancelSearch}
         inputRef={inputRef}
         stories={stories}
-        setSearchBSIsActive={setSearchBSIsActive}
       />
-      <SearchBottomSheet
-        searchBS={searchBS}
-        isActive={searchBSIsActive}
-        setIsActive={setSearchBSIsActive}
-      />
+      <SearchBottomSheet searchBS={searchBS} />
     </View>
   );
 };

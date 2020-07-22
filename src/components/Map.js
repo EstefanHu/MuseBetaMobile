@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Map = ({ navigation, bs, mapRef, toggleBs, stories, longitude, latitude }) => {
+export const Map = ({ bs, mapRef, stories, longitude, latitude }) => {
   if (longitude === null)
     return <ActivityIndicator
       size='large'
@@ -38,6 +38,10 @@ export const Map = ({ navigation, bs, mapRef, toggleBs, stories, longitude, lati
     longitudeDelta: 0.1,
     latitudeDelta: 0.1
   });
+
+  const toggleBs = () => {
+    bs.current.snapTo(1);
+  }
 
   return (
     <MapView
@@ -62,7 +66,6 @@ export const Map = ({ navigation, bs, mapRef, toggleBs, stories, longitude, lati
             }}
             onPress={toggleBs}
             tracksViewChanges={false}
-            onMapReady={() => console.log('hello')}
           >
             <Callout tooltip alphaHitTest={true}>
               <View style={styles.callout}>

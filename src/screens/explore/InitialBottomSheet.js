@@ -20,15 +20,19 @@ import { BSSearch } from './../../components/BSSearch.js';
 const styles = StyleSheet.create({
   header: {
     backgroundColor: 'rgba(255,255,255,0.8)',
-    shadowColor: '#333333',
-    shadowOffset: { width: -1, height: -3 },
-    shadowRadius: 2,
-    shadowOpacity: 0.2,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(200,200,200,0.4)',
+    borderLeftWidth: 1,
+    borderLeftColor: 'rgba(200,200,200,0.4)',
+    borderRightWidth: 1,
+    borderRightColor: 'rgba(200,200,200,0.4)',
     paddingVertical: 5,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     paddingHorizontal: 20,
-    alignItems: 'center'
+    alignItems: 'center',
+    width: Dimensions.get('window').width + 2,
+    transform: [{ translateX: -1 }]
   },
   panelHandle: {
     width: 40,
@@ -61,10 +65,10 @@ const styles = StyleSheet.create({
 });
 
 const PANNEL_HEADER_HEIGHT = 30;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-export const InitialBottomSheet = ({ navigation, initialBS, searchBS, fall, setSearchBSIsActive,
+export const InitialBottomSheet = ({ navigation, initialBS, searchBS, fall,
   search, setSearch, isSearching, setIsSearching, cancelSearch, inputRef, stories }) => {
-
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
   const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
 
@@ -72,19 +76,18 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, fall, setS
     fetchLibrary();
   }, []);
 
-  return (
+  return bottomInset ?
     <BottomSheet
       ref={initialBS}
       snapPoints={[
-        Dimensions.get('window').height - headerHeight
+        SCREEN_HEIGHT - headerHeight
         - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-        Dimensions.get('window').height / 2 - headerHeight
+        SCREEN_HEIGHT / 2 - headerHeight
         - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
         bottomInset + PANNEL_HEADER_HEIGHT
       ]}
       initialSnap={2}
       callbackNode={fall}
-      enabledBottomInitialAnimation={false}
       enabledBottomClamp={true}
       onCloseStart={() => cancelSearch(1)}
       onCloseEnd={() => cancelSearch(2)}
@@ -110,11 +113,9 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, fall, setS
             library={library}
             initialBS={initialBS}
             searchBS={searchBS}
-            setSearchBSIsActive={setSearchBSIsActive}
           />
       }
-    />
-  );
+    /> : null
 };
 
 const BottomSheetHeader = ({ search, setSearch, initialBS,
@@ -187,7 +188,7 @@ const bsbStyles = StyleSheet.create({
 });
 
 const BottomSheetBody = ({ navigation, search, isSearching,
-  stories, library, initialBS, searchBS, setSearchBSIsActive }) => {
+  stories, library, initialBS, searchBS }) => {
 
   return (
     <View style={bsbStyles.panel}>
@@ -197,7 +198,6 @@ const BottomSheetBody = ({ navigation, search, isSearching,
             navigation={navigation}
             initialBS={initialBS}
             searchBS={searchBS}
-            setSearchBSIsActive={setSearchBSIsActive}
           /> : <>
             <View style={bsbStyles.section}>
               <View style={bsbStyles.sectionHeader}>

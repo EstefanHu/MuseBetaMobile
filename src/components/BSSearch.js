@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 
 
 
-export const BSSearch = ({ initialBS, searchBS, setSearchBSIsActive }) => {
+export const BSSearch = ({ initialBS, searchBS }) => {
   const [history, setHistory] = React.useState([]);
 
   React.useEffect(() => {
@@ -80,7 +80,6 @@ export const BSSearch = ({ initialBS, searchBS, setSearchBSIsActive }) => {
   const openSubject = subject => {
     initialBS.current.snapTo(2);
     searchBS.current.snapTo(1);
-    setSearchBSIsActive(true);
   }
 
   return (
