@@ -15,6 +15,5 @@ const styles = StyleSheet.create({
 export const SBItemScroll = ({ children }) => {
 
   return (
-    <FlatList
   )
 }

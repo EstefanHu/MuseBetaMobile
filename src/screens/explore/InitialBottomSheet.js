@@ -8,8 +8,6 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
-  ScrollView,
-  KeyboardAvoidingView
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Animated, { Easing } from 'react-native-reanimated';
@@ -266,64 +264,59 @@ const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS, st
   const { state: { initialized } } = React.useContext(SearchContext);
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <View style={bsbStyles.panel}>
-        {
-          initialized ?
-            <BSSearch
-              navigation={navigation}
-              initialBS={initialBS}
-              searchBS={searchBS}
-            /> : <>
-              <View style={bsbStyles.section}>
-                <View style={bsbStyles.sectionHeader}>
-                  <Text style={bsbStyles.sectionLabel}>Docked Story</Text>
-                </View>
+    <View style={bsbStyles.panel}>
+      {
+        initialized ?
+          <BSSearch
+            navigation={navigation}
+            initialBS={initialBS}
+            searchBS={searchBS}
+          /> : <>
+            <View style={bsbStyles.section}>
+              <View style={bsbStyles.sectionHeader}>
+                <Text style={bsbStyles.sectionLabel}>Docked Story</Text>
               </View>
+            </View>
 
-              <View style={bsbStyles.section}>
-                <View style={bsbStyles.sectionHeader}>
-                  <Text style={bsbStyles.sectionLabel}>Library Preview</Text>
-                  <TouchableOpacity onPress={() => navigation.navigate('Library')}>
-                    <Text style={bsbStyles.more}>See All</Text>
-                  </TouchableOpacity>
-                </View>
-                {
-                  library.slice(0, 5).map(item => (
-                    <StoryPreview
-                      key={item._id}
-                      item={item}
-                      initialBS={initialBS}
-                      storyBS={storyBS}
-                    />
-                  ))
-                }
+            <View style={bsbStyles.section}>
+              <View style={bsbStyles.sectionHeader}>
+                <Text style={bsbStyles.sectionLabel}>Library Preview</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Library')}>
+                  <Text style={bsbStyles.more}>See All</Text>
+                </TouchableOpacity>
               </View>
+              {
+                library.slice(0, 5).map(item => (
+                  <StoryPreview
+                    key={item._id}
+                    item={item}
+                    initialBS={initialBS}
+                    storyBS={storyBS}
+                  />
+                ))
+              }
+            </View>
 
-              <View style={bsbStyles.section}>
-                <View style={bsbStyles.sectionHeader}>
-                  <Text style={bsbStyles.sectionLabel}>Nearby</Text>
-                  <TouchableOpacity onPress={() => navigation.navigate('Near')}>
-                    <Text style={bsbStyles.more}>See All</Text>
-                  </TouchableOpacity>
-                </View>
-                {
-                  stories.slice(0, 5).map(item => (
-                    <StoryPreview
-                      key={item._id}
-                      item={item}
-                      initialBS={initialBS}
-                      storyBS={storyBS}
-                    />
-                  ))
-                }
+            <View style={bsbStyles.section}>
+              <View style={bsbStyles.sectionHeader}>
+                <Text style={bsbStyles.sectionLabel}>Nearby</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Near')}>
+                  <Text style={bsbStyles.more}>See All</Text>
+                </TouchableOpacity>
               </View>
-            </>
-        }
-      </View>
-    </KeyboardAvoidingView>
+              {
+                stories.slice(0, 5).map(item => (
+                  <StoryPreview
+                    key={item._id}
+                    item={item}
+                    initialBS={initialBS}
+                    storyBS={storyBS}
+                  />
+                ))
+              }
+            </View>
+          </>
+      }
+    </View>
   );
 };

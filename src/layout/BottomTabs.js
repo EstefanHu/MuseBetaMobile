@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   FontAwesome5,
@@ -53,12 +54,12 @@ export const BottomTabs = () => {
             return <MaterialCommunityIcons name='library-shelves' size={size} color={color} />;
           }
         },
-        
+
       })}
       tabBarOptions={{
         activeTintColor: 'rgb(255,50,50)',
         inactiveTintColor: 'grey',
-        keyboardHidesTabBar: true,
+        keyboardHidesTabBar: Platform.OS == 'ios' ? false : true,
       }}
       initialRouteName={'Explore'}
     >

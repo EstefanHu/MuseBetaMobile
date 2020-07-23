@@ -4,6 +4,8 @@ import {
   View,
   TouchableOpacity,
   Keyboard,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import {
   Feather,
@@ -63,49 +65,50 @@ export const ExploreHomeScreen = ({ navigation }) => {
   const storyBS = React.useRef(null);
 
   return (
-    <View style={styles.container}>
-      <Map
-        initialBS={initialBS}
-        bs={storyBS}
-        mapRef={mapRef}
-        stories={stories}
-        longitude={longitude}
-        latitude={latitude}
-      />
+    
+      <View style={styles.container}>
+        <Map
+          initialBS={initialBS}
+          bs={storyBS}
+          mapRef={mapRef}
+          stories={stories}
+          longitude={longitude}
+          latitude={latitude}
+        />
 
-      <Animated.View style={[styles.actions, { opacity: 1 }]}>
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => null}
-        >
-          <Feather name='info' size={25} color='black' />
-        </TouchableOpacity>
+        <Animated.View style={[styles.actions, { opacity: 1 }]}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => null}
+          >
+            <Feather name='info' size={25} color='black' />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={recenter}
-        >
-          <MaterialIcons name='crop-free' size={25} color='black' />
-        </TouchableOpacity>
-      </Animated.View>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={recenter}
+          >
+            <MaterialIcons name='crop-free' size={25} color='black' />
+          </TouchableOpacity>
+        </Animated.View>
 
-      <InitialBottomSheet
-        navigation={navigation}
-        initialBS={initialBS}
-        searchBS={searchBS}
-        inputRef={inputRef}
-        stories={stories}
-        storyBS={storyBS}
-      />
-      <SearchBottomSheet
-        initialBS={initialBS}
-        searchBS={searchBS}
-      />
-      <StoryBottomSheet
-        navigation={navigation}
-        initialBS={initialBS}
-        storyBS={storyBS}
-      />
-    </View>
+        <InitialBottomSheet
+          navigation={navigation}
+          initialBS={initialBS}
+          searchBS={searchBS}
+          inputRef={inputRef}
+          stories={stories}
+          storyBS={storyBS}
+        />
+        <SearchBottomSheet
+          initialBS={initialBS}
+          searchBS={searchBS}
+        />
+        <StoryBottomSheet
+          navigation={navigation}
+          initialBS={initialBS}
+          storyBS={storyBS}
+        />
+      </View>
   );
 };
