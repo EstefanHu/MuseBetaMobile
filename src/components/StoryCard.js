@@ -17,6 +17,7 @@ import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 import { Context as SearchContext } from '../providers/SearchProvider.js';
 
 import DefaultImage from './../../assets/user-default.png';
+import { useDateFormat } from '../hooks/useDateFormat.js';
 
 const styles = StyleSheet.create({
   card: {
@@ -129,7 +130,7 @@ export const StoryCard = ({ navigation, item }) => (
     <Text style={styles.pitch}>{item.pitch}</Text>
 
     <View style={styles.metaContainer}>
-      <Text style={styles.meta}>{Date.now()}</Text>
+      <Text style={styles.meta}>{useDateFormat(item.createdAt)}</Text>
     </View>
 
     <View style={styles.actions}>
