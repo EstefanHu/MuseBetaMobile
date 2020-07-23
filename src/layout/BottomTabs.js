@@ -53,11 +53,12 @@ export const BottomTabs = () => {
             return <MaterialCommunityIcons name='library-shelves' size={size} color={color} />;
           }
         },
+        
       })}
       tabBarOptions={{
         activeTintColor: 'rgb(255,50,50)',
         inactiveTintColor: 'grey',
-
+        keyboardHidesTabBar: true,
       }}
       initialRouteName={'Explore'}
     >

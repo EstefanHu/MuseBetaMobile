@@ -127,8 +127,8 @@ const catagoryStyles = StyleSheet.create({
 
 const CatagoryView = ({ history, clearHistory, openSubject }) => (
   <ScrollView
-    keyboardDismissMode='on-drag'
     keyboardShouldPersistTaps='handled'
+    keyboardDismissMode='on-drag'
     bounces={false}
   >
     {

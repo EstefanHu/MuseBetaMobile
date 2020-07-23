@@ -8,6 +8,8 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  ScrollView,
+  KeyboardAvoidingView
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Animated, { Easing } from 'react-native-reanimated';
@@ -77,6 +79,10 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, i
   const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
   const { state: { initialized, storyId, catagory }, cancelQuery } = React.useContext(SearchContext);
 
+  const [allowScrolling, setAllowScrolling] = React.useState(false);
+
+  console.log(allowScrolling)
+
   React.useEffect(() => {
     fetchLibrary();
   }, []);
@@ -133,8 +139,20 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, i
       ]}
       initialSnap={2}
       enabledBottomInitialAnimation={true}
-      onCloseStart={cancelSearch}
+      // onCloseStart={cancelSearch}
       onCloseEnd={cancelSearch}
+
+      onOpenEnd={() => setAllowScrolling(true)}
+      enabledInnerScrolling={true}
+      onCloseStart={() => {
+        setAllowScrolling(false);
+        cancelSearch();
+      }}
+      enabledGestureInteraction={true}
+      overdragResistanceFactor={0}
+      enabledHeaderGestureInteraction={true}
+      enabledContentGestureInteraction={allowScrolling}
+
       renderHeader={
         () =>
           <BottomSheetHeader
@@ -157,6 +175,8 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, i
             initialBS={initialBS}
             searchBS={searchBS}
             storyBS={storyBS}
+            allowScrolling={allowScrolling}
+            setAllowScrolling={setAllowScrolling}
           />
       }
     /> : null
@@ -242,63 +262,68 @@ const bsbStyles = StyleSheet.create({
   },
 });
 
-const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS, storyBS }) => {
+const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS, storyBS, allowScrolling, setAllowScrolling }) => {
   const { state: { initialized } } = React.useContext(SearchContext);
 
   return (
-    <View style={bsbStyles.panel}>
-      {
-        initialized ?
-          <BSSearch
-            navigation={navigation}
-            initialBS={initialBS}
-            searchBS={searchBS}
-          /> : <>
-            <View style={bsbStyles.section}>
-              <View style={bsbStyles.sectionHeader}>
-                <Text style={bsbStyles.sectionLabel}>Docked Story</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <View style={bsbStyles.panel}>
+        {
+          initialized ?
+            <BSSearch
+              navigation={navigation}
+              initialBS={initialBS}
+              searchBS={searchBS}
+            /> : <>
+              <View style={bsbStyles.section}>
+                <View style={bsbStyles.sectionHeader}>
+                  <Text style={bsbStyles.sectionLabel}>Docked Story</Text>
+                </View>
               </View>
-            </View>
 
-            <View style={bsbStyles.section}>
-              <View style={bsbStyles.sectionHeader}>
-                <Text style={bsbStyles.sectionLabel}>Library Preview</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Library')}>
-                  <Text style={bsbStyles.more}>See All</Text>
-                </TouchableOpacity>
+              <View style={bsbStyles.section}>
+                <View style={bsbStyles.sectionHeader}>
+                  <Text style={bsbStyles.sectionLabel}>Library Preview</Text>
+                  <TouchableOpacity onPress={() => navigation.navigate('Library')}>
+                    <Text style={bsbStyles.more}>See All</Text>
+                  </TouchableOpacity>
+                </View>
+                {
+                  library.slice(0, 5).map(item => (
+                    <StoryPreview
+                      key={item._id}
+                      item={item}
+                      initialBS={initialBS}
+                      storyBS={storyBS}
+                    />
+                  ))
+                }
               </View>
-              {
-                library.slice(0, 5).map(item => (
-                  <StoryPreview
-                    key={item._id}
-                    item={item}
-                    initialBS={initialBS}
-                    storyBS={storyBS}
-                  />
-                ))
-              }
-            </View>
 
-            <View style={bsbStyles.section}>
-              <View style={bsbStyles.sectionHeader}>
-                <Text style={bsbStyles.sectionLabel}>Nearby</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Near')}>
-                  <Text style={bsbStyles.more}>See All</Text>
-                </TouchableOpacity>
+              <View style={bsbStyles.section}>
+                <View style={bsbStyles.sectionHeader}>
+                  <Text style={bsbStyles.sectionLabel}>Nearby</Text>
+                  <TouchableOpacity onPress={() => navigation.navigate('Near')}>
+                    <Text style={bsbStyles.more}>See All</Text>
+                  </TouchableOpacity>
+                </View>
+                {
+                  stories.slice(0, 5).map(item => (
+                    <StoryPreview
+                      key={item._id}
+                      item={item}
+                      initialBS={initialBS}
+                      storyBS={storyBS}
+                    />
+                  ))
+                }
               </View>
-              {
-                stories.slice(0, 5).map(item => (
-                  <StoryPreview
-                    key={item._id}
-                    item={item}
-                    initialBS={initialBS}
-                    storyBS={storyBS}
-                  />
-                ))
-              }
-            </View>
-          </>
-      }
-    </View>
+            </>
+        }
+      </View>
+    </KeyboardAvoidingView>
   );
 };

@@ -50,7 +50,7 @@ const getCoords = dispatch => async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     let location;
     if (status === 'granted') {
-      location = await Location.getCurrentPositionAsync({});
+      location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
     } else {
       Alert.alert(
         'Grant Location',
