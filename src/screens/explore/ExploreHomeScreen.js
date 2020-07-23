@@ -65,7 +65,11 @@ export const ExploreHomeScreen = ({ navigation }) => {
   const storyBS = React.useRef(null);
 
   return (
-    
+    <KeyboardAvoidingView
+      behavior={'height'}
+      enabled={Platform.OS == 'ios' ? false : true}
+      style={styles.container}
+    >
       <View style={styles.container}>
         <Map
           initialBS={initialBS}
@@ -110,5 +114,6 @@ export const ExploreHomeScreen = ({ navigation }) => {
           storyBS={storyBS}
         />
       </View>
+    </KeyboardAvoidingView>
   );
 };
