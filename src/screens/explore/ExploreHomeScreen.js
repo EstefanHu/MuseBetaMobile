@@ -102,6 +102,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
         searchBS={searchBS}
       />
       <StoryBottomSheet
+        navigation={navigation}
         initialBS={initialBS}
         storyBS={storyBS}
       />

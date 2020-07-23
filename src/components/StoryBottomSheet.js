@@ -25,7 +25,7 @@ const PANNEL_HEADER_HEIGHT = 30;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export const StoryBottomSheet = ({ initialBS, storyBS }) => {
+export const StoryBottomSheet = ({ navigation, initialBS, storyBS }) => {
   const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
   const { state: { storyId }, clearStory } = React.useContext(SearchContext);
   const { state: { stories } } = React.useContext(StoryContext);
@@ -60,6 +60,7 @@ export const StoryBottomSheet = ({ initialBS, storyBS }) => {
       renderContent={
         () =>
           <BottomSheetBody
+            navigation={navigation}
             story={story}
           />
       }
@@ -203,7 +204,7 @@ const bodyStyles = StyleSheet.create({
   }
 });
 
-const BottomSheetBody = ({ story }) => {
+const BottomSheetBody = ({ navigation, story }) => {
   const { state: { libraryIds }, addToLibrary, removeFromLibrary } = React.useContext(ProfileContext);
   const [isSaved, setIsSaved] = React.useState(false);
 
@@ -267,7 +268,7 @@ const BottomSheetBody = ({ story }) => {
 
       <TouchableOpacity
         style={bodyStyles.bottomAction}
-        onPress={() => null}
+        onPress={() => navigation.navigate('ReportStack', { storyId: story._id })}
       >
         <Text style={bodyStyles.bottomActionText}>Report an Issue</Text>
         <View style={bodyStyles.bottomActionIcon}>
