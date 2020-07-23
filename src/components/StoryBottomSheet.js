@@ -10,7 +10,8 @@ import {
 import {
   Ionicons,
   Feather,
-  FontAwesome
+  FontAwesome,
+  Octicons
 } from '@expo/vector-icons';
 
 import { Context as SearchContext } from './../providers/SearchProvider.js';
@@ -152,10 +153,10 @@ const bodyStyles = StyleSheet.create({
     fontSize: 20,
   },
   actionContainer: {
-    marginTop: 20,
+    marginVertical: 20,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   actionButton: {
     justifyContent: 'center',
@@ -170,15 +171,36 @@ const bodyStyles = StyleSheet.create({
     fontSize: 12,
   },
   section: {
-    paddingTop: 10
+    paddingVertical: 15,
+    borderBottomColor: 'rgba(200,200,200,0.8)',
+    borderBottomWidth: 1,
   },
   sectionLabel: {
     fontSize: 13,
-    color: 'grey'
+    color: 'rgba(150,150,150,0.8)',
+    marginBottom: 5
   },
   pitch: {
     fontSize: 16
   },
+  bottomAction: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 15,
+  },
+  bottomActionText: {
+    color: 'rgb(255,50,50)',
+    fontSize: 20,
+  },
+  bottomActionIcon: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(100,100,100,0.1)'
+  }
 });
 
 const BottomSheetBody = ({ story }) => {
@@ -237,6 +259,21 @@ const BottomSheetBody = ({ story }) => {
         <Text style={bodyStyles.sectionLabel}>Hello World</Text>
         <Text style={bodyStyles.pitch}>{story?.pitch}</Text>
       </View>
+
+      <View style={bodyStyles.section}>
+        <Text style={bodyStyles.sectionLabel}>Reviews</Text>
+
+      </View>
+
+      <TouchableOpacity
+        style={bodyStyles.bottomAction}
+        onPress={() => null}
+      >
+        <Text style={bodyStyles.bottomActionText}>Report an Issue</Text>
+        <View style={bodyStyles.bottomActionIcon}>
+          <Octicons name='report' size={18} color='rgb(255,50,50)' />
+        </View>
+      </TouchableOpacity>
 
     </View>
   );
