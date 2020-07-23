@@ -94,7 +94,7 @@ export const StoryCardModal = ({ route, navigation }) => {
                 <Text style={styles.optionLabel}>Share</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('ReportModal', { storyId })}>
+            <TouchableOpacity onPress={() => navigation.navigate('ReportStack', { storyId })}>
               <View style={styles.optionButton}>
                 <MaterialCommunityIcons name='flag' size={SIZE} color={COLOR} />
                 <Text style={styles.optionLabel}>Report</Text>

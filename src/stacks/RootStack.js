@@ -16,7 +16,6 @@ import { HeaderActions } from './../components/HeaderActions.js';
 import { Logo } from './../components/Logo.js';
 
 import { StoryCardModal } from './../modals/StoryCardModal.js';
-import { ReportModal } from './../modals/ReportModal.js';
 import { ScanQRModal } from './../modals/ScanQRModal.js';
 import { AccountModal } from '../modals/AccountModal.js'
 import { UpdateNameModal } from './../modals/UpdateNameModal.js';
@@ -26,6 +25,7 @@ import { SupportStack } from './SupportStack.js';
 import { SettingsStack } from './SettingsStack.js';
 import { CreateStack } from './CreateStack.js';
 import { CreatePermissionsModal } from './../modals/CreatePermissionsModal.js';
+import { ReportStack } from './ReportStack.js';
 
 const Stack = createStackNavigator();
 
@@ -122,8 +122,8 @@ export const RootStack = () => {
         }}
       />
       <Stack.Screen
-        name='ReportModal'
-        component={ReportModal}
+        name='ReportStack'
+        component={ReportStack}
         options={({ navigation }) => ({
           animationEnabled: true,
           headerTitle: null
