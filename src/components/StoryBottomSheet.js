@@ -13,6 +13,7 @@ import {
   FontAwesome,
   Octicons
 } from '@expo/vector-icons';
+import { useDateFormat } from './../hooks/useDateFormat.js';
 
 import { Context as SearchContext } from './../providers/SearchProvider.js';
 import { Context as LayoutContext } from './../providers/LayoutProvider.js';
@@ -181,7 +182,7 @@ const bodyStyles = StyleSheet.create({
     color: 'rgba(150,150,150,0.8)',
     marginBottom: 5
   },
-  pitch: {
+  sectionText: {
     fontSize: 16
   },
   bottomAction: {
@@ -257,8 +258,20 @@ const BottomSheetBody = ({ navigation, story }) => {
       </View>
 
       <View style={bodyStyles.section}>
-        <Text style={bodyStyles.sectionLabel}>Hello World</Text>
-        <Text style={bodyStyles.pitch}>{story?.pitch}</Text>
+        <Text style={bodyStyles.sectionLabel}>Info</Text>
+        <Text style={bodyStyles.sectionText}>Channel: {story?.channel}</Text>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={bodyStyles.sectionText}>Author: </Text>
+          <TouchableOpacity onPress={() => console.log(story?.authorId)}>
+            <Text style={bodyStyles.sectionText}>{story?.authorName}</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={bodyStyles.sectionText}>Post Date: {story ? useDateFormat(story.createdAt) : null}</Text>
+      </View>
+
+      <View style={bodyStyles.section}>
+        <Text style={bodyStyles.sectionLabel}>Pitch</Text>
+        <Text style={bodyStyles.sectionText}>{story?.pitch}</Text>
       </View>
 
       <View style={bodyStyles.section}>
