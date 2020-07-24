@@ -228,7 +228,6 @@ const bsbStyles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: 'rgba(255,255,255,0.8)',
     paddingTop: 10,
-    backgroundColor: 'red'
   },
   section: {
     marginBottom: 30

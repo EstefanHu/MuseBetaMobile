@@ -44,8 +44,7 @@ const setBottomSheetHeaderHeight = dispatch => height =>
 
 const setBottomSheetHeight = disptach => (device, header, top, bottom, BSHeader) => {
   try {
-    console.log(bottom)
-    const height = device - header - top - bottom - 2 * BSHeader - 10;
+    const height = device - header - top - bottom - 3 * BSHeader;
     disptach({
       type: 'set_bottom_sheet_height',
       payload: height,
