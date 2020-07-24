@@ -4,8 +4,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TextInput,
-  Dimensions
 } from 'react-native';
 import {
   Ionicons,
@@ -22,12 +20,14 @@ import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 
-const PANNEL_HEADER_HEIGHT = 30;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
 export const StoryBottomSheet = ({ navigation, initialBS, storyBS }) => {
-  const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
+  const { state: {
+    deviceHeight,
+    bottomSheetHeaderHeight,
+    headerHeight,
+    topInset,
+    bottomInset
+  } } = React.useContext(LayoutContext);
   const { state: { storyId }, clearStory } = React.useContext(SearchContext);
   const { state: { stories } } = React.useContext(StoryContext);
 
@@ -43,11 +43,11 @@ export const StoryBottomSheet = ({ navigation, initialBS, storyBS }) => {
     <BottomSheet
       ref={storyBS}
       snapPoints={[
-        SCREEN_HEIGHT - headerHeight
-        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-        SCREEN_HEIGHT / 2 - headerHeight
-        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-        storyId ? bottomInset + PANNEL_HEADER_HEIGHT : 0
+        deviceHeight - headerHeight
+        - topInset - bottomInset - bottomSheetHeaderHeight,
+        deviceHeight / 2 - headerHeight
+        - topInset - bottomInset - bottomSheetHeaderHeight,
+        storyId ? bottomInset + bottomSheetHeaderHeight : 0
       ]}
       initialSnap={2}
       enabledBottomInitialAnimation={true}

@@ -27,9 +27,7 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, i
     topInset,
     bottomInset,
     bottomSheetHeaderHeight
-  },
-    setBottomSheetHeight
-  } = React.useContext(LayoutContext);
+  } } = React.useContext(LayoutContext);
   const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
   const { state: { initialized, storyId, catagory }, cancelQuery } = React.useContext(SearchContext);
 

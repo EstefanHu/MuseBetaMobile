@@ -2,14 +2,10 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Dimensions,
   Text,
   TouchableOpacity,
-  TextInput,
-  TouchableWithoutFeedback,
 } from 'react-native';
 import {
-  MaterialIcons,
   Ionicons
 } from '@expo/vector-icons';
 
@@ -18,12 +14,9 @@ import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 
-const PANNEL_HEADER_HEIGHT = 30;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-
 export const SearchBottomSheet = ({ initialBS, searchBS }) => {
   const { state: { catagory, query, results }, cancelQuery, clearCatagory } = React.useContext(SearchContext);
-  const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
+  const { state: { deviceHeight, bottomSheetHeaderHeight, headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
 
   const deactivate = () => {
     initialBS.current.snapTo(1);
@@ -35,11 +28,11 @@ export const SearchBottomSheet = ({ initialBS, searchBS }) => {
     <BottomSheet
       ref={searchBS}
       snapPoints={[
-        SCREEN_HEIGHT - headerHeight
-        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-        SCREEN_HEIGHT / 2 - headerHeight
-        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-        catagory ? bottomInset + PANNEL_HEADER_HEIGHT : 0
+        deviceHeight - headerHeight
+        - topInset - bottomInset - bottomSheetHeaderHeight,
+        deviceHeight / 2 - headerHeight
+        - topInset - bottomInset - bottomSheetHeaderHeight,
+        catagory ? bottomInset + bottomSheetHeaderHeight : 0
       ]}
       initialSnap={2}
       enabledBottomInitialAnimation={true}
