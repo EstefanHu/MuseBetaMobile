@@ -9,7 +9,16 @@ import {
   Keyboard,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import Animated, { Easing } from 'react-native-reanimated';
+import Animated, {
+  Easing,
+  useCode,
+  onChange,
+  block,
+  cond,
+  greaterOrEq,
+  lessOrEq,
+  call
+} from 'react-native-reanimated';
 
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 import { Context as ProfileContext } from '../../providers/ProfileProvider.js'; // TODO: Temp
@@ -37,6 +46,7 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, i
 
   const cancelSearch = () => {
     if (initialized) {
+      console.log('cancel')
       inputRef.current.blur();
       cancelQuery();
       Keyboard.dismiss();
@@ -75,19 +85,48 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, i
     }).start();
   };
 
+
+  // TODO: FIX THIS
+
+  const bsNodeTracker = React.useRef(new Animated.Value(0)).current;
+
+  const clampedNodeTrackerAnim = React.useRef(
+    Animated.interpolate(bsNodeTracker, {
+      extrapolate: Animated.Extrapolate.CLAMP,
+      inputRange: [0, 0.5, 1],
+      outputRange: [0, 0.5, 1],
+    })
+  ).current;
+
+  useCode(
+    () => onChange(
+      clampedNodeTrackerAnim,
+      block([
+        cond(
+          greaterOrEq(clampedNodeTrackerAnim, 0.5),
+          call([], () => {
+            cancelSearch()
+          })
+        ),
+      ])
+    ),
+    null
+  );
+
+  const NONSCREEN = + headerHeight + topInset + bottomInset + bottomSheetHeaderHeight;
+
   return bottomInset ?
     <BottomSheet
       ref={initialBS}
       snapPoints={[
-        deviceHeight - headerHeight
-        - topInset - bottomInset - bottomSheetHeaderHeight,
-        deviceHeight / 2 - headerHeight
-        - topInset - bottomInset - bottomSheetHeaderHeight,
+        deviceHeight - NONSCREEN,
+        deviceHeight / 2 - NONSCREEN,
         storyId || catagory ? 0 : bottomInset + bottomSheetHeaderHeight
       ]}
       initialSnap={2}
+      callbackNode={bsNodeTracker}
       onCloseEnd={cancelSearch}
-      onCloseStart={cancelSearch}
+      // onCloseStart={cancelSearch}
       renderHeader={
         () =>
           <BottomSheetHeader
