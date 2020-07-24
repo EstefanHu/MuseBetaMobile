@@ -3,9 +3,9 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  Keyboard,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  Dimensions
 } from 'react-native';
 import {
   Feather,
@@ -16,6 +16,7 @@ import Animated from 'react-native-reanimated';
 
 import { Context as LocationContext } from './../../providers/LocationProvider.js';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
+import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 
 import { Map } from './../../components/Map.js';
 import { InitialBottomSheet } from './InitialBottomSheet.js';
@@ -25,6 +26,7 @@ import { StoryBottomSheet } from '../../components/StoryBottomSheet.js';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: Dimensions.get('window').width,
     alignItems: 'center',
   },
   actions: {
@@ -44,6 +46,26 @@ const styles = StyleSheet.create({
 export const ExploreHomeScreen = ({ navigation }) => {
   const { state: { stories } } = React.useContext(StoryContext);
   const { state: { longitude, latitude } } = React.useContext(LocationContext);
+  const {
+    state: {
+      deviceHeight,
+      headerHeight,
+      topInset,
+      bottomInset,
+      bottomSheetHeaderHeight
+    },
+    setBottomSheetHeight
+  } = React.useContext(LayoutContext);
+
+  React.useEffect(() => {
+    setBottomSheetHeight(
+      deviceHeight, headerHeight,
+      topInset, bottomInset,
+      bottomSheetHeaderHeight);
+  }, [
+    deviceHeight, headerHeight, topInset,
+    bottomInset, bottomSheetHeaderHeight
+  ]);
 
   const recenter = () => {
     mapRef.current.animateToRegion(

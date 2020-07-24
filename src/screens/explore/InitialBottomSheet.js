@@ -2,7 +2,6 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Dimensions,
   Text,
   TouchableOpacity,
   TextInput,
@@ -17,12 +16,106 @@ import { Context as ProfileContext } from '../../providers/ProfileProvider.js'; 
 import { Context as SearchContext } from './../../providers/SearchProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
-import { StoryPreview } from '../../components/StoryPreview.js';
+import { StoryPreview } from './../../components/StoryPreview.js';
 import { BSSearch } from './../../components/BSSearch.js';
 
-const PANNEL_HEADER_HEIGHT = 30;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SCREEN_WIDTH = Dimensions.get('window').width;
+export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, inputRef, stories }) => {
+  const { state: {
+    deviceHeight,
+    deviceWidth,
+    headerHeight,
+    topInset,
+    bottomInset,
+    bottomSheetHeaderHeight
+  },
+    setBottomSheetHeight
+  } = React.useContext(LayoutContext);
+  const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
+  const { state: { initialized, storyId, catagory }, cancelQuery } = React.useContext(SearchContext);
+
+  React.useEffect(() => {
+    fetchLibrary();
+  }, []);
+
+  const cancelSearch = () => {
+    if (initialized) {
+      inputRef.current.blur();
+      cancelQuery();
+      Keyboard.dismiss();
+      growSearchBar();
+    }
+  }
+
+  const widthAnim = React.useRef(new Animated.Value(deviceWidth - 40)).current;
+  const marginAnim = React.useRef(new Animated.Value(20)).current;
+
+  const shrinkSearchBar = () => {
+    Animated.timing(widthAnim, {
+      toValue: deviceWidth - 100,
+      duration: 350,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
+
+    Animated.timing(marginAnim, {
+      toValue: 10,
+      duration: 350,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
+  };
+
+  const growSearchBar = () => {
+    Animated.timing(widthAnim, {
+      toValue: deviceWidth - 40,
+      duration: 300,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
+
+    Animated.timing(marginAnim, {
+      toValue: 20,
+      duration: 300,
+      easing: Easing.inOut(Easing.ease)
+    }).start();
+  };
+
+  return bottomInset ?
+    <BottomSheet
+      ref={initialBS}
+      snapPoints={[
+        deviceHeight - headerHeight
+        - topInset - bottomInset - bottomSheetHeaderHeight,
+        deviceHeight / 2 - headerHeight
+        - topInset - bottomInset - bottomSheetHeaderHeight,
+        storyId || catagory ? 0 : bottomInset + bottomSheetHeaderHeight
+      ]}
+      initialSnap={2}
+      onCloseEnd={cancelSearch}
+      onCloseStart={cancelSearch}
+      renderHeader={
+        () =>
+          <BottomSheetHeader
+            initialBS={initialBS}
+            inputRef={inputRef}
+            cancelSearch={cancelSearch}
+            initialized={initialized}
+            widthAnim={widthAnim}
+            marginAnim={marginAnim}
+            shrinkSearchBar={shrinkSearchBar}
+            growSearchBar={growSearchBar}
+          />
+      }
+      renderContent={
+        () =>
+          <BottomSheetBody
+            navigation={navigation}
+            stories={stories}
+            library={library}
+            initialBS={initialBS}
+            searchBS={searchBS}
+            storyBS={storyBS}
+          />
+      }
+    /> : null
+};
 
 const styles = StyleSheet.create({
   header: {
@@ -37,7 +130,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     paddingHorizontal: 20,
-    width: SCREEN_WIDTH + 2,
     transform: [{ translateX: -1 }]
   },
   panelHeader: {
@@ -72,117 +164,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, inputRef, stories }) => {
-  const { state: { headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
-  const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
-  const { state: { initialized, storyId, catagory }, cancelQuery } = React.useContext(SearchContext);
-
-  const [allowScrolling, setAllowScrolling] = React.useState(false);
-
-  console.log(allowScrolling)
-
-  React.useEffect(() => {
-    fetchLibrary();
-  }, []);
-
-  const cancelSearch = () => {
-    if (initialized) {
-      inputRef.current.blur();
-      cancelQuery();
-      Keyboard.dismiss();
-      growSearchBar();
-    }
-  }
-
-  const widthAnim = React.useRef(new Animated.Value(SCREEN_WIDTH - 40)).current;
-  const marginAnim = React.useRef(new Animated.Value(20)).current;
-
-  const shrinkSearchBar = () => {
-    Animated.timing(widthAnim, {
-      toValue: SCREEN_WIDTH - 100,
-      duration: 350,
-      easing: Easing.inOut(Easing.ease)
-    }).start();
-
-    Animated.timing(marginAnim, {
-      toValue: 10,
-      duration: 350,
-      easing: Easing.inOut(Easing.ease)
-    }).start();
-  };
-
-  const growSearchBar = () => {
-    Animated.timing(widthAnim, {
-      toValue: SCREEN_WIDTH - 40,
-      duration: 300,
-      easing: Easing.inOut(Easing.ease)
-    }).start();
-
-    Animated.timing(marginAnim, {
-      toValue: 20,
-      duration: 300,
-      easing: Easing.inOut(Easing.ease)
-    }).start();
-  };
-
-  return bottomInset ?
-    <BottomSheet
-      ref={initialBS}
-      snapPoints={[
-        SCREEN_HEIGHT - headerHeight
-        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-        SCREEN_HEIGHT / 2 - headerHeight
-        - topInset - bottomInset - PANNEL_HEADER_HEIGHT,
-        storyId || catagory ? 0 : bottomInset + PANNEL_HEADER_HEIGHT
-      ]}
-      initialSnap={2}
-      enabledBottomInitialAnimation={true}
-      // onCloseStart={cancelSearch}
-      onCloseEnd={cancelSearch}
-
-      onOpenEnd={() => setAllowScrolling(true)}
-      enabledInnerScrolling={true}
-      onCloseStart={() => {
-        setAllowScrolling(false);
-        cancelSearch();
-      }}
-      enabledGestureInteraction={true}
-      overdragResistanceFactor={0}
-      enabledHeaderGestureInteraction={true}
-      enabledContentGestureInteraction={allowScrolling}
-
-      renderHeader={
-        () =>
-          <BottomSheetHeader
-            initialBS={initialBS}
-            inputRef={inputRef}
-            cancelSearch={cancelSearch}
-            initialized={initialized}
-            widthAnim={widthAnim}
-            marginAnim={marginAnim}
-            shrinkSearchBar={shrinkSearchBar}
-            growSearchBar={growSearchBar}
-          />
-      }
-      renderContent={
-        () =>
-          <BottomSheetBody
-            navigation={navigation}
-            stories={stories}
-            library={library}
-            initialBS={initialBS}
-            searchBS={searchBS}
-            storyBS={storyBS}
-            allowScrolling={allowScrolling}
-            setAllowScrolling={setAllowScrolling}
-          />
-      }
-    /> : null
-};
-
 const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch,
   widthAnim, marginAnim, shrinkSearchBar, growSearchBar }) => {
   const { state: { query }, initializeQuery, updateQuery } = React.useContext(SearchContext);
+  const { state: { deviceWidth, bottomSheetHeaderHeight } } = React.useContext(LayoutContext);
 
   const startSearch = () => {
     inputRef.current.focus();
@@ -192,7 +177,12 @@ const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch,
   }
 
   return (
-    <View style={styles.header}>
+    <View style={[
+      styles.header,
+      {
+        height: bottomSheetHeaderHeight * 2,
+        width: deviceWidth
+      }]}>
       <View style={styles.panelHeader}>
         <View style={styles.panelHandle}></View>
       </View>
@@ -238,7 +228,7 @@ const bsbStyles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: 'rgba(255,255,255,0.8)',
     paddingTop: 10,
-    height: '100%'
+    backgroundColor: 'red'
   },
   section: {
     marginBottom: 30
@@ -260,11 +250,12 @@ const bsbStyles = StyleSheet.create({
   },
 });
 
-const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS, storyBS, allowScrolling, setAllowScrolling }) => {
+const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS, storyBS }) => {
+  const { state: { bottomSheetHeight } } = React.useContext(LayoutContext);
   const { state: { initialized } } = React.useContext(SearchContext);
 
   return (
-    <View style={bsbStyles.panel}>
+    <View style={[bsbStyles.panel, { minHeight: bottomSheetHeight }]}>
       {
         initialized ?
           <BSSearch
@@ -311,8 +302,7 @@ const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS, st
                     item={item}
                     initialBS={initialBS}
                     storyBS={storyBS}
-                  />
-                ))
+                  />))
               }
             </View>
           </>

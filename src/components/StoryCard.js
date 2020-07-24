@@ -196,4 +196,4 @@ const SaveButton = ({ id }) => {
         <Text>  Save</Text>
       </View>
     </TouchableOpacity>
-}
+};
