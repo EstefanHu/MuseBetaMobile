@@ -29,6 +29,7 @@ const clearErrorMessage = dispatch => () => {
 const login = dispatch => async ({ payload }) => {
   try {
     const response = await useFetch(loginUrl, 'POST', payload);
+    console.log('response')
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', payload: response.payload });
 

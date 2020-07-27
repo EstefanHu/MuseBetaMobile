@@ -88,30 +88,30 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, i
 
   // TODO: FIX THIS
 
-  const bsNodeTracker = React.useRef(new Animated.Value(0)).current;
+  // const bsNodeTracker = React.useRef(new Animated.Value(0)).current;
 
-  const clampedNodeTrackerAnim = React.useRef(
-    Animated.interpolate(bsNodeTracker, {
-      extrapolate: Animated.Extrapolate.CLAMP,
-      inputRange: [0, 0.5, 1],
-      outputRange: [0, 0.5, 1],
-    })
-  ).current;
+  // const clampedNodeTrackerAnim = React.useRef(
+  //   Animated.interpolate(bsNodeTracker, {
+  //     extrapolate: Animated.Extrapolate.CLAMP,
+  //     inputRange: [0, 0.5, 1],
+  //     outputRange: [0, 0.5, 1],
+  //   })
+  // ).current;
 
-  useCode(
-    () => onChange(
-      clampedNodeTrackerAnim,
-      block([
-        cond(
-          greaterOrEq(clampedNodeTrackerAnim, 0.5),
-          call([], () => {
-            cancelSearch()
-          })
-        ),
-      ])
-    ),
-    null
-  );
+  // useCode(
+  //   () => onChange(
+  //     clampedNodeTrackerAnim,
+  //     block([
+  //       cond(
+  //         greaterOrEq(clampedNodeTrackerAnim, 0.6),
+  //         call([], () => {
+  //           cancelSearch()
+  //         })
+  //       ),
+  //     ])
+  //   ),
+  //   null
+  // );
 
   const NONSCREEN = + headerHeight + topInset + bottomInset + bottomSheetHeaderHeight;
 
@@ -124,7 +124,7 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, i
         storyId || catagory ? 0 : bottomInset + bottomSheetHeaderHeight
       ]}
       initialSnap={2}
-      callbackNode={bsNodeTracker}
+      // callbackNode={bsNodeTracker}
       onCloseEnd={cancelSearch}
       // onCloseStart={cancelSearch}
       renderHeader={

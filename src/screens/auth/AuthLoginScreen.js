@@ -14,15 +14,15 @@ import { Context as AuthContext } from './../../providers/AuthProvider.js';
 
 export const AuthLoginScreen = ({ navigation }) => {
   const { state: { errorMessage }, login, clearErrorMessage } = useContext(AuthContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('estefanhu074@gmail.com');
+  const [password, setPassword] = useState('poiupoiu');
 
   useEffect(() => {
     navigation.addListener('blur', clearErrorMessage);
   }, []);
 
-  const launchLogin = () => {
-    login({ payload: { email, password } });
+  const launchLogin = async () => {
+   await login({ payload: { email, password } });
   }
 
   return (
@@ -34,7 +34,7 @@ export const AuthLoginScreen = ({ navigation }) => {
         <SafeAreaView>
           <View style={styles.formContainer} >
             <Text style={styles.logo}>:Muse</Text>
-            {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
+            {errorMessage ? <Text style={styles.errorMessage}>hi</Text> : null}
             <TextInput style={styles.inputBox}
               underlineColorAndroid='rgba(0,0,0,0)'
               placeholder="Email Address"

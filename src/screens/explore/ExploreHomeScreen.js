@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-  Dimensions
 } from 'react-native';
 import {
   Feather,
@@ -26,7 +25,6 @@ import { StoryBottomSheet } from '../../components/StoryBottomSheet.js';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: Dimensions.get('window').width,
     alignItems: 'center',
   },
   actions: {
@@ -49,6 +47,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
   const {
     state: {
       deviceHeight,
+      deviceWidth,
       headerHeight,
       topInset,
       bottomInset,
@@ -92,7 +91,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
       enabled={Platform.OS == 'ios' ? false : true}
       style={styles.container}
     >
-      <View style={styles.container}>
+      <View style={[styles.container, { width: deviceWidth }]}>
         <Map
           initialBS={initialBS}
           bs={storyBS}
