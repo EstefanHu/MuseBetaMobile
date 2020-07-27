@@ -265,12 +265,6 @@ const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS, st
           /> : <>
             <View style={bsbStyles.section}>
               <View style={bsbStyles.sectionHeader}>
-                <Text style={bsbStyles.sectionLabel}>Docked Story</Text>
-              </View>
-            </View>
-
-            <View style={bsbStyles.section}>
-              <View style={bsbStyles.sectionHeader}>
                 <Text style={bsbStyles.sectionLabel}>Library Preview</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('Library')}>
                   <Text style={bsbStyles.more}>See All</Text>
