@@ -11,13 +11,6 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import Animated, {
   Easing,
-  useCode,
-  onChange,
-  block,
-  cond,
-  greaterOrEq,
-  lessOrEq,
-  call
 } from 'react-native-reanimated';
 
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
@@ -46,7 +39,6 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, i
 
   const cancelSearch = () => {
     if (initialized) {
-      console.log('cancel')
       inputRef.current.blur();
       cancelQuery();
       Keyboard.dismiss();
@@ -85,34 +77,6 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, i
     }).start();
   };
 
-
-  // TODO: FIX THIS
-
-  // const bsNodeTracker = React.useRef(new Animated.Value(0)).current;
-
-  // const clampedNodeTrackerAnim = React.useRef(
-  //   Animated.interpolate(bsNodeTracker, {
-  //     extrapolate: Animated.Extrapolate.CLAMP,
-  //     inputRange: [0, 0.5, 1],
-  //     outputRange: [0, 0.5, 1],
-  //   })
-  // ).current;
-
-  // useCode(
-  //   () => onChange(
-  //     clampedNodeTrackerAnim,
-  //     block([
-  //       cond(
-  //         greaterOrEq(clampedNodeTrackerAnim, 0.6),
-  //         call([], () => {
-  //           cancelSearch()
-  //         })
-  //       ),
-  //     ])
-  //   ),
-  //   null
-  // );
-
   const NONSCREEN = + headerHeight + topInset + bottomInset + bottomSheetHeaderHeight;
 
   return bottomInset ?
@@ -126,7 +90,7 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, i
       initialSnap={2}
       // callbackNode={bsNodeTracker}
       onCloseEnd={cancelSearch}
-      // onCloseStart={cancelSearch}
+      onCloseStart={cancelSearch}
       renderHeader={
         () =>
           <BottomSheetHeader
