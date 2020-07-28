@@ -33,17 +33,10 @@ export const StoryBottomSheet = () => {
     initialBottomSheetRef,
     storyBottomSheetRef,
   } } = React.useContext(LayoutContext);
-  const { state: { storyId }, clearStory } = React.useContext(SearchContext);
+  const { state: { storyId } } = React.useContext(SearchContext);
   const { state: { stories } } = React.useContext(StoryContext);
-  const { state: { journeyId } } = React.useContext(JourneyContext);
 
   const story = stories.find(s => s._id === storyId);
-
-  const deactivate = () => {
-    initialBottomSheetRef.current.snapTo(1);
-    storyBottomSheetRef.current.snapTo(2);
-    clearStory();
-  }
 
   const NONSCREEN = headerHeight + topInset + bottomInset + bottomSheetHeaderHeight;
 
@@ -53,17 +46,11 @@ export const StoryBottomSheet = () => {
       snapPoints={[
         deviceHeight - NONSCREEN,
         deviceHeight / 2 - NONSCREEN,
-        storyId && journeyId === null ? bottomInset + bottomSheetHeaderHeight : 0
+        storyId ? bottomInset + bottomSheetHeaderHeight : 0
       ]}
       initialSnap={2}
       enabledBottomInitialAnimation={true}
-      renderHeader={
-        () =>
-          <BottomSheetHeader
-            story={story}
-            deactivate={deactivate}
-          />
-      }
+      renderHeader={() => <BottomSheetHeader story={story} />}
       renderContent={() => <BottomSheetBody story={story} />}
     /> : null
 };
@@ -112,27 +99,38 @@ const headerStyles = StyleSheet.create({
   }
 });
 
-const BottomSheetHeader = ({ story, deactivate }) => (
-  <View style={headerStyles.header}>
-    <View style={headerStyles.panelHeader}>
-      <View style={headerStyles.panelHandle}></View>
-    </View>
+const BottomSheetHeader = ({ story }) => {
+  const { state: { initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
+  const { clearStory } = React.useContext(SearchContext);
 
-    <View style={headerStyles.headerInfo}>
-      <View>
-        <Text style={headerStyles.title}>{story?.title}</Text>
-        <Text style={bodyStyles.distance}>distance...</Text>
+  const deactivate = () => {
+    initialBottomSheetRef.current.snapTo(1);
+    storyBottomSheetRef.current.snapTo(2);
+    clearStory();
+  }
+
+  return (
+    <View style={headerStyles.header}>
+      <View style={headerStyles.panelHeader}>
+        <View style={headerStyles.panelHandle}></View>
       </View>
 
-      <TouchableOpacity
-        style={headerStyles.back}
-        onPress={deactivate}
-      >
-        <Ionicons name='ios-close' size={25} color='white' />
-      </TouchableOpacity>
+      <View style={headerStyles.headerInfo}>
+        <View>
+          <Text style={headerStyles.title}>{story?.title}</Text>
+          <Text style={bodyStyles.distance}>distance...</Text>
+        </View>
+
+        <TouchableOpacity
+          style={headerStyles.back}
+          onPress={deactivate}
+        >
+          <Ionicons name='ios-close' size={25} color='white' />
+        </TouchableOpacity>
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 const bodyStyles = StyleSheet.create({
   panel: {
@@ -211,6 +209,7 @@ const BottomSheetBody = ({ story }) => {
   const { state: { mapRef, storyBottomSheetRef, navigationBottomSheetRef } } = React.useContext(LayoutContext);
   const { state: { longitude, latitude } } = React.useContext(LocationContext);
   const { setJourney } = React.useContext(JourneyContext);
+  const { clearStory } = React.useContext(SearchContext);
   const [isSaved, setIsSaved] = React.useState(false);
 
   React.useEffect(() => {
@@ -244,6 +243,7 @@ const BottomSheetBody = ({ story }) => {
     storyBottomSheetRef.current.snapTo(2);
     navigationBottomSheetRef.current.snapTo(1);
     setJourney(story);
+    clearStory();
   }
 
   return (

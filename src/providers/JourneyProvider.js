@@ -9,6 +9,8 @@ const journeyReducer = (state, action) => {
         journeyTitle: action.payload.title,
 
       };
+    case 'clear_journey':
+      return { ...state, journeyId: null };
     default:
       return state;
   };
@@ -17,13 +19,16 @@ const journeyReducer = (state, action) => {
 const setJourney = dispatch => journey =>
   dispatch({ type: 'set_journey', payload: journey });
 
+const clearJourney = dispatch => () =>
+  dispatch({ type: 'clear_journey' });
+
 export const { Context, Provider } = createDataContext(
   journeyReducer,
   {
-    setJourney
+    setJourney,
+    clearJourney,
   },
   {
     journeyId: null,
-    journeyTitle: null,
   }
 );

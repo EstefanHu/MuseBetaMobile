@@ -5,6 +5,9 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
+import {
+  Ionicons
+} from '@expo/vector-icons';
 
 import { Context as SearchContext } from './../../providers/SearchProvider.js';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
@@ -38,11 +41,11 @@ export const NavigationBottomSheet = () => {
       snapPoints={[
         deviceHeight - NONSCREEN,
         deviceHeight / 2 - NONSCREEN,
-        journeyId ? bottomInset + bottomSheetHeaderHeight : 0
+        journeyId && storyId === null ? bottomInset + bottomSheetHeaderHeight : 0
       ]}
       initialSnap={2}
       enabledBottomInitialAnimation={true}
-      renderHeader={() => <BottomSheetHeader story={story} />}
+      renderHeader={() => <BottomSheetHeader />}
       renderContent={() => <BottomSheetBody story={story} />}
     /> : null
 };
@@ -73,10 +76,36 @@ const styles = StyleSheet.create({
     backgroundColor: '#00000040',
     marginBottom: 6,
   },
+  headerInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  back: {
+    backgroundColor: 'lightgrey',
+    width: 25,
+    height: 25,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
 
 const BottomSheetHeader = () => {
-  const { state: { deviceWidth, bottomSheetHeaderHeight, initialBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: { deviceWidth, bottomSheetHeaderHeight, storyBottomSheetRef, navigationBottomSheetRef } } = React.useContext(LayoutContext);
+  const { setStory } = React.useContext(SearchContext);
+  const { state: { journeyId }, clearJourney } = React.useContext(JourneyContext);
+
+  const unmountJourney = () => {
+    storyBottomSheetRef.current.snapTo(1);
+    navigationBottomSheetRef.current.snapTo(2);
+    setStory(journeyId);
+    clearJourney();
+  }
 
   return (
     <View style={[
@@ -87,6 +116,20 @@ const BottomSheetHeader = () => {
       }]}>
       <View style={styles.panelHeader}>
         <View style={styles.panelHandle}></View>
+      </View>
+
+      <View style={styles.headerInfo}>
+        <View>
+          <Text style={styles.title}>Journey Title</Text>
+          <Text style={styles.distance}>distance...</Text>
+        </View>
+
+        <TouchableOpacity
+          style={styles.back}
+          onPress={unmountJourney}
+        >
+          <Ionicons name='ios-close' size={25} color='white' />
+        </TouchableOpacity>
       </View>
     </View>
   );
