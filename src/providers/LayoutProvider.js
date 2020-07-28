@@ -20,6 +20,8 @@ const layoutReducer = (state, action) => {
       return { ...state, bottomSheetHeight: action.payload };
     case 'set_map_ref':
       return { ...state, mapRef: action.payload };
+    case 'set_story_bottom_sheet_ref':
+      return { ...state, storyBottomSheetRef: action.payload };
     default:
       return state;
   }
@@ -60,6 +62,9 @@ const setBottomSheetHeight = disptach => (device, header, top, bottom, BSHeader)
 const setMapRef = dispatch => ref =>
   dispatch({ type: 'set_map_ref', payload: ref });
 
+const setStoryBottomSheetRef = dispatch => ref =>
+  dispatch({ type: 'set_story_bottom_sheet_ref', payload: ref });
+
 export const { Context, Provider } = createDataContext(
   layoutReducer,
   {
@@ -68,6 +73,7 @@ export const { Context, Provider } = createDataContext(
     setBottomSheetHeaderHeight,
     setBottomSheetHeight,
     setMapRef,
+    setStoryBottomSheetRef,
   },
   {
     deviceHeight: Dimensions.get('window').height,
@@ -78,5 +84,6 @@ export const { Context, Provider } = createDataContext(
     bottomSheetHeaderHeight: 30,
     bottomSheetHeight: null,
     mapRef: null,
+    storyBottomSheetRef: null
   }
 );

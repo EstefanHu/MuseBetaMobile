@@ -20,13 +20,14 @@ import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 
-export const StoryBottomSheet = ({ navigation, initialBS, storyBS }) => {
+export const StoryBottomSheet = ({ navigation, initialBS }) => {
   const { state: {
     deviceHeight,
     bottomSheetHeaderHeight,
     headerHeight,
     topInset,
-    bottomInset
+    bottomInset,
+    storyBottomSheetRef,
   } } = React.useContext(LayoutContext);
   const { state: { storyId }, clearStory } = React.useContext(SearchContext);
   const { state: { stories } } = React.useContext(StoryContext);
@@ -35,13 +36,13 @@ export const StoryBottomSheet = ({ navigation, initialBS, storyBS }) => {
 
   const deactivate = () => {
     initialBS.current.snapTo(1);
-    storyBS.current.snapTo(2);
+    storyBottomSheetRef.current.snapTo(2);
     clearStory();
   }
 
   return bottomInset ?
     <BottomSheet
-      ref={storyBS}
+      ref={storyBottomSheetRef}
       snapPoints={[
         deviceHeight - headerHeight
         - topInset - bottomInset - bottomSheetHeaderHeight,

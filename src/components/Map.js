@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Map = ({ initialBS, bs, stories, longitude, latitude }) => {
+export const Map = ({ initialBS, stories, longitude, latitude }) => {
   if (longitude === null)
     return <ActivityIndicator
       size='large'
@@ -36,7 +36,7 @@ export const Map = ({ initialBS, bs, stories, longitude, latitude }) => {
     />
 
   const { setStory } = React.useContext(SearchContext);
-  const { state: { mapRef } } = React.useContext(LayoutContext);
+  const { state: { mapRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
 
   const [region, setRegion] = React.useState({
     longitude: longitude,
@@ -48,7 +48,7 @@ export const Map = ({ initialBS, bs, stories, longitude, latitude }) => {
   const toggleBs = storyId => {
     setStory(storyId)
     initialBS.current.snapTo(2);
-    bs.current.snapTo(1);
+    storyBottomSheetRef.current.snapTo(1);
   }
 
   return (
