@@ -18,6 +18,7 @@ import { Context as SearchContext } from './../providers/SearchProvider.js';
 import { Context as LayoutContext } from './../providers/LayoutProvider.js';
 import { Context as StoryContext } from './../providers/StoryProvider.js';
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
+import { Context as LocationContext } from './../providers/LocationProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 
@@ -205,6 +206,8 @@ const bodyStyles = StyleSheet.create({
 const BottomSheetBody = ({ story }) => {
   const navigation = useNavigation();
   const { state: { libraryIds }, addToLibrary, removeFromLibrary } = React.useContext(ProfileContext);
+  const { state: { mapRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: { longitude, latitude } } = React.useContext(LocationContext);
   const [isSaved, setIsSaved] = React.useState(false);
 
   React.useEffect(() => {
@@ -221,10 +224,31 @@ const BottomSheetBody = ({ story }) => {
     setIsSaved(false);
   }
 
+  const beginStory = () => {
+    storyBottomSheetRef.current.snapTo(2);
+    const POINTS = [
+      {
+        longitude: story.startLocation.coordinates[0],
+        latitude: story.startLocation.coordinates[1]
+      },
+      { longitude, latitude }
+    ]
+    const OPTIONS = {
+      edgePadding: {
+        top: 40,
+        right: 60,
+        bottom: 100,
+        left: 60
+      }
+    }
+    mapRef.current.fitToCoordinates(POINTS, OPTIONS);
+  }
+
   return (
     <View style={bodyStyles.panel}>
       <TouchableOpacity
         style={bodyStyles.beginButton}
+        onPress={beginStory}
       >
         <Text style={bodyStyles.beginText}>Begin Story</Text>
       </TouchableOpacity>
