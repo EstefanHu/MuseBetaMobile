@@ -46,9 +46,9 @@ export const StoryPreview = ({ item }) => {
     mapRef.current.animateToRegion(
       {
         longitude: item.startLocation.coordinates[0],
-        latitude: item.startLocation.coordinates[1],
-        longitudeDelta: 0.1,
-        latitudeDelta: 0.1
+        latitude: item.startLocation.coordinates[1] - 0.009,
+        longitudeDelta: 0.05,
+        latitudeDelta: 0.05
       },
       1000
     );

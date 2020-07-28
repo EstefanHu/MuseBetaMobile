@@ -28,6 +28,8 @@ const layoutReducer = (state, action) => {
       return { ...state, searchBottomSheetRef: action.payload };
     case 'set_story_bottom_sheet_ref':
       return { ...state, storyBottomSheetRef: action.payload };
+    case 'set_navigation_bottom_sheet_ref':
+      return { ...state, navigationBottomSheetRef: action.payload };
     default:
       return state;
   }
@@ -80,6 +82,9 @@ const setSearchBottomSheetRef = dispatch => ref =>
 const setStoryBottomSheetRef = dispatch => ref =>
   dispatch({ type: 'set_story_bottom_sheet_ref', payload: ref });
 
+const setNavigationBottomSheetRef = dispatch => ref =>
+  dispatch({ type: 'set_navigation_bottom_sheet_ref', payload: ref });
+
 export const { Context, Provider } = createDataContext(
   layoutReducer,
   {
@@ -92,6 +97,7 @@ export const { Context, Provider } = createDataContext(
     setInitialBottomSheetRef,
     setSearchBottomSheetRef,
     setStoryBottomSheetRef,
+    setNavigationBottomSheetRef
   },
   {
     deviceHeight: Dimensions.get('window').height,
@@ -105,6 +111,7 @@ export const { Context, Provider } = createDataContext(
     inputRef: null,
     initialBottomSheetRef: null,
     searchBottomSheetRef: null,
-    storyBottomSheetRef: null
+    storyBottomSheetRef: null,
+    navigationBottomSheetRef: null,
   }
 );

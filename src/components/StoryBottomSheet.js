@@ -225,23 +225,21 @@ const BottomSheetBody = ({ story }) => {
   }
 
   const beginStory = () => {
-    storyBottomSheetRef.current.snapTo(2);
-    const POINTS = [
-      {
-        longitude: story.startLocation.coordinates[0],
-        latitude: story.startLocation.coordinates[1]
-      },
-      { longitude, latitude }
-    ]
+    const POINTS = [{
+      longitude: story.startLocation.coordinates[0],
+      latitude: story.startLocation.coordinates[1]
+    }, { longitude, latitude }]
     const OPTIONS = {
       edgePadding: {
-        top: 40,
+        top: 50,
         right: 60,
         bottom: 100,
         left: 60
       }
     }
     mapRef.current.fitToCoordinates(POINTS, OPTIONS);
+    storyBottomSheetRef.current.snapTo(2);
+
   }
 
   return (
