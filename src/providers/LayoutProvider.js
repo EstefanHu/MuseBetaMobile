@@ -22,6 +22,8 @@ const layoutReducer = (state, action) => {
       return { ...state, mapRef: action.payload };
     case 'set_input_ref':
       return { ...state, inputRef: action.payload };
+    case 'set_initial_bottom_sheet_ref':
+      return { ...state, initialBottomSheetRef: action.payload };
     case 'set_search_bottom_sheet_ref':
       return { ...state, searchBottomSheetRef: action.payload };
     case 'set_story_bottom_sheet_ref':
@@ -69,6 +71,9 @@ const setMapRef = dispatch => ref =>
 const setInputRef = dispatch => ref =>
   dispatch({ type: 'set_input_ref', payload: ref });
 
+const setInitialBottomSheetRef = dispatch => ref =>
+  dispatch({ type: 'set_initial_bottom_sheet_ref', payload: ref });
+
 const setSearchBottomSheetRef = dispatch => ref =>
   dispatch({ type: 'set_search_bottom_sheet_ref', payload: ref });
 
@@ -84,6 +89,7 @@ export const { Context, Provider } = createDataContext(
     setBottomSheetHeight,
     setMapRef,
     setInputRef,
+    setInitialBottomSheetRef,
     setSearchBottomSheetRef,
     setStoryBottomSheetRef,
   },
@@ -97,6 +103,7 @@ export const { Context, Provider } = createDataContext(
     bottomSheetHeight: null,
     mapRef: null,
     inputRef: null,
+    initialBottomSheetRef: null,
     searchBottomSheetRef: null,
     storyBottomSheetRef: null
   }

@@ -21,7 +21,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import { StoryPreview } from './../../components/StoryPreview.js';
 import { BSSearch } from './../../components/BSSearch.js';
 
-export const InitialBottomSheet = ({ navigation, initialBS, stories }) => {
+export const InitialBottomSheet = ({ navigation, stories }) => {
   const { state: {
     deviceHeight,
     deviceWidth,
@@ -29,7 +29,8 @@ export const InitialBottomSheet = ({ navigation, initialBS, stories }) => {
     topInset,
     bottomInset,
     bottomSheetHeaderHeight,
-    inputRef
+    inputRef,
+    initialBottomSheetRef
   } } = React.useContext(LayoutContext);
   const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
   const { state: { initialized, storyId, catagory }, cancelQuery } = React.useContext(SearchContext);
@@ -82,7 +83,7 @@ export const InitialBottomSheet = ({ navigation, initialBS, stories }) => {
 
   return bottomInset ?
     <BottomSheet
-      ref={initialBS}
+      ref={initialBottomSheetRef}
       snapPoints={[
         deviceHeight - NONSCREEN,
         deviceHeight / 2 - NONSCREEN,
@@ -95,7 +96,6 @@ export const InitialBottomSheet = ({ navigation, initialBS, stories }) => {
       renderHeader={
         () =>
           <BottomSheetHeader
-            initialBS={initialBS}
             cancelSearch={cancelSearch}
             initialized={initialized}
             widthAnim={widthAnim}
@@ -110,7 +110,6 @@ export const InitialBottomSheet = ({ navigation, initialBS, stories }) => {
             navigation={navigation}
             stories={stories}
             library={library}
-            initialBS={initialBS}
           />
       }
     /> : null
@@ -163,14 +162,13 @@ const styles = StyleSheet.create({
   }
 });
 
-const BottomSheetHeader = ({ initialBS, cancelSearch,
-  widthAnim, marginAnim, shrinkSearchBar, growSearchBar }) => {
+const BottomSheetHeader = ({ cancelSearch, widthAnim, marginAnim, shrinkSearchBar, growSearchBar }) => {
   const { state: { query }, initializeQuery, updateQuery } = React.useContext(SearchContext);
-  const { state: { deviceWidth, inputRef, bottomSheetHeaderHeight } } = React.useContext(LayoutContext);
+  const { state: { deviceWidth, inputRef, bottomSheetHeaderHeight, initialBottomSheetRef } } = React.useContext(LayoutContext);
 
   const startSearch = () => {
     inputRef.current.focus();
-    initialBS.current.snapTo(0);
+    initialBottomSheetRef.current.snapTo(0);
     initializeQuery();
     shrinkSearchBar()
   }
@@ -215,7 +213,7 @@ const BottomSheetHeader = ({ initialBS, cancelSearch,
         </TouchableWithoutFeedback>
         <TouchableOpacity
           onPress={() => {
-            initialBS.current.snapTo(1);
+            initialBottomSheetRef.current.snapTo(1);
             cancelSearch();
             growSearchBar();
           }}>
@@ -255,8 +253,7 @@ const bsbStyles = StyleSheet.create({
   },
 });
 
-const BottomSheetBody = ({ navigation, stories,
-  library, initialBS }) => {
+const BottomSheetBody = ({ navigation, stories, library }) => {
   const { state: { bottomSheetHeight } } = React.useContext(LayoutContext);
   const { state: { initialized } } = React.useContext(SearchContext);
 
@@ -264,10 +261,8 @@ const BottomSheetBody = ({ navigation, stories,
     <View style={[bsbStyles.panel, { minHeight: bottomSheetHeight }]}>
       {
         initialized ?
-          <BSSearch
-            navigation={navigation}
-            initialBS={initialBS}
-          /> : <>
+          <BSSearch navigation={navigation} />
+          : <>
             <View style={bsbStyles.section}>
               <View style={bsbStyles.sectionHeader}>
                 <Text style={bsbStyles.sectionLabel}>Library Preview</Text>
@@ -280,7 +275,6 @@ const BottomSheetBody = ({ navigation, stories,
                   <StoryPreview
                     key={item._id}
                     item={item}
-                    initialBS={initialBS}
                   />
                 ))
               }
@@ -298,7 +292,6 @@ const BottomSheetBody = ({ navigation, stories,
                   <StoryPreview
                     key={item._id}
                     item={item}
-                    initialBS={initialBS}
                   />))
               }
             </View>

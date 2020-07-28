@@ -14,12 +14,20 @@ import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 
-export const SearchBottomSheet = ({ initialBS, searchBS }) => {
+export const SearchBottomSheet = () => {
   const { state: { catagory, query, results }, cancelQuery, clearCatagory } = React.useContext(SearchContext);
-  const { state: { deviceHeight, bottomSheetHeaderHeight, headerHeight, topInset, bottomInset, searchBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: {
+    deviceHeight,
+    bottomSheetHeaderHeight,
+    headerHeight,
+    topInset,
+    bottomInset,
+    initialBottomSheetRef,
+    searchBottomSheetRef
+  } } = React.useContext(LayoutContext);
 
   const deactivate = () => {
-    initialBS.current.snapTo(1);
+    initialBottomSheetRef.current.snapTo(1);
     searchBottomSheetRef.current.snapTo(2);
     clearCatagory();
   }
@@ -37,8 +45,8 @@ export const SearchBottomSheet = ({ initialBS, searchBS }) => {
       initialSnap={2}
       enabledBottomInitialAnimation={true}
       enabledBottomClamp={true}
-      onCloseStart={() => initialBS.current.snapTo(2)}
-      onOpenEnd={() => initialBS.current.snapTo(2)}
+      onCloseStart={() => initialBottomSheetRef.current.snapTo(2)}
+      onOpenEnd={() => initialBottomSheetRef.current.snapTo(2)}
       renderHeader={
         () =>
           <BottomSheetHeader

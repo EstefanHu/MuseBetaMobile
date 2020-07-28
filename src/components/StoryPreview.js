@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
   }
 });
 
-export const StoryPreview = ({ item, initialBS }) => {
+export const StoryPreview = ({ item }) => {
   const { setStory } = React.useContext(SearchContext);
-  const { state: { mapRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: { mapRef, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
 
   const openItem = () => {
     setStory(item._id);
-    initialBS.current.snapTo(2);
+    initialBottomSheetRef.current.snapTo(2);
     storyBottomSheetRef.current.snapTo(1);
 
     mapRef.current.animateToRegion(

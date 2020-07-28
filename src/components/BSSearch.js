@@ -15,16 +15,16 @@ import {
 import { Context as LayoutContext } from './../providers/LayoutProvider.js';
 import { Context as SearchContext } from './../providers/SearchProvider.js';
 
-export const BSSearch = ({ initialBS }) => {
+export const BSSearch = () => {
   const { state: { history, query, results },
     getHistory, clearHistory, setCatagory } = React.useContext(SearchContext);
-  const { state: { searchBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: { initialBottomSheetRef, searchBottomSheetRef } } = React.useContext(LayoutContext);
 
   React.useEffect(() => { (async () => { getHistory() })() }, []);
 
   const openSubject = subject => {
     setCatagory(subject);
-    initialBS.current.snapTo(2);
+    initialBottomSheetRef.current.snapTo(2);
     searchBottomSheetRef.current.snapTo(1);
   }
 

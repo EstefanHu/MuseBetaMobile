@@ -56,6 +56,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
     setBottomSheetHeight,
     setMapRef,
     setInputRef,
+    setInitialBottomSheetRef,
     setSearchBottomSheetRef,
     setStoryBottomSheetRef,
   } = React.useContext(LayoutContext);
@@ -72,11 +73,13 @@ export const ExploreHomeScreen = ({ navigation }) => {
 
   const mapRef = React.useRef(null);
   const inputRef = React.useRef(null);
+  const initialBS = React.useRef(null);
   const storyBS = React.useRef(null);
   const searchBS = React.useRef(null);
   React.useEffect(() => {
     setMapRef(mapRef);
     setInputRef(inputRef)
+    setInitialBottomSheetRef(initialBS);
     setSearchBottomSheetRef(searchBS);
     setStoryBottomSheetRef(storyBS);
   }, []);
@@ -93,7 +96,6 @@ export const ExploreHomeScreen = ({ navigation }) => {
     );
   }
 
-  const initialBS = React.useRef(null);
 
   return (
     <KeyboardAvoidingView
@@ -103,7 +105,6 @@ export const ExploreHomeScreen = ({ navigation }) => {
     >
       <View style={[styles.container, { width: deviceWidth }]}>
         <Map
-          initialBS={initialBS}
           stories={stories}
           longitude={longitude}
           latitude={latitude}
@@ -127,15 +128,10 @@ export const ExploreHomeScreen = ({ navigation }) => {
 
         <InitialBottomSheet
           navigation={navigation}
-          initialBS={initialBS}
-          inputRef={inputRef}
           stories={stories}
         />
-        <SearchBottomSheet initialBS={initialBS} />
-        <StoryBottomSheet
-          navigation={navigation}
-          initialBS={initialBS}
-        />
+        <SearchBottomSheet />
+        <StoryBottomSheet navigation={navigation} />
       </View>
     </KeyboardAvoidingView>
   );
