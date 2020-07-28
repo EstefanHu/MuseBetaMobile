@@ -43,14 +43,14 @@ export const StoryBottomSheet = () => {
     clearStory();
   }
 
+  const NONSCREEN = headerHeight + topInset + bottomInset + bottomSheetHeaderHeight;
+
   return bottomInset ?
     <BottomSheet
       ref={storyBottomSheetRef}
       snapPoints={[
-        deviceHeight - headerHeight
-        - topInset - bottomInset - bottomSheetHeaderHeight,
-        deviceHeight / 2 - headerHeight
-        - topInset - bottomInset - bottomSheetHeaderHeight,
+        deviceHeight - NONSCREEN,
+        deviceHeight / 2 - NONSCREEN,
         storyId ? bottomInset + bottomSheetHeaderHeight : 0
       ]}
       initialSnap={2}

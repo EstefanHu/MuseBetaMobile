@@ -21,6 +21,7 @@ import { Map } from './../../components/Map.js';
 import { InitialBottomSheet } from './InitialBottomSheet.js';
 import { SearchBottomSheet } from './SearchBottomSheet.js';
 import { StoryBottomSheet } from './StoryBottomSheet.js';
+import { NavigationBottomSheet } from './NavigationBottomSheet.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -99,7 +100,6 @@ export const ExploreHomeScreen = () => {
     );
   }
 
-
   return (
     <KeyboardAvoidingView
       behavior={'height'}
@@ -132,6 +132,7 @@ export const ExploreHomeScreen = () => {
         <InitialBottomSheet stories={stories} />
         <SearchBottomSheet />
         <StoryBottomSheet />
+        <NavigationBottomSheet />
       </View>
     </KeyboardAvoidingView>
   );

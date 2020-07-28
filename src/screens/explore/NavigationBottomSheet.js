@@ -6,15 +6,11 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import { Context as SearchContext } from './../../providers/SearchProvider.js';
+import { Context as StoryContext } from './../../providers/StoryProvider.js';
 import { Context as LayoutContext } from '../../providers/LayoutProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  }
-});
 
 export const NavigationBottomSheet = () => {
   const { state: {
@@ -27,6 +23,10 @@ export const NavigationBottomSheet = () => {
     storyBottomSheetRef,
     navigationBottomSheetRef,
   } } = React.useContext(LayoutContext);
+  const { state: { storyId }, clearStory } = React.useContext(SearchContext);
+  const { state: { stories } } = React.useContext(StoryContext);
+
+  const story = stories.find(s => s._id === storyId);
 
   const NONSCREEN = headerHeight + topInset + bottomInset + bottomSheetHeaderHeight;
 
@@ -40,13 +40,7 @@ export const NavigationBottomSheet = () => {
       ]}
       initialSnap={2}
       enabledBottomInitialAnimation={true}
-      renderHeader={
-        () =>
-          <BottomSheetHeader
-            story={story}
-            deactivate={deactivate}
-          />
-      }
+      renderHeader={() => <BottomSheetHeader story={story} />}
       renderContent={() => <BottomSheetBody story={story} />}
     /> : null
 };
