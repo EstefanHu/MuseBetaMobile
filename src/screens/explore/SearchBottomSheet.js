@@ -43,6 +43,7 @@ export const SearchBottomSheet = () => {
         catagory ? bottomInset + bottomSheetHeaderHeight : 0
       ]}
       initialSnap={2}
+      enabledContentTapInteraction={false}
       enabledBottomInitialAnimation={true}
       enabledBottomClamp={true}
       onCloseStart={() => initialBottomSheetRef.current.snapTo(2)}

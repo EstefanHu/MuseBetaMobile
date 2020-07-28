@@ -128,12 +128,12 @@ export const ExploreHomeScreen = () => {
             <MaterialIcons name='crop-free' size={25} color='black' />
           </TouchableOpacity>
         </Animated.View>
-
-        <InitialBottomSheet stories={stories} />
-        <SearchBottomSheet />
-        <StoryBottomSheet />
-        <NavigationBottomSheet />
       </View>
+
+      <InitialBottomSheet stories={stories} />
+      <SearchBottomSheet />
+      <StoryBottomSheet />
+      <NavigationBottomSheet />
     </KeyboardAvoidingView>
   );
 };

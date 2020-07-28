@@ -150,6 +150,7 @@ export const ProfileUpdateScreen = ({ navigation }) => {
         initialSnap={1}
         callbackNode={fall}
         enabledBottomClamp={true}
+        enabledContentTapInteraction={false}
         renderHeader={() => <Header />}
         renderContent={() => <Panel bs={bs} />}
       />
@@ -199,6 +200,7 @@ const bsStyles = StyleSheet.create({
     backgroundColor: 'rgb(255,50,50)',
     alignItems: 'center',
     marginVertical: 7,
+    zIndex: 10
   },
   panelButtonTitle: {
     fontSize: 17,
@@ -219,6 +221,7 @@ const Panel = ({ bs }) => {
   const { uploadProfilePhoto } = useContext(ProfileContext);
 
   const selectPicture = async () => {
+    console.log('hello')
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status !== 'granted') return Alert.alert(
       'Grant Permission',
@@ -282,7 +285,7 @@ const Panel = ({ bs }) => {
 
       <TouchableOpacity
         style={bsStyles.panelButton}
-        onPress={selectPicture}>
+        onPress={() => console.log('hello world')}>
         <Text style={bsStyles.panelButtonTitle}>Choose From Library</Text>
       </TouchableOpacity>
 

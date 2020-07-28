@@ -44,6 +44,7 @@ export const NavigationBottomSheet = () => {
         journeyId && storyId === null ? bottomInset + bottomSheetHeaderHeight : 0
       ]}
       initialSnap={2}
+      enabledContentTapInteraction={false}
       enabledBottomInitialAnimation={true}
       renderHeader={() => <BottomSheetHeader />}
       renderContent={() => <BottomSheetBody story={story} />}

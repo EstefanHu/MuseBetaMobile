@@ -13,7 +13,6 @@ import { Context as LayoutContext } from './../providers/LayoutProvider.js';
 const styles = StyleSheet.create({
   listItem: {
     paddingVertical: 10,
-    flexDirection: 'row',
     borderBottomColor: 'rgba(200,200,200,0.8)',
     borderBottomWidth: 1,
   },
@@ -39,6 +38,7 @@ export const StoryPreview = ({ item }) => {
   const { state: { mapRef, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
 
   const openItem = () => {
+    console.log('android')
     setStory(item._id);
     initialBottomSheetRef.current.snapTo(2);
     storyBottomSheetRef.current.snapTo(1);
@@ -55,23 +55,24 @@ export const StoryPreview = ({ item }) => {
   }
 
   return (
-    <TouchableOpacity
-      key={item._id}
-      style={styles.listItem}
-      onPress={openItem}
-    >
-      <View style={styles.itemIcon}>
-        <FontAwesome name='book' size={18} color='rgba(255,255,255,0.9)' />
-      </View>
-      <View style={styles.itemInfo}>
-        <Text style={styles.title}>
-          {
-            ((item.title).length > 40) ?
-              (((item.title).substring(0, 40 - 3)) + '...') :
-              item.title
-          }
-        </Text>
-      </View>
-    </TouchableOpacity>
+    <View style={styles.listItem}>
+      <TouchableOpacity
+        style={{ flexDirection: 'row' }}
+        onPress={openItem}
+      >
+        <View style={styles.itemIcon}>
+          <FontAwesome name='book' size={18} color='rgba(255,255,255,0.9)' />
+        </View>
+        <View style={styles.itemInfo}>
+          <Text style={styles.title}>
+            {
+              ((item.title).length > 40) ?
+                (((item.title).substring(0, 40 - 3)) + '...') :
+                item.title
+            }
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };

@@ -91,6 +91,7 @@ export const InitialBottomSheet = ({ stories }) => {
         storyId || catagory ? 0 : bottomInset + bottomSheetHeaderHeight
       ]}
       initialSnap={2}
+      enabledContentTapInteraction={false}
       // callbackNode={bsNodeTracker}
       onCloseEnd={cancelSearch}
       onCloseStart={cancelSearch}
