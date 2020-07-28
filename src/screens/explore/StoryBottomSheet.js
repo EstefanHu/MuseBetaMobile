@@ -205,8 +205,17 @@ const bodyStyles = StyleSheet.create({
 
 const BottomSheetBody = ({ story }) => {
   const navigation = useNavigation();
+  const { state: {
+    deviceHeight,
+    bottomSheetHeaderHeight,
+    headerHeight,
+    topInset,
+    bottomInset,
+    mapRef,
+    storyBottomSheetRef,
+    navigationBottomSheetRef
+  } } = React.useContext(LayoutContext);
   const { state: { libraryIds }, addToLibrary, removeFromLibrary } = React.useContext(ProfileContext);
-  const { state: { mapRef, storyBottomSheetRef, navigationBottomSheetRef } } = React.useContext(LayoutContext);
   const { state: { longitude, latitude } } = React.useContext(LocationContext);
   const { setJourney } = React.useContext(JourneyContext);
   const { clearStory } = React.useContext(SearchContext);
@@ -235,7 +244,8 @@ const BottomSheetBody = ({ story }) => {
       edgePadding: {
         top: 50,
         right: 60,
-        bottom: 100,
+        bottom: deviceHeight / 2 + 50
+          - (headerHeight + topInset + bottomInset + bottomSheetHeaderHeight),
         left: 60
       }
     }
