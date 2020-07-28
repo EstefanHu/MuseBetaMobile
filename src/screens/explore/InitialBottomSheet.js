@@ -12,6 +12,7 @@ import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import Animated, {
   Easing,
 } from 'react-native-reanimated';
+import { useNavigation } from '@react-navigation/native';
 
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 import { Context as ProfileContext } from '../../providers/ProfileProvider.js'; // TODO: Temp
@@ -21,7 +22,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import { StoryPreview } from './../../components/StoryPreview.js';
 import { BSSearch } from './../../components/BSSearch.js';
 
-export const InitialBottomSheet = ({ navigation, stories }) => {
+export const InitialBottomSheet = ({ stories }) => {
   const { state: {
     deviceHeight,
     deviceWidth,
@@ -107,7 +108,6 @@ export const InitialBottomSheet = ({ navigation, stories }) => {
       renderContent={
         () =>
           <BottomSheetBody
-            navigation={navigation}
             stories={stories}
             library={library}
           />
@@ -253,7 +253,8 @@ const bsbStyles = StyleSheet.create({
   },
 });
 
-const BottomSheetBody = ({ navigation, stories, library }) => {
+const BottomSheetBody = ({ stories, library }) => {
+  const navigation = useNavigation();
   const { state: { bottomSheetHeight } } = React.useContext(LayoutContext);
   const { state: { initialized } } = React.useContext(SearchContext);
 
@@ -261,7 +262,7 @@ const BottomSheetBody = ({ navigation, stories, library }) => {
     <View style={[bsbStyles.panel, { minHeight: bottomSheetHeight }]}>
       {
         initialized ?
-          <BSSearch navigation={navigation} />
+          <BSSearch />
           : <>
             <View style={bsbStyles.section}>
               <View style={bsbStyles.sectionHeader}>

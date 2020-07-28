@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ExploreHomeScreen = ({ navigation }) => {
+export const ExploreHomeScreen = () => {
   const { state: { stories } } = React.useContext(StoryContext);
   const { state: { longitude, latitude } } = React.useContext(LocationContext);
   const {
@@ -126,10 +126,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </Animated.View>
 
-        <InitialBottomSheet
-          navigation={navigation}
-          stories={stories}
-        />
+        <InitialBottomSheet stories={stories} />
         <SearchBottomSheet />
         <StoryBottomSheet />
       </View>
