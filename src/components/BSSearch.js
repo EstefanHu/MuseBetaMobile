@@ -12,18 +12,20 @@ import {
   MaterialCommunityIcons
 } from '@expo/vector-icons';
 
+import { Context as LayoutContext } from './../providers/LayoutProvider.js';
 import { Context as SearchContext } from './../providers/SearchProvider.js';
 
-export const BSSearch = ({ initialBS, searchBS }) => {
+export const BSSearch = ({ initialBS }) => {
   const { state: { history, query, results },
     getHistory, clearHistory, setCatagory } = React.useContext(SearchContext);
+  const { state: { searchBottomSheetRef } } = React.useContext(LayoutContext);
 
   React.useEffect(() => { (async () => { getHistory() })() }, []);
 
   const openSubject = subject => {
     setCatagory(subject);
     initialBS.current.snapTo(2);
-    searchBS.current.snapTo(1);
+    searchBottomSheetRef.current.snapTo(1);
   }
 
   return query ?

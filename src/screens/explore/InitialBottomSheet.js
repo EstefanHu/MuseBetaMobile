@@ -21,15 +21,14 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import { StoryPreview } from './../../components/StoryPreview.js';
 import { BSSearch } from './../../components/BSSearch.js';
 
-export const InitialBottomSheet = ({ navigation, initialBS,
-  searchBS, inputRef, stories }) => {
+export const InitialBottomSheet = ({ navigation, initialBS, inputRef, stories }) => {
   const { state: {
     deviceHeight,
     deviceWidth,
     headerHeight,
     topInset,
     bottomInset,
-    bottomSheetHeaderHeight
+    bottomSheetHeaderHeight,
   } } = React.useContext(LayoutContext);
   const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
   const { state: { initialized, storyId, catagory }, cancelQuery } = React.useContext(SearchContext);
@@ -112,7 +111,6 @@ export const InitialBottomSheet = ({ navigation, initialBS,
             stories={stories}
             library={library}
             initialBS={initialBS}
-            searchBS={searchBS}
           />
       }
     /> : null
@@ -258,7 +256,7 @@ const bsbStyles = StyleSheet.create({
 });
 
 const BottomSheetBody = ({ navigation, stories,
-  library, initialBS, searchBS }) => {
+  library, initialBS }) => {
   const { state: { bottomSheetHeight } } = React.useContext(LayoutContext);
   const { state: { initialized } } = React.useContext(SearchContext);
 
@@ -269,7 +267,6 @@ const BottomSheetBody = ({ navigation, stories,
           <BSSearch
             navigation={navigation}
             initialBS={initialBS}
-            searchBS={searchBS}
           /> : <>
             <View style={bsbStyles.section}>
               <View style={bsbStyles.sectionHeader}>

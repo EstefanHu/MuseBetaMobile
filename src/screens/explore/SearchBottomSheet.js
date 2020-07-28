@@ -16,17 +16,17 @@ import BottomSheet from 'reanimated-bottom-sheet';
 
 export const SearchBottomSheet = ({ initialBS, searchBS }) => {
   const { state: { catagory, query, results }, cancelQuery, clearCatagory } = React.useContext(SearchContext);
-  const { state: { deviceHeight, bottomSheetHeaderHeight, headerHeight, topInset, bottomInset } } = React.useContext(LayoutContext);
+  const { state: { deviceHeight, bottomSheetHeaderHeight, headerHeight, topInset, bottomInset, searchBottomSheetRef } } = React.useContext(LayoutContext);
 
   const deactivate = () => {
     initialBS.current.snapTo(1);
-    searchBS.current.snapTo(2);
+    searchBottomSheetRef.current.snapTo(2);
     clearCatagory();
   }
 
   return bottomInset ?
     <BottomSheet
-      ref={searchBS}
+      ref={searchBottomSheetRef}
       snapPoints={[
         deviceHeight - headerHeight
         - topInset - bottomInset - bottomSheetHeaderHeight,
@@ -49,9 +49,7 @@ export const SearchBottomSheet = ({ initialBS, searchBS }) => {
       }
       renderContent={
         () =>
-          <BottomSheetBody
-            searchBS={searchBS}
-          />
+          <BottomSheetBody />
       }
     /> : null
 };
@@ -128,7 +126,7 @@ const bodyStyles = StyleSheet.create({
   }
 });
 
-const BottomSheetBody = ({ searchBS }) => {
+const BottomSheetBody = () => {
 
   return (
     <View style={bodyStyles.container}>
