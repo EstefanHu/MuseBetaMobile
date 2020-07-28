@@ -78,6 +78,11 @@ export const ExploreHomeScreen = ({ navigation }) => {
     );
   }
 
+  const focusMarker = () => {
+    initialBS.current.snapTo(2);
+    bs.current.snapTo(1);
+  }
+
   const mapRef = React.useRef(null);
   const inputRef = React.useRef(null);
 

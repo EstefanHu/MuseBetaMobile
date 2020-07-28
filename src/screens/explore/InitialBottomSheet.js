@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import Animated, {
   Easing,
 } from 'react-native-reanimated';
@@ -177,6 +177,10 @@ const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch,
     shrinkSearchBar()
   }
 
+  const startListening = () => {
+    startSearch();
+  }
+
   return (
     <View style={[
       styles.header,
@@ -206,6 +210,9 @@ const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch,
               clearButtonMode={'always'}
               autoCorrect={false}
             />
+            <TouchableOpacity onPress={startListening}>
+              <FontAwesome name='microphone' size={22} color='grey' />
+            </TouchableOpacity>
           </Animated.View>
         </TouchableWithoutFeedback>
         <TouchableOpacity
