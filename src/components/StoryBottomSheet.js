@@ -12,6 +12,7 @@ import {
   Octicons
 } from '@expo/vector-icons';
 import { useDateFormat } from './../hooks/useDateFormat.js';
+import { useNavigation } from '@react-navigation/native';
 
 import { Context as SearchContext } from './../providers/SearchProvider.js';
 import { Context as LayoutContext } from './../providers/LayoutProvider.js';
@@ -20,7 +21,7 @@ import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 
-export const StoryBottomSheet = ({ navigation }) => {
+export const StoryBottomSheet = () => {
   const { state: {
     deviceHeight,
     bottomSheetHeaderHeight,
@@ -60,13 +61,7 @@ export const StoryBottomSheet = ({ navigation }) => {
             deactivate={deactivate}
           />
       }
-      renderContent={
-        () =>
-          <BottomSheetBody
-            navigation={navigation}
-            story={story}
-          />
-      }
+      renderContent={() => <BottomSheetBody story={story} />}
     /> : null
 };
 
@@ -207,7 +202,8 @@ const bodyStyles = StyleSheet.create({
   }
 });
 
-const BottomSheetBody = ({ navigation, story }) => {
+const BottomSheetBody = ({ story }) => {
+  const navigation = useNavigation();
   const { state: { libraryIds }, addToLibrary, removeFromLibrary } = React.useContext(ProfileContext);
   const [isSaved, setIsSaved] = React.useState(false);
 

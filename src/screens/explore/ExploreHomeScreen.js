@@ -131,7 +131,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
           stories={stories}
         />
         <SearchBottomSheet />
-        <StoryBottomSheet navigation={navigation} />
+        <StoryBottomSheet />
       </View>
     </KeyboardAvoidingView>
   );
