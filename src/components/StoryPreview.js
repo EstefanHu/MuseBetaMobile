@@ -38,7 +38,6 @@ export const StoryPreview = ({ item }) => {
   const { state: { mapRef, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
 
   const openItem = () => {
-    console.log('android')
     setStory(item._id);
     initialBottomSheetRef.current.snapTo(2);
     storyBottomSheetRef.current.snapTo(1);
