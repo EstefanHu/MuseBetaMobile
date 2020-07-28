@@ -55,6 +55,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
     },
     setBottomSheetHeight,
     setMapRef,
+    setInputRef,
     setSearchBottomSheetRef,
     setStoryBottomSheetRef,
   } = React.useContext(LayoutContext);
@@ -70,10 +71,12 @@ export const ExploreHomeScreen = ({ navigation }) => {
   ]);
 
   const mapRef = React.useRef(null);
+  const inputRef = React.useRef(null);
   const storyBS = React.useRef(null);
   const searchBS = React.useRef(null);
   React.useEffect(() => {
     setMapRef(mapRef);
+    setInputRef(inputRef)
     setSearchBottomSheetRef(searchBS);
     setStoryBottomSheetRef(storyBS);
   }, []);
@@ -90,7 +93,6 @@ export const ExploreHomeScreen = ({ navigation }) => {
     );
   }
 
-  const inputRef = React.useRef(null);
   const initialBS = React.useRef(null);
 
   return (

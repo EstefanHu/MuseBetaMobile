@@ -21,7 +21,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import { StoryPreview } from './../../components/StoryPreview.js';
 import { BSSearch } from './../../components/BSSearch.js';
 
-export const InitialBottomSheet = ({ navigation, initialBS, inputRef, stories }) => {
+export const InitialBottomSheet = ({ navigation, initialBS, stories }) => {
   const { state: {
     deviceHeight,
     deviceWidth,
@@ -29,6 +29,7 @@ export const InitialBottomSheet = ({ navigation, initialBS, inputRef, stories })
     topInset,
     bottomInset,
     bottomSheetHeaderHeight,
+    inputRef
   } } = React.useContext(LayoutContext);
   const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
   const { state: { initialized, storyId, catagory }, cancelQuery } = React.useContext(SearchContext);
@@ -95,7 +96,6 @@ export const InitialBottomSheet = ({ navigation, initialBS, inputRef, stories })
         () =>
           <BottomSheetHeader
             initialBS={initialBS}
-            inputRef={inputRef}
             cancelSearch={cancelSearch}
             initialized={initialized}
             widthAnim={widthAnim}
@@ -163,10 +163,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const BottomSheetHeader = ({ initialBS, inputRef, cancelSearch,
+const BottomSheetHeader = ({ initialBS, cancelSearch,
   widthAnim, marginAnim, shrinkSearchBar, growSearchBar }) => {
   const { state: { query }, initializeQuery, updateQuery } = React.useContext(SearchContext);
-  const { state: { deviceWidth, bottomSheetHeaderHeight } } = React.useContext(LayoutContext);
+  const { state: { deviceWidth, inputRef, bottomSheetHeaderHeight } } = React.useContext(LayoutContext);
 
   const startSearch = () => {
     inputRef.current.focus();
