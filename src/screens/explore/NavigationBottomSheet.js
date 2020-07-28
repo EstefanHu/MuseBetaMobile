@@ -9,6 +9,7 @@ import {
 import { Context as SearchContext } from './../../providers/SearchProvider.js';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
 import { Context as LayoutContext } from '../../providers/LayoutProvider.js';
+import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 
@@ -25,6 +26,7 @@ export const NavigationBottomSheet = () => {
   } } = React.useContext(LayoutContext);
   const { state: { storyId }, clearStory } = React.useContext(SearchContext);
   const { state: { stories } } = React.useContext(StoryContext);
+  const { state: { journeyId } } = React.useContext(JourneyContext);
 
   const story = stories.find(s => s._id === storyId);
 
@@ -36,7 +38,7 @@ export const NavigationBottomSheet = () => {
       snapPoints={[
         deviceHeight - NONSCREEN,
         deviceHeight / 2 - NONSCREEN,
-        storyId ? bottomInset + bottomSheetHeaderHeight : 0
+        journeyId ? bottomInset + bottomSheetHeaderHeight : 0
       ]}
       initialSnap={2}
       enabledBottomInitialAnimation={true}

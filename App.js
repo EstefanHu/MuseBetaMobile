@@ -13,6 +13,7 @@ import { Provider as StoryProvider } from './src/providers/StoryProvider.js';
 import { Provider as ProfileProvider } from './src/providers/ProfileProvider.js';
 import { Provider as LayoutProvider } from './src/providers/LayoutProvider.js';
 import { Provider as SearchProvider } from './src/providers/SearchProvider.js';
+import { Provider as JourneyProvider } from './src/providers/JourneyProvider.js';
 
 import { AuthStack } from './src/stacks/AuthStack.js';
 import { RootStack } from './src/stacks/RootStack.js';
@@ -51,9 +52,11 @@ export default () => {
             <ProfileProvider>
               <LayoutProvider>
                 <SearchProvider>
-                  {/* <React.StrictMode> */}
-                  <App />
-                  {/* </React.StrictMode> */}
+                  <JourneyProvider>
+                    {/* <React.StrictMode> */}
+                    <App />
+                    {/* </React.StrictMode> */}
+                  </JourneyProvider>
                 </SearchProvider>
               </LayoutProvider>
             </ProfileProvider>

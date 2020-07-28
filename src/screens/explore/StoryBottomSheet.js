@@ -19,6 +19,7 @@ import { Context as LayoutContext } from '../../providers/LayoutProvider.js';
 import { Context as StoryContext } from '../../providers/StoryProvider.js';
 import { Context as ProfileContext } from '../../providers/ProfileProvider.js';
 import { Context as LocationContext } from '../../providers/LocationProvider.js';
+import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 
@@ -34,6 +35,7 @@ export const StoryBottomSheet = () => {
   } } = React.useContext(LayoutContext);
   const { state: { storyId }, clearStory } = React.useContext(SearchContext);
   const { state: { stories } } = React.useContext(StoryContext);
+  const { state: { journeyId } } = React.useContext(JourneyContext);
 
   const story = stories.find(s => s._id === storyId);
 
@@ -51,7 +53,7 @@ export const StoryBottomSheet = () => {
       snapPoints={[
         deviceHeight - NONSCREEN,
         deviceHeight / 2 - NONSCREEN,
-        storyId ? bottomInset + bottomSheetHeaderHeight : 0
+        storyId && journeyId === null ? bottomInset + bottomSheetHeaderHeight : 0
       ]}
       initialSnap={2}
       enabledBottomInitialAnimation={true}
@@ -206,8 +208,9 @@ const bodyStyles = StyleSheet.create({
 const BottomSheetBody = ({ story }) => {
   const navigation = useNavigation();
   const { state: { libraryIds }, addToLibrary, removeFromLibrary } = React.useContext(ProfileContext);
-  const { state: { mapRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: { mapRef, storyBottomSheetRef, navigationBottomSheetRef } } = React.useContext(LayoutContext);
   const { state: { longitude, latitude } } = React.useContext(LocationContext);
+  const { setJourney } = React.useContext(JourneyContext);
   const [isSaved, setIsSaved] = React.useState(false);
 
   React.useEffect(() => {
@@ -239,7 +242,8 @@ const BottomSheetBody = ({ story }) => {
     }
     mapRef.current.fitToCoordinates(POINTS, OPTIONS);
     storyBottomSheetRef.current.snapTo(2);
-
+    navigationBottomSheetRef.current.snapTo(1);
+    setJourney(story);
   }
 
   return (
