@@ -10,6 +10,7 @@ import MapView, { Marker, Callout } from 'react-native-maps';
 import { Foundation } from '@expo/vector-icons';
 
 import { Context as SearchContext } from './../providers/SearchProvider.js';
+import { Context as LayoutContext } from './../providers/LayoutProvider.js';
 
 const styles = StyleSheet.create({
   mapStyle: {
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Map = ({ initialBS, bs, mapRef, stories, longitude, latitude }) => {
+export const Map = ({ initialBS, bs, stories, longitude, latitude }) => {
   if (longitude === null)
     return <ActivityIndicator
       size='large'
@@ -35,6 +36,7 @@ export const Map = ({ initialBS, bs, mapRef, stories, longitude, latitude }) => 
     />
 
   const { setStory } = React.useContext(SearchContext);
+  const { state: { mapRef } } = React.useContext(LayoutContext);
 
   const [region, setRegion] = React.useState({
     longitude: longitude,

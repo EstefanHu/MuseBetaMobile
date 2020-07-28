@@ -22,7 +22,7 @@ import { StoryPreview } from './../../components/StoryPreview.js';
 import { BSSearch } from './../../components/BSSearch.js';
 
 export const InitialBottomSheet = ({ navigation, initialBS,
-  searchBS, storyBS, inputRef, stories, mapRef }) => {
+  searchBS, storyBS, inputRef, stories }) => {
   const { state: {
     deviceHeight,
     deviceWidth,
@@ -114,7 +114,6 @@ export const InitialBottomSheet = ({ navigation, initialBS,
             initialBS={initialBS}
             searchBS={searchBS}
             storyBS={storyBS}
-            mapRef={mapRef}
           />
       }
     /> : null
@@ -260,7 +259,7 @@ const bsbStyles = StyleSheet.create({
 });
 
 const BottomSheetBody = ({ navigation, stories,
-  library, initialBS, searchBS, storyBS, mapRef }) => {
+  library, initialBS, searchBS, storyBS }) => {
   const { state: { bottomSheetHeight } } = React.useContext(LayoutContext);
   const { state: { initialized } } = React.useContext(SearchContext);
 
@@ -287,7 +286,6 @@ const BottomSheetBody = ({ navigation, stories,
                     item={item}
                     initialBS={initialBS}
                     storyBS={storyBS}
-                    mapRef={mapRef}
                   />
                 ))
               }
@@ -307,7 +305,6 @@ const BottomSheetBody = ({ navigation, stories,
                     item={item}
                     initialBS={initialBS}
                     storyBS={storyBS}
-                    mapRef={mapRef}
                   />))
               }
             </View>

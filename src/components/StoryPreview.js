@@ -8,6 +8,7 @@ import {
 import { FontAwesome } from '@expo/vector-icons';
 
 import { Context as SearchContext } from './../providers/SearchProvider.js';
+import { Context as LayoutContext } from './../providers/LayoutProvider.js';
 
 const styles = StyleSheet.create({
   listItem: {
@@ -33,14 +34,15 @@ const styles = StyleSheet.create({
   }
 });
 
-export const StoryPreview = ({ item, initialBS, storyBS, mapRef }) => {
+export const StoryPreview = ({ item, initialBS, storyBS }) => {
   const { setStory } = React.useContext(SearchContext);
+  const { state: { mapRef } } = React.useContext(LayoutContext);
 
   const openItem = () => {
     setStory(item._id);
     initialBS.current.snapTo(2);
     storyBS.current.snapTo(1);
-    
+
     mapRef.current.animateToRegion(
       {
         longitude: item.startLocation.coordinates[0],

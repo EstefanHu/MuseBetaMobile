@@ -53,7 +53,8 @@ export const ExploreHomeScreen = ({ navigation }) => {
       bottomInset,
       bottomSheetHeaderHeight
     },
-    setBottomSheetHeight
+    setBottomSheetHeight,
+    setMapRef,
   } = React.useContext(LayoutContext);
 
   React.useEffect(() => {
@@ -65,6 +66,11 @@ export const ExploreHomeScreen = ({ navigation }) => {
     deviceHeight, headerHeight, topInset,
     bottomInset, bottomSheetHeaderHeight
   ]);
+
+  const mapRef = React.useRef(null);
+  React.useEffect(() => {
+    setMapRef(mapRef)
+  }, []);
 
   const recenter = () => {
     mapRef.current.animateToRegion(
@@ -78,9 +84,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
     );
   }
 
-  const mapRef = React.useRef(null);
   const inputRef = React.useRef(null);
-
   const initialBS = React.useRef(null);
   const searchBS = React.useRef(null);
   const storyBS = React.useRef(null);
@@ -95,7 +99,6 @@ export const ExploreHomeScreen = ({ navigation }) => {
         <Map
           initialBS={initialBS}
           bs={storyBS}
-          mapRef={mapRef}
           stories={stories}
           longitude={longitude}
           latitude={latitude}
@@ -124,7 +127,6 @@ export const ExploreHomeScreen = ({ navigation }) => {
           inputRef={inputRef}
           stories={stories}
           storyBS={storyBS}
-          mapRef={mapRef}
         />
         <SearchBottomSheet
           initialBS={initialBS}

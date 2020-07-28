@@ -1,4 +1,5 @@
 import createDataContext from './createDataContext.js';
+import React from 'react';
 import { NO_BEZEL } from './../constants/ios.js';
 import * as Device from 'expo-device';
 import { Dimensions } from 'react-native';
@@ -17,6 +18,8 @@ const layoutReducer = (state, action) => {
       return { ...state, bottomSheetHeaderHeight: action.payload };
     case 'set_bottom_sheet_height':
       return { ...state, bottomSheetHeight: action.payload };
+    case 'set_map_ref':
+      return { ...state, mapRef: action.payload };
     default:
       return state;
   }
@@ -54,6 +57,9 @@ const setBottomSheetHeight = disptach => (device, header, top, bottom, BSHeader)
   }
 }
 
+const setMapRef = dispatch => ref =>
+  dispatch({ type: 'set_map_ref', payload: ref });
+
 export const { Context, Provider } = createDataContext(
   layoutReducer,
   {
@@ -61,6 +67,7 @@ export const { Context, Provider } = createDataContext(
     setInsets,
     setBottomSheetHeaderHeight,
     setBottomSheetHeight,
+    setMapRef,
   },
   {
     deviceHeight: Dimensions.get('window').height,
@@ -70,5 +77,6 @@ export const { Context, Provider } = createDataContext(
     bottomInset: null,
     bottomSheetHeaderHeight: 30,
     bottomSheetHeight: null,
+    mapRef: null,
   }
 );
