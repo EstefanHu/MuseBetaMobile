@@ -78,11 +78,6 @@ export const ExploreHomeScreen = ({ navigation }) => {
     );
   }
 
-  const focusMarker = () => {
-    initialBS.current.snapTo(2);
-    bs.current.snapTo(1);
-  }
-
   const mapRef = React.useRef(null);
   const inputRef = React.useRef(null);
 
@@ -129,6 +124,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
           inputRef={inputRef}
           stories={stories}
           storyBS={storyBS}
+          mapRef={mapRef}
         />
         <SearchBottomSheet
           initialBS={initialBS}

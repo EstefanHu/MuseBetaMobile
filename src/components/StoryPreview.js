@@ -33,13 +33,23 @@ const styles = StyleSheet.create({
   }
 });
 
-export const StoryPreview = ({ item, initialBS, storyBS }) => {
+export const StoryPreview = ({ item, initialBS, storyBS, mapRef }) => {
   const { setStory } = React.useContext(SearchContext);
 
   const openItem = () => {
     setStory(item._id);
     initialBS.current.snapTo(2);
     storyBS.current.snapTo(1);
+    
+    mapRef.current.animateToRegion(
+      {
+        longitude: item.startLocation.coordinates[0],
+        latitude: item.startLocation.coordinates[1],
+        longitudeDelta: 0.1,
+        latitudeDelta: 0.1
+      },
+      1000
+    );
   }
 
   return (

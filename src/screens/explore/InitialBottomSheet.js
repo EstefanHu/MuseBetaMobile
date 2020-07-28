@@ -21,7 +21,8 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import { StoryPreview } from './../../components/StoryPreview.js';
 import { BSSearch } from './../../components/BSSearch.js';
 
-export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, inputRef, stories }) => {
+export const InitialBottomSheet = ({ navigation, initialBS,
+  searchBS, storyBS, inputRef, stories, mapRef }) => {
   const { state: {
     deviceHeight,
     deviceWidth,
@@ -113,6 +114,7 @@ export const InitialBottomSheet = ({ navigation, initialBS, searchBS, storyBS, i
             initialBS={initialBS}
             searchBS={searchBS}
             storyBS={storyBS}
+            mapRef={mapRef}
           />
       }
     /> : null
@@ -257,7 +259,8 @@ const bsbStyles = StyleSheet.create({
   },
 });
 
-const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS, storyBS }) => {
+const BottomSheetBody = ({ navigation, stories,
+  library, initialBS, searchBS, storyBS, mapRef }) => {
   const { state: { bottomSheetHeight } } = React.useContext(LayoutContext);
   const { state: { initialized } } = React.useContext(SearchContext);
 
@@ -284,6 +287,7 @@ const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS, st
                     item={item}
                     initialBS={initialBS}
                     storyBS={storyBS}
+                    mapRef={mapRef}
                   />
                 ))
               }
@@ -303,6 +307,7 @@ const BottomSheetBody = ({ navigation, stories, library, initialBS, searchBS, st
                     item={item}
                     initialBS={initialBS}
                     storyBS={storyBS}
+                    mapRef={mapRef}
                   />))
               }
             </View>
