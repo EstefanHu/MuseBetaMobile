@@ -20,7 +20,7 @@ import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
 import { Map } from './../../components/Map.js';
 import { InitialBottomSheet } from './InitialBottomSheet.js';
 import { SearchBottomSheet } from './SearchBottomSheet.js';
-import { StoryBottomSheet } from '../../components/StoryBottomSheet.js';
+import { StoryBottomSheet } from './StoryBottomSheet.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -59,6 +59,7 @@ export const ExploreHomeScreen = () => {
     setInitialBottomSheetRef,
     setSearchBottomSheetRef,
     setStoryBottomSheetRef,
+    setNavigationBottomSheetRef,
   } = React.useContext(LayoutContext);
 
   React.useEffect(() => {
@@ -76,12 +77,14 @@ export const ExploreHomeScreen = () => {
   const initialBS = React.useRef(null);
   const storyBS = React.useRef(null);
   const searchBS = React.useRef(null);
+  const navigationBS = React.useRef(null);
   React.useEffect(() => {
     setMapRef(mapRef);
     setInputRef(inputRef)
     setInitialBottomSheetRef(initialBS);
     setSearchBottomSheetRef(searchBS);
     setStoryBottomSheetRef(storyBS);
+    setNavigationBottomSheetRef(navigationBS);
   }, []);
 
   const recenter = () => {

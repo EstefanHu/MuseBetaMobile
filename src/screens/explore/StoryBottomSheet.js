@@ -11,14 +11,14 @@ import {
   FontAwesome,
   Octicons
 } from '@expo/vector-icons';
-import { useDateFormat } from './../hooks/useDateFormat.js';
+import { useDateFormat } from '../../hooks/useDateFormat.js';
 import { useNavigation } from '@react-navigation/native';
 
-import { Context as SearchContext } from './../providers/SearchProvider.js';
-import { Context as LayoutContext } from './../providers/LayoutProvider.js';
-import { Context as StoryContext } from './../providers/StoryProvider.js';
-import { Context as ProfileContext } from './../providers/ProfileProvider.js';
-import { Context as LocationContext } from './../providers/LocationProvider.js';
+import { Context as SearchContext } from '../../providers/SearchProvider.js';
+import { Context as LayoutContext } from '../../providers/LayoutProvider.js';
+import { Context as StoryContext } from '../../providers/StoryProvider.js';
+import { Context as ProfileContext } from '../../providers/ProfileProvider.js';
+import { Context as LocationContext } from '../../providers/LocationProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 
