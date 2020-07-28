@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     paddingHorizontal: 20,
-    transform: [{ translateX: -1 }]
   },
   panelHeader: {
     width: '100%',
@@ -84,6 +83,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  myLocation: {
+    color: 'rgb(255,50,50)'
   },
   back: {
     backgroundColor: 'lightgrey',
@@ -112,7 +114,6 @@ const BottomSheetHeader = () => {
       styles.header,
       {
         height: bottomSheetHeaderHeight * 2,
-        width: deviceWidth
       }]}>
       <View style={styles.panelHeader}>
         <View style={styles.panelHandle}></View>
@@ -121,7 +122,12 @@ const BottomSheetHeader = () => {
       <View style={styles.headerInfo}>
         <View>
           <Text style={styles.title}>Journey Title</Text>
-          <Text style={styles.distance}>distance...</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.distance}>From</Text>
+            <TouchableOpacity onPress={() => null}>
+              <Text style={styles.myLocation}> My Location</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <TouchableOpacity

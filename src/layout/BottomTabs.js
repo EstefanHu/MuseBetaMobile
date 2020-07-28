@@ -59,7 +59,7 @@ export const BottomTabs = () => {
       tabBarOptions={{
         activeTintColor: 'rgb(255,50,50)',
         inactiveTintColor: 'grey',
-        keyboardHidesTabBar: Platform.OS == 'ios' ? false : true,
+        // keyboardHidesTabBar: Platform.OS == 'ios' ? false : true,
       }}
       initialRouteName={'Explore'}
     >
