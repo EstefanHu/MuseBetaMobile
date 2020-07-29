@@ -274,7 +274,7 @@ const BottomSheetBody = ({ story }) => {
   const getDirections = () => {
     const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
     const latLng = `${story.startLocation.coordinates[1]},${story.startLocation.coordinates[0]}`;
-    const label = 'Custom Label';
+    const label = story.title;
     const url = Platform.select({
       ios: `${scheme}${label}@${latLng}`,
       android: `${scheme}${latLng}(${label})`
