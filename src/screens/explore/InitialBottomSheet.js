@@ -15,8 +15,9 @@ import Animated, {
 import { useNavigation } from '@react-navigation/native';
 
 import { Context as LayoutContext } from './../../providers/LayoutProvider.js';
-import { Context as ProfileContext } from '../../providers/ProfileProvider.js'; // TODO: Temp
+import { Context as ProfileContext } from '../../providers/ProfileProvider.js'; // TODO: Update Librayr to seperate context
 import { Context as SearchContext } from './../../providers/SearchProvider.js';
+import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 import { StoryPreview } from './../../components/StoryPreview.js';
@@ -35,6 +36,7 @@ export const InitialBottomSheet = ({ stories }) => {
   } } = React.useContext(LayoutContext);
   const { state: { library }, fetchLibrary } = React.useContext(ProfileContext);
   const { state: { initialized, storyId, catagory }, cancelQuery } = React.useContext(SearchContext);
+  const { state: { journeyId } } = React.useContext(JourneyContext);
 
   React.useEffect(() => {
     fetchLibrary();
@@ -88,7 +90,7 @@ export const InitialBottomSheet = ({ stories }) => {
       snapPoints={[
         deviceHeight - NONSCREEN,
         deviceHeight / 2 - NONSCREEN,
-        storyId || catagory ? 0 : bottomInset + bottomSheetHeaderHeight
+        storyId || catagory || journeyId ? 0 : bottomInset + bottomSheetHeaderHeight
       ]}
       initialSnap={2}
       enabledContentTapInteraction={false}

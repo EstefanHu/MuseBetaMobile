@@ -23,16 +23,12 @@ export const NavigationBottomSheet = () => {
     headerHeight,
     topInset,
     bottomInset,
-    initialBottomSheetRef,
-    storyBottomSheetRef,
     navigationBottomSheetRef,
-    markers,
   } } = React.useContext(LayoutContext);
-  const { state: { storyId }, clearStory } = React.useContext(SearchContext);
   const { state: { stories } } = React.useContext(StoryContext);
   const { state: { journeyId } } = React.useContext(JourneyContext);
 
-  const story = stories.find(s => s._id === storyId);
+  const story = stories.find(s => s._id === journeyId);
 
   const NONSCREEN = headerHeight + topInset + bottomInset + bottomSheetHeaderHeight;
 
@@ -42,7 +38,7 @@ export const NavigationBottomSheet = () => {
       snapPoints={[
         deviceHeight - NONSCREEN,
         deviceHeight / 2 - NONSCREEN,
-        journeyId && storyId === null ? bottomInset + bottomSheetHeaderHeight : 0
+        journeyId ? bottomInset + bottomSheetHeaderHeight : 0
       ]}
       initialSnap={2}
       enabledContentTapInteraction={false}
@@ -101,11 +97,9 @@ const styles = StyleSheet.create({
 
 const BottomSheetHeader = () => {
   const { state: {
-    deviceWidth,
     bottomSheetHeaderHeight,
     storyBottomSheetRef,
     navigationBottomSheetRef,
-    markers
   } } = React.useContext(LayoutContext);
   const { setStory } = React.useContext(SearchContext);
   const { state: { journeyId }, clearJourney } = React.useContext(JourneyContext);
@@ -114,7 +108,6 @@ const BottomSheetHeader = () => {
     storyBottomSheetRef.current.snapTo(1);
     navigationBottomSheetRef.current.snapTo(2);
     setStory(journeyId);
-    markers[journeyId].showCallout();
     clearJourney();
   }
 
@@ -133,7 +126,7 @@ const BottomSheetHeader = () => {
           <Text style={styles.title}>Journey Title</Text>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.distance}>From</Text>
-            <TouchableOpacity onPress={() => null}>
+            <TouchableOpacity onPress={() => true}>
               <Text style={styles.myLocation}> My Location</Text>
             </TouchableOpacity>
           </View>

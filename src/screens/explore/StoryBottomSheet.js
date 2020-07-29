@@ -30,11 +30,18 @@ export const StoryBottomSheet = () => {
     headerHeight,
     topInset,
     bottomInset,
-    initialBottomSheetRef,
     storyBottomSheetRef,
+    markers
   } } = React.useContext(LayoutContext);
   const { state: { storyId } } = React.useContext(SearchContext);
   const { state: { stories } } = React.useContext(StoryContext);
+
+  React.useEffect(() => {
+    if (storyId) {
+      markers[storyId].showCallout();
+      // return () => markers[storyId].hideCallout()
+    }
+  }, [storyId]);
 
   const story = stories.find(s => s._id === storyId);
 

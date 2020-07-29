@@ -11,13 +11,14 @@ import { Foundation } from '@expo/vector-icons';
 
 import { Context as SearchContext } from './../providers/SearchProvider.js';
 import { Context as LayoutContext } from './../providers/LayoutProvider.js';
+import { Context as JourneyContext } from './../providers/JourneyProvider.js';
 
 const styles = StyleSheet.create({
   mapStyle: {
     width: Dimensions.get('window').width,
     height: '100%',
   },
-  callout: {
+  callout: { //TODO: styles causeing misalignments
     justifyContent: 'center',
     alignItems: 'center',
     transform: [
@@ -37,6 +38,7 @@ export const Map = ({ stories, longitude, latitude }) => {
 
   const { state: { storyId }, setStory, clearStory } = React.useContext(SearchContext);
   const { state: { mapRef, markers, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: { journeyId, journeyStartLocation } } = React.useContext(JourneyContext);
 
   const [region, setRegion] = React.useState({
     longitude: longitude,
@@ -52,8 +54,7 @@ export const Map = ({ stories, longitude, latitude }) => {
   }
 
   const closeStorySearch = e => {
-    console.log(e);
-    if (!storyId) return console.log('nope!');
+    if (!storyId) return;
 
     clearStory();
     initialBottomSheetRef.current.snapTo(1);
@@ -75,8 +76,14 @@ export const Map = ({ stories, longitude, latitude }) => {
       showsPointsOfInterest={false}
       onPress={closeStorySearch}
     >
-      {
-        stories.map(item => (
+      {journeyId ?
+        <Marker
+          coordinate={{
+            latitude: journeyStartLocation?.coordinates[1],
+            longitude: journeyStartLocation?.coordinates[0]
+          }}
+        />
+        : stories.map(item => (
           <Marker
             key={item._id}
             ref={(ref) => markers[item._id] = ref}
@@ -85,7 +92,6 @@ export const Map = ({ stories, longitude, latitude }) => {
               longitude: item.startLocation.coordinates[0]
             }}
             onPress={() => toggleBs(item._id)}
-            tracksViewChanges={false}
             stopPropagation
           >
             <Callout tooltip alphaHitTest={true}>
