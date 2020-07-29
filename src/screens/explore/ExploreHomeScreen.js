@@ -56,6 +56,7 @@ export const ExploreHomeScreen = () => {
     },
     setBottomSheetHeight,
     setMapRef,
+    setMarkersRef,
     setInputRef,
     setInitialBottomSheetRef,
     setSearchBottomSheetRef,
@@ -74,6 +75,7 @@ export const ExploreHomeScreen = () => {
   ]);
 
   const mapRef = React.useRef(null);
+  // const markerRef = React.useRef({});
   const inputRef = React.useRef(null);
   const initialBS = React.useRef(null);
   const storyBS = React.useRef(null);
@@ -81,7 +83,8 @@ export const ExploreHomeScreen = () => {
   const navigationBS = React.useRef(null);
   React.useEffect(() => {
     setMapRef(mapRef);
-    setInputRef(inputRef)
+    // setMarkersRef(markerRef);
+    setInputRef(inputRef);
     setInitialBottomSheetRef(initialBS);
     setSearchBottomSheetRef(searchBS);
     setStoryBottomSheetRef(storyBS);

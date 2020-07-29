@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
 
 const BottomSheetHeader = ({ cancelSearch, widthAnim, marginAnim, shrinkSearchBar, growSearchBar }) => {
   const { state: { query }, initializeQuery, updateQuery } = React.useContext(SearchContext);
-  const { state: { inputRef, initialBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: { deviceWidth, inputRef, initialBottomSheetRef } } = React.useContext(LayoutContext);
 
   const startSearch = () => {
     inputRef.current.focus();
@@ -178,7 +178,7 @@ const BottomSheetHeader = ({ cancelSearch, widthAnim, marginAnim, shrinkSearchBa
   }
 
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, { width: deviceWidth }]}>
       <View style={styles.panelHeader}>
         <View style={styles.panelHandle}></View>
       </View>

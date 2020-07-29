@@ -1,5 +1,4 @@
 import createDataContext from './createDataContext.js';
-import React from 'react';
 import { NO_BEZEL } from './../constants/ios.js';
 import * as Device from 'expo-device';
 import { Dimensions } from 'react-native';
@@ -108,6 +107,7 @@ export const { Context, Provider } = createDataContext(
     bottomSheetHeaderHeight: 30,
     bottomSheetHeight: null,
     mapRef: null,
+    markersRef: {},
     inputRef: null,
     initialBottomSheetRef: null,
     searchBottomSheetRef: null,

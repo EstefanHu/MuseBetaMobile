@@ -36,7 +36,7 @@ export const Map = ({ stories, longitude, latitude }) => {
     />
 
   const { setStory } = React.useContext(SearchContext);
-  const { state: { mapRef, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: { mapRef, markersRef, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
 
   const [region, setRegion] = React.useState({
     longitude: longitude,
@@ -68,6 +68,7 @@ export const Map = ({ stories, longitude, latitude }) => {
         stories.map(item => (
           <Marker
             key={item._id}
+            ref={(ref) => markersRef[item._id] = ref}
             coordinate={{
               latitude: item.startLocation.coordinates[1],
               longitude: item.startLocation.coordinates[0]
