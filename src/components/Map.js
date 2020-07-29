@@ -80,7 +80,9 @@ export const Map = ({ stories, longitude, latitude }) => {
             latitude: journeyStartLocation?.coordinates[1],
             longitude: journeyStartLocation?.coordinates[0]
           }}
-        />
+        >
+          <Entypo name='location-pin' size={45} color='rgb(255,50,50)' />
+        </Marker>
         : stories.map(item => (
           <Marker
             key={item._id}
