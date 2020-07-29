@@ -3,11 +3,13 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  Text,
   ActivityIndicator
 } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
-import { Foundation } from '@expo/vector-icons';
+import {
+  Foundation,
+  Entypo,
+} from '@expo/vector-icons';
 
 import { Context as SearchContext } from './../providers/SearchProvider.js';
 import { Context as LayoutContext } from './../providers/LayoutProvider.js';
@@ -21,10 +23,6 @@ const styles = StyleSheet.create({
   callout: { //TODO: styles causeing misalignments
     justifyContent: 'center',
     alignItems: 'center',
-    transform: [
-      { translateX: 9 },
-      { translateY: 15 }
-    ]
   },
 });
 
@@ -37,7 +35,7 @@ export const Map = ({ stories, longitude, latitude }) => {
     />
 
   const { state: { storyId }, setStory, clearStory } = React.useContext(SearchContext);
-  const { state: { mapRef, markers, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: { mapRef, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
   const { state: { journeyId, journeyStartLocation } } = React.useContext(JourneyContext);
 
   const [region, setRegion] = React.useState({
@@ -86,19 +84,20 @@ export const Map = ({ stories, longitude, latitude }) => {
         : stories.map(item => (
           <Marker
             key={item._id}
-            ref={(ref) => markers[item._id] = ref}
             coordinate={{
               latitude: item.startLocation.coordinates[1],
               longitude: item.startLocation.coordinates[0]
             }}
             onPress={() => toggleBs(item._id)}
             stopPropagation
+            calloutOffset={{ x: 1, y: 15 }}
+            calloutAnchor={{ x: 0.5, y: 1.5 }}
           >
-            <Callout tooltip alphaHitTest={true}>
-              <View style={styles.callout}>
-                <Foundation name='arrow-down' size={35} color='black' />
-              </View>
-            </Callout>
+            <Entypo
+              name='location-pin'
+              size={35}
+              color={item._id === storyId ? 'rgb(255,50,50)' : 'black'}
+            />
           </Marker>
         ))
       }

@@ -31,17 +31,9 @@ export const StoryBottomSheet = () => {
     topInset,
     bottomInset,
     storyBottomSheetRef,
-    markers
   } } = React.useContext(LayoutContext);
   const { state: { storyId } } = React.useContext(SearchContext);
   const { state: { stories } } = React.useContext(StoryContext);
-
-  React.useEffect(() => {
-    if (storyId) {
-      markers[storyId].showCallout();
-      // return () => markers[storyId].hideCallout()
-    }
-  }, [storyId]);
 
   const story = stories.find(s => s._id === storyId);
 
@@ -108,13 +100,12 @@ const headerStyles = StyleSheet.create({
 });
 
 const BottomSheetHeader = ({ story }) => {
-  const { state: { markers, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: { initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
   const { clearStory } = React.useContext(SearchContext);
 
   const deactivate = () => {
     initialBottomSheetRef.current.snapTo(1);
     storyBottomSheetRef.current.snapTo(2);
-    markers[story._id].hideCallout();
     clearStory();
   }
 
@@ -221,7 +212,6 @@ const BottomSheetBody = ({ story }) => {
     topInset,
     bottomInset,
     mapRef,
-    markers,
     storyBottomSheetRef,
     navigationBottomSheetRef
   } } = React.useContext(LayoutContext);
@@ -263,7 +253,6 @@ const BottomSheetBody = ({ story }) => {
     storyBottomSheetRef.current.snapTo(2);
     navigationBottomSheetRef.current.snapTo(1);
     setJourney(story);
-    markers[story._id].hideCallout();
     clearStory();
   }
 

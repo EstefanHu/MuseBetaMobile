@@ -107,7 +107,6 @@ export const { Context, Provider } = createDataContext(
     bottomSheetHeaderHeight: 30,
     bottomSheetHeight: null,
     mapRef: null,
-    markers: {},
     inputRef: null,
     initialBottomSheetRef: null,
     searchBottomSheetRef: null,
