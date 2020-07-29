@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import { Context as ProfileContext } from './../providers/ProfileProvider.js';
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
@@ -24,12 +26,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export const UpdateActions = ({ action }) => {
+export const UpdateActions = ({ body }) => {
   const navigation = useNavigation();
+  const { updateProfile } = React.useContext(ProfileContext);
 
-  const submitUpdate = () => {
-    
-  }
+  const submitUpdate = () => updateProfile(body);
 
   return (
     <View style={styles.container}>
@@ -43,7 +44,7 @@ export const UpdateActions = ({ action }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={() => navigation.navigate(action)}
+            onPress={submitUpdate}
           >
             <Text style={styles.actionText}>Update</Text>
           </TouchableOpacity>
