@@ -8,7 +8,6 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import { ProfileOverviewScreen } from '../screens/profile/ProfileOverviewScreen.js';
 import { ProfileUpdateScreen } from '../screens/profile/ProfileUpdateScreen.js';
-import { ProfileBioScreen } from '../screens/profile/ProfileBioScreen.js';
 import { ProfileStoryScreen } from '../screens/profile/ProfileStoryScreen.js';
 
 const Tab = createMaterialTopTabNavigator();
@@ -42,13 +41,6 @@ export const ProfileTopTabs = () => {
         component={ProfileUpdateScreen}
         options={{
           title: 'Update'
-        }}
-      />
-      <Tab.Screen
-        name='ProfileBioScreen'
-        component={ProfileBioScreen}
-        options={{
-          title: 'Bio'
         }}
       />
     </Tab.Navigator>

@@ -4,10 +4,10 @@ import {
   View,
   Text,
   TextInput,
-  SafeAreaView,
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Context as ProfileContext } from '../providers/ProfileProvider.js';
 import { UpdateActions } from './../components/UpdateActions.js';
@@ -75,7 +75,6 @@ export const UpdateEmailModal = ({ navigation }) => {
               onChangeText={text => setNewEmail(text)}
             />
           </View>
-
         </SafeAreaView>
 
         <UpdateActions body={{ email: newEmail }} navigation={navigation} />

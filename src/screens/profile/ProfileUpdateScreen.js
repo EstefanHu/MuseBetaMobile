@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
 });
 
 export const ProfileUpdateScreen = ({ navigation }) => {
-  const { state: { name, email, photo, links } } = useContext(ProfileContext);
+  const { state: { name, email, photo, links } } = React.useContext(ProfileContext);
 
   const bs = React.createRef();
   const fall = new Animated.Value(1);
@@ -162,6 +162,10 @@ export const ProfileUpdateScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('UpdateLinksModal')}>
             <MaterialIcons name='edit' size={20} color='grey' />
           </TouchableOpacity>
+        </View>
+
+        <View style={styles.action}>
+
         </View>
       </Animated.View >
       <BottomSheet
@@ -238,7 +242,7 @@ const Header = () => (
 );
 
 const Panel = ({ bs }) => {
-  const { uploadProfilePhoto } = useContext(ProfileContext);
+  const { uploadProfilePhoto } = React.useContext(ProfileContext);
 
   const selectPicture = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
