@@ -5,23 +5,47 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  SafeAreaView
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 
 import { Context as ProfileContext } from '../providers/ProfileProvider.js';
+import { UpdateActions } from './../components/UpdateActions.js';
 
 const styles = StyleSheet.create({
   container: {
-
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  intro: {
+    marginVertical: 10,
+    marginHorizontal: 20
+  },
+  header: {
+    fontWeight: 'bold',
+    fontSize: 40,
+    color: 'rgb(255,50,50)',
+    textAlign: 'center',
+  },
+  description: {
+    fontSize: 18,
   },
   inputContainer: {
-
+    marginTop: 10,
+    marginBottom: 10,
+    paddingBottom: 5,
+    paddingHorizontal: 20,
   },
-  inputLabel: {
-
+  label: {
+    color: 'grey'
   },
   input: {
-
+    backgroundColor: 'lightgrey',
+    height: 42,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    fontSize: 20
   }
 });
 
@@ -34,46 +58,59 @@ export const UpdateNameModal = ({ navigation }) => {
   useEffect(() => {
     const seperatedName = name.split(' ');
     setFirstName(seperatedName[0]);
-    setLastName(seperatedName[-1]);
+    setLastName(seperatedName[seperatedName.length - 1]);
 
     if (seperatedName.length > 2)
-      setMiddleName(seperatedName[2]);
-  }), [name];
+      setMiddleName(seperatedName[1]);
+  }, []);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>First Name</Text>
-        <TextInput
-          style={styles.input}
-          autoFocus
-          value={firstName}
-          autoCapitalize='none'
-          autoCorrect={false}
-          onChangeText={text => setFirstName(text)}
-        />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <SafeAreaView>
+          <View style={styles.intro}>
+            <Text style={styles.header}>Change Name</Text>
+            <Text style={styles.description}>
+              Name can be change up to three times every 90 days.
+            </Text>
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>First Name</Text>
+            <TextInput
+              style={styles.input}
+              value={firstName}
+              autoCapitalize='none'
+              autoCorrect={false}
+              onChangeText={text => setFirstName(text)}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Middle Name</Text>
+            <TextInput
+              style={styles.input}
+              value={middleName}
+              autoCapitalize='none'
+              autoCorrect={false}
+              onChangeText={text => setMiddleName(text)}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Last Name</Text>
+            <TextInput
+              style={styles.input}
+              value={lastName}
+              autoCapitalize='none'
+              autoCorrect={false}
+              onChangeText={text => setLastName(text)}
+            />
+          </View>
+        </SafeAreaView>
+
+        <UpdateActions body={{ name: `${firstName} ${middleName} ${lastName}` }} />
       </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Middle Name</Text>
-        <TextInput
-          style={styles.input}
-          value={middleName}
-          autoCapitalize='none'
-          autoCorrect={false}
-          onChangeText={text => setMiddleName(text)}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Last Name</Text>
-        <TextInput
-          style={styles.input}
-          value={lastName}
-          autoCapitalize='none'
-          autoCorrect={false}
-          onChangeText={text => setLastName(text)}
-        />
-      </View>
-      <Text>3 name changes allowed every 90 days.</Text>
-    </View>
-  )
-}
+    </TouchableWithoutFeedback>
+  );
+};

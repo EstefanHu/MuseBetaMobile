@@ -131,7 +131,7 @@ const fetchStories = dispatch => async authorId => {
 
 const updateProfile = dispatch => async body => {
   try {
-    const response = await useFetch(profileUrl, 'PATCH', body);
+    const response = await useFetch(updateMeUrl, 'PATCH', body);
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', paylaod: response.payload });
     dispatch({ type: 'get_me', payload: response.payload });

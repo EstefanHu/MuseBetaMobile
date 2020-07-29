@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   actionButton: {},
   actionText: {
     fontSize: 19,
-    color: 'blue'
+    color: 'rgb(255,50,50)'
   }
 });
 
@@ -30,7 +30,10 @@ export const UpdateActions = ({ body }) => {
   const navigation = useNavigation();
   const { updateProfile } = React.useContext(ProfileContext);
 
-  const submitUpdate = () => updateProfile(body);
+  const submitUpdate = () => {
+    updateProfile(body);
+    navigation.pop();
+  };
 
   return (
     <View style={styles.container}>
