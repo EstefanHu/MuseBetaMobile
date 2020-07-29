@@ -20,10 +20,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: '100%',
   },
-  callout: { //TODO: styles causeing misalignments
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 });
 
 export const Map = ({ stories, longitude, latitude }) => {
@@ -92,8 +88,6 @@ export const Map = ({ stories, longitude, latitude }) => {
             }}
             onPress={() => toggleBs(item._id)}
             stopPropagation
-            calloutOffset={{ x: 1, y: 15 }}
-            calloutAnchor={{ x: 0.5, y: 1.5 }}
           >
             <Entypo
               name='location-pin'
