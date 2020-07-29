@@ -46,10 +46,6 @@ const profileReducer = (state, action) => {
       };
     case 'fetch_stories':
       return { ...state, stories: action.payload };
-    case 'update_name':
-      return { ...state, name: action.payload };
-    case 'update_email':
-      return { ...state, email: action.payload };
     default:
       return state;
   }
@@ -133,23 +129,12 @@ const fetchStories = dispatch => async authorId => {
   };
 };
 
-const updateName = dispatch => async name => {
+const updateProfile = dispatch => async body => {
   try {
-    const response = await useFetch(profileUrl, 'PATCH', name);
-    if (response.status !== 'success')
-      return dispatch({ type: 'add_error', payload: response.payload });
-    dispatch({ type: 'update_name', payload: response.payload });
-  } catch (error) {
-    console.log(error);
-  };
-};
-
-const udpateEmail = dispatch => async email => {
-  try {
-    const response = await useFetch(profileUrl, 'PATCH', email);
+    const response = await useFetch(profileUrl, 'PATCH', body);
     if (response.status !== 'success')
       return dispatch({ type: 'add_error', paylaod: response.payload });
-    dispatch({ type: 'update_email', payload: response.payload });
+    dispatch({ type: 'get_me', payload: response.payload });
   } catch (error) {
     console.log(error);
   }
@@ -165,8 +150,7 @@ export const { Context, Provider } = createDataContext(
     addToLibrary,
     removeFromLibrary,
     fetchStories,
-    updateName,
-    udpateEmail,
+    updateProfile,
   },
   {
     id: null,

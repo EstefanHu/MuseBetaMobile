@@ -27,6 +27,10 @@ const styles = StyleSheet.create({
 export const UpdateActions = ({ action }) => {
   const navigation = useNavigation();
 
+  const submitUpdate = () => {
+    
+  }
+
   return (
     <View style={styles.container}>
       <SafeAreaView>
@@ -39,6 +43,7 @@ export const UpdateActions = ({ action }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.actionButton}
+            onPress={() => navigation.navigate(action)}
           >
             <Text style={styles.actionText}>Update</Text>
           </TouchableOpacity>
