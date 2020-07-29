@@ -35,7 +35,7 @@ export const Map = ({ stories, longitude, latitude }) => {
       style={{ flex: 1 }}
     />
 
-  const { state: { storyId }, setStory } = React.useContext(SearchContext);
+  const { state: { storyId }, setStory, clearStory } = React.useContext(SearchContext);
   const { state: { mapRef, markers, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
 
   const [region, setRegion] = React.useState({
@@ -51,6 +51,15 @@ export const Map = ({ stories, longitude, latitude }) => {
     storyBottomSheetRef.current.snapTo(1);
   }
 
+  const closeStorySearch = e => {
+    console.log(e);
+    if (!storyId) return console.log('nope!');
+
+    clearStory();
+    initialBottomSheetRef.current.snapTo(1);
+    storyBottomSheetRef.current.snapTo(2)
+  }
+
   return (
     <MapView
       style={styles.mapStyle}
@@ -63,6 +72,8 @@ export const Map = ({ stories, longitude, latitude }) => {
       showsScale
       compassOffset={{ x: -6, y: 105 }}
       showsUserLocation
+      showsPointsOfInterest={false}
+      onPress={closeStorySearch}
     >
       {
         stories.map(item => (
@@ -75,6 +86,7 @@ export const Map = ({ stories, longitude, latitude }) => {
             }}
             onPress={() => toggleBs(item._id)}
             tracksViewChanges={false}
+            stopPropagation
           >
             <Callout tooltip alphaHitTest={true}>
               <View style={styles.callout}>
