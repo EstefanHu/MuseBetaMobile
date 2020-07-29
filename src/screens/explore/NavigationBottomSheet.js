@@ -190,7 +190,7 @@ const BottomSheetBody = () => {
       <Text style={{ textAlign: 'center' }}>When you have arrived, click 'start story'</Text>
       <TouchableOpacity
         style={bsbStyles.start}
-        onPress={() => navigation.navigate('ExploreStoryScreen')}
+        onPress={() => true}
       >
         <Text style={bsbStyles.startText}>Start Story</Text>
       </TouchableOpacity>

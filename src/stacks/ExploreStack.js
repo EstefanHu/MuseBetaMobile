@@ -24,12 +24,12 @@ export const ExploreStack = () => (
       component={ExploreEndScreen}
     />
     <Stack.Screen
-      name='ProfileTopTabs'
-      component={ProfileTopTabs}
-    />
-    <Stack.Screen
       name='ExploreInfoScreen'
       component={ExploreInfoScreen}
+    />
+    <Stack.Screen
+      name='ProfileTopTabs'
+      component={ProfileTopTabs}
     />
   </Stack.Navigator>
 );

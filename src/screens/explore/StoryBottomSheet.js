@@ -152,6 +152,19 @@ const bodyStyles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
   },
+  directionsButton: {
+    backgroundColor: 'rgb(235,235,235)',
+    width: '100%',
+    paddingVertical: 10,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 15
+  },
+  directionsText: {
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
   actionContainer: {
     marginVertical: 20,
     flexDirection: 'row',
@@ -256,6 +269,10 @@ const BottomSheetBody = ({ story }) => {
     clearStory();
   }
 
+  const getDirections = () => {
+    console.log('GO')
+  }
+
   return (
     <View style={bodyStyles.panel}>
       <TouchableOpacity
@@ -263,6 +280,13 @@ const BottomSheetBody = ({ story }) => {
         onPress={beginStory}
       >
         <Text style={bodyStyles.beginText}>Begin Story</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={bodyStyles.directionsButton}
+        onPress={getDirections}
+      >
+        <Text style={bodyStyles.directionsText}>Get Directions</Text>
       </TouchableOpacity>
 
       <View style={bodyStyles.actionContainer}>
