@@ -15,6 +15,7 @@ import { Context as LayoutContext } from '../../providers/LayoutProvider.js';
 import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
+import { useNavigation } from '@react-navigation/native';
 
 export const NavigationBottomSheet = () => {
   const { state: {
@@ -167,14 +168,34 @@ const bsbStyles = StyleSheet.create({
     color: 'rgba(0, 100, 255, 0.7)',
     fontSize: 13
   },
+  start: {
+    backgroundColor: 'rgb(255,50,50)',
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  startText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 20
+  }
 });
 
 const BottomSheetBody = () => {
+  const navigation = useNavigation()
   const { state: { bottomSheetHeight } } = React.useContext(LayoutContext);
 
   return (
     <View style={[bsbStyles.panel, { minHeight: bottomSheetHeight }]}>
-
+      <Text style={{ textAlign: 'center' }}>When you have arrived, click 'start story'</Text>
+      <TouchableOpacity
+        style={bsbStyles.start}
+        onPress={() => navigation.navigate('ExploreStoryScreen')}
+      >
+        <Text style={bsbStyles.startText}>Start Story</Text>
+      </TouchableOpacity>
     </View>
   );
 };
