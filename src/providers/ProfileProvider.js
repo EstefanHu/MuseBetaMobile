@@ -26,7 +26,8 @@ const profileReducer = (state, action) => {
         credibility: action.payload.credibility,
         role: action.payload.role,
         type: action.payload.type,
-        photo: action.payload.photo
+        photo: action.payload.photo,
+        bio: action.payload.bio,
       }
     case 'upload_profile_photo':
       return { ...state, photo: action.payload };

@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
 });
 
 export const ProfileUpdateScreen = ({ navigation }) => {
-  const { state: { name, email, photo, links } } = React.useContext(ProfileContext);
+  const { state: { name, email, photo, links, bio } } = React.useContext(ProfileContext);
 
   const bs = React.createRef();
   const fall = new Animated.Value(1);
@@ -165,7 +165,14 @@ export const ProfileUpdateScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.action}>
-
+          <View>
+            <Text style={styles.label}>Bio</Text>
+            <Text style={styles.infoLabel}>{bio}</Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('UpdateBioModal')}>
+            <MaterialIcons name='edit' size={20} color='grey' />
+          </TouchableOpacity>
         </View>
       </Animated.View >
       <BottomSheet

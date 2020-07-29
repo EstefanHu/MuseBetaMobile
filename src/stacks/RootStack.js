@@ -27,6 +27,7 @@ import { CreateStack } from './CreateStack.js';
 import { CreatePermissionsModal } from './../modals/CreatePermissionsModal.js';
 import { ReportStack } from './ReportStack.js';
 import { UpdateLinksModal } from '../modals/UpdateLinksModal.js';
+import { UpdateBioModal } from './../modals/UpdateBioModal.js';
 
 const Stack = createStackNavigator();
 
@@ -165,6 +166,14 @@ export const RootStack = () => {
       <Stack.Screen
         name='UpdateLinksModal'
         component={UpdateLinksModal}
+        options={{
+          animationEnabled: true,
+          header: () => null
+        }}
+      />
+      <Stack.Screen
+        name='UpdateBioModal'
+        component={UpdateBioModal}
         options={{
           animationEnabled: true,
           header: () => null

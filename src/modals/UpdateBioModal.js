@@ -5,7 +5,8 @@ import {
   Text,
   TextInput,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  KeyboardAvoidingView
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -36,83 +37,62 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     paddingHorizontal: 20,
   },
+  meta: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   label: {
     color: 'grey'
   },
   input: {
     backgroundColor: 'lightgrey',
-    height: 42,
     borderRadius: 5,
-    paddingHorizontal: 10,
-    fontSize: 20
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    fontSize: 20,
   }
 });
 
-export const UpdateNameModal = ({ navigation }) => {
-  const { state: { name } } = React.useContext(ProfileContext);
-  const [firstName, setFirstName] = React.useState();
-  const [middleName, setMiddleName] = React.useState();
-  const [lastName, setLastName] = React.useState();
-
-  React.useEffect(() => {
-    const seperatedName = name.split(' ');
-    setFirstName(seperatedName[0]);
-    setLastName(seperatedName[seperatedName.length - 1]);
-
-    if (seperatedName.length > 2)
-      setMiddleName(seperatedName[1]);
-  }, []);
+export const UpdateBioModal = ({ navigation }) => {
+  const { state: { bio } } = React.useContext(ProfileContext);
+  const [edit, setEdit] = React.useState(bio || '');
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <SafeAreaView>
-          <View style={styles.intro}>
-            <Text style={styles.header}>Change Name</Text>
-            <Text style={styles.description}>
-              Name can be change up to three times every 90 days.
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
+          <SafeAreaView>
+            <View style={styles.intro}>
+              <Text style={styles.header}>Update Bio</Text>
+              <Text style={styles.description}>
+                A quick, fun intro of who you are as a content creator.
             </Text>
-          </View>
+            </View>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>First Name</Text>
-            <TextInput
-              style={styles.input}
-              underlineColorAndroid='rgba(0,0,0,0)'
-              value={firstName}
-              autoCapitalize='none'
-              autoCorrect={false}
-              onChangeText={text => setFirstName(text)}
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Middle Name</Text>
-            <TextInput
-              style={styles.input}
-              underlineColorAndroid='rgba(0,0,0,0)'
-              value={middleName}
-              autoCapitalize='none'
-              autoCorrect={false}
-              onChangeText={text => setMiddleName(text)}
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Last Name</Text>
-            <TextInput
-              style={styles.input}
-              underlineColorAndroid='rgba(0,0,0,0)'
-              value={lastName}
-              autoCapitalize='none'
-              autoCorrect={false}
-              onChangeText={text => setLastName(text)}
-            />
-          </View>
-        </SafeAreaView>
+            <View style={styles.inputContainer}>
+              <View style={styles.meta}>
+                <Text style={styles.label}>Bio</Text>
+                <Text>{edit.length}/500</Text>
+              </View>
+              <TextInput
+                style={styles.input}
+                underlineColorAndroid='rgba(0,0,0,0)'
+                placeholder={'Its kinda lonely here... write something!'}
+                value={edit}
+                autoCorrect
+                onChangeText={text => setEdit(text)}
+                multiline
+                maxLength={500}
+                numberOfLines={4}
+              />
+            </View>
+          </SafeAreaView>
+        </KeyboardAvoidingView>
 
         <UpdateActions
-          body={{ name: `${firstName} ${middleName} ${lastName}` }}
+          body={{ bio: edit }}
           navigation={navigation}
         />
       </View>
