@@ -214,6 +214,7 @@ const BottomSheetBody = ({ story }) => {
     topInset,
     bottomInset,
     mapRef,
+    markers,
     storyBottomSheetRef,
     navigationBottomSheetRef
   } } = React.useContext(LayoutContext);
@@ -255,6 +256,7 @@ const BottomSheetBody = ({ story }) => {
     storyBottomSheetRef.current.snapTo(2);
     navigationBottomSheetRef.current.snapTo(1);
     setJourney(story);
+    markers[story._id].hideCallout();
     clearStory();
   }
 

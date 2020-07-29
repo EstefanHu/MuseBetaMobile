@@ -26,6 +26,7 @@ export const NavigationBottomSheet = () => {
     initialBottomSheetRef,
     storyBottomSheetRef,
     navigationBottomSheetRef,
+    markers,
   } } = React.useContext(LayoutContext);
   const { state: { storyId }, clearStory } = React.useContext(SearchContext);
   const { state: { stories } } = React.useContext(StoryContext);
@@ -99,7 +100,13 @@ const styles = StyleSheet.create({
 });
 
 const BottomSheetHeader = () => {
-  const { state: { deviceWidth, bottomSheetHeaderHeight, storyBottomSheetRef, navigationBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: {
+    deviceWidth,
+    bottomSheetHeaderHeight,
+    storyBottomSheetRef,
+    navigationBottomSheetRef,
+    markers
+  } } = React.useContext(LayoutContext);
   const { setStory } = React.useContext(SearchContext);
   const { state: { journeyId }, clearJourney } = React.useContext(JourneyContext);
 
@@ -107,6 +114,7 @@ const BottomSheetHeader = () => {
     storyBottomSheetRef.current.snapTo(1);
     navigationBottomSheetRef.current.snapTo(2);
     setStory(journeyId);
+    markers[journeyId].showCallout();
     clearJourney();
   }
 
