@@ -5,8 +5,9 @@ import {
   Text,
   TouchableOpacity,
   ImageBackground,
-  TouchableWithoutFeedback,
-  Alert
+  Alert,
+  Dimensions,
+  ScrollView,
 } from 'react-native';
 import {
   Fontisto,
@@ -56,13 +57,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
     paddingBottom: 5,
+    // flexWrap: 'wrap'
   },
   label: {
     fontSize: 12,
     color: 'grey'
   },
   infoLabel: {
-    fontSize: 18
+    fontSize: 18,
+    width: Dimensions.get('window').width * 0.8,
   },
   links: {
     marginTop: 10,
@@ -102,79 +105,82 @@ export const ProfileUpdateScreen = ({ navigation }) => {
   const fall = new Animated.Value(1);
 
   return (
-    <View style={styles.container}>
-      <Animated.View style={{
-        margin: 20,
-        opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-      }}>
-        <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
-            <ImageBackground
-              style={styles.image}
-              source={
-                photo ? { uri: getProfileImage + '/' + photo }
-                  : DefaultImage
-              }
-            >
-              <View style={styles.cameraHolder}>
-                <Fontisto style={styles.camera}
-                  name='camera' size={35} color='#fff' />
-              </View>
-            </ImageBackground>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.action}>
-          <View>
-            <Text style={styles.label}>Name</Text>
-            <Text style={styles.infoLabel}>{name}</Text>
-          </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('UpdateNameModal')}>
-            <MaterialIcons name='edit' size={20} color='grey' />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.action}>
-          <View>
-            <Text style={styles.label}>Email</Text>
-            <Text style={styles.infoLabel}>{email}</Text>
-          </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('UpdateEmailModal')}>
-            <MaterialIcons name='edit' size={20} color='grey' />
-          </TouchableOpacity>
-        </View >
-
-        <View style={styles.action}>
-          <View>
-            <Text style={styles.label}>Links</Text>
-            {
-              links.map(l => (
-                <View style={styles.link}>
-                  <Text style={styles.infoLabel}>{l}</Text>
-                  <MaterialIcons name='edit' size={20} color='grey' />
+    <>
+      <ScrollView style={styles.container} bounces={false}>
+        <Animated.View style={{
+          margin: 20,
+          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+        }}>
+          <View style={{ alignItems: 'center' }}>
+            <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
+              <ImageBackground
+                style={styles.image}
+                source={
+                  photo ? { uri: getProfileImage + '/' + photo }
+                    : DefaultImage
+                }
+              >
+                <View style={styles.cameraHolder}>
+                  <Fontisto style={styles.camera}
+                    name='camera' size={35} color='#fff' />
                 </View>
-              ))
-            }
+              </ImageBackground>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('UpdateLinksModal')}>
-            <MaterialIcons name='edit' size={20} color='grey' />
-          </TouchableOpacity>
-        </View>
 
-        <View style={styles.action}>
-          <View>
-            <Text style={styles.label}>Bio</Text>
-            <Text style={styles.infoLabel}>{bio}</Text>
+          <View style={styles.action}>
+            <View>
+              <Text style={styles.label}>Name</Text>
+              <Text style={styles.infoLabel}>{name}</Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('UpdateNameModal')}>
+              <MaterialIcons name='edit' size={20} color='grey' />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('UpdateBioModal')}>
-            <MaterialIcons name='edit' size={20} color='grey' />
-          </TouchableOpacity>
-        </View>
-      </Animated.View >
+
+          <View style={styles.action}>
+            <View>
+              <Text style={styles.label}>Email</Text>
+              <Text style={styles.infoLabel}>{email}</Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('UpdateEmailModal')}>
+              <MaterialIcons name='edit' size={20} color='grey' />
+            </TouchableOpacity>
+          </View >
+
+          <View style={styles.action}>
+            <View>
+              <Text style={styles.label}>Links</Text>
+              {
+                links.map(l => (
+                  <View style={styles.link}>
+                    <Text style={styles.infoLabel}>{l}</Text>
+                    <MaterialIcons name='edit' size={20} color='grey' />
+                  </View>
+                ))
+              }
+            </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('UpdateLinksModal')}>
+              <MaterialIcons name='edit' size={20} color='grey' />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.action}>
+            <View>
+              <Text style={styles.label}>Bio</Text>
+              <Text style={styles.infoLabel}>{bio}</Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('UpdateBioModal')}>
+              <MaterialIcons name='edit' size={20} color='grey' />
+            </TouchableOpacity>
+          </View>
+        </Animated.View >
+
+      </ScrollView>
       <BottomSheet
         ref={bs}
         snapPoints={[330, 0]}
@@ -185,7 +191,7 @@ export const ProfileUpdateScreen = ({ navigation }) => {
         renderHeader={() => <Header />}
         renderContent={() => <Panel bs={bs} />}
       />
-    </View >
+    </>
   );
 };
 

@@ -164,6 +164,7 @@ export const { Context, Provider } = createDataContext(
     library: [],
     stories: [],
     credibility: null,
-    photo: null
+    photo: null,
+    bio: null,
   }
 );
