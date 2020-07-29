@@ -103,7 +103,10 @@ const BottomSheetHeader = () => {
     navigationBottomSheetRef,
   } } = React.useContext(LayoutContext);
   const { setStory } = React.useContext(SearchContext);
+  const { state: { stories } } = React.useContext(StoryContext);
   const { state: { journeyId }, clearJourney } = React.useContext(JourneyContext);
+
+  const story = stories.find(s => s._id === journeyId);
 
   const unmountJourney = () => {
     storyBottomSheetRef.current.snapTo(1);
@@ -124,7 +127,7 @@ const BottomSheetHeader = () => {
 
       <View style={styles.headerInfo}>
         <View>
-          <Text style={styles.title}>Journey Title</Text>
+          <Text style={styles.title}>To {story?.title}</Text>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.distance}>From</Text>
             <TouchableOpacity onPress={() => true}>
