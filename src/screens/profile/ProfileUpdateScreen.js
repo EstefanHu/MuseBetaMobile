@@ -64,6 +64,23 @@ const styles = StyleSheet.create({
   infoLabel: {
     fontSize: 18
   },
+  links: {
+    marginTop: 10,
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f2f2f2',
+    paddingBottom: 5,
+  },
+  addLink: {
+    backgroundColor: 'rgb(220,220,220)',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 5,
+  },
+  addLinkText: {
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
   submit: {
     padding: 15,
     borderRadius: 10,
@@ -118,8 +135,7 @@ export const ProfileUpdateScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <View
-          style={styles.action}>
+        <View style={styles.action}>
           <View>
             <Text style={styles.label}>Email</Text>
             <Text style={styles.infoLabel}>{email}</Text>
@@ -130,19 +146,23 @@ export const ProfileUpdateScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View >
 
-        {
-          links.length > 0 ? links.map(l => (
-            <View
-              style={styles.action}
-              onPress={() => navigation.navigate('')}>
-              <View>
-                <Text style={styles.label}>Link</Text>
-                <Text style={styles.infoLabel}>{l}</Text>
-              </View>
-              <MaterialIcons name='edit' size={20} color='grey' />
-            </View>
-          )) : null
-        }
+        <View style={styles.action}>
+          <View>
+            <Text style={styles.label}>Links</Text>
+            {
+              links.map(l => (
+                <View style={styles.link}>
+                  <Text style={styles.infoLabel}>{l}</Text>
+                  <MaterialIcons name='edit' size={20} color='grey' />
+                </View>
+              ))
+            }
+          </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('UpdateLinksModal')}>
+            <MaterialIcons name='edit' size={20} color='grey' />
+          </TouchableOpacity>
+        </View>
       </Animated.View >
       <BottomSheet
         ref={bs}
@@ -221,7 +241,6 @@ const Panel = ({ bs }) => {
   const { uploadProfilePhoto } = useContext(ProfileContext);
 
   const selectPicture = async () => {
-    console.log('hello')
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status !== 'granted') return Alert.alert(
       'Grant Permission',
@@ -285,7 +304,7 @@ const Panel = ({ bs }) => {
 
       <TouchableOpacity
         style={bsStyles.panelButton}
-        onPress={() => console.log('hello world')}>
+        onPress={selectPicture}>
         <Text style={bsStyles.panelButtonTitle}>Choose From Library</Text>
       </TouchableOpacity>
 

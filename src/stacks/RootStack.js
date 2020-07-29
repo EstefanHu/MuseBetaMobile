@@ -26,6 +26,7 @@ import { SettingsStack } from './SettingsStack.js';
 import { CreateStack } from './CreateStack.js';
 import { CreatePermissionsModal } from './../modals/CreatePermissionsModal.js';
 import { ReportStack } from './ReportStack.js';
+import { UpdateLinksModal } from '../modals/UpdateLinksModal.js';
 
 const Stack = createStackNavigator();
 
@@ -148,17 +149,34 @@ export const RootStack = () => {
       <Stack.Screen
         name='UpdateNameModal'
         component={UpdateNameModal}
-        options={{ animationEnabled: true }}
+        options={{
+          animationEnabled: true,
+          header: () => null
+        }}
       />
       <Stack.Screen
         name='UpdateEmailModal'
         component={UpdateEmailModal}
-        options={{ animationEnabled: true }}
+        options={{
+          animationEnabled: true,
+          header: () => null
+        }}
+      />
+      <Stack.Screen
+        name='UpdateLinksModal'
+        component={UpdateLinksModal}
+        options={{
+          animationEnabled: true,
+          header: () => null
+        }}
       />
       <Stack.Screen
         name='UpdatePasswordModal'
         component={UpdatePasswordModal}
-        options={{ animationEnabled: true }}
+        options={{
+          animationEnabled: true,
+          header: () => null
+        }}
       />
       <Stack.Screen
         name='SettingsStack'
