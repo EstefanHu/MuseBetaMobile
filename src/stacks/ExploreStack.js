@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ProfileTopTabs } from './../layout/ProfileTopTabs.js';
 import { ExploreHomeScreen } from './../screens/explore/ExploreHomeScreen.js';
 import { MapInfoModal } from './../screens/explore/MapInfoModal.js';
+import { Overlay } from 'react-native-maps';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,9 @@ export const ExploreStack = () => {
       <Stack.Screen
         name='MapInfoModal'
         component={MapInfoModal}
+        options={{
+          cardOverlay: true
+        }}
       />
     </Stack.Navigator>
   );
