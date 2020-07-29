@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   SafeAreaView
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 
@@ -26,8 +25,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const UpdateActions = ({ body }) => {
-  const navigation = useNavigation();
+export const UpdateActions = ({ body, navigation }) => {
   const { updateProfile } = React.useContext(ProfileContext);
 
   const submitUpdate = () => {

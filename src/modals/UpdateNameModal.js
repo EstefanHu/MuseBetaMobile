@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity,
   TextInput,
   SafeAreaView,
   TouchableWithoutFeedback,
@@ -50,12 +49,12 @@ const styles = StyleSheet.create({
 });
 
 export const UpdateNameModal = ({ navigation }) => {
-  const { state: { name } } = useContext(ProfileContext);
-  const [firstName, setFirstName] = useState();
-  const [middleName, setMiddleName] = useState();
-  const [lastName, setLastName] = useState();
+  const { state: { name } } = React.useContext(ProfileContext);
+  const [firstName, setFirstName] = React.useState();
+  const [middleName, setMiddleName] = React.useState();
+  const [lastName, setLastName] = React.useState();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const seperatedName = name.split(' ');
     setFirstName(seperatedName[0]);
     setLastName(seperatedName[seperatedName.length - 1]);
@@ -79,6 +78,7 @@ export const UpdateNameModal = ({ navigation }) => {
             <Text style={styles.label}>First Name</Text>
             <TextInput
               style={styles.input}
+              underlineColorAndroid='rgba(0,0,0,0)'
               value={firstName}
               autoCapitalize='none'
               autoCorrect={false}
@@ -90,6 +90,7 @@ export const UpdateNameModal = ({ navigation }) => {
             <Text style={styles.label}>Middle Name</Text>
             <TextInput
               style={styles.input}
+              underlineColorAndroid='rgba(0,0,0,0)'
               value={middleName}
               autoCapitalize='none'
               autoCorrect={false}
@@ -101,6 +102,7 @@ export const UpdateNameModal = ({ navigation }) => {
             <Text style={styles.label}>Last Name</Text>
             <TextInput
               style={styles.input}
+              underlineColorAndroid='rgba(0,0,0,0)'
               value={lastName}
               autoCapitalize='none'
               autoCorrect={false}
@@ -109,7 +111,10 @@ export const UpdateNameModal = ({ navigation }) => {
           </View>
         </SafeAreaView>
 
-        <UpdateActions body={{ name: `${firstName} ${middleName} ${lastName}` }} />
+        <UpdateActions
+          body={{ name: `${firstName} ${middleName} ${lastName}` }}
+          navigation={navigation}
+        />
       </View>
     </TouchableWithoutFeedback>
   );
