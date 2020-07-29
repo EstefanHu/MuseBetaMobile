@@ -4,24 +4,29 @@ import {
   View,
   Text,
   TouchableOpacity,
-  SafeAreaView
 } from 'react-native';
+
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    paddingVertical: 20,
   },
   wrapper: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
-  actionButton: {},
+  actionButton: {
+    flexGrow: 1,
+    paddingTop: 30,
+  },
   actionText: {
     fontSize: 19,
-    color: 'rgb(255,50,50)'
+    color: 'rgb(255,50,50)',
+    textAlign: 'center',
   }
 });
 
@@ -35,21 +40,19 @@ export const UpdateActions = ({ body, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView>
-        <View style={styles.wrapper}>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => navigation.pop()}
-          >
-            <Text style={styles.actionText}>Cancel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={submitUpdate}
-          >
-            <Text style={styles.actionText}>Update</Text>
-          </TouchableOpacity>
-        </View>
+      <SafeAreaView style={styles.wrapper} edges={['bottom']}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => navigation.pop()}
+        >
+          <Text style={styles.actionText}>Cancel</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={submitUpdate}
+        >
+          <Text style={styles.actionText}>Update</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </View>
   );

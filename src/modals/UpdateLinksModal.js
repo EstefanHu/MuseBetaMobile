@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const UpdateLinksModal = () => {
+export const UpdateLinksModal = ({ navigation }) => {
   const { state: { links } } = React.useContext(ProfileContext);
   const [one, setOne] = React.useState(links[0]);
   const [two, setTwo] = React.useState(links[1]);
@@ -102,7 +102,7 @@ export const UpdateLinksModal = () => {
           </View>
         </SafeAreaView>
 
-        <UpdateActions action={'test'} />
+        <UpdateActions action={{ links: [one, two, three] }} navigation={navigation} />
       </View>
     </TouchableWithoutFeedback>
   );
