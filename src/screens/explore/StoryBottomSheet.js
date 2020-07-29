@@ -5,7 +5,8 @@ import {
   View,
   TouchableOpacity,
   Platform,
-  Linking
+  Linking,
+  Alert,
 } from 'react-native';
 import {
   Ionicons,
@@ -14,6 +15,7 @@ import {
   Octicons
 } from '@expo/vector-icons';
 import { useDateFormat } from '../../hooks/useDateFormat.js';
+import { useMeasureDistance } from '../../hooks/useMeasureDistance.js';
 import { useNavigation } from '@react-navigation/native';
 
 import { Context as SearchContext } from '../../providers/SearchProvider.js';
@@ -251,9 +253,32 @@ const BottomSheetBody = ({ story }) => {
   }
 
   const beginStory = () => {
+    const sLat = story.startLocation.coordinates[1];
+    const sLon = story.startLocation.coordinates[0];
+    const distance = useMeasureDistance(latitude, longitude, sLat, sLon);
+    distance > 10 ?
+      Alert.alert(
+        'You\'re too far away',
+        'Being near the story creates a more emersive expereince, are you sure you don\'t want to wait?',
+        [
+          {
+            text: 'Wait',
+            onPress: () => null,
+            style: 'cancel'
+          },
+          {
+            text: 'I know what I\,m doing!',
+            onPress: () => fitPoints(sLat, sLon)
+          }
+        ]
+      ) : fitPoints(sLat, sLon)
+
+  }
+
+  const fitPoints = (sLat, sLon) => {
     const POINTS = [{
-      longitude: story.startLocation.coordinates[0],
-      latitude: story.startLocation.coordinates[1]
+      longitude: sLon,
+      latitude: sLat
     }, { longitude, latitude }]
     const OPTIONS = {
       edgePadding: {
