@@ -4,6 +4,8 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Platform,
+  Linking
 } from 'react-native';
 import {
   Ionicons,
@@ -270,7 +272,15 @@ const BottomSheetBody = ({ story }) => {
   }
 
   const getDirections = () => {
-    console.log('GO')
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const latLng = `${story.startLocation.coordinates[1]},${story.startLocation.coordinates[0]}`;
+    const label = 'Custom Label';
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`
+    });
+
+    Linking.openURL(url);
   }
 
   return (
