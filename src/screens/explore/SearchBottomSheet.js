@@ -32,14 +32,14 @@ export const SearchBottomSheet = () => {
     clearCatagory();
   }
 
+  const NONSCREEN = headerHeight + topInset + bottomInset + bottomSheetHeaderHeight;
+
   return bottomInset ?
     <BottomSheet
       ref={searchBottomSheetRef}
       snapPoints={[
-        deviceHeight - headerHeight
-        - topInset - bottomInset - bottomSheetHeaderHeight,
-        deviceHeight / 2 - headerHeight
-        - topInset - bottomInset - bottomSheetHeaderHeight,
+        deviceHeight - NONSCREEN,
+        deviceHeight / 2 - NONSCREEN,
         catagory ? bottomInset + bottomSheetHeaderHeight : 0
       ]}
       initialSnap={2}

@@ -101,12 +101,13 @@ const headerStyles = StyleSheet.create({
 });
 
 const BottomSheetHeader = ({ story }) => {
-  const { state: { initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: { markers, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
   const { clearStory } = React.useContext(SearchContext);
 
   const deactivate = () => {
     initialBottomSheetRef.current.snapTo(1);
     storyBottomSheetRef.current.snapTo(2);
+    markers[story._id].hideCallout();
     clearStory();
   }
 

@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
 export const StoryPreview = ({ item }) => {
   const { setStory } = React.useContext(SearchContext);
-  const { state: { mapRef, markersRef, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
+  const { state: { mapRef, markers, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
 
   const openItem = () => {
     setStory(item._id);
@@ -52,7 +52,7 @@ export const StoryPreview = ({ item }) => {
       1000
     );
 
-    markersRef[item._id].showCallout();
+    markers[item._id].showCallout();
   }
 
   return (
