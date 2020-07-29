@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
 
 const BottomSheetHeader = () => {
   const { state: {
-    bottomSheetHeaderHeight,
     storyBottomSheetRef,
     navigationBottomSheetRef,
   } } = React.useContext(LayoutContext);
@@ -116,11 +115,7 @@ const BottomSheetHeader = () => {
   }
 
   return (
-    <View style={[
-      styles.header,
-      {
-        height: bottomSheetHeaderHeight * 2,
-      }]}>
+    <View style={styles.header}>
       <View style={styles.panelHeader}>
         <View style={styles.panelHandle}></View>
       </View>

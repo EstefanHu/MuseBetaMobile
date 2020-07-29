@@ -119,7 +119,7 @@ export const ExploreHomeScreen = ({ navigation }) => {
         <Animated.View style={[styles.actions, { opacity: 1 }]}>
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={() => navigation.navigate('MapInfoModal')}
+            onPress={() => navigation.navigate('ExploreInfoScreen')}
           >
             <Feather name='info' size={25} color='black' />
           </TouchableOpacity>

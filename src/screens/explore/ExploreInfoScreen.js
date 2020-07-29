@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const MapInfoModal = () => {
+export const ExploreInfoScreen = () => {
 
   return (
     <View style={styles.container}>
