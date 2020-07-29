@@ -22,7 +22,7 @@ export const ProfileTopTabs = () => {
         indicatorStyle: { backgroundColor: 'rgb(255,50,50)' }
       }}
     >
-      {/* <Tab.Screen
+      <Tab.Screen
         name='ProfileOverviewScreen'
         component={ProfileOverviewScreen}
         options={{
@@ -35,7 +35,7 @@ export const ProfileTopTabs = () => {
         options={{
           title: 'Stories'
         }}
-      /> */}
+      />
       <Tab.Screen
         name='ProfileUpdateScreen'
         component={ProfileUpdateScreen}

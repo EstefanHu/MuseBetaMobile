@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ExploreHomeScreen = () => {
+export const ExploreHomeScreen = ({ navigation }) => {
   const { state: { stories } } = React.useContext(StoryContext);
   const { state: { longitude, latitude } } = React.useContext(LocationContext);
   const {
@@ -119,7 +119,7 @@ export const ExploreHomeScreen = () => {
         <Animated.View style={[styles.actions, { opacity: 1 }]}>
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={() => null}
+            onPress={() => navigation.navigate('MapInfoModal')}
           >
             <Feather name='info' size={25} color='black' />
           </TouchableOpacity>
