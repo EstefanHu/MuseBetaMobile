@@ -1,3 +1,4 @@
+// https://stackoverflow.com/questions/639695/how-to-convert-latitude-or-longitude-to-meters
 exports.useMeasureDistance = (lat1, lon1, lat2, lon2) => {
   var R = 6378.137; // Radius of earth in KM
   var dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
