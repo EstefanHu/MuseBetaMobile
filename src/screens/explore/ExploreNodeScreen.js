@@ -10,20 +10,23 @@ import { Context as JourneyContext } from './../../providers/JourneyProvider.js'
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
+    paddingVertical: 15
   },
   card: {
     backgroundColor: 'white',
-    paddingVertical: 8,
+    paddingVertical: 15,
     paddingHorizontal: 15,
-    marginTop: 15,
+    marginBottom: 20,
     borderRadius: 5,
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
   },
+  body: {
+    fontSize: 18,
+  },
   doneButton: {
-    marginTop: 40,
     backgroundColor: 'rgb(220,220,220)',
     paddingVertical: 10,
     justifyContent: 'center',
