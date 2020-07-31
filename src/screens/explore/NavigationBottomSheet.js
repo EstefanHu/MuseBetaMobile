@@ -29,9 +29,9 @@ export const NavigationBottomSheet = () => {
     navigationBottomSheetRef,
   } } = React.useContext(LayoutContext);
   const { state: { stories } } = React.useContext(StoryContext);
-  const { state: { journeyId } } = React.useContext(JourneyContext);
+  const { state: { id } } = React.useContext(JourneyContext);
 
-  const story = stories.find(s => s._id === journeyId);
+  const story = stories.find(s => s._id === id);
 
   const NONSCREEN = headerHeight + topInset + bottomInset + bottomSheetHeaderHeight;
 
@@ -41,7 +41,7 @@ export const NavigationBottomSheet = () => {
       snapPoints={[
         deviceHeight - NONSCREEN,
         deviceHeight / 2 - NONSCREEN,
-        journeyId ? bottomInset + bottomSheetHeaderHeight : 0
+        id ? bottomInset + bottomSheetHeaderHeight : 0
       ]}
       initialSnap={2}
       enabledContentTapInteraction={false}
@@ -105,14 +105,14 @@ const BottomSheetHeader = () => {
   } } = React.useContext(LayoutContext);
   const { setStory } = React.useContext(SearchContext);
   const { state: { stories } } = React.useContext(StoryContext);
-  const { state: { journeyId }, clearJourney, resetStep } = React.useContext(JourneyContext);
+  const { state: { id }, clearJourney, resetStep } = React.useContext(JourneyContext);
 
-  const story = stories.find(s => s._id === journeyId);
+  const story = stories.find(s => s._id === id);
 
   const unmountJourney = () => {
     storyBottomSheetRef.current.snapTo(1);
     navigationBottomSheetRef.current.snapTo(2);
-    setStory(journeyId);
+    setStory(id);
     clearJourney();
     resetStep();
   }
@@ -125,7 +125,7 @@ const BottomSheetHeader = () => {
 
       <View style={styles.headerInfo}>
         <View>
-          <Text style={styles.title}>To {story?.title}</Text>
+          <Text style={styles.title}>{story?.title}</Text>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.distance}>From</Text>
             <TouchableOpacity onPress={() => true}>
@@ -188,13 +188,14 @@ const bsbStyles = StyleSheet.create({
 
 const BottomSheetBody = ({ story }) => {
   const navigation = useNavigation()
-  const { state: { bottomSheetHeight } } = React.useContext(LayoutContext);
+  const { state: { bottomSheetHeight, navigationBottomSheetRef } } = React.useContext(LayoutContext);
   const { state: { stories } } = React.useContext(StoryContext);
-  const { state: { journeyId, startLocation, locations, step }, nextStep } = React.useContext(JourneyContext);
+  const { state: { id, startLocation, locations, step }, nextStep } = React.useContext(JourneyContext);
 
 
   const next = () => {
     nextStep();
+    navigationBottomSheetRef.current.snapTo(1);
     navigation.navigate('ExploreNodeScreen');
   }
 
@@ -228,7 +229,7 @@ const BottomSheetBody = ({ story }) => {
               }
             ]}
             onPress={next}
-            enabled={step < locations?.length + 1}
+            disabled={step > locations?.length}
           >
             <Text style={bsbStyles.buttonText}>Start Node</Text>
           </TouchableOpacity>
@@ -243,7 +244,7 @@ const BottomSheetBody = ({ story }) => {
             <Text style={bsbStyles.buttonText}>Review</Text>
           </TouchableOpacity>
 
-          <BSActions storyId={journeyId} />
+          <BSActions storyId={id} />
         </>
       }
     </View >

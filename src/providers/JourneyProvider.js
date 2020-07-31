@@ -20,7 +20,7 @@ const journeyReducer = (state, action) => {
         credibility: action.payload.credibility,
       };
     case 'clear_journey':
-      return { ...state, journeyId: null };
+      return { id: null, step: state.step };
     case 'next_step':
       return { ...state, step: state.step + 1 };
     case 'reset_step':
@@ -52,8 +52,6 @@ export const { Context, Provider } = createDataContext(
   },
   {
     id: null,
-    startLocation: null,
-    locations: null,
     step: 0,
   }
 );
