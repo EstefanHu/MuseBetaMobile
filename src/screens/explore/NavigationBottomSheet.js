@@ -9,6 +9,7 @@ import {
   Ionicons,
   Entypo,
 } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import { Context as SearchContext } from './../../providers/SearchProvider.js';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
@@ -16,7 +17,7 @@ import { Context as LayoutContext } from '../../providers/LayoutProvider.js';
 import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
-import { useNavigation } from '@react-navigation/native';
+import { BSActions } from './../../components/BSActions.js';
 
 export const NavigationBottomSheet = () => {
   const { state: {
