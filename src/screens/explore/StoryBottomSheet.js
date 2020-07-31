@@ -267,12 +267,11 @@ const BottomSheetBody = ({ story }) => {
             style: 'cancel'
           },
           {
-            text: 'I know what I\,m doing!',
+            text: 'I know what I\'m doing!',
             onPress: () => fitPoints(sLat, sLon)
           }
         ]
       ) : fitPoints(sLat, sLon)
-
   }
 
   const fitPoints = (sLat, sLon) => {

@@ -6,7 +6,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 import {
-  Ionicons
+  Ionicons,
+  Entypo,
 } from '@expo/vector-icons';
 
 import { Context as SearchContext } from './../../providers/SearchProvider.js';
@@ -148,25 +149,20 @@ const bsbStyles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.8)',
     paddingTop: 10,
   },
-  section: {
-    marginBottom: 30
-  },
-  sectionHeader: {
+  node: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(200,200,200,0.8)',
-    paddingBottom: 5,
+    alignItems: 'center',
   },
-  sectionLabel: {
-    color: 'grey',
-    fontSize: 13
+  icon: {
+    width: 30,
+    height: 30,
+    borderRadius: 20,
+    backgroundColor: 'rgb(255,50,50)',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  more: {
-    color: 'rgba(0, 100, 255, 0.7)',
-    fontSize: 13
-  },
-  start: {
+  startButton: {
     backgroundColor: 'rgb(255,50,50)',
     paddingVertical: 10,
     alignItems: 'center',
@@ -184,16 +180,87 @@ const bsbStyles = StyleSheet.create({
 const BottomSheetBody = () => {
   const navigation = useNavigation()
   const { state: { bottomSheetHeight } } = React.useContext(LayoutContext);
+  const { state: { stories } } = React.useContext(StoryContext);
+  const { state: { startLocation, locations } } = React.useContext(JourneyContext);
 
   return (
     <View style={[bsbStyles.panel, { minHeight: bottomSheetHeight }]}>
-      <Text style={{ textAlign: 'center' }}>When you have arrived, click 'start story'</Text>
-      <TouchableOpacity
-        style={bsbStyles.start}
-        onPress={() => true}
-      >
-        <Text style={bsbStyles.startText}>Start Story</Text>
-      </TouchableOpacity>
+      <View style={bsbStyles.node}>
+        <View style={bsbStyles.icon}>
+          <Entypo name='location-pin' size={22} color='white' />
+        </View>
+        <TouchableOpacity
+          style={bsbStyles.startButton}
+          onPress={() => true}
+        >
+          <Text style={bsbStyles.startText}>Start Node</Text>
+        </TouchableOpacity>
+      </View>
+      {locations?.map(
+        l =>
+          <NodeItem
+            key={l._id}
+            node={l}
+          />
+      )}
+    </View>
+  );
+};
+
+const nodeStyles = StyleSheet.create({
+  container: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(200,200,200,0.8)',
+  },
+  node: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(200,200,200,0.8)',
+  },
+  nodeIcon: {
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    backgroundColor: 'rgb(255,50,50)',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(200,200,200,0.8)',
+  }
+});
+
+const NodeItem = ({ node }) => {
+  const [bread, setBread] = React.useState(false);
+  const [enabled, setEnabled] = React.useState(false);
+
+  return (
+    <View style={nodeStyles.container}>
+      <View style={nodeStyles.bread}>
+        <View style={nodeStyles.breadIcon}>
+
+        </View>
+
+        <TouchableOpacity
+          style={nodeStyles.breadButton}
+          enabled={bread}
+          onPress={() => true}
+        >
+          <Text style={nodeStyles.breadText}>Start Navigation</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={nodeStyles.node}>
+        <View style={nodeStyles.nodeIcon}>
+          <Entypo name='location-pin' size={20} color='white' />
+        </View>
+
+        <TouchableOpacity
+          style={nodeStyles.nodeButton}
+          enabled={enabled}
+          onPress={() => true}
+        >
+          <Text style={nodeStyles.nodeText}>Start</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

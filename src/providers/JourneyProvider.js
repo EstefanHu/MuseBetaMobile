@@ -6,7 +6,8 @@ const journeyReducer = (state, action) => {
       return {
         ...state,
         journeyId: action.payload._id,
-        journeyStartLocation: action.payload.startLocation
+        journeyStartLocation: action.payload.startLocation,
+        locations: action.payload.locations,
       };
     case 'clear_journey':
       return { ...state, journeyId: null };
@@ -29,6 +30,7 @@ export const { Context, Provider } = createDataContext(
   },
   {
     journeyId: null,
-    journeyStartLocation: null
+    journeyStartLocation: null,
+    locations: null,
   }
 );
