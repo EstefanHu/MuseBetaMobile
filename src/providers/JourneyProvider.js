@@ -5,9 +5,19 @@ const journeyReducer = (state, action) => {
     case 'set_journey':
       return {
         ...state,
-        journeyId: action.payload._id,
+        id: action.payload._id,
+        title: action.payload.title,
+        pitch: action.payload.pitch,
+        body: action.payload.body, // TODO: Temporary solution
+        channel: action.payload.channel,
         journeyStartLocation: action.payload.startLocation,
         locations: action.payload.locations,
+        city: action.payload.city,
+        community: action.payload.community,
+        authorName: action.payload.authorName,
+        authorId: action.payload.authorId,
+        createdAt: action.payload.createdAt,
+        credibility: action.payload.credibility,
       };
     case 'clear_journey':
       return { ...state, journeyId: null };
@@ -41,8 +51,8 @@ export const { Context, Provider } = createDataContext(
     resetStep
   },
   {
-    journeyId: null,
-    journeyStartLocation: null,
+    id: null,
+    startLocation: null,
     locations: null,
     step: 0,
   }
