@@ -5,10 +5,22 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
+import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
+  },
+  card: {
+    backgroundColor: 'white',
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    marginTop: 15,
+    borderRadius: 5,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
   },
   doneButton: {
     marginTop: 40,
@@ -25,10 +37,18 @@ const styles = StyleSheet.create({
 });
 
 export const ExploreNodeScreen = ({ navigation }) => {
+  const { state: { title, body, step } } = React.useContext(JourneyContext);
 
   return (
     <View style={styles.container}>
-      <Text>Node</Text>
+      <View style={styles.card}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.stepNumber}>Step {step}</Text>
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.body}>{body}</Text>
+      </View>
 
       <TouchableOpacity
         style={styles.doneButton}

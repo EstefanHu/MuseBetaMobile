@@ -229,7 +229,7 @@ const BottomSheetBody = ({ story }) => {
               }
             ]}
             onPress={next}
-            disabled={step > locations?.length}
+            // disabled={step > locations?.length}
           >
             <Text style={bsbStyles.buttonText}>Start Node</Text>
           </TouchableOpacity>

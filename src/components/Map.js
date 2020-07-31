@@ -32,7 +32,7 @@ export const Map = ({ stories, longitude, latitude }) => {
 
   const { state: { storyId }, setStory, clearStory } = React.useContext(SearchContext);
   const { state: { mapRef, initialBottomSheetRef, storyBottomSheetRef } } = React.useContext(LayoutContext);
-  const { state: { journeyId, journeyStartLocation } } = React.useContext(JourneyContext);
+  const { state: { id, startLocation } } = React.useContext(JourneyContext);
 
   const [region, setRegion] = React.useState({
     longitude: longitude,
@@ -70,11 +70,11 @@ export const Map = ({ stories, longitude, latitude }) => {
       showsPointsOfInterest={false}
       onPress={closeStorySearch}
     >
-      {journeyId ?
+      {id ?
         <Marker
           coordinate={{
-            latitude: journeyStartLocation?.coordinates[1],
-            longitude: journeyStartLocation?.coordinates[0]
+            latitude: startLocation?.coordinates[1],
+            longitude: startLocation?.coordinates[0]
           }}
         >
           <Entypo name='location-pin' size={45} color='rgb(255,50,50)' />

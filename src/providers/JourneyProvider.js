@@ -10,7 +10,7 @@ const journeyReducer = (state, action) => {
         pitch: action.payload.pitch,
         body: action.payload.body, // TODO: Temporary solution
         channel: action.payload.channel,
-        journeyStartLocation: action.payload.startLocation,
+        startLocation: action.payload.startLocation,
         locations: action.payload.locations,
         city: action.payload.city,
         community: action.payload.community,
