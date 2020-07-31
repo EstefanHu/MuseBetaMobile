@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export const BSActions = () => {
+export const BSActions = ({ storyId }) => {
   const navigation = useNavigation();
 
   return (
     <>
       <TouchableOpacity
         style={styles.container}
-        onPress={() => navigation.navigate('ReportStack', { storyId: story._id })}
+        onPress={() => navigation.navigate('ReportStack', { storyId })}
       >
         <Text style={styles.text}>Report an Issue</Text>
         <View style={styles.icon}>

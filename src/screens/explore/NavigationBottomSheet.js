@@ -105,7 +105,7 @@ const BottomSheetHeader = () => {
   } } = React.useContext(LayoutContext);
   const { setStory } = React.useContext(SearchContext);
   const { state: { stories } } = React.useContext(StoryContext);
-  const { state: { journeyId }, clearJourney } = React.useContext(JourneyContext);
+  const { state: { journeyId }, clearJourney, resetStep } = React.useContext(JourneyContext);
 
   const story = stories.find(s => s._id === journeyId);
 
@@ -114,6 +114,7 @@ const BottomSheetHeader = () => {
     navigationBottomSheetRef.current.snapTo(2);
     setStory(journeyId);
     clearJourney();
+    resetStep();
   }
 
   return (
@@ -153,6 +154,7 @@ const bsbStyles = StyleSheet.create({
     paddingTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 30,
   },
   abstract: {
     paddingHorizontal: 10,
@@ -184,19 +186,25 @@ const bsbStyles = StyleSheet.create({
   }
 });
 
-const BottomSheetBody = () => {
+const BottomSheetBody = ({ story }) => {
   const navigation = useNavigation()
   const { state: { bottomSheetHeight } } = React.useContext(LayoutContext);
   const { state: { stories } } = React.useContext(StoryContext);
-  const { state: { startLocation, locations } } = React.useContext(JourneyContext);
-  const [count, setCount] = React.useState(1);
+  const { state: { journeyId, startLocation, locations, step }, nextStep } = React.useContext(JourneyContext);
+
+
+  const next = () => {
+    nextStep();
+    console.log('hello')
+    console.log(step)
+  }
 
   return (
     <View style={[bsbStyles.panel, { minHeight: bottomSheetHeight }]}>
       <View style={bsbStyles.guide}>
         <View style={bsbStyles.abstract}>
           <View style={bsbStyles.node}>
-            <View style={[bsbStyles.icon, { backgroundColor: count === 0 ? 'rgb(255,50,50)' : 'lightgrey' }]}>
+            <View style={[bsbStyles.icon, { backgroundColor: step === 0 ? 'rgb(255,50,50)' : 'lightgrey' }]}>
               <Entypo name='location-pin' size={22} color='white' />
             </View>
           </View>
@@ -204,7 +212,7 @@ const BottomSheetBody = () => {
             (l, idx) =>
               <NodeItem
                 key={l._id}
-                idx={idx === count + 1}
+                idx={idx === step + 1}
                 node={l}
               />
           )}
@@ -216,18 +224,19 @@ const BottomSheetBody = () => {
               bsbStyles.button,
               {
                 backgroundColor:
-                  count < locations?.length ?
+                  step <= locations?.length ?
                     'rgb(255,50,50)' : 'lightgrey'
               }
             ]}
-            onPress={() => true}
+            onPress={next}
+            enabled={step < locations?.length + 1}
           >
             <Text style={bsbStyles.buttonText}>Start Node</Text>
           </TouchableOpacity>
         </View>
       </View>
       {
-        count > locations?.length && <>
+        step > locations?.length && <>
           <TouchableOpacity
             style={[bsbStyles.button, { backgroundColor: 'rgb(255,50,50)' }]}
             onPress={() => navigation.navigate('ExploreReviewScreen')}
@@ -235,7 +244,7 @@ const BottomSheetBody = () => {
             <Text style={bsbStyles.buttonText}>Review</Text>
           </TouchableOpacity>
 
-          <BSActions />
+          <BSActions storyId={journeyId} />
         </>
       }
     </View >

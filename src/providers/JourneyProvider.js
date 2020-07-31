@@ -11,6 +11,10 @@ const journeyReducer = (state, action) => {
       };
     case 'clear_journey':
       return { ...state, journeyId: null };
+    case 'next_step':
+      return { ...state, step: state.step + 1 };
+    case 'reset_step':
+      return { ...state, step: 0 };
     default:
       return state;
   };
@@ -22,15 +26,24 @@ const setJourney = dispatch => journey =>
 const clearJourney = dispatch => () =>
   dispatch({ type: 'clear_journey' });
 
+const nextStep = dispatch => () =>
+  dispatch({ type: 'next_step' });
+
+const resetStep = dispatch => () =>
+  dispatch({ type: 'reset_step' });
+
 export const { Context, Provider } = createDataContext(
   journeyReducer,
   {
     setJourney,
     clearJourney,
+    nextStep,
+    resetStep
   },
   {
     journeyId: null,
     journeyStartLocation: null,
     locations: null,
+    step: 0,
   }
 );
