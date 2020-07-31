@@ -147,33 +147,39 @@ const bsbStyles = StyleSheet.create({
   panel: {
     paddingHorizontal: 20,
     backgroundColor: 'rgba(255,255,255,0.8)',
-    paddingTop: 10,
   },
-  node: {
+  guide: {
+    paddingTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+  },
+  abstract: {
+    paddingHorizontal: 10,
+
+  },
+  node: {
+    paddingVertical: 5,
   },
   icon: {
     width: 30,
     height: 30,
     borderRadius: 20,
-    backgroundColor: 'rgb(255,50,50)',
     justifyContent: 'center',
     alignItems: 'center'
   },
-  startButton: {
-    backgroundColor: 'rgb(255,50,50)',
-    paddingVertical: 10,
+  buttonSlider: {
+  },
+  button: {
+    paddingVertical: 8,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
-    marginTop: 10,
+    paddingHorizontal: 20,
   },
-  startText: {
+  buttonText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 20,
   }
 });
 
@@ -182,28 +188,56 @@ const BottomSheetBody = () => {
   const { state: { bottomSheetHeight } } = React.useContext(LayoutContext);
   const { state: { stories } } = React.useContext(StoryContext);
   const { state: { startLocation, locations } } = React.useContext(JourneyContext);
+  const [count, setCount] = React.useState(1);
 
   return (
     <View style={[bsbStyles.panel, { minHeight: bottomSheetHeight }]}>
-      <View style={bsbStyles.node}>
-        <View style={bsbStyles.icon}>
-          <Entypo name='location-pin' size={22} color='white' />
+      <View style={bsbStyles.guide}>
+        <View style={bsbStyles.abstract}>
+          <View style={bsbStyles.node}>
+            <View style={[bsbStyles.icon, { backgroundColor: count === 0 ? 'rgb(255,50,50)' : 'lightgrey' }]}>
+              <Entypo name='location-pin' size={22} color='white' />
+            </View>
+          </View>
+          {locations?.map(
+            (l, idx) =>
+              <NodeItem
+                key={l._id}
+                idx={idx === count + 1}
+                node={l}
+              />
+          )}
         </View>
-        <TouchableOpacity
-          style={bsbStyles.startButton}
-          onPress={() => true}
-        >
-          <Text style={bsbStyles.startText}>Start Node</Text>
-        </TouchableOpacity>
+
+        <View style={bsbStyles.buttonSlider}>
+          <TouchableOpacity
+            style={[
+              bsbStyles.button,
+              {
+                backgroundColor:
+                  count < locations?.length ?
+                    'rgb(255,50,50)' : 'lightgrey'
+              }
+            ]}
+            onPress={() => true}
+          >
+            <Text style={bsbStyles.buttonText}>Start Node</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      {locations?.map(
-        l =>
-          <NodeItem
-            key={l._id}
-            node={l}
-          />
-      )}
-    </View>
+      {
+        count > locations?.length && <>
+          <TouchableOpacity
+            style={[bsbStyles.button, { backgroundColor: 'rgb(255,50,50)' }]}
+            onPress={() => navigation.navigate('ExploreReviewScreen')}
+          >
+            <Text style={bsbStyles.buttonText}>Review</Text>
+          </TouchableOpacity>
+
+          <BSActions />
+        </>
+      }
+    </View >
   );
 };
 
@@ -228,7 +262,7 @@ const nodeStyles = StyleSheet.create({
   }
 });
 
-const NodeItem = ({ node }) => {
+const NodeItem = ({ node, selected }) => {
   const [bread, setBread] = React.useState(false);
   const [enabled, setEnabled] = React.useState(false);
 
@@ -238,28 +272,16 @@ const NodeItem = ({ node }) => {
         <View style={nodeStyles.breadIcon}>
 
         </View>
-
-        <TouchableOpacity
-          style={nodeStyles.breadButton}
-          enabled={bread}
-          onPress={() => true}
-        >
-          <Text style={nodeStyles.breadText}>Start Navigation</Text>
-        </TouchableOpacity>
       </View>
 
       <View style={nodeStyles.node}>
         <View style={nodeStyles.nodeIcon}>
-          <Entypo name='location-pin' size={20} color='white' />
+          <Entypo
+            name='location-pin'
+            size={20}
+            color={selected ? 'rgb(255,50,50)' : 'lightgrey'}
+          />
         </View>
-
-        <TouchableOpacity
-          style={nodeStyles.nodeButton}
-          enabled={enabled}
-          onPress={() => true}
-        >
-          <Text style={nodeStyles.nodeText}>Start</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );

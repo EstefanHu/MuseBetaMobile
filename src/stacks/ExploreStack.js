@@ -6,6 +6,7 @@ import { ExploreHomeScreen } from './../screens/explore/ExploreHomeScreen.js';
 import { ExploreInfoScreen } from '../screens/explore/ExploreInfoScreen.js';
 import { ExploreNodeScreen } from '../screens/explore/ExploreNodeScreen.js';
 import { ExploreEndScreen } from '../screens/explore/ExploreEndScreen.js';
+import { ExploreReviewScreen } from '../screens/explore/ExploreReviewScreen.js';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,10 @@ export const ExploreStack = () => (
     <Stack.Screen
       name='ExploreEndScreen'
       component={ExploreEndScreen}
+    />
+    <Stack.Screen
+      name='ExploreReviewScreen'
+      component={ExploreReviewScreen}
     />
     <Stack.Screen
       name='ExploreInfoScreen'

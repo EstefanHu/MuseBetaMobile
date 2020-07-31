@@ -26,6 +26,7 @@ import { Context as LocationContext } from '../../providers/LocationProvider.js'
 import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
 
 import BottomSheet from 'reanimated-bottom-sheet';
+import { BSActions } from '../../components/BSActions.js';
 
 export const StoryBottomSheet = () => {
   const { state: {
@@ -200,28 +201,9 @@ const bodyStyles = StyleSheet.create({
   sectionText: {
     fontSize: 16
   },
-  bottomAction: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 15,
-  },
-  bottomActionText: {
-    color: 'rgb(255,50,50)',
-    fontSize: 20,
-  },
-  bottomActionIcon: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(100,100,100,0.1)'
-  }
 });
 
 const BottomSheetBody = ({ story }) => {
-  const navigation = useNavigation();
   const { state: {
     deviceHeight,
     bottomSheetHeaderHeight,
@@ -371,16 +353,7 @@ const BottomSheetBody = ({ story }) => {
 
       </View>
 
-      <TouchableOpacity
-        style={bodyStyles.bottomAction}
-        onPress={() => navigation.navigate('ReportStack', { storyId: story._id })}
-      >
-        <Text style={bodyStyles.bottomActionText}>Report an Issue</Text>
-        <View style={bodyStyles.bottomActionIcon}>
-          <Octicons name='report' size={18} color='rgb(255,50,50)' />
-        </View>
-      </TouchableOpacity>
-
+      <BSActions />
     </View>
   );
 };
