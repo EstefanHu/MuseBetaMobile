@@ -195,8 +195,7 @@ const BottomSheetBody = ({ story }) => {
 
   const next = () => {
     nextStep();
-    console.log('hello')
-    console.log(step)
+    navigation.navigate('ExploreNodeScreen');
   }
 
   return (
