@@ -51,6 +51,8 @@ const getCoords = dispatch => async () => {
     let location;
     if (status === 'granted') {
       location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+      dispatch({ type: 'get_location', payload: location });
+
     } else {
       Alert.alert(
         'Grant Location',
@@ -67,8 +69,8 @@ const getCoords = dispatch => async () => {
         ],
         { cancelable: false }
       )
+      dispatch({ type: 'get_location', payload: location });
     }
-    dispatch({ type: 'get_location', payload: location });
   } catch (error) {
     console.log(error)
   }
