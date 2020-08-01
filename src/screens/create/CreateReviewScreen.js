@@ -3,10 +3,10 @@ import {
   StyleSheet,
   View,
   Text,
-  SafeAreaView,
   TouchableOpacity
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
 import { Context as LocationContext } from './../../providers/LocationProvider.js';

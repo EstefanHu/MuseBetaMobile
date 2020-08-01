@@ -6,7 +6,6 @@ import {
   Dimensions,
   TouchableOpacity,
   Alert,
-  SafeAreaView
 } from 'react-native';
 import {
   FontAwesome,
@@ -14,6 +13,7 @@ import {
   Feather
 } from '@expo/vector-icons';
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const styles = StyleSheet.create({
   container: {

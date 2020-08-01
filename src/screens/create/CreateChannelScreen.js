@@ -4,11 +4,11 @@ import {
   View,
   Text,
   TouchableOpacity,
-  SafeAreaView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CHANNELS } from './../../constants/channels.js';
 import { Picker } from '@react-native-community/picker'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
 

@@ -4,7 +4,6 @@ import {
   View,
   Text,
   TextInput,
-  SafeAreaView,
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
@@ -12,6 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
 

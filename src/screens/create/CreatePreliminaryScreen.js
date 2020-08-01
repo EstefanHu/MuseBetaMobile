@@ -5,12 +5,12 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  SafeAreaView,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
 import { Ionicons } from '@expo/vector-icons';
