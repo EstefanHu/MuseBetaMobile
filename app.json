@@ -26,11 +26,13 @@
       "bundleIdentifier": "com.estefanhu.projectmuse",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Allow Project:Muse experiences to use your location for accurate map content rendering.",
-        "NSPhotoLibraryUsageDescription": "Give Project:Muse experiences permission to access you photos for profile and review images"
+        "NSPhotoLibraryUsageDescription": "Give Project:Muse experiences permission to access you photos for profile and review images",
+        "NSCameraUsageDescription": "Allow Project:Muse experiences permission to use camera for taking photos and posting them",
+        "NSMicrophoneUsageDescription": "Allow Project:Muse experiences permission to use microphone for recording audio and posting audio files"
       }
     },
     "android": {
-      "package":"com.estefanhu.projectmuse"
+      "package": "com.estefanhu.projectmuse"
     },
     "web": {
       "favicon": "./assets/favicon.png"
