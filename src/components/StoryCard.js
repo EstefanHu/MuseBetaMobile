@@ -9,12 +9,15 @@ import {
 } from 'react-native';
 import {
   Feather,
-  FontAwesome
+  FontAwesome,
+  Entypo
 } from '@expo/vector-icons';
+import Mapview, { Marker } from 'react-native-maps';
 import { getProfileImage } from './../constants/network.js';
 
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 import { Context as SearchContext } from '../providers/SearchProvider.js';
+import { Context as LocationContext } from './../providers/LocationProvider.js';
 
 import DefaultImage from './../../assets/user-default.png';
 import { useDateFormat } from '../hooks/useDateFormat.js';
@@ -26,11 +29,11 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 5,
     marginTop: 10,
+    paddingHorizontal: 15,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 15,
     marginBottom: 5
   },
   meta: {
@@ -53,7 +56,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   prime: {
-    paddingHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: 3
@@ -65,11 +67,9 @@ const styles = StyleSheet.create({
   },
   channel: {},
   pitch: {
-    paddingHorizontal: 15,
     fontSize: 16,
   },
   metaContainer: {
-    paddingHorizontal: 15,
     flexDirection: 'row',
     marginVertical: 5,
   },
@@ -97,14 +97,13 @@ const styles = StyleSheet.create({
 
 export const StoryCard = ({ navigation, item }) => (
   <View style={styles.card}>
-
     <View style={styles.header}>
       <View style={styles.meta}>
         <Image
           style={styles.profileImg}
-          source={
-            item.photo ? getProfileImage + '/' + item.photo
-              : DefaultImage
+          source={item.photo
+            ? getProfileImage + '/' + item.photo
+            : DefaultImage
           }
         />
         <View>
@@ -133,6 +132,11 @@ export const StoryCard = ({ navigation, item }) => (
       <Text style={styles.meta}>{useDateFormat(item.createdAt)}</Text>
     </View>
 
+    <MapPreview
+      longitude={item.startLocation.coordinates[0]}
+      latitude={item.startLocation.coordinates[1]}
+    />
+
     <View style={styles.actions}>
       <View style={styles.actionsWrapper}>
         <ReadButton storyRef={item} />
@@ -141,6 +145,69 @@ export const StoryCard = ({ navigation, item }) => (
     </View>
   </View>
 );
+
+const mapStyles = StyleSheet.create({
+  container: {
+    height: 200,
+    width: '100%',
+    borderRadius: 5,
+    overflow: 'hidden',
+    marginBottom: 20,
+  }
+});
+
+const MapPreview = ({ storyLongitude, storyLatitude }) => {
+  const previewMap = React.useRef(null);
+  const { state: { longitude, latitude } } = React.useContext(LocationContext)
+
+  React.useEffect(() => fitMarkers(), [longitude, previewMap]);
+
+  const fitMarkers = () => {
+    const MARKERS = [
+      { latitude: storyLatitude, longitude: storyLongitude },
+      { latitude: latitude, longitude: longitude }
+    ]
+    const OPTIONS = {
+      edgePadding: {
+        top: 40,
+        right: 60,
+        bottom: 30,
+        left: 60
+      }
+    }
+    previewMap.current.fitToCoordinates(MARKERS, OPTIONS);
+  }
+
+  return (
+    <View style={mapStyles.container}>
+      <Mapview
+        style={{ height: '100%', width: '100%' }}
+        ref={previewMap}
+        initialRegion={{
+          longitude,
+          latitude,
+          longitudeDelta: 0.1,
+          latitudeDelta: 0.1
+        }}
+        mapType={'mutedStandard'}
+        showsUserLocation
+        scrollEnabled={false}
+        pitchEnabled={false}
+        rotateEnabled={false}
+        scrollEnabled={false}
+        zoomEnabled={false}
+      >
+        <Marker coordinate={{ latitude, longitude }}>
+          <Entypo
+            name='location-pin'
+            size={30}
+            color='black'
+          />
+        </Marker>
+      </Mapview>
+    </View>
+  );
+};
 
 const ReadButton = ({ storyRef }) => {
   const { state: { storyId }, setStory, clearStory } = React.useContext(SearchContext);
