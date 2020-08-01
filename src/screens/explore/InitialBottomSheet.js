@@ -280,8 +280,8 @@ const BottomSheetBody = ({ stories, library }) => {
 
             <View style={bsbStyles.section}>
               <View style={bsbStyles.sectionHeader}>
-                <Text style={bsbStyles.sectionLabel}>Nearby</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Near')}>
+                <Text style={bsbStyles.sectionLabel}>Top Stories</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Top')}>
                   <Text style={bsbStyles.more}>See All</Text>
                 </TouchableOpacity>
               </View>

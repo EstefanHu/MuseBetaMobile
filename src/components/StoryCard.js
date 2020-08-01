@@ -133,8 +133,8 @@ export const StoryCard = ({ navigation, item }) => (
     </View>
 
     <MapPreview
-      longitude={item.startLocation.coordinates[0]}
-      latitude={item.startLocation.coordinates[1]}
+      storyLongitude={item.startLocation.coordinates[0]}
+      storyLatitude={item.startLocation.coordinates[1]}
     />
 
     <View style={styles.actions}>
@@ -160,8 +160,6 @@ const MapPreview = ({ storyLongitude, storyLatitude }) => {
   const previewMap = React.useRef(null);
   const { state: { longitude, latitude } } = React.useContext(LocationContext)
 
-  React.useEffect(() => fitMarkers(), [longitude, previewMap]);
-
   const fitMarkers = () => {
     const MARKERS = [
       { latitude: storyLatitude, longitude: storyLongitude },
@@ -171,7 +169,7 @@ const MapPreview = ({ storyLongitude, storyLatitude }) => {
       edgePadding: {
         top: 40,
         right: 60,
-        bottom: 30,
+        bottom: 40,
         left: 60
       }
     }
@@ -184,8 +182,8 @@ const MapPreview = ({ storyLongitude, storyLatitude }) => {
         style={{ height: '100%', width: '100%' }}
         ref={previewMap}
         initialRegion={{
-          longitude,
-          latitude,
+          longitude: longitude,
+          latitude: latitude,
           longitudeDelta: 0.1,
           latitudeDelta: 0.1
         }}
@@ -196,8 +194,12 @@ const MapPreview = ({ storyLongitude, storyLatitude }) => {
         rotateEnabled={false}
         scrollEnabled={false}
         zoomEnabled={false}
+        onMapReady={fitMarkers}
       >
-        <Marker coordinate={{ latitude, longitude }}>
+        <Marker coordinate={{
+          latitude: storyLatitude,
+          longitude: storyLongitude
+        }}>
           <Entypo
             name='location-pin'
             size={30}
