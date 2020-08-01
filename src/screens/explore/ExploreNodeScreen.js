@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import { Context as JourneyContext } from './../../providers/JourneyProvider.js';
 
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   doneButton: {
-    backgroundColor: 'rgb(220,220,220)',
+    backgroundColor: 'rgb(255,50,50)',
     paddingVertical: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
   doneText: {
     fontWeight: 'bold',
     fontSize: 22,
+    color: 'white',
   }
 });
 
@@ -43,7 +45,10 @@ export const ExploreNodeScreen = ({ navigation }) => {
   const { state: { title, body, step } } = React.useContext(JourneyContext);
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      bounces={false}
+    >
       <View style={styles.card}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.stepNumber}>Step {step}</Text>
@@ -59,6 +64,6 @@ export const ExploreNodeScreen = ({ navigation }) => {
       >
         <Text style={styles.doneText}>Done</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };

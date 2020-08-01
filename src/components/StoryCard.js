@@ -4,7 +4,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
   Dimensions,
 } from 'react-native';
 import {
@@ -13,13 +12,11 @@ import {
   Entypo
 } from '@expo/vector-icons';
 import Mapview, { Marker } from 'react-native-maps';
-import { getProfileImage } from './../constants/network.js';
 
 import { Context as ProfileContext } from './../providers/ProfileProvider.js';
 import { Context as SearchContext } from '../providers/SearchProvider.js';
 import { Context as LocationContext } from './../providers/LocationProvider.js';
 
-import DefaultImage from './../../assets/user-default.png';
 import { useDateFormat } from '../hooks/useDateFormat.js';
 
 const styles = StyleSheet.create({
@@ -39,14 +36,6 @@ const styles = StyleSheet.create({
   meta: {
     color: 'grey',
     flexDirection: 'row'
-  },
-  profileImg: {
-    height: 30,
-    width: 30,
-    borderWidth: 1,
-    borderColor: 'lightgrey',
-    borderRadius: 15,
-    marginRight: 10
   },
   author: {
     fontWeight: 'bold',
@@ -99,13 +88,6 @@ export const StoryCard = ({ navigation, item }) => (
   <View style={styles.card}>
     <View style={styles.header}>
       <View style={styles.meta}>
-        <Image
-          style={styles.profileImg}
-          source={item.photo
-            ? getProfileImage + '/' + item.photo
-            : DefaultImage
-          }
-        />
         <View>
           <TouchableOpacity>
             <Text style={styles.author}>{item.authorName}</Text>
@@ -148,7 +130,7 @@ export const StoryCard = ({ navigation, item }) => (
 
 const mapStyles = StyleSheet.create({
   container: {
-    height: 200,
+    height: 150,
     width: '100%',
     borderRadius: 5,
     overflow: 'hidden',
@@ -167,10 +149,10 @@ const MapPreview = ({ storyLongitude, storyLatitude }) => {
     ]
     const OPTIONS = {
       edgePadding: {
-        top: 40,
-        right: 60,
-        bottom: 40,
-        left: 60
+        top: 20,
+        right: 40,
+        bottom: 20,
+        left: 40
       }
     }
     previewMap.current.fitToCoordinates(MARKERS, OPTIONS);
