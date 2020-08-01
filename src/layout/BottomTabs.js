@@ -14,7 +14,6 @@ import { Context as LayoutContext } from './../providers/LayoutProvider.js';
 import { TopStack } from '../stacks/TopStack.js';
 import { ExploreStack } from './../stacks/ExploreStack.js';
 import { LibraryStack } from './../stacks/LibraryStack.js';
-import { NewsStack } from './../stacks/NewsStack.js';
 
 import { useHeaderHeight } from '@react-navigation/stack';
 
@@ -64,7 +63,6 @@ export const BottomTabs = () => {
     >
       <Tabs.Screen name='Top' component={TopStack} />
       <Tabs.Screen name='Explore' component={ExploreStack} />
-      {/* <Tabs.Screen name='News' component={NewsStack} /> */}
       <Tabs.Screen name='Library' component={LibraryStack} />
     </Tabs.Navigator>
   );

@@ -4,9 +4,13 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Platform
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import {
+  Ionicons,
+  Entypo
+} from '@expo/vector-icons';
 import MapView, { Marker } from 'react-native-maps';
 
 import { Context as StoryContext } from './../../providers/StoryProvider.js';
@@ -133,16 +137,22 @@ export const CreateLocationScreen = ({ navigation }) => {
             loadingEnabled
             compassOffset={{ x: -5, y: 5 }}
           >
-            <View style={styles.coordContainer}>
-              <Text style={styles.coord}>Lat: {latitude}</Text>
-              <Text style={styles.coord}>Long: {longitude}</Text>
-            </View>
-            <Marker
-              coordinate={{
-                latitude: latitude,
-                longitude: longitude
-              }}
-            />
+            {
+              Platform.OS == 'ios' ? <View style={styles.coordContainer}>
+                <Text style={styles.coord}>Lat: {latitude}</Text>
+                <Text style={styles.coord}>Long: {longitude}</Text>
+              </View> : null
+            }
+            <Marker coordinate={{
+              latitude: latitude,
+              longitude: longitude
+            }}>
+              <Entypo
+                name='location-pin'
+                size={30}
+                color='black'
+              />
+            </Marker>
           </MapView>
           <TouchableOpacity
             style={styles.action}
