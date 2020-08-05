@@ -5,7 +5,6 @@ import {
   Text,
   TouchableOpacity,
   Dimensions,
-  SafeAreaView,
   ScrollView,
   Image
 } from 'react-native';
@@ -14,6 +13,7 @@ import {
   FontAwesome,
   Ionicons
 } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { getProfileImage } from '../constants/network.js';
 
 import { Context as ProfileContext } from '../providers/ProfileProvider.js';
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
   },
   actionLabel: {
     flex: 1,
-    marginTop: Platform.OS === 'ios' ? 0 : -12,
     paddingLeft: 15,
     color: 'rgb(70, 70, 70)',
   },
