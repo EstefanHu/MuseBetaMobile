@@ -19,8 +19,6 @@ exports.useFetch = async (url, method, body) => {
     const response = await fetch(url, params);
     const data = await response.json();
 
-    // console.log(data);
-
     return data;
   } catch (error) {
     return { status: 'failure', payload: error };

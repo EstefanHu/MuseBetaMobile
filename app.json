@@ -4,7 +4,6 @@
     "description": "Project:Muse is the worlds for context first story telling platform.",
     "slug": "project-muse",
     "scheme": "muse",
-    "sdkVersion": "38.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
