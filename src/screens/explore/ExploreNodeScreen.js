@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
+    marginBottom: 30,
   },
   doneText: {
     fontWeight: 'bold',

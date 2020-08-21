@@ -238,22 +238,22 @@ const BottomSheetBody = ({ story }) => {
     const sLat = story.startLocation.coordinates[1];
     const sLon = story.startLocation.coordinates[0];
     const distance = useMeasureDistance(latitude, longitude, sLat, sLon);
-    // distance > 10 ?
-    //   Alert.alert(
-    //     'You\'re too far away',
-    //     'Being near the story creates a more emersive expereince, are you sure you don\'t want to wait?',
-    //     [
-    //       {
-    //         text: 'Wait',
-    //         onPress: () => null,
-    //         style: 'cancel'
-    //       },
-    //       {
-    //         text: 'I know what I\'m doing!',
-    //         onPress: () => fitPoints(sLat, sLon)
-    //       }
-    //     ]
-    //   ) : fitPoints(sLat, sLon);
+    distance > 10 ?
+      Alert.alert(
+        'You\'re too far away',
+        'Being near the story creates a more emersive expereince, are you sure you don\'t want to wait?',
+        [
+          {
+            text: 'Wait',
+            onPress: () => null,
+            style: 'cancel'
+          },
+          {
+            text: 'I know what I\'m doing!',
+            onPress: () => fitPoints(sLat, sLon)
+          }
+        ]
+      ) : fitPoints(sLat, sLon);
 
       fitPoints(sLat,sLon)
   }
