@@ -14,8 +14,8 @@ import { Context as AuthContext } from './../../providers/AuthProvider.js';
 
 export const AuthLoginScreen = ({ navigation }) => {
   const { state: { errorMessage }, login, clearErrorMessage } = useContext(AuthContext);
-  const [email, setEmail] = useState('estefanhu074@gmail.com');
-  const [password, setPassword] = useState('poiupoiu');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     navigation.addListener('blur', clearErrorMessage);

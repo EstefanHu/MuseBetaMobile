@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": ":Muse",
-    "description": "Project:Muse is the worlds for context first story telling platform.",
+    "description": "Project:Muse is the worlds first context story telling platform.",
     "slug": "project-muse",
     "scheme": "muse",
     "version": "1.0.0",
@@ -28,10 +28,12 @@
         "NSPhotoLibraryUsageDescription": "Give Project:Muse experiences permission to access you photos for profile and review images",
         "NSCameraUsageDescription": "Allow Project:Muse experiences permission to use camera for taking photos and posting them",
         "NSMicrophoneUsageDescription": "Allow Project:Muse experiences permission to use microphone for recording audio and posting audio files"
-      }
+      },
+      "buildNumber": "1.0.0"
     },
     "android": {
-      "package": "com.estefanhu.projectmuse"
+      "package": "com.estefanhu.projectmuse",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
